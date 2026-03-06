@@ -31,8 +31,15 @@ jobs:
       DB_PASS: ${{ secrets.DB_PASS }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_PORT: ${{ secrets.DB_PORT }}
+      SMTP_HOST: ${{ secrets.SMTP_HOST }}
+      SMTP_PORT: ${{ secrets.SMTP_PORT }}
+      SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
+      SMTP_FROM_EMAIL: ${{ secrets.SMTP_FROM_EMAIL }}
+      SMTP_FROM_NAME: ${{ secrets.SMTP_FROM_NAME }}
+      SMTP_TO_EMAIL: ${{ secrets.SMTP_TO_EMAIL }}
+      SMTP_DEBUG: ${{ secrets.SMTP_DEBUG }}
       WHATSAPP_VERIFY_TOKEN: ${{ secrets.WHATSAPP_VERIFY_TOKEN }}
 
     steps:
@@ -51,6 +58,10 @@ jobs:
             exit 1
           fi
 
+          if [ -z "${SMTP_USER}" ] || [ -z "${SMTP_PASS}" ]; then
+            echo "Aviso: faltan SMTP_USER o SMTP_PASS. El formulario guardara mensajes, pero no podra enviar correos."
+          fi
+
       - name: Checkout del repositorio
         uses: actions/checkout@v6
 
@@ -62,8 +73,15 @@ jobs:
           DB_PASS: ${{ env.DB_PASS }}
           DB_NAME: ${{ env.DB_NAME }}
           DB_PORT: ${{ env.DB_PORT }}
+          SMTP_HOST: ${{ env.SMTP_HOST }}
+          SMTP_PORT: ${{ env.SMTP_PORT }}
+          SMTP_SECURE: ${{ env.SMTP_SECURE }}
           SMTP_USER: ${{ env.SMTP_USER }}
           SMTP_PASS: ${{ env.SMTP_PASS }}
+          SMTP_FROM_EMAIL: ${{ env.SMTP_FROM_EMAIL }}
+          SMTP_FROM_NAME: ${{ env.SMTP_FROM_NAME }}
+          SMTP_TO_EMAIL: ${{ env.SMTP_TO_EMAIL }}
+          SMTP_DEBUG: ${{ env.SMTP_DEBUG }}
           WHATSAPP_VERIFY_TOKEN: ${{ env.WHATSAPP_VERIFY_TOKEN }}
         with:
           script: |
@@ -79,12 +97,40 @@ jobs:
               `$DB_PORT = ${Number(process.env.DB_PORT || '3306')};`,
             ];
 
+            if (process.env.SMTP_HOST) {
+              lines.push(`$SMTP_HOST = ${phpString(process.env.SMTP_HOST)};`);
+            }
+
+            if (process.env.SMTP_PORT) {
+              lines.push(`$SMTP_PORT = ${Number(process.env.SMTP_PORT)};`);
+            }
+
+            if (process.env.SMTP_SECURE) {
+              lines.push(`$SMTP_SECURE = ${phpString(process.env.SMTP_SECURE)};`);
+            }
+
             if (process.env.SMTP_USER) {
               lines.push(`$SMTP_USER = ${phpString(process.env.SMTP_USER)};`);
             }
 
             if (process.env.SMTP_PASS) {
               lines.push(`$SMTP_PASS = ${phpString(process.env.SMTP_PASS)};`);
+            }
+
+            if (process.env.SMTP_FROM_EMAIL) {
+              lines.push(`$SMTP_FROM_EMAIL = ${phpString(process.env.SMTP_FROM_EMAIL)};`);
+            }
+
+            if (process.env.SMTP_FROM_NAME) {
+              lines.push(`$SMTP_FROM_NAME = ${phpString(process.env.SMTP_FROM_NAME)};`);
+            }
+
+            if (process.env.SMTP_TO_EMAIL) {
+              lines.push(`$SMTP_TO_EMAIL = ${phpString(process.env.SMTP_TO_EMAIL)};`);
+            }
+
+            if (process.env.SMTP_DEBUG) {
+              lines.push(`$SMTP_DEBUG = ${phpString(process.env.SMTP_DEBUG)};`);
             }
 
             if (process.env.WHATSAPP_VERIFY_TOKEN) {

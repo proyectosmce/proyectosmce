@@ -14,6 +14,17 @@ if (file_exists($secretPath)) {
 }
 $smtpUser = $SMTP_USER ?? getenv('SMTP_USER') ?? 'proyectosmceaa@gmail.com';
 $smtpPass = $SMTP_PASS ?? getenv('SMTP_PASS') ?? '';
+$smtpHost = $SMTP_HOST ?? getenv('SMTP_HOST') ?? 'smtp.gmail.com';
+$smtpPort = (int) ($SMTP_PORT ?? getenv('SMTP_PORT') ?? 587);
+$smtpSecure = strtolower((string) ($SMTP_SECURE ?? getenv('SMTP_SECURE') ?? 'tls'));
+$smtpFromEmail = $SMTP_FROM_EMAIL ?? getenv('SMTP_FROM_EMAIL') ?? $smtpUser;
+$smtpFromName = $SMTP_FROM_NAME ?? getenv('SMTP_FROM_NAME') ?? 'Proyectos MCE';
+$smtpToEmail = $SMTP_TO_EMAIL ?? getenv('SMTP_TO_EMAIL') ?? $smtpUser;
+$smtpDebug = (string) ($SMTP_DEBUG ?? getenv('SMTP_DEBUG') ?? '0') === '1';
+
+if (stripos($smtpHost, 'gmail.com') !== false) {
+    $smtpPass = str_replace(' ', '', $smtpPass);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = sanitize($_POST['nombre']);
@@ -40,9 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Enviar email con PHPMailer
         $mail = new PHPMailer(true);
         try {
-            if (empty($smtpPass)) {
-                throw new Exception('Falta SMTP_PASS');
+            if (empty($smtpUser) || empty($smtpPass)) {
+                throw new Exception('Falta SMTP_USER o SMTP_PASS');
             }
+
+            $smtpDebugLog = [];
 
             $nombreMail = html_entity_decode($nombre, ENT_QUOTES, 'UTF-8');
             $emailMail = html_entity_decode($email, ENT_QUOTES, 'UTF-8');
@@ -184,16 +197,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $replyMailtoHtml = htmlspecialchars('mailto:' . $emailMail, ENT_QUOTES, 'UTF-8');
 
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
+            $mail->Host = $smtpHost;
             $mail->SMTPAuth = true;
-            $mail->Username = $smtpUser; // correo remitente
-            $mail->Password = $smtpPass; // app password (no la clave normal)
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 587;
+            $mail->Username = $smtpUser;
+            $mail->Password = $smtpPass;
+            $mail->Port = $smtpPort;
+            $mail->Timeout = 30;
             $mail->CharSet = 'UTF-8';
-            
-            $mail->setFrom($smtpUser, 'Proyectos MCE');
-            $mail->addAddress('proyectosmceaa@gmail.com');
+            $mail->SMTPDebug = $smtpDebug ? 2 : 0;
+            $mail->Debugoutput = static function ($str, $level) use (&$smtpDebugLog) {
+                $smtpDebugLog[] = "[{$level}] {$str}";
+            };
+
+            if ($smtpSecure === 'ssl' || $smtpSecure === 'smtps') {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            } elseif ($smtpSecure === 'none' || $smtpSecure === '') {
+                $mail->SMTPSecure = '';
+                $mail->SMTPAutoTLS = false;
+            } else {
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            }
+             
+            $mail->setFrom($smtpFromEmail, $smtpFromName);
+            $mail->addAddress($smtpToEmail);
             if (!empty($email)) {
                 $mail->addReplyTo($email, $nombre);
             }
@@ -395,7 +421,13 @@ HTML;
             redirect('contacto.php?success=1');
         } catch (Exception $e) {
             error_log('Error al enviar correo: ' . $e->getMessage());
-            $code = (empty($smtpPass) ? 4 : 3);
+            if (!empty($mail->ErrorInfo)) {
+                error_log('PHPMailer ErrorInfo: ' . $mail->ErrorInfo);
+            }
+            if (!empty($smtpDebugLog)) {
+                error_log("SMTP debug:\n" . implode("\n", $smtpDebugLog));
+            }
+            $code = (empty($smtpUser) || empty($smtpPass)) ? 4 : 5;
             redirect('contacto.php?error=' . $code);
         }
     } else {
