@@ -33,6 +33,7 @@ jobs:
       DB_PORT: ${{ secrets.DB_PORT }}
       SMTP_USER: ${{ secrets.SMTP_USER }}
       SMTP_PASS: ${{ secrets.SMTP_PASS }}
+      WHATSAPP_VERIFY_TOKEN: ${{ secrets.WHATSAPP_VERIFY_TOKEN }}
 
     steps:
       - name: Verificar configuracion
@@ -63,6 +64,7 @@ jobs:
           DB_PORT: ${{ env.DB_PORT }}
           SMTP_USER: ${{ env.SMTP_USER }}
           SMTP_PASS: ${{ env.SMTP_PASS }}
+          WHATSAPP_VERIFY_TOKEN: ${{ env.WHATSAPP_VERIFY_TOKEN }}
         with:
           script: |
             const fs = require('fs');
@@ -83,6 +85,10 @@ jobs:
 
             if (process.env.SMTP_PASS) {
               lines.push(`$SMTP_PASS = ${phpString(process.env.SMTP_PASS)};`);
+            }
+
+            if (process.env.WHATSAPP_VERIFY_TOKEN) {
+              lines.push(`$WHATSAPP_VERIFY_TOKEN = ${phpString(process.env.WHATSAPP_VERIFY_TOKEN)};`);
             }
 
             fs.writeFileSync('includes/secrets.php', `${lines.join('\n')}\n`);

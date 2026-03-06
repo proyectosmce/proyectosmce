@@ -1,1 +1,18 @@
+# Archivos de secretos locales
+.env
+.env.*
+!.env.example
 includes/secrets.php
+includes/secrets.local.php
+includes/secrets.*.php
+!includes/secrets.php.example
+
+# Llaves y certificados
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+
+# Artefactos de despliegue
+.ftp-deploy-sync-state.json

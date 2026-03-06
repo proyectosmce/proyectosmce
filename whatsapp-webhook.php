@@ -4,14 +4,19 @@
 
 require_once __DIR__ . '/includes/config.php';
 
-// Cambia este token si usas Meta Cloud API
-$verifyToken = 'cambia-este-token';
+// Lee el token desde secrets.php o variables de entorno.
+$verifyToken = $WHATSAPP_VERIFY_TOKEN ?? getenv('WHATSAPP_VERIFY_TOKEN') ?? 'cambia-este-token';
 
 // Correo de destino
 $notifyEmail = 'proyectosmceaa@gmail.com';
 
 // 1) Verificacion del webhook (solo Meta Cloud)
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['hub_mode'])) {
+    if ($verifyToken === 'cambia-este-token') {
+        http_response_code(500);
+        exit('Configura WHATSAPP_VERIFY_TOKEN antes de usar el webhook.');
+    }
+
     if ($_GET['hub_mode'] === 'subscribe' && isset($_GET['hub_verify_token']) && $_GET['hub_verify_token'] === $verifyToken) {
         echo $_GET['hub_challenge'] ?? '';
         exit;

@@ -1,4 +1,4 @@
--- NOTA HOSTING: en InfinityFree selecciona antes la base if0_41264992_proyectosmce en phpMyAdmin.
+-- NOTA HOSTING: en InfinityFree selecciona antes tu base if0_XXXXXXXX_proyectosmce en phpMyAdmin.
 -- Si trabajas en local (XAMPP), puedes descomentar las dos líneas siguientes para crearla y usarla.
 -- CREATE DATABASE IF NOT EXISTS proyectosmce CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- USE proyectosmce;
