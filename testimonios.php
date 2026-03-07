@@ -55,20 +55,108 @@ $hasProjectOptions = !empty($projectOptions);
 ?>
 <?php include 'includes/header.php'; ?>
 
-<section class="bg-gray-100 py-12">
-    <div class="max-w-7xl mx-auto px-4">
-        <p class="text-sm uppercase tracking-widest text-blue-600 font-semibold">Testimonios</p>
-        <h1 class="text-4xl font-bold mb-3">Lo que dicen los dueños de sus proyectos</h1>
-        <p class="text-xl text-gray-600">Experiencias reales de clientes que lanzaron su sistema con Proyectos MCE.</p>
+<!-- Hero Testimonios -->
+<section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-800 text-white">
+    <div class="absolute inset-0 bg-grid-white/10"></div>
+    <div class="absolute -top-24 -left-16 w-72 h-72 bg-blue-500/30 blur-3xl rounded-full"></div>
+    <div class="absolute -bottom-24 -right-10 w-80 h-80 bg-purple-500/25 blur-3xl rounded-full"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 py-20 lg:py-24">
+        <div class="grid lg:grid-cols-12 gap-10 items-center">
+            <div class="lg:col-span-7 space-y-5">
+                <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
+                    <i class="fas fa-comment-dots mr-2 text-yellow-300"></i> Testimonios · Proyectos MCE
+                </span>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Lo que dicen quienes operan con nuestro software</h1>
+                <p class="text-lg text-blue-50 max-w-3xl">
+                    Experiencias de clientes que lanzaron sistemas, portales y automatizaciones con nosotros. Respuestas cercanas, entregas iterativas y soporte que se queda después del lanzamiento.
+                </p>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
+                        <p class="text-blue-50">Acompañamiento end-to-end en cada release.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
+                        <p class="text-blue-50">Equipos de negocio y tecnología siempre informados.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
+                        <p class="text-blue-50">Feedback directo que usamos para mejorar el producto.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+                    <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
+                        <i class="fas fa-handshake mr-2"></i> Compartir tu caso
+                    </a>
+                    <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
+                        <i class="fas fa-eye mr-2"></i> Ver proyectos
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5">
+                <div class="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-8 shadow-2xl space-y-5">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-blue-100">Lo que valoran</p>
+                            <p class="text-2xl font-semibold text-white">Claridad, tiempos y soporte cercano</p>
+                        </div>
+                        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-300 text-slate-900 font-bold shadow-lg">MCE</span>
+                    </div>
+                    <ul class="space-y-3 text-blue-50">
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-clock"></i></span>
+                            <div>
+                                <p class="font-semibold">Visibilidad constante</p>
+                                <p class="text-sm text-blue-100">Demos en cada sprint y comunicación directa.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-shield-alt"></i></span>
+                            <div>
+                                <p class="font-semibold">Cuidado de la operación</p>
+                                <p class="text-sm text-blue-100">Backups, seguridad y monitoreo activo.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-face-smile"></i></span>
+                            <div>
+                                <p class="font-semibold">Experiencias claras</p>
+                                <p class="text-sm text-blue-100">UX/UI pensado para equipos reales y sus clientes.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-blue-100">Participa</p>
+                            <p class="font-semibold">Deja tu testimonio y ayuda a otros equipos</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-yellow-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
-<section id="testimonios" class="max-w-7xl mx-auto px-4 py-10">
+<section id="testimonios" class="max-w-7xl mx-auto px-4 py-12">
     <?php if ($testimonioOk): ?>
     <div id="alert-testimonio" class="mb-8 rounded-lg border border-green-200 bg-green-50 text-green-800 px-4 py-3">
         ¡Gracias! Tu testimonio se guardó y ya es visible.
     </div>
     <?php endif; ?>
+
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+        <div>
+            <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Experiencias reales</p>
+            <h2 class="text-3xl font-bold text-slate-900">Historias de equipos que confiaron en Proyectos MCE</h2>
+            <p class="text-gray-700 mt-2 max-w-3xl">Lee cómo usamos entregas iterativas, acompañamiento y soporte para llevar sus proyectos a producción.</p>
+        </div>
+        <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
+            <i class="fas fa-comments mr-2"></i> Quiero contar mi experiencia
+        </a>
+    </div>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         <?php if ($testError): ?>
@@ -81,7 +169,7 @@ $hasProjectOptions = !empty($projectOptions);
             </div>
         <?php else: ?>
             <?php while ($t = $testimonios->fetch_assoc()): ?>
-            <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 p-6 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
                 <div>
                     <p class="font-semibold text-gray-900"><?php echo htmlspecialchars($t['nombre'], ENT_QUOTES, 'UTF-8'); ?></p>
@@ -178,6 +266,25 @@ $hasProjectOptions = !empty($projectOptions);
                 </div>
             </div>
         </form>
+    </div>
+</section>
+
+<!-- CTA final -->
+<section class="max-w-7xl mx-auto px-4 pb-16">
+    <div class="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-800 text-white rounded-2xl p-10 shadow-2xl flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+            <p class="text-sm font-semibold text-blue-100 uppercase tracking-wide">Hablemos</p>
+            <h3 class="text-2xl font-bold">¿Quieres aparecer en esta sección?</h3>
+            <p class="text-blue-100 mt-2">Cuéntanos cómo te fue con tu proyecto y te contactamos para publicarlo.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+            <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold shadow-lg hover:bg-blue-50 transition">
+                <i class="fas fa-paper-plane mr-2"></i> Escribir a MCE
+            </a>
+            <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl border border-white/60 text-white font-semibold hover:bg-white/10 transition">
+                <i class="fas fa-eye mr-2"></i> Ver portafolio
+            </a>
+        </div>
     </div>
 </section>
 
