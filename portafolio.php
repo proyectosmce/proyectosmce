@@ -3,6 +3,7 @@
 <?php
 $projects = fetchPortfolioProjects($conn);
 $categories = fetchPortfolioCategories($projects);
+$featuredProject = $projects[0] ?? null;
 ?>
 <?php include 'includes/header.php'; ?>
 
@@ -82,8 +83,98 @@ $categories = fetchPortfolioCategories($projects);
     </div>
 </section>
 
+<?php if ($featuredProject): ?>
+<section class="max-w-7xl mx-auto px-4 py-12">
+    <?php
+    $featuredUrl = $featuredProject['public_url'];
+    $featuredHasLink = $featuredUrl !== '#';
+    $featuredIsExternal = $featuredHasLink && isExternalProjectUrl($featuredUrl);
+    $featuredDescription = trim((string) ($featuredProject['descripcion'] ?? '')) ?: 'Proyecto destacado del portafolio de Proyectos MCE.';
+    $featuredClient = trim((string) ($featuredProject['cliente'] ?? '')) ?: 'Cliente privado';
+    $featuredDate = null;
+    if (!empty($featuredProject['fecha_completado'])) {
+        $timestamp = strtotime((string) $featuredProject['fecha_completado']);
+        if ($timestamp) {
+            $featuredDate = date('d/m/Y', $timestamp);
+        }
+    }
+    $repoUrl = trim((string) ($featuredProject['url_repo'] ?? ''));
+    if ($repoUrl !== '' && preg_match('~^(https?://|/)~i', $repoUrl) !== 1) {
+        $repoUrl = 'https://' . $repoUrl;
+    }
+    ?>
+    <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-100">
+        <div class="md:flex">
+            <div class="md:w-1/2">
+                <img
+                    src="<?php echo htmlspecialchars($featuredProject['image_url'], ENT_QUOTES, 'UTF-8'); ?>"
+                    alt="<?php echo htmlspecialchars($featuredProject['titulo'], ENT_QUOTES, 'UTF-8'); ?>"
+                    class="w-full h-64 md:h-full object-cover"
+                >
+            </div>
+            <div class="md:w-1/2 p-8 space-y-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-blue-700">Proyecto destacado</span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold"><?php echo htmlspecialchars($featuredProject['categoria'], ENT_QUOTES, 'UTF-8'); ?></span>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900"><?php echo htmlspecialchars($featuredProject['titulo'], ENT_QUOTES, 'UTF-8'); ?></h3>
+                <p class="text-gray-700"><?php echo htmlspecialchars($featuredDescription, ENT_QUOTES, 'UTF-8'); ?></p>
+
+                <div class="grid sm:grid-cols-2 gap-3 text-gray-700">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-user-tie text-blue-600"></i>
+                        <span><?php echo htmlspecialchars($featuredClient, ENT_QUOTES, 'UTF-8'); ?></span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-layer-group text-blue-600"></i>
+                        <span><?php echo htmlspecialchars($featuredProject['categoria'], ENT_QUOTES, 'UTF-8'); ?></span>
+                    </div>
+                    <?php if ($featuredDate): ?>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-calendar-alt text-blue-600"></i>
+                            <span><?php echo htmlspecialchars($featuredDate, ENT_QUOTES, 'UTF-8'); ?></span>
+                        </div>
+                    <?php endif; ?>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-star text-blue-600"></i>
+                        <span>Seleccionado por el equipo MCE</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <?php if ($featuredHasLink): ?>
+                        <a
+                            href="<?php echo htmlspecialchars($featuredUrl, ENT_QUOTES, 'UTF-8'); ?>"
+                            <?php echo $featuredIsExternal ? 'target="_blank" rel="noopener"' : ''; ?>
+                            class="bg-slate-900 text-white px-6 py-3 rounded-lg hover:bg-slate-800 transition"
+                        >
+                            Ver proyecto
+                        </a>
+                    <?php endif; ?>
+
+                    <?php if ($repoUrl !== ''): ?>
+                        <a
+                            href="<?php echo htmlspecialchars($repoUrl, ENT_QUOTES, 'UTF-8'); ?>"
+                            target="_blank"
+                            rel="noopener"
+                            class="border border-slate-300 text-slate-700 px-6 py-3 rounded-lg hover:bg-slate-50 transition"
+                        >
+                            Ver repositorio
+                        </a>
+                    <?php endif; ?>
+
+                    <a href="#proyectos-grid" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition">
+                        Ver más proyectos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
 <!-- Filtros -->
-<section class="max-w-7xl mx-auto px-4 -mt-10 lg:-mt-14">
+<section class="max-w-7xl mx-auto px-4 py-6">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
             <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Filtrar proyectos</p>

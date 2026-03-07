@@ -1,9 +1,6 @@
 ﻿<?php require_once 'includes/config.php'; ?>
 <?php require_once 'includes/project-helpers.php'; ?>
 <?php
-$portfolioProjects = fetchPortfolioProjects($conn);
-$featuredProject = $portfolioProjects[0] ?? null;
-
 // Manejo de envío de testimonios (solo alta, sin edición)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo_testimonio') {
     $nombre  = trim($_POST['nombre'] ?? '');
@@ -45,16 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
 
                 <div class="flex flex-wrap gap-3">
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm">
-                        <i class="fas fa-diagram-project mr-2 text-yellow-300"></i>Sistemas de gestión
+                        <i class="fas fa-people-group mr-2 text-yellow-300"></i>Equipo senior multidisciplinario
                     </span>
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm">
-                        <i class="fas fa-globe mr-2 text-yellow-300"></i>Páginas web profesionales
+                        <i class="fas fa-pen-ruler mr-2 text-yellow-300"></i>Discovery + UX/UI antes de código
                     </span>
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm">
-                        <i class="fas fa-gears mr-2 text-yellow-300"></i>Automatización de procesos
-                    </span>
-                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm">
-                        <i class="fas fa-code mr-2 text-yellow-300"></i>Software personalizado
+                        <i class="fas fa-bolt mr-2 text-yellow-300"></i>Sprints con demos y QA continuo
                     </span>
                 </div>
 
@@ -65,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
                     <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
                         <i class="fas fa-eye mr-2"></i> Ver portafolio
                     </a>
-                    <a href="#servicios" class="inline-flex items-center text-blue-100 hover:text-white font-semibold">
+                    <a href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center text-blue-100 hover:text-white font-semibold">
                         <span>Ver servicios</span>
                         <i class="fas fa-arrow-down ml-2"></i>
                     </a>
@@ -206,177 +200,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- Servicios Destacados -->
-<section id="servicios" class="max-w-7xl mx-auto px-4 py-16">
-    <div class="grid md:grid-cols-2 gap-12 items-start mb-12">
-        <div class="space-y-4">
-            <span class="inline-flex items-center px-3 py-1 text-sm font-semibold text-blue-700 bg-blue-100 rounded-full">Servicios</span>
-            <h2 class="text-3xl font-bold text-slate-900 leading-tight">Creamos software y páginas web a medida para empresas que quieren automatizar y crecer.</h2>
-            <p class="text-gray-700">Integramos estrategia, diseño y desarrollo para que cada entrega se conecte con tus metas operativas, comerciales y de servicio. Trabajamos con procesos claros, demos constantes y acompañamiento post lanzamiento.</p>
-            <div class="flex flex-wrap gap-3">
-                <span class="inline-flex items-center px-3 py-2 rounded-full bg-slate-900 text-white text-sm"><i class="fas fa-link mr-2"></i>Integraciones con ERP/CRM</span>
-                <span class="inline-flex items-center px-3 py-2 rounded-full bg-blue-50 text-blue-700 text-sm"><i class="fas fa-file-alt mr-2"></i>Documentación y handoff</span>
-                <span class="inline-flex items-center px-3 py-2 rounded-full bg-emerald-50 text-emerald-700 text-sm"><i class="fas fa-shield-alt mr-2"></i>Seguridad y observabilidad</span>
-            </div>
-        </div>
-        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
-            <h3 class="text-xl font-semibold text-slate-900 mb-4">Nuestro foco</h3>
-            <ul class="space-y-3 text-gray-800">
-                <li class="flex items-start gap-3">
-                    <span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span>
-                    <span>Sistemas de gestión hechos a tu medida para controlar operaciones.</span>
-                </li>
-                <li class="flex items-start gap-3">
-                    <span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span>
-                    <span>Páginas web profesionales orientadas a convertir y posicionar tu marca.</span>
-                </li>
-                <li class="flex items-start gap-3">
-                    <span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span>
-                    <span>Automatización de procesos para reducir tiempos operativos y errores.</span>
-                </li>
-                <li class="flex items-start gap-3">
-                    <span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span>
-                    <span>Software personalizado con integraciones API y arquitectura escalable.</span>
-                </li>
-            </ul>
-            <div class="mt-6 p-4 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-between">
-                <span>Agenda una sesión y recibe una propuesta en pocos días.</span>
-                <i class="fas fa-arrow-right"></i>
-            </div>
-        </div>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8">
-        <?php
-        $result = $conn->query("SELECT * FROM servicios WHERE destacado = 1 ORDER BY orden LIMIT 3");
-        while ($row = $result->fetch_assoc()):
-        ?>
-        <!-- En servicios.php, dentro del grid -->
-        <div class="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden animate-on-scroll">
-            <!-- Barra decorativa superior -->
-            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-            
-            <!-- Icono con animación -->
-            <div class="text-5xl text-blue-600 mb-6 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-                <i class="fas fa-<?php echo $row['icono'] ?? 'code'; ?>"></i>
-            </div>
-            
-            <!-- Contenido -->
-            <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition"><?php echo $row['titulo']; ?></h3>
-            <p class="text-gray-600 mb-4"><?php echo $row['descripcion']; ?></p>
-            
-            <!-- Precio y CTA -->
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-3xl font-bold text-blue-600">$<?php echo number_format($row['precio_desde']); ?></span>
-                <span class="text-gray-500 text-sm">+IVA</span>
-            </div>
-            
-            <!-- Botón con efecto -->
-            <a href="<?php echo app_url('contacto.php'); ?>?servicio=<?php echo urlencode($row['titulo']); ?>" 
-               class="mt-4 inline-flex items-center text-blue-600 group-hover:text-blue-800 font-semibold">
-                <span>Solicitar presupuesto</span>
-                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition"></i>
-            </a>
-        </div>
-        <?php endwhile; ?>
-    </div>
-</section>
-
-<!-- Proyecto Destacado -->
-<section class="bg-gray-100 py-16">
-    <div class="max-w-7xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-12">Proyecto Destacado</h2>
-        <?php if ($featuredProject): ?>
-            <?php
-            $featuredUrl = $featuredProject['public_url'];
-            $featuredHasLink = $featuredUrl !== '#';
-            $featuredIsExternal = $featuredHasLink && isExternalProjectUrl($featuredUrl);
-            $featuredDescription = trim((string) ($featuredProject['descripcion'] ?? '')) ?: 'Proyecto destacado del portafolio de Proyectos MCE.';
-            $featuredClient = trim((string) ($featuredProject['cliente'] ?? '')) ?: 'Cliente privado';
-            $featuredDate = null;
-            if (!empty($featuredProject['fecha_completado'])) {
-                $timestamp = strtotime((string) $featuredProject['fecha_completado']);
-                if ($timestamp) {
-                    $featuredDate = date('d/m/Y', $timestamp);
-                }
-            }
-            $repoUrl = trim((string) ($featuredProject['url_repo'] ?? ''));
-            if ($repoUrl !== '' && preg_match('~^(https?://|/)~i', $repoUrl) !== 1) {
-                $repoUrl = 'https://' . $repoUrl;
-            }
-            ?>
-            <div class="bg-white rounded-xl shadow-xl overflow-hidden">
-                <div class="md:flex">
-                    <div class="md:w-1/2">
-                        <img
-                            src="<?php echo htmlspecialchars($featuredProject['image_url'], ENT_QUOTES, 'UTF-8'); ?>"
-                            alt="<?php echo htmlspecialchars($featuredProject['titulo'], ENT_QUOTES, 'UTF-8'); ?>"
-                            class="w-full h-64 md:h-full object-cover"
-                        >
-                    </div>
-                    <div class="md:w-1/2 p-8">
-                        <span class="text-blue-600 font-semibold"><?php echo htmlspecialchars($featuredProject['categoria'], ENT_QUOTES, 'UTF-8'); ?></span>
-                        <h3 class="text-2xl font-bold mt-2 mb-4"><?php echo htmlspecialchars($featuredProject['titulo'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                        <p class="text-gray-600 mb-6"><?php echo htmlspecialchars($featuredDescription, ENT_QUOTES, 'UTF-8'); ?></p>
-
-                        <div class="grid sm:grid-cols-2 gap-3 text-gray-600 mb-6">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-user-tie text-blue-600"></i>
-                                <span><?php echo htmlspecialchars($featuredClient, ENT_QUOTES, 'UTF-8'); ?></span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-layer-group text-blue-600"></i>
-                                <span><?php echo htmlspecialchars($featuredProject['categoria'], ENT_QUOTES, 'UTF-8'); ?></span>
-                            </div>
-                            <?php if ($featuredDate): ?>
-                                <div class="flex items-center gap-2">
-                                    <i class="fas fa-calendar-alt text-blue-600"></i>
-                                    <span><?php echo htmlspecialchars($featuredDate, ENT_QUOTES, 'UTF-8'); ?></span>
-                                </div>
-                            <?php endif; ?>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-star text-blue-600"></i>
-                                <span>Proyecto destacado</span>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap gap-3">
-                            <?php if ($featuredHasLink): ?>
-                                <a
-                                    href="<?php echo htmlspecialchars($featuredUrl, ENT_QUOTES, 'UTF-8'); ?>"
-                                    <?php echo $featuredIsExternal ? 'target="_blank" rel="noopener"' : ''; ?>
-                                    class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-                                >
-                                    Ver proyecto
-                                </a>
-                            <?php endif; ?>
-
-                            <?php if ($repoUrl !== ''): ?>
-                                <a
-                                    href="<?php echo htmlspecialchars($repoUrl, ENT_QUOTES, 'UTF-8'); ?>"
-                                    target="_blank"
-                                    rel="noopener"
-                                    class="border border-slate-300 text-slate-700 px-6 py-3 rounded-lg hover:bg-slate-50 transition"
-                                >
-                                    Ver repositorio
-                                </a>
-                            <?php endif; ?>
-
-                            <a href="<?php echo app_url('portafolio.php'); ?>" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition">
-                                Ver más proyectos
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php else: ?>
-            <div class="bg-white rounded-xl shadow-xl p-10 text-center text-gray-600">
-                Aún no hay proyectos destacados publicados. Revisa el portafolio completo para ver los trabajos disponibles.
-            </div>
-        <?php endif; ?>
     </div>
 </section>
 
