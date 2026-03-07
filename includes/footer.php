@@ -1,7 +1,7 @@
     </main>
     
     <!-- Footer profesional -->
-    <footer class="bg-slate-900 text-white mt-16">
+    <footer class="bg-gradient-to-t from-slate-950 via-slate-900 to-slate-900 text-white mt-16">
         <!-- CTA superior -->
         <div class="border-b border-white/10">
             <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -20,12 +20,13 @@
             </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 py-12">
-            <div class="grid md:grid-cols-4 gap-10">
+        <div class="max-w-7xl mx-auto px-4 py-12 space-y-10">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
                 <!-- Col 1: Logo y descripción -->
                 <div class="space-y-3">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-blue-100 uppercase tracking-[0.18em]">MCE</div>
                     <h3 class="text-xl font-bold">Proyectos MCE</h3>
-                    <p class="text-gray-300 leading-relaxed">Software a medida, sitios web y automatizaciones con equipos que se involucran en tus procesos.</p>
+                    <p class="text-gray-300 leading-relaxed">Software a medida, sitios web y automatizaciones hechas con foco en tu operación diaria.</p>
                     <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center text-blue-200 hover:text-white font-semibold">
                         <span>Ver casos en vivo</span>
                         <i class="fas fa-arrow-right ml-2 text-sm"></i>
@@ -58,7 +59,7 @@
                 <!-- Col 4: Contacto y redes -->
                 <div class="space-y-4">
                     <h4 class="text-lg font-semibold">Contacto</h4>
-                    <ul class="space-y-2 text-gray-300">
+                    <ul class="space-y-3 text-gray-300">
                         <li>
                             <a href="mailto:proyectosmceaa@gmail.com" class="inline-flex items-center hover:text-white transition">
                                 <i class="fas fa-envelope mr-2"></i><span>proyectosmceaa@gmail.com</span>
@@ -69,6 +70,9 @@
                                 <i class="fas fa-phone mr-2"></i><span>+57 311 412 59 71</span>
                             </a>
                         </li>
+                        <li class="inline-flex items-center text-gray-300">
+                            <i class="fas fa-clock mr-2"></i><span>Lunes a sábado · 8:00 - 18:00 (GMT-5)</span>
+                        </li>
                         <li class="flex flex-wrap items-center gap-4 pt-2">
                             <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                             <a href="https://t.me/proyectosmce" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
@@ -78,9 +82,6 @@
                             <a href="https://www.tiktok.com/@proyectosmce" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                         </li>
                     </ul>
-                    <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex items-center px-4 py-3 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition">
-                        <i class="fab fa-whatsapp mr-2"></i> Hablar ahora
-                    </a>
                 </div>
             </div>
             
