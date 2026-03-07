@@ -13,9 +13,9 @@
                 <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
                     <i class="fas fa-headset mr-2 text-yellow-300"></i> Contacto · Proyectos MCE
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Agendemos un diagnóstico y plan de acción</h1>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Agenda un diagnóstico técnico</h1>
                 <p class="text-lg text-blue-50 max-w-3xl">
-                    Cuéntanos qué quieres automatizar, construir o escalar. Te respondemos con tiempos, enfoque técnico y próximos pasos para que tomes decisión rápido.
+                    Cuéntanos qué proceso quieres automatizar o qué plataforma necesitas. Te respondemos con esfuerzo estimado, riesgos, stack propuesto y plan de arranque.
                 </p>
                 <div class="flex flex-wrap gap-3">
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-bolt mr-2 text-yellow-300"></i>Respuesta en &lt; 24h</span>
@@ -29,7 +29,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-blue-100">Contacta directo</p>
-                            <p class="text-2xl font-semibold text-white">Estamos listos para ayudarte</p>
+                            <p class="text-2xl font-semibold text-white">Equipo técnico listo para ayudarte</p>
                         </div>
                         <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-300 text-slate-900 font-bold shadow-lg">MCE</span>
                     </div>

@@ -19,14 +19,14 @@ $featuredProject = $projects[0] ?? null;
                 <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
                     <i class="fas fa-briefcase mr-2 text-yellow-300"></i> Portafolio · Proyectos MCE
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Productos digitales y sistemas que ya están funcionando</h1>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Productos digitales y sistemas en producción</h1>
                 <p class="text-lg text-blue-50 max-w-3xl">
-                    Mostramos implementaciones reales: sistemas de gestión, portales transaccionales, automatizaciones y sitios web de marca que impulsan operaciones y ventas.
+                    Implementaciones reales con data, usuarios y soporte activo: backoffice, portales transaccionales, automatizaciones y sitios de marca conectados a APIs y pasarelas.
                 </p>
                 <div class="flex flex-wrap gap-3">
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-industry mr-2 text-yellow-300"></i>Retail · Logística · Servicios</span>
-                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-code-branch mr-2 text-yellow-300"></i>APIs e integraciones</span>
-                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-lock mr-2 text-yellow-300"></i>Enfoque en seguridad y calidad</span>
+                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-code-branch mr-2 text-yellow-300"></i>APIs, colas y webhooks</span>
+                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-lock mr-2 text-yellow-300"></i>Seguridad y pruebas end-to-end</span>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
                     <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
@@ -51,25 +51,25 @@ $featuredProject = $projects[0] ?? null;
                         <li class="flex items-start gap-3">
                             <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-laptop-code"></i></span>
                             <div>
-                                <p class="font-semibold">Aplicaciones y backoffice</p>
-                                <p class="text-sm text-blue-100">Portales internos, paneles y flujos operativos.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-globe"></i></span>
-                            <div>
-                                <p class="font-semibold">Sitios y eCommerce</p>
-                                <p class="text-sm text-blue-100">Brand sites, catálogos y funnels de conversión.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-gears"></i></span>
-                            <div>
-                                <p class="font-semibold">Automatizaciones</p>
-                                <p class="text-sm text-blue-100">Integraciones API y reducción de tareas manuales.</p>
-                            </div>
-                        </li>
-                    </ul>
+                            <p class="font-semibold">Aplicaciones y backoffice</p>
+                            <p class="text-sm text-blue-100">Paneles, roles, auditoría y flujos operativos.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-globe"></i></span>
+                        <div>
+                            <p class="font-semibold">Sitios y eCommerce</p>
+                            <p class="text-sm text-blue-100">Catálogos, checkout, pasarelas y métricas de conversión.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-gears"></i></span>
+                        <div>
+                            <p class="font-semibold">Automatizaciones</p>
+                            <p class="text-sm text-blue-100">Integraciones API, colas, webhooks y reducción de tareas manuales.</p>
+                        </div>
+                    </li>
+                </ul>
                     <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
                         <div>
                             <p class="text-sm text-blue-100">Entrega con visibilidad</p>

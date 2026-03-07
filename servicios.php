@@ -13,26 +13,26 @@
                 <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
                     <i class="fas fa-layer-group mr-2 text-yellow-300"></i> Servicios · Proyectos MCE
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Soluciones digitales listas para automatizar y escalar tu negocio</h1>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Software a medida para operaciones, ventas y servicio</h1>
                 <p class="text-lg text-blue-50 max-w-3xl">
-                    Creamos software y páginas web a medida para empresas que quieren automatizar y crecer. Nos encargamos del ciclo completo: discovery, UX/UI, desarrollo, QA, despliegue y soporte.
+                    Servicios end-to-end: descubrimiento, diseño, ingeniería, QA, infraestructura y soporte. Integraciones con tu stack actual, datos consistentes y despliegues predecibles.
                 </p>
                 <div class="space-y-3">
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50">Sistemas de gestión alineados a tus procesos clave.</p>
+                        <p class="text-blue-50">Sistemas de gestión alineados a procesos y métricas del negocio.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50">Páginas web profesionales que comunican y convierten.</p>
+                        <p class="text-blue-50">Sitios y tiendas pensadas para conversiones, SEO técnico y analítica.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50">Automatización de procesos y flujos internos.</p>
+                        <p class="text-blue-50">Automatización de flujos, integraciones API y reducción de tareas manuales.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50">Software personalizado con integraciones API.</p>
+                        <p class="text-blue-50">Software personalizado con monitoreo, seguridad y observabilidad.</p>
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
@@ -110,7 +110,7 @@
         <div>
             <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Catálogo de servicios</p>
             <h2 class="text-3xl font-bold text-slate-900">Soluciones diseñadas para automatizar y crecer</h2>
-            <p class="text-gray-700 mt-2 max-w-3xl">Elige el servicio que necesitas o combínalos en un solo roadmap. Entregamos con transparencia, demos frecuentes y documentación lista para tus equipos.</p>
+            <p class="text-gray-700 mt-2 max-w-3xl">Elige un servicio o arma un roadmap combinado. Incluimos especificaciones, ambientes de staging, pipelines, documentación y handoff a tus equipos.</p>
         </div>
         <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
             <i class="fas fa-handshake mr-2"></i> Hablemos de tu proyecto

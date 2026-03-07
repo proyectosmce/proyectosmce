@@ -34,49 +34,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
                     Proyectos MCE · Fábrica de software
                 </span>
                 <h1 class="text-4xl md:text-6xl font-bold leading-tight">
-                    Software a medida que impulsa la operación de tu empresa
+                    Arquitectura y software a medida para operaciones críticas
                 </h1>
                 <p class="text-lg md:text-xl text-blue-50 max-w-3xl">
-                    Creamos software y páginas web a medida para empresas que quieren automatizar y crecer, con equipos senior que acompañan desde la estrategia hasta el despliegue.
+                    Diseñamos, construimos y operamos plataformas web y backoffice que sostienen ventas, inventario, logística y servicio al cliente con métricas y trazabilidad.
                 </p>
 
                 <div class="flex flex-wrap gap-3">
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm">
-                        <i class="fas fa-people-group mr-2 text-yellow-300"></i>Equipo senior multidisciplinario
+                        <i class="fas fa-diagram-project mr-2 text-yellow-300"></i>Modelado de dominio y procesos
                     </span>
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm">
-                        <i class="fas fa-pen-ruler mr-2 text-yellow-300"></i>Discovery + UX/UI antes de código
+                        <i class="fas fa-pen-ruler mr-2 text-yellow-300"></i>Discovery, UX/UI y prototipos validados
                     </span>
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm">
-                        <i class="fas fa-bolt mr-2 text-yellow-300"></i>Sprints con demos y QA continuo
+                        <i class="fas fa-bolt mr-2 text-yellow-300"></i>Sprints con QA, CI/CD y monitoreo
+                    </span>
+                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm">
+                        <i class="fas fa-database mr-2 text-yellow-300"></i>Integraciones y calidad de datos
                     </span>
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
                     <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
-                        <i class="fas fa-rocket mr-2"></i> Agenda un diagnóstico
+                        <i class="fas fa-rocket mr-2"></i> Plan técnico inicial
                     </a>
                     <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
-                        <i class="fas fa-eye mr-2"></i> Ver portafolio
+                        <i class="fas fa-eye mr-2"></i> Ver casos en producción
                     </a>
                     <a href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center text-blue-100 hover:text-white font-semibold">
-                        <span>Ver servicios</span>
+                        <span>Servicios</span>
                         <i class="fas fa-arrow-down ml-2"></i>
                     </a>
                 </div>
 
                 <div class="grid sm:grid-cols-3 gap-4 pt-6 border-t border-white/10 max-w-4xl">
                     <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-                        <p class="text-sm text-blue-100">Acompañamiento end-to-end</p>
-                        <p class="text-lg font-semibold">Discovery, UX, desarrollo y soporte</p>
+                        <p class="text-sm text-blue-100">Gobernanza</p>
+                        <p class="text-lg font-semibold">Historias priorizadas, Definition of Done y revisiones</p>
                     </div>
                     <div class="bg-white/5 border border-white/10 rounded-xl p-4">
                         <p class="text-sm text-blue-100">Entrega iterativa</p>
-                        <p class="text-lg font-semibold">Sprints quincenales con visibilidad</p>
+                        <p class="text-lg font-semibold">Demos quincenales, QA automatizado y pruebas regresivas</p>
                     </div>
                     <div class="bg-white/5 border border-white/10 rounded-xl p-4">
-                        <p class="text-sm text-blue-100">Stack moderno</p>
-                        <p class="text-lg font-semibold">Cloud, APIs seguras e integraciones</p>
+                        <p class="text-sm text-blue-100">Operabilidad</p>
+                        <p class="text-lg font-semibold">Observabilidad, alertas y soporte continuo (SRE)</p>
                     </div>
                 </div>
             </div>
@@ -141,16 +144,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
                 <p class="text-sm font-semibold text-blue-600 uppercase tracking-wide">Presentación</p>
                 <h2 class="text-3xl font-bold text-slate-900">Proyectos MCE en pocas palabras</h2>
                 <p class="text-gray-700 leading-relaxed">
-                    Somos un equipo multidisciplinario que une estrategia digital, diseño y desarrollo para lanzar productos y plataformas que resuelven procesos reales. Trabajamos con empresas que buscan automatizar, escalar ventas y ofrecer experiencias digitales de alto nivel.
+                    Equipo senior de ingeniería y producto que arma soluciones end-to-end: entendemos el dominio, diseñamos la experiencia y entregamos software estable listo para producción.
                 </p>
                 <div class="space-y-3">
                     <div class="flex items-start gap-3">
                         <span class="mt-1 text-blue-600"><i class="fas fa-magnifying-glass-chart"></i></span>
-                        <p class="text-gray-800">Discovery estratégico y priorización junto a stakeholders del negocio.</p>
+                        <p class="text-gray-800">Discovery técnico/funcional con KPIs, backlog priorizado y dependencias mapeadas.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="mt-1 text-blue-600"><i class="fas fa-laptop-code"></i></span>
-                        <p class="text-gray-800">Arquitecturas modernas, APIs seguras e integraciones con tus sistemas existentes.</p>
+                        <p class="text-gray-800">Arquitecturas modernas, APIs seguras, integración con ERP/CRM y servicios externos.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="mt-1 text-blue-600"><i class="fas fa-people-group"></i></span>
@@ -158,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="mt-1 text-blue-600"><i class="fas fa-headset"></i></span>
-                        <p class="text-gray-800">Acompañamiento post-lanzamiento con monitoreo, soporte y roadmap evolutivo.</p>
+                        <p class="text-gray-800">Soporte post-lanzamiento con monitoreo, alertas y roadmap evolutivo.</p>
                     </div>
                 </div>
             </div>

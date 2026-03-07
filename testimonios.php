@@ -69,7 +69,7 @@ $hasProjectOptions = !empty($projectOptions);
                 </span>
                 <h1 class="text-4xl md:text-5xl font-bold leading-tight">Lo que dicen quienes operan con nuestro software</h1>
                 <p class="text-lg text-blue-50 max-w-3xl">
-                    Experiencias de clientes que lanzaron sistemas, portales y automatizaciones con nosotros. Respuestas cercanas, entregas iterativas y soporte que se queda después del lanzamiento.
+                    Comentarios de equipos que hoy usan las soluciones en producción: releases frecuentes, soporte real y métricas visibles.
                 </p>
                 <div class="space-y-3">
                     <div class="flex items-start gap-3">
@@ -109,21 +109,21 @@ $hasProjectOptions = !empty($projectOptions);
                             <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-clock"></i></span>
                             <div>
                                 <p class="font-semibold">Visibilidad constante</p>
-                                <p class="text-sm text-blue-100">Demos en cada sprint y comunicación directa.</p>
+                                <p class="text-sm text-blue-100">Demos en cada sprint, tableros y comunicación directa.</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-shield-alt"></i></span>
                             <div>
                                 <p class="font-semibold">Cuidado de la operación</p>
-                                <p class="text-sm text-blue-100">Backups, seguridad y monitoreo activo.</p>
+                                <p class="text-sm text-blue-100">Backups, roles, permisos y monitoreo activo.</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-face-smile"></i></span>
                             <div>
                                 <p class="font-semibold">Experiencias claras</p>
-                                <p class="text-sm text-blue-100">UX/UI pensado para equipos reales y sus clientes.</p>
+                                <p class="text-sm text-blue-100">UX/UI pensado para equipos operativos y clientes finales.</p>
                             </div>
                         </li>
                     </ul>
