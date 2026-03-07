@@ -31,8 +31,8 @@ $categories = fetchPortfolioCategories($projects);
                     <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
                         <i class="fas fa-rocket mr-2"></i> Solicitar demo
                     </a>
-                    <a href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
-                        <i class="fas fa-layer-group mr-2"></i> Ver servicios
+                    <a href="#proyectos-grid" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
+                        <i class="fas fa-eye mr-2"></i> Ver proyectos
                     </a>
                 </div>
             </div>
@@ -101,8 +101,8 @@ $categories = fetchPortfolioCategories($projects);
 </section>
 
 <!-- Grid de proyectos -->
-<section class="max-w-7xl mx-auto px-4 py-12">
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="proyectos-grid">
+<section class="max-w-7xl mx-auto px-4 py-12" id="proyectos-grid">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php if (!$projects): ?>
             <div class="md:col-span-2 lg:col-span-3 rounded-2xl border border-dashed border-gray-300 bg-white p-10 text-center text-gray-600">
                 Aún no hay proyectos publicados en el portafolio.
@@ -184,8 +184,8 @@ $categories = fetchPortfolioCategories($projects);
             <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold shadow-lg hover:bg-blue-50 transition">
                 <i class="fas fa-comments mr-2"></i> Agendar llamada
             </a>
-            <a href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl border border-white/60 text-white font-semibold hover:bg-white/10 transition">
-                <i class="fas fa-layer-group mr-2"></i> Ver servicios
+            <a href="#proyectos-grid" class="inline-flex items-center px-5 py-3 rounded-xl border border-white/60 text-white font-semibold hover:bg-white/10 transition">
+                <i class="fas fa-eye mr-2"></i> Ver proyectos
             </a>
         </div>
     </div>

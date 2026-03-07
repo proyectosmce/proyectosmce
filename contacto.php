@@ -18,7 +18,7 @@
                     Cuéntanos qué quieres automatizar, construir o escalar. Te respondemos con tiempos, enfoque técnico y próximos pasos para que tomes decisión rápido.
                 </p>
                 <div class="flex flex-wrap gap-3">
-                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-bolt mr-2 text-yellow-300"></i>Respuesta en menos de 24h</span>
+                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-bolt mr-2 text-yellow-300"></i>Respuesta en &lt; 24h</span>
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-diagram-project mr-2 text-yellow-300"></i>Discovery + propuesta</span>
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-lock mr-2 text-yellow-300"></i>Confidencialidad garantizada</span>
                 </div>

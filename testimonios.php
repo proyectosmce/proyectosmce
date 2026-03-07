@@ -86,11 +86,11 @@ $hasProjectOptions = !empty($projectOptions);
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
-                    <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
-                        <i class="fas fa-handshake mr-2"></i> Compartir tu caso
+                    <a href="#testimonios" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
+                        <i class="fas fa-comments mr-2"></i> Leer testimonios
                     </a>
-                    <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
-                        <i class="fas fa-eye mr-2"></i> Ver proyectos
+                    <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
+                        <i class="fas fa-handshake mr-2"></i> Compartir mi experiencia
                     </a>
                 </div>
             </div>
@@ -153,7 +153,7 @@ $hasProjectOptions = !empty($projectOptions);
             <h2 class="text-3xl font-bold text-slate-900">Historias de equipos que confiaron en Proyectos MCE</h2>
             <p class="text-gray-700 mt-2 max-w-3xl">Lee cómo usamos entregas iterativas, acompañamiento y soporte para llevar sus proyectos a producción.</p>
         </div>
-        <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
+        <a href="#form-testimonio" class="inline-flex items-center px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
             <i class="fas fa-comments mr-2"></i> Quiero contar mi experiencia
         </a>
     </div>
@@ -202,7 +202,7 @@ $hasProjectOptions = !empty($projectOptions);
         <?php endif; ?>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-xl border border-blue-100 p-8">
+    <div class="bg-white rounded-2xl shadow-xl border border-blue-100 p-8" id="form-testimonio">
         <h3 class="text-2xl font-bold text-gray-900 mb-2">Deja tu testimonio</h3>
         <div class="mb-6 bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-lg text-sm flex items-start gap-3">
             <span class="inline-flex items-center justify-center w-5 h-5 bg-amber-500 text-white rounded-full text-xs mt-0.5">
@@ -278,11 +278,11 @@ $hasProjectOptions = !empty($projectOptions);
             <p class="text-blue-100 mt-2">Cuéntanos cómo te fue con tu proyecto y te contactamos para publicarlo.</p>
         </div>
         <div class="flex flex-wrap gap-3">
-            <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold shadow-lg hover:bg-blue-50 transition">
-                <i class="fas fa-paper-plane mr-2"></i> Escribir a MCE
+            <a href="#form-testimonio" class="inline-flex items-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold shadow-lg hover:bg-blue-50 transition">
+                <i class="fas fa-paper-plane mr-2"></i> Dejar testimonio
             </a>
-            <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl border border-white/60 text-white font-semibold hover:bg-white/10 transition">
-                <i class="fas fa-eye mr-2"></i> Ver portafolio
+            <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl border border-white/60 text-white font-semibold hover:bg-white/10 transition">
+                <i class="fas fa-comments mr-2"></i> Hablar con el equipo
             </a>
         </div>
     </div>
