@@ -33,6 +33,49 @@
     opacity: 0.6;
 }
 
+/* Utilidad: limitar a 2 líneas */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Timeline mobile */
+.timeline {
+    position: relative;
+}
+.timeline:before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255,255,255,0.12);
+}
+.timeline-item {
+    position: relative;
+    padding-left: 48px;
+}
+.timeline-bullet {
+    position: absolute;
+    left: 8px;
+    top: 6px;
+}
+
+@media (min-width: 768px) {
+    .timeline:before {
+        display: none;
+    }
+    .timeline-item {
+        padding-left: 0;
+    }
+    .timeline-bullet {
+        position: static;
+    }
+}
+
 /* Personalizar scrollbar (opcional) */
 ::-webkit-scrollbar {
     width: 10px;

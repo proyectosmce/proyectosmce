@@ -168,30 +168,35 @@ $hasProjectOptions = !empty($projectOptions);
                 Aún no hay testimonios. ¡Sé el primero en dejar el tuyo!
             </div>
         <?php else: ?>
-            <?php while ($t = $testimonios->fetch_assoc()): ?>
+            <?php while ($t = $testimonios->fetch_assoc()):
+                $initial = strtoupper(mb_substr($t['nombre'] ?? 'U', 0, 1, 'UTF-8'));
+            ?>
             <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 p-6 border border-gray-100">
                 <div class="flex items-center justify-between mb-4">
-                <div>
-                    <p class="font-semibold text-gray-900"><?php echo htmlspecialchars($t['nombre'], ENT_QUOTES, 'UTF-8'); ?></p>
-                    <p class="text-sm text-blue-600"><?php echo htmlspecialchars($t['proyecto'] ?? 'Proyecto MCE', ENT_QUOTES, 'UTF-8'); ?></p>
-                </div>
-                <div class="text-right">
-                    <div class="flex text-yellow-400 justify-end">
-                        <?php for ($i = 0; $i < 5; $i++): ?>
-                            <i class="fas fa-star<?php echo $i < (int) $t['valoracion'] ? '' : '-o'; ?>"></i>
-                        <?php endfor; ?>
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-700 font-semibold"><?php echo $initial; ?></span>
+                        <div>
+                            <p class="font-semibold text-gray-900"><?php echo htmlspecialchars($t['nombre'], ENT_QUOTES, 'UTF-8'); ?></p>
+                            <p class="text-sm text-blue-600"><?php echo htmlspecialchars($t['proyecto'] ?? 'Proyecto MCE', ENT_QUOTES, 'UTF-8'); ?></p>
+                        </div>
                     </div>
-                    <?php
-                        $v = (int) $t['valoracion'];
-                        if ($v <= 1) { $lbl = 'No recomiendo'; $cls = 'text-red-600'; }
-                        else if ($v == 2) { $lbl = 'Poco recomendable'; $cls = 'text-red-600'; }
-                        else if ($v == 3) { $lbl = 'Neutral'; $cls = 'text-gray-600'; }
-                        else if ($v == 4) { $lbl = 'Recomiendo'; $cls = 'text-green-600'; }
-                        else { $lbl = 'Sí recomiendo'; $cls = 'text-green-600'; }
-                    ?>
-                    <p class="text-xs font-semibold <?php echo $cls; ?> mt-1"><?php echo $v; ?> / 5 · <?php echo $lbl; ?></p>
+                    <div class="text-right">
+                        <div class="flex text-yellow-400 justify-end">
+                            <?php for ($i = 0; $i < 5; $i++): ?>
+                                <i class="fas fa-star<?php echo $i < (int) $t['valoracion'] ? '' : '-o'; ?>"></i>
+                            <?php endfor; ?>
+                        </div>
+                        <?php
+                            $v = (int) $t['valoracion'];
+                            if ($v <= 1) { $lbl = 'No recomiendo'; $cls = 'text-red-600'; }
+                            else if ($v == 2) { $lbl = 'Poco recomendable'; $cls = 'text-red-600'; }
+                            else if ($v == 3) { $lbl = 'Neutral'; $cls = 'text-gray-600'; }
+                            else if ($v == 4) { $lbl = 'Recomiendo'; $cls = 'text-green-600'; }
+                            else { $lbl = 'Sí recomiendo'; $cls = 'text-green-600'; }
+                        ?>
+                        <p class="text-xs font-semibold <?php echo $cls; ?> mt-1"><?php echo $v; ?> / 5 · <?php echo $lbl; ?></p>
+                    </div>
                 </div>
-            </div>
                 <?php
                     $projName = $t['proyecto'] ?? 'su proyecto';
                     $textoFinal = "Yo, {$t['nombre']} dueño de {$projName}, {$t['testimonio']}";

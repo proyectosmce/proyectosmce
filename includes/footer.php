@@ -101,6 +101,12 @@
             ¡Chatea con nosotros!
         </span>
     </a>
+
+    <!-- Botón flotante extra para llamada (desktop) -->
+    <a href="<?php echo app_url('contacto.php'); ?>"
+       class="hidden md:inline-flex fixed bottom-6 left-6 bg-white text-slate-900 px-4 py-3 rounded-full shadow-lg hover:bg-blue-50 transition-all duration-300 hover:scale-105 z-50 border border-slate-200">
+        <i class="fas fa-phone-alt mr-2"></i> Agenda una llamada
+    </a>
     
     <!-- Script para menú móvil -->
     <script>

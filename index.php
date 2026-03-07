@@ -85,12 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
             </div>
 
             <div class="lg:col-span-5">
-                <div class="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-8 shadow-2xl space-y-6">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="text-sm text-blue-100">Hoja de ruta MCE</p>
-                            <p class="text-2xl font-semibold text-white">Tu proyecto, con control total</p>
-                        </div>
+                        <div class="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-8 shadow-2xl space-y-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-blue-100">Hoja de ruta MCE</p>
+                                    <p class="text-2xl font-semibold text-white">Tu proyecto, con control total</p>
+                                </div>
                         <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-300 text-slate-900 font-bold shadow-lg">MCE</span>
                     </div>
                     <ul class="space-y-3 text-blue-50">
@@ -136,6 +136,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
     </div>
 </section>
 
+<!-- Métricas de confianza -->
+<section class="max-w-7xl mx-auto px-4 -mt-10 lg:-mt-16">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-100 px-6 py-6 md:px-10 md:py-8">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+            <div>
+                <p class="text-3xl font-bold text-slate-900">+120</p>
+                <p class="text-sm text-gray-600">proyectos entregados</p>
+            </div>
+            <div>
+                <p class="text-3xl font-bold text-slate-900">&lt; 48h</p>
+                <p class="text-sm text-gray-600">tiempo de respuesta</p>
+            </div>
+            <div>
+                <p class="text-3xl font-bold text-slate-900">99.9%</p>
+                <p class="text-sm text-gray-600">uptime en soportes</p>
+            </div>
+            <div>
+                <p class="text-3xl font-bold text-slate-900">9.2/10</p>
+                <p class="text-sm text-gray-600">satisfacción clientes</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Presentación -->
 <section class="relative max-w-7xl mx-auto px-4 -mt-10 lg:-mt-16">
     <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
@@ -167,30 +191,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
             </div>
             <div class="p-10 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-800 text-white space-y-5">
                 <h3 class="text-2xl font-bold">Cómo trabajamos</h3>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3">
-                        <span class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center font-semibold">1</span>
+                <ul class="space-y-4 timeline">
+                    <li class="flex items-start gap-3 timeline-item">
+                        <span class="timeline-bullet w-8 h-8 rounded-full bg-white/15 flex items-center justify-center font-semibold">1</span>
                         <div>
                             <p class="font-semibold">Kickoff y plan</p>
                             <p class="text-sm text-blue-100">Revisamos tus objetivos y qué debe hacer la solución.</p>
                         </div>
                     </li>
-                    <li class="flex items-start gap-3">
-                        <span class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center font-semibold">2</span>
+                    <li class="flex items-start gap-3 timeline-item">
+                        <span class="timeline-bullet w-8 h-8 rounded-full bg-white/15 flex items-center justify-center font-semibold">2</span>
                         <div>
                             <p class="font-semibold">Diseño y prototipos</p>
                             <p class="text-sm text-blue-100">Te mostramos maquetas para confirmar que el flujo es correcto.</p>
                         </div>
                     </li>
-                    <li class="flex items-start gap-3">
-                        <span class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center font-semibold">3</span>
+                    <li class="flex items-start gap-3 timeline-item">
+                        <span class="timeline-bullet w-8 h-8 rounded-full bg-white/15 flex items-center justify-center font-semibold">3</span>
                         <div>
                             <p class="font-semibold">Desarrollo incremental</p>
                             <p class="text-sm text-blue-100">Entregamos en ciclos cortos con pruebas y notas claras.</p>
                         </div>
                     </li>
-                    <li class="flex items-start gap-3">
-                        <span class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center font-semibold">4</span>
+                    <li class="flex items-start gap-3 timeline-item">
+                        <span class="timeline-bullet w-8 h-8 rounded-full bg-white/15 flex items-center justify-center font-semibold">4</span>
                         <div>
                             <p class="font-semibold">Lanzamiento y soporte</p>
                             <p class="text-sm text-blue-100">Publicamos, monitoreamos y mejoramos de forma continua.</p>

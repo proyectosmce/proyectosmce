@@ -133,7 +133,7 @@
             
             <!-- Contenido -->
             <h3 class="text-2xl font-bold mb-3 group-hover:text-blue-600 transition"><?php echo $row['titulo']; ?></h3>
-            <p class="text-gray-600 mb-4"><?php echo $row['descripcion']; ?></p>
+            <p class="text-gray-600 mb-4 line-clamp-2"><?php echo $row['descripcion']; ?></p>
             
             <!-- Precio y CTA -->
             <div class="flex justify-between items-center mb-4">

@@ -106,11 +106,12 @@ $featuredProject = $projects[0] ?? null;
     <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-100">
         <div class="md:flex">
             <div class="md:w-1/2">
-                <img
-                    src="<?php echo htmlspecialchars($featuredProject['image_url'], ENT_QUOTES, 'UTF-8'); ?>"
-                    alt="<?php echo htmlspecialchars($featuredProject['titulo'], ENT_QUOTES, 'UTF-8'); ?>"
-                    class="w-full h-64 md:h-full object-cover"
-                >
+                    <img
+                        src="<?php echo htmlspecialchars($featuredProject['image_url'], ENT_QUOTES, 'UTF-8'); ?>"
+                        alt="<?php echo htmlspecialchars($featuredProject['titulo'], ENT_QUOTES, 'UTF-8'); ?>"
+                        class="w-full h-64 md:h-full object-cover"
+                        loading="lazy"
+                    >
             </div>
             <div class="md:w-1/2 p-8 space-y-4">
                 <div class="flex items-center justify-between">
@@ -118,7 +119,7 @@ $featuredProject = $projects[0] ?? null;
                     <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold"><?php echo htmlspecialchars($featuredProject['categoria'], ENT_QUOTES, 'UTF-8'); ?></span>
                 </div>
                 <h3 class="text-2xl font-bold text-slate-900"><?php echo htmlspecialchars($featuredProject['titulo'], ENT_QUOTES, 'UTF-8'); ?></h3>
-                <p class="text-gray-700"><?php echo htmlspecialchars($featuredDescription, ENT_QUOTES, 'UTF-8'); ?></p>
+                    <p class="text-gray-700"><?php echo htmlspecialchars($featuredDescription, ENT_QUOTES, 'UTF-8'); ?></p>
 
                 <div class="grid sm:grid-cols-2 gap-3 text-gray-700">
                     <div class="flex items-center gap-2">
@@ -226,6 +227,7 @@ $featuredProject = $projects[0] ?? null;
                         src="<?php echo htmlspecialchars($project['image_url'], ENT_QUOTES, 'UTF-8'); ?>"
                         alt="<?php echo htmlspecialchars($project['titulo'], ENT_QUOTES, 'UTF-8'); ?>"
                         class="w-full h-52 object-cover hover:scale-[1.01] transition-transform duration-200"
+                        loading="lazy"
                     >
                 </a>
                 <div class="p-6 space-y-3">
@@ -242,7 +244,7 @@ $featuredProject = $projects[0] ?? null;
                             <?php echo htmlspecialchars($project['titulo'], ENT_QUOTES, 'UTF-8'); ?>
                         </a>
                     </h3>
-                    <p class="text-gray-600"><?php echo htmlspecialchars($descriptionPreview, ENT_QUOTES, 'UTF-8'); ?></p>
+                    <p class="text-gray-600 line-clamp-2"><?php echo htmlspecialchars($descriptionPreview, ENT_QUOTES, 'UTF-8'); ?></p>
                     <div class="flex justify-between items-center gap-4 pt-1">
                         <span class="text-gray-500 text-sm"><?php echo htmlspecialchars($clientLabel, ENT_QUOTES, 'UTF-8'); ?></span>
                         <?php if ($hasLink): ?>

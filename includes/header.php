@@ -79,11 +79,11 @@
         <!-- Menú móvil mejorado -->
         <div id="mobile-menu" class="hidden md:hidden fixed inset-0 bg-white z-40 pt-20">
             <div class="flex flex-col items-center space-y-6 p-8">
-                <a href="<?php echo app_url(); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3"><i class="fas fa-home text-blue-500/80"></i><span>Inicio</span></a>
-                <a href="<?php echo app_url('servicios.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3"><i class="fas fa-layer-group text-blue-500/80"></i><span>Servicios</span></a>
-                <a href="<?php echo app_url('portafolio.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3"><i class="fas fa-briefcase text-blue-500/80"></i><span>Portafolio</span></a>
-                <a href="<?php echo app_url('testimonios.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3"><i class="fas fa-comments text-blue-500/80"></i><span>Testimonios</span></a>
-                <a href="<?php echo app_url('contacto.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3"><i class="fas fa-envelope-open-text text-blue-500/80"></i><span>Contacto</span></a>
+                <a href="<?php echo app_url(); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'text-blue-600' : ''; ?>"><i class="fas fa-home text-blue-500/80"></i><span>Inicio</span></a>
+                <a href="<?php echo app_url('servicios.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'servicios.php' ? 'text-blue-600' : ''; ?>"><i class="fas fa-layer-group text-blue-500/80"></i><span>Servicios</span></a>
+                <a href="<?php echo app_url('portafolio.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'portafolio.php' ? 'text-blue-600' : ''; ?>"><i class="fas fa-briefcase text-blue-500/80"></i><span>Portafolio</span></a>
+                <a href="<?php echo app_url('testimonios.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'testimonios.php' ? 'text-blue-600' : ''; ?>"><i class="fas fa-comments text-blue-500/80"></i><span>Testimonios</span></a>
+                <a href="<?php echo app_url('contacto.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'contacto.php' ? 'text-blue-600' : ''; ?>"><i class="fas fa-envelope-open-text text-blue-500/80"></i><span>Contacto</span></a>
                 
                 <!-- Botón de contacto en móvil -->
                 <a href="<?php echo app_url('contacto.php'); ?>" 
