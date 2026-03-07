@@ -1,16 +1,122 @@
 ﻿<?php require_once 'includes/config.php'; ?>
 <?php include 'includes/header.php'; ?>
 
-<!-- Título de página -->
-<section class="bg-gray-100 py-12">
-    <div class="max-w-7xl mx-auto px-4">
-        <h1 class="text-4xl font-bold mb-2">Nuestros Servicios</h1>
-        <p class="text-xl text-gray-600">Soluciones profesionales para tu negocio</p>
+<!-- Hero Servicios -->
+<section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-800 text-white">
+    <div class="absolute inset-0 bg-grid-white/10"></div>
+    <div class="absolute -top-24 -left-16 w-72 h-72 bg-blue-500/30 blur-3xl rounded-full"></div>
+    <div class="absolute -bottom-24 -right-10 w-80 h-80 bg-purple-500/25 blur-3xl rounded-full"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 py-20 lg:py-24">
+        <div class="grid lg:grid-cols-12 gap-10 items-center">
+            <div class="lg:col-span-7 space-y-5">
+                <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
+                    <i class="fas fa-layer-group mr-2 text-yellow-300"></i> Servicios · Proyectos MCE
+                </span>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Soluciones digitales listas para automatizar y escalar tu negocio</h1>
+                <p class="text-lg text-blue-50 max-w-3xl">
+                    Creamos software y páginas web a medida para empresas que quieren automatizar y crecer. Nos encargamos del ciclo completo: discovery, UX/UI, desarrollo, QA, despliegue y soporte.
+                </p>
+                <div class="space-y-3">
+                    <div class="flex items-start gap-3">
+                        <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
+                        <p class="text-blue-50">Sistemas de gestión alineados a tus procesos clave.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
+                        <p class="text-blue-50">Páginas web profesionales que comunican y convierten.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
+                        <p class="text-blue-50">Automatización de procesos y flujos internos.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
+                        <p class="text-blue-50">Software personalizado con integraciones API.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+                    <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
+                        <i class="fas fa-calendar-check mr-2"></i> Agenda una reunión
+                    </a>
+                    <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
+                        <i class="fas fa-eye mr-2"></i> Ver proyectos
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5">
+                <div class="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-8 shadow-2xl space-y-5">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-blue-100">Qué obtienes</p>
+                            <p class="text-2xl font-semibold text-white">Paquetes completos, sin sorpresas</p>
+                        </div>
+                        <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-300 text-slate-900 font-bold shadow-lg">MCE</span>
+                    </div>
+                    <ul class="space-y-3 text-blue-50">
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-clipboard-list"></i></span>
+                            <div>
+                                <p class="font-semibold">Discovery & roadmap</p>
+                                <p class="text-sm text-blue-100">Entendemos objetivos y priorizamos entregables.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-pen-ruler"></i></span>
+                            <div>
+                                <p class="font-semibold">UI/UX profesional</p>
+                                <p class="text-sm text-blue-100">Prototipos navegables y pruebas con usuarios.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-server"></i></span>
+                            <div>
+                                <p class="font-semibold">Arquitectura y desarrollo</p>
+                                <p class="text-sm text-blue-100">Tecnologías modernas, APIs e integraciones.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-vial-circle-check"></i></span>
+                            <div>
+                                <p class="font-semibold">QA + DevOps</p>
+                                <p class="text-sm text-blue-100">Pruebas, CI/CD y despliegues controlados.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-headset"></i></span>
+                            <div>
+                                <p class="font-semibold">Soporte y evolución</p>
+                                <p class="text-sm text-blue-100">Monitoreo, mejoras y acompañamiento continuo.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-blue-100">Consultoría inicial</p>
+                            <p class="font-semibold">Agenda un diagnóstico sin costo</p>
+                        </div>
+                        <i class="fas fa-arrow-right text-yellow-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- Lista de servicios -->
 <section class="max-w-7xl mx-auto px-4 py-16">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+        <div>
+            <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Catálogo de servicios</p>
+            <h2 class="text-3xl font-bold text-slate-900">Soluciones diseñadas para automatizar y crecer</h2>
+            <p class="text-gray-700 mt-2 max-w-3xl">Elige el servicio que necesitas o combínalos en un solo roadmap. Entregamos con transparencia, demos frecuentes y documentación lista para tus equipos.</p>
+        </div>
+        <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
+            <i class="fas fa-handshake mr-2"></i> Hablemos de tu proyecto
+        </a>
+    </div>
+
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php
         $result = $conn->query("SELECT * FROM servicios ORDER BY orden");
@@ -43,6 +149,25 @@
             </a>
         </div>
         <?php endwhile; ?>
+    </div>
+</section>
+
+<!-- CTA final -->
+<section class="max-w-7xl mx-auto px-4 pb-16">
+    <div class="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-800 text-white rounded-2xl p-10 shadow-2xl flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+            <p class="text-sm font-semibold text-blue-100 uppercase tracking-wide">Siguiente paso</p>
+            <h3 class="text-2xl font-bold">Cuéntanos qué quieres automatizar o lanzar</h3>
+            <p class="text-blue-100 mt-2">Respondemos en menos de 24 horas con un plan de acción y tiempos estimados.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+            <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold shadow-lg hover:bg-blue-50 transition">
+                <i class="fas fa-comments mr-2"></i> Agendar llamada
+            </a>
+            <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl border border-white/60 text-white font-semibold hover:bg-white/10 transition">
+                <i class="fas fa-eye mr-2"></i> Ver portafolio
+            </a>
+        </div>
     </div>
 </section>
 
