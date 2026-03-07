@@ -37,11 +37,11 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Enlaces</h4>
                     <ul class="space-y-2 text-gray-300">
-                        <li><a href="<?php echo app_url(); ?>" class="hover:text-white transition">Inicio</a></li>
-                        <li><a href="<?php echo app_url('servicios.php'); ?>" class="hover:text-white transition">Servicios</a></li>
-                        <li><a href="<?php echo app_url('portafolio.php'); ?>" class="hover:text-white transition">Portafolio</a></li>
-                        <li><a href="<?php echo app_url('testimonios.php'); ?>" class="hover:text-white transition">Testimonios</a></li>
-                        <li><a href="<?php echo app_url('contacto.php'); ?>" class="hover:text-white transition">Contacto</a></li>
+                        <li><a href="<?php echo app_url(); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-home text-blue-300"></i><span>Inicio</span></a></li>
+                        <li><a href="<?php echo app_url('servicios.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-layer-group text-blue-300"></i><span>Servicios</span></a></li>
+                        <li><a href="<?php echo app_url('portafolio.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-briefcase text-blue-300"></i><span>Portafolio</span></a></li>
+                        <li><a href="<?php echo app_url('testimonios.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-comments text-blue-300"></i><span>Testimonios</span></a></li>
+                        <li><a href="<?php echo app_url('contacto.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-envelope-open-text text-blue-300"></i><span>Contacto</span></a></li>
                     </ul>
                 </div>
                 
