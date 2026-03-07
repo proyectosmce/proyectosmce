@@ -1,19 +1,41 @@
     </main>
     
     <!-- Footer profesional -->
-    <footer class="bg-gray-800 text-white mt-16">
+    <footer class="bg-slate-900 text-white mt-16">
+        <!-- CTA superior -->
+        <div class="border-b border-white/10">
+            <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="space-y-1">
+                    <p class="text-sm uppercase tracking-[0.2em] text-blue-200 font-semibold">Proyectos MCE</p>
+                    <p class="text-lg md:text-xl font-semibold">Transformamos tus ideas en software listo para usar.</p>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-4 py-3 rounded-lg bg-white text-slate-900 font-semibold shadow hover:bg-blue-50 transition">
+                        <i class="fas fa-calendar-check mr-2"></i> Agenda una llamada
+                    </a>
+                    <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex items-center px-4 py-3 rounded-lg border border-white/30 text-white font-semibold hover:bg-white/10 transition">
+                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp inmediato
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div class="max-w-7xl mx-auto px-4 py-12">
-            <div class="grid md:grid-cols-4 gap-8">
+            <div class="grid md:grid-cols-4 gap-10">
                 <!-- Col 1: Logo y descripción -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Proyectos MCE</h3>
-                    <p class="text-gray-400">Transformamos tus ideas en código. Soluciones web profesionales a medida.</p>
+                <div class="space-y-3">
+                    <h3 class="text-xl font-bold">Proyectos MCE</h3>
+                    <p class="text-gray-300 leading-relaxed">Software a medida, sitios web y automatizaciones con equipos que se involucran en tus procesos.</p>
+                    <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center text-blue-200 hover:text-white font-semibold">
+                        <span>Ver casos en vivo</span>
+                        <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                    </a>
                 </div>
                 
                 <!-- Col 2: Enlaces rápidos -->
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Enlaces</h4>
-                    <ul class="space-y-2 text-gray-400">
+                    <ul class="space-y-2 text-gray-300">
                         <li><a href="<?php echo app_url(); ?>" class="hover:text-white transition">Inicio</a></li>
                         <li><a href="<?php echo app_url('servicios.php'); ?>" class="hover:text-white transition">Servicios</a></li>
                         <li><a href="<?php echo app_url('portafolio.php'); ?>" class="hover:text-white transition">Portafolio</a></li>
@@ -25,7 +47,7 @@
                 <!-- Col 3: Servicios -->
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Servicios</h4>
-                    <ul class="space-y-2 text-gray-400">
+                    <ul class="space-y-2 text-gray-300">
                         <li>Desarrollo a Medida</li>
                         <li>Tiendas Online</li>
                         <li>Sistemas de Inventario</li>
@@ -33,27 +55,38 @@
                     </ul>
                 </div>
                 
-                <!-- Col 4: Contacto -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Contacto</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="mailto:proyectosmceaa@gmail.com" class="inline-flex items-center hover:text-white transition"><i class="fas fa-envelope mr-2"></i><span>proyectosmceaa@gmail.com</span></a></li>
-                        <li><i class="fas fa-phone mr-2"></i> +57 311 412 59 71</li>
-                        <li class="flex flex-wrap items-center gap-4 mt-4">
-                            <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex text-gray-400 hover:text-white text-xl" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                            <a href="https://t.me/proyectosmce" target="_blank" rel="noopener" class="inline-flex text-gray-400 hover:text-white text-xl" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                            <a href="https://www.instagram.com/proyectosmce/" target="_blank" rel="noopener" class="inline-flex text-gray-400 hover:text-white text-xl" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="https://www.linkedin.com/company/proyectosmce/" target="_blank" rel="noopener" class="inline-flex text-gray-400 hover:text-white text-xl" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                            <a href="https://www.facebook.com/proyectosmce" target="_blank" rel="noopener" class="inline-flex text-gray-400 hover:text-white text-xl" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://www.tiktok.com/@proyectosmce" target="_blank" rel="noopener" class="inline-flex text-gray-400 hover:text-white text-xl" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <!-- Col 4: Contacto y redes -->
+                <div class="space-y-4">
+                    <h4 class="text-lg font-semibold">Contacto</h4>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>
+                            <a href="mailto:proyectosmceaa@gmail.com" class="inline-flex items-center hover:text-white transition">
+                                <i class="fas fa-envelope mr-2"></i><span>proyectosmceaa@gmail.com</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+573114125971" class="inline-flex items-center hover:text-white transition">
+                                <i class="fas fa-phone mr-2"></i><span>+57 311 412 59 71</span>
+                            </a>
+                        </li>
+                        <li class="flex flex-wrap items-center gap-4 pt-2">
+                            <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="https://t.me/proyectosmce" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="https://www.instagram.com/proyectosmce/" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/company/proyectosmce/" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.facebook.com/proyectosmce" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.tiktok.com/@proyectosmce" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
                         </li>
                     </ul>
+                    <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex items-center px-4 py-3 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition">
+                        <i class="fab fa-whatsapp mr-2"></i> Hablar ahora
+                    </a>
                 </div>
             </div>
             
             <!-- Copyright -->
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2024 Proyectos MCE. Todos los derechos reservados.</p>
+            <div class="border-t border-white/10 mt-10 pt-6 text-center text-gray-400 text-sm">
+                <p>&copy; <?php echo date('Y'); ?> Proyectos MCE. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
