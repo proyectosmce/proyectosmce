@@ -19,6 +19,13 @@ $searchTerm = trim((string) ($_GET['q'] ?? ''));
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $perPage = 10;
 $publishedCount = 0;
+$toast = admin_build_toast($statusMessage, [
+    'deleted' => ['message' => 'Testimonio eliminado correctamente.'],
+    'saved' => ['message' => 'Testimonio guardado correctamente.'],
+    'approved' => ['title' => 'Testimonio confirmado', 'message' => 'El testimonio ya esta publicado en la web.'],
+    'hidden' => ['type' => 'warning', 'title' => 'Testimonio pendiente', 'message' => 'El testimonio se marco como pendiente.'],
+    'csrf' => ['type' => 'error', 'title' => 'Sesion no valida', 'message' => 'Recarga la pagina e intenta de nuevo.'],
+]);
 
 if ($publishedResult = $conn->query('SELECT COUNT(*) AS total FROM testimonios WHERE aprobado = 1')) {
     $publishedCount = (int) ($publishedResult->fetch_assoc()['total'] ?? 0);
@@ -209,6 +216,7 @@ $totalCount = $pendingCount + $publishedCount;
 
         <div class="flex-1 overflow-y-auto">
             <div class="p-8">
+                <?php admin_render_toast($toast); ?>
                 <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                         <h1 class="text-3xl font-bold">Testimonios de Clientes</h1>
@@ -295,18 +303,6 @@ $totalCount = $pendingCount + $publishedCount;
                         <a href="<?php echo admin_build_url('testimonios.php', ['estado' => 'pendientes', 'q' => $searchTerm]); ?>" class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-amber-700 shadow-sm hover:bg-amber-100">
                             Revisar pendientes
                         </a>
-                    </div>
-                <?php endif; ?>
-
-                <?php if ($statusMessage !== ''): ?>
-                    <div class="mb-4 rounded border px-4 py-3 <?php echo $statusMessage === 'csrf' ? 'border-red-400 bg-red-100 text-red-700' : 'border-green-400 bg-green-100 text-green-700'; ?>">
-                        <?php
-                        if ($statusMessage === 'deleted') echo 'Testimonio eliminado correctamente.';
-                        if ($statusMessage === 'saved') echo 'Testimonio guardado correctamente.';
-                        if ($statusMessage === 'approved') echo 'Testimonio confirmado y publicado correctamente.';
-                        if ($statusMessage === 'hidden') echo 'Testimonio marcado como pendiente.';
-                        if ($statusMessage === 'csrf') echo 'La sesion de seguridad no es valida. Recarga la pagina e intenta de nuevo.';
-                        ?>
                     </div>
                 <?php endif; ?>
 

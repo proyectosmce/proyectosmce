@@ -14,6 +14,7 @@ $adminId = isset($_SESSION['admin_id']) ? (int) $_SESSION['admin_id'] : 0;
 $adminUsername = $_SESSION['admin_username'] ?? 'admin';
 $flashMessage = $_GET['msg'] ?? '';
 $error = '';
+$toast = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $currentPassword = $_POST['current_password'] ?? '';
@@ -67,6 +68,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+if ($flashMessage === 'updated') {
+    $toast = admin_build_toast('updated', [
+        'updated' => ['message' => 'La contrasena se actualizo correctamente.'],
+    ]);
+} elseif ($error !== '') {
+    $toast = [
+        'type' => 'error',
+        'title' => 'No se pudo guardar',
+        'message' => $error,
+    ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -118,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="flex-1 overflow-y-auto">
             <div class="p-8">
+                <?php admin_render_toast($toast); ?>
                 <div class="mb-8">
                     <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Seguridad del admin</p>
                     <h1 class="mt-2 text-3xl font-bold text-slate-900">Cambiar contrasena</h1>
@@ -125,18 +139,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         Usuario actual: <span class="font-semibold text-slate-900"><?php echo htmlspecialchars($adminUsername, ENT_QUOTES, 'UTF-8'); ?></span>
                     </p>
                 </div>
-
-                <?php if ($flashMessage === 'updated'): ?>
-                    <div class="mb-4 rounded border border-green-400 bg-green-100 px-4 py-3 text-green-700">
-                        La contrasena se actualizo correctamente.
-                    </div>
-                <?php endif; ?>
-
-                <?php if ($error !== ''): ?>
-                    <div class="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
-                        <?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?>
-                    </div>
-                <?php endif; ?>
 
                 <div class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
                     <form method="POST" class="rounded-2xl bg-white p-8 shadow">

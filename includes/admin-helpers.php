@@ -152,6 +152,143 @@ function admin_get_message_reply_templates(?string $contactName = null): array
     ];
 }
 
+function admin_build_toast(?string $code, array $map): ?array
+{
+    if (!is_string($code) || $code === '' || !isset($map[$code]) || !is_array($map[$code])) {
+        return null;
+    }
+
+    $toast = $map[$code];
+    $type = $toast['type'] ?? 'success';
+    if (!in_array($type, ['success', 'error', 'warning', 'info'], true)) {
+        $type = 'success';
+    }
+
+    $title = trim((string) ($toast['title'] ?? ''));
+    if ($title === '') {
+        $defaults = [
+            'success' => 'Listo',
+            'error' => 'Atencion',
+            'warning' => 'Revisa esto',
+            'info' => 'Informacion',
+        ];
+        $title = $defaults[$type];
+    }
+
+    $message = trim((string) ($toast['message'] ?? ''));
+    if ($message === '') {
+        return null;
+    }
+
+    return [
+        'type' => $type,
+        'title' => $title,
+        'message' => $message,
+    ];
+}
+
+function admin_render_toast(?array $toast): void
+{
+    if (!$toast) {
+        return;
+    }
+
+    $type = $toast['type'] ?? 'success';
+
+    switch ($type) {
+        case 'error':
+            $panelClasses = 'border-red-200 bg-white text-slate-900';
+            $iconClasses = 'bg-red-100 text-red-600';
+            $progressClasses = 'bg-red-500';
+            $icon = 'fa-circle-exclamation';
+            break;
+        case 'warning':
+            $panelClasses = 'border-amber-200 bg-white text-slate-900';
+            $iconClasses = 'bg-amber-100 text-amber-600';
+            $progressClasses = 'bg-amber-500';
+            $icon = 'fa-triangle-exclamation';
+            break;
+        case 'info':
+            $panelClasses = 'border-sky-200 bg-white text-slate-900';
+            $iconClasses = 'bg-sky-100 text-sky-600';
+            $progressClasses = 'bg-sky-500';
+            $icon = 'fa-circle-info';
+            break;
+        default:
+            $panelClasses = 'border-emerald-200 bg-white text-slate-900';
+            $iconClasses = 'bg-emerald-100 text-emerald-600';
+            $progressClasses = 'bg-emerald-500';
+            $icon = 'fa-circle-check';
+            break;
+    }
+
+    ?>
+    <div id="admin-toast-region" class="pointer-events-none fixed right-4 top-4 z-[90] w-full max-w-sm">
+        <div
+            id="admin-toast"
+            class="pointer-events-auto overflow-hidden rounded-2xl border shadow-2xl ring-1 ring-black/5 transition duration-300 <?php echo $panelClasses; ?>"
+            role="status"
+            aria-live="polite"
+        >
+            <div class="flex items-start gap-4 p-4">
+                <div class="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl <?php echo $iconClasses; ?>">
+                    <i class="fas <?php echo $icon; ?>"></i>
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="text-sm font-semibold text-slate-900"><?php echo admin_escape((string) ($toast['title'] ?? '')); ?></p>
+                    <p class="mt-1 text-sm leading-6 text-slate-600"><?php echo admin_escape((string) ($toast['message'] ?? '')); ?></p>
+                </div>
+                <button type="button" id="admin-toast-close" class="rounded-full p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600" aria-label="Cerrar notificacion">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+            <div class="h-1 w-full bg-slate-100">
+                <div id="admin-toast-progress" class="h-full w-full origin-left <?php echo $progressClasses; ?>"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var toast = document.getElementById('admin-toast');
+            var closeButton = document.getElementById('admin-toast-close');
+            var progress = document.getElementById('admin-toast-progress');
+            var duration = 4200;
+            var closing = false;
+
+            if (!toast || !progress) {
+                return;
+            }
+
+            progress.style.transition = 'transform ' + duration + 'ms linear';
+            requestAnimationFrame(function () {
+                progress.style.transform = 'scaleX(0)';
+            });
+
+            function closeToast() {
+                if (closing) {
+                    return;
+                }
+
+                closing = true;
+                toast.classList.add('translate-y-2', 'opacity-0');
+                window.setTimeout(function () {
+                    var region = document.getElementById('admin-toast-region');
+                    if (region) {
+                        region.remove();
+                    }
+                }, 280);
+            }
+
+            window.setTimeout(closeToast, duration);
+
+            if (closeButton) {
+                closeButton.addEventListener('click', closeToast);
+            }
+        }());
+    </script>
+    <?php
+}
+
 function admin_log_column_exists(mysqli $conn, string $columnName): bool
 {
     $safeColumn = $conn->real_escape_string($columnName);

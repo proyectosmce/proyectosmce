@@ -279,8 +279,16 @@ $currentImageUrl = !empty($project['imagen']) ? getProjectImageUrl($project) : n
 
                             <div>
                                 <label class="block text-gray-700 mb-2">Subir nueva imagen</label>
-                                <input id="project-image-input" type="file" name="imagen" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
-                                <p class="text-sm text-gray-500 mt-1">Si subes una imagen, reemplaza la ruta actual y el sistema la optimiza automaticamente para que pese menos.</p>
+                                <div id="project-image-dropzone" class="rounded-2xl border-2 border-dashed border-blue-200 bg-blue-50/60 p-6 transition hover:border-blue-400 hover:bg-blue-50" tabindex="0" role="button" aria-label="Arrastrar o seleccionar imagen del proyecto">
+                                    <div class="flex flex-col items-center justify-center text-center">
+                                        <span class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-blue-600 shadow-sm">
+                                            <i class="fas fa-cloud-arrow-up text-2xl"></i>
+                                        </span>
+                                        <p class="mt-4 text-sm font-semibold text-slate-900">Arrastra una imagen aqui o haz clic para seleccionarla</p>
+                                        <p id="project-image-dropzone-label" class="mt-2 text-sm text-blue-700">JPG, PNG, GIF o WEBP. Se optimiza automaticamente al guardar.</p>
+                                    </div>
+                                    <input id="project-image-input" type="file" name="imagen" accept="image/*" class="sr-only">
+                                </div>
                                 <div id="project-image-preview-wrapper" class="mt-4 hidden">
                                     <p class="mb-2 text-sm font-semibold text-gray-700">Vista previa nueva</p>
                                     <img id="project-image-preview" src="" alt="Vista previa nueva del proyecto" class="h-52 w-full max-w-md rounded-lg border border-blue-200 object-cover shadow-sm">
@@ -334,28 +342,92 @@ $currentImageUrl = !empty($project['imagen']) ? getProjectImageUrl($project) : n
     <script>
         (function () {
             var input = document.getElementById('project-image-input');
+            var dropzone = document.getElementById('project-image-dropzone');
+            var dropzoneLabel = document.getElementById('project-image-dropzone-label');
             var wrapper = document.getElementById('project-image-preview-wrapper');
             var preview = document.getElementById('project-image-preview');
             var fileName = document.getElementById('project-image-preview-name');
+            var currentObjectUrl = null;
+            var defaultLabel = 'JPG, PNG, GIF o WEBP. Se optimiza automaticamente al guardar.';
 
-            if (!input || !wrapper || !preview || !fileName) {
+            if (!input || !dropzone || !dropzoneLabel || !wrapper || !preview || !fileName) {
                 return;
             }
 
-            input.addEventListener('change', function () {
-                var file = input.files && input.files[0] ? input.files[0] : null;
-
+            function setPreview(file) {
                 if (!file) {
                     wrapper.classList.add('hidden');
                     preview.src = '';
                     fileName.textContent = '';
+                    dropzoneLabel.textContent = defaultLabel;
                     return;
                 }
 
-                var objectUrl = URL.createObjectURL(file);
-                preview.src = objectUrl;
+                if (currentObjectUrl) {
+                    URL.revokeObjectURL(currentObjectUrl);
+                }
+
+                currentObjectUrl = URL.createObjectURL(file);
+                preview.src = currentObjectUrl;
                 fileName.textContent = file.name;
+                dropzoneLabel.textContent = 'Archivo seleccionado: ' + file.name;
                 wrapper.classList.remove('hidden');
+            }
+
+            function activateDropzone(active) {
+                dropzone.classList.toggle('border-blue-500', active);
+                dropzone.classList.toggle('bg-blue-100', active);
+                dropzone.classList.toggle('shadow-lg', active);
+            }
+
+            dropzone.addEventListener('click', function () {
+                input.click();
+            });
+
+            dropzone.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    input.click();
+                }
+            });
+
+            ['dragenter', 'dragover'].forEach(function (eventName) {
+                dropzone.addEventListener(eventName, function (event) {
+                    event.preventDefault();
+                    activateDropzone(true);
+                });
+            });
+
+            ['dragleave', 'dragend', 'drop'].forEach(function (eventName) {
+                dropzone.addEventListener(eventName, function (event) {
+                    event.preventDefault();
+                    activateDropzone(false);
+                });
+            });
+
+            dropzone.addEventListener('drop', function (event) {
+                var files = event.dataTransfer && event.dataTransfer.files ? event.dataTransfer.files : null;
+                if (!files || !files.length) {
+                    return;
+                }
+
+                if (typeof DataTransfer !== 'undefined') {
+                    var dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(files[0]);
+                    input.files = dataTransfer.files;
+                } else {
+                    try {
+                        input.files = files;
+                    } catch (error) {
+                    }
+                }
+
+                setPreview(files[0]);
+            });
+
+            input.addEventListener('change', function () {
+                var file = input.files && input.files[0] ? input.files[0] : null;
+                setPreview(file);
             });
         }());
     </script>

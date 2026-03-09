@@ -258,8 +258,16 @@ $isApproved = isset($testimonio['aprobado']) ? (int) $testimonio['aprobado'] ===
                                     <img src="../assets/img/testimonios/<?php echo htmlspecialchars($testimonio['foto'], ENT_QUOTES, 'UTF-8'); ?>" alt="Foto" class="w-20 h-20 rounded-full object-cover">
                                 </div>
                             <?php endif; ?>
-                            <input id="testimonial-photo-input" type="file" name="foto" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
-                            <p class="text-sm text-gray-500 mt-1">Formatos: JPG, PNG, GIF, WEBP. Se ajusta automaticamente a un formato ligero y se recomienda una foto cuadrada.</p>
+                            <div id="testimonial-photo-dropzone" class="rounded-2xl border-2 border-dashed border-blue-200 bg-blue-50/60 p-6 transition hover:border-blue-400 hover:bg-blue-50" tabindex="0" role="button" aria-label="Arrastrar o seleccionar foto del testimonio">
+                                <div class="flex flex-col items-center justify-center text-center">
+                                    <span class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-blue-600 shadow-sm">
+                                        <i class="fas fa-image text-2xl"></i>
+                                    </span>
+                                    <p class="mt-4 text-sm font-semibold text-slate-900">Arrastra la foto aqui o haz clic para seleccionarla</p>
+                                    <p id="testimonial-photo-dropzone-label" class="mt-2 text-sm text-blue-700">Formatos JPG, PNG, GIF o WEBP. Ideal en formato cuadrado.</p>
+                                </div>
+                                <input id="testimonial-photo-input" type="file" name="foto" accept="image/*" class="sr-only">
+                            </div>
                             <div id="testimonial-photo-preview-wrapper" class="mt-4 hidden">
                                 <p class="mb-2 text-sm font-semibold text-gray-700">Vista previa nueva</p>
                                 <div class="flex items-center gap-4">
@@ -302,28 +310,92 @@ $isApproved = isset($testimonio['aprobado']) ? (int) $testimonio['aprobado'] ===
     <script>
         (function () {
             var input = document.getElementById('testimonial-photo-input');
+            var dropzone = document.getElementById('testimonial-photo-dropzone');
+            var dropzoneLabel = document.getElementById('testimonial-photo-dropzone-label');
             var wrapper = document.getElementById('testimonial-photo-preview-wrapper');
             var preview = document.getElementById('testimonial-photo-preview');
             var fileName = document.getElementById('testimonial-photo-preview-name');
+            var currentObjectUrl = null;
+            var defaultLabel = 'Formatos JPG, PNG, GIF o WEBP. Ideal en formato cuadrado.';
 
-            if (!input || !wrapper || !preview || !fileName) {
+            if (!input || !dropzone || !dropzoneLabel || !wrapper || !preview || !fileName) {
                 return;
             }
 
-            input.addEventListener('change', function () {
-                var file = input.files && input.files[0] ? input.files[0] : null;
-
+            function setPreview(file) {
                 if (!file) {
                     wrapper.classList.add('hidden');
                     preview.src = '';
                     fileName.textContent = '';
+                    dropzoneLabel.textContent = defaultLabel;
                     return;
                 }
 
-                var objectUrl = URL.createObjectURL(file);
-                preview.src = objectUrl;
+                if (currentObjectUrl) {
+                    URL.revokeObjectURL(currentObjectUrl);
+                }
+
+                currentObjectUrl = URL.createObjectURL(file);
+                preview.src = currentObjectUrl;
                 fileName.textContent = file.name;
+                dropzoneLabel.textContent = 'Archivo seleccionado: ' + file.name;
                 wrapper.classList.remove('hidden');
+            }
+
+            function activateDropzone(active) {
+                dropzone.classList.toggle('border-blue-500', active);
+                dropzone.classList.toggle('bg-blue-100', active);
+                dropzone.classList.toggle('shadow-lg', active);
+            }
+
+            dropzone.addEventListener('click', function () {
+                input.click();
+            });
+
+            dropzone.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    input.click();
+                }
+            });
+
+            ['dragenter', 'dragover'].forEach(function (eventName) {
+                dropzone.addEventListener(eventName, function (event) {
+                    event.preventDefault();
+                    activateDropzone(true);
+                });
+            });
+
+            ['dragleave', 'dragend', 'drop'].forEach(function (eventName) {
+                dropzone.addEventListener(eventName, function (event) {
+                    event.preventDefault();
+                    activateDropzone(false);
+                });
+            });
+
+            dropzone.addEventListener('drop', function (event) {
+                var files = event.dataTransfer && event.dataTransfer.files ? event.dataTransfer.files : null;
+                if (!files || !files.length) {
+                    return;
+                }
+
+                if (typeof DataTransfer !== 'undefined') {
+                    var dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(files[0]);
+                    input.files = dataTransfer.files;
+                } else {
+                    try {
+                        input.files = files;
+                    } catch (error) {
+                    }
+                }
+
+                setPreview(files[0]);
+            });
+
+            input.addEventListener('change', function () {
+                var file = input.files && input.files[0] ? input.files[0] : null;
+                setPreview(file);
             });
         }());
     </script>

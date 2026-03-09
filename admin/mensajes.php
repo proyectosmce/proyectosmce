@@ -30,6 +30,13 @@ $messageFilter = ($_GET['estado'] ?? 'todos') === 'nuevo' ? 'nuevo' : 'todos';
 $searchTerm = trim((string) ($_GET['q'] ?? ''));
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $perPage = 10;
+$toast = admin_build_toast($messageStatus, [
+    'deleted' => ['message' => 'Mensaje eliminado correctamente.'],
+    'read' => ['type' => 'info', 'title' => 'Mensaje actualizado', 'message' => 'Mensaje marcado como leido.'],
+    'unread' => ['type' => 'warning', 'title' => 'Mensaje actualizado', 'message' => 'Mensaje marcado como no leido.'],
+    'notfound' => ['type' => 'warning', 'title' => 'Mensaje no disponible', 'message' => 'Ese mensaje ya no existe o fue eliminado.'],
+    'csrf' => ['type' => 'error', 'title' => 'Sesion no valida', 'message' => 'Recarga la pagina e intenta de nuevo.'],
+]);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $requestFilter = ($_POST['estado'] ?? 'todos') === 'nuevo' ? 'nuevo' : 'todos';
@@ -201,6 +208,7 @@ $mensajes = $conn->query($messagesSql);
 
         <div class="flex-1 overflow-y-auto">
             <div class="p-8">
+                <?php admin_render_toast($toast); ?>
                 <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                         <h1 class="text-3xl font-bold">Mensajes de Contacto</h1>
@@ -219,18 +227,6 @@ $mensajes = $conn->query($messagesSql);
                         </button>
                     </form>
                 </div>
-
-                <?php if ($messageStatus !== ''): ?>
-                    <div class="mb-4 rounded border px-4 py-3 <?php echo $messageStatus === 'csrf' ? 'border-red-400 bg-red-100 text-red-700' : 'border-green-400 bg-green-100 text-green-700'; ?>">
-                        <?php
-                        if ($messageStatus === 'deleted') echo 'Mensaje eliminado correctamente.';
-                        if ($messageStatus === 'read') echo 'Mensaje marcado como leido.';
-                        if ($messageStatus === 'unread') echo 'Mensaje marcado como no leido.';
-                        if ($messageStatus === 'notfound') echo 'Ese mensaje ya no existe o fue eliminado.';
-                        if ($messageStatus === 'csrf') echo 'La sesion de seguridad no es valida. Recarga la pagina e intenta de nuevo.';
-                        ?>
-                    </div>
-                <?php endif; ?>
 
                 <div class="mb-6 flex flex-col gap-4 rounded-2xl bg-white p-5 shadow lg:flex-row lg:items-center lg:justify-between">
                     <div class="flex flex-wrap gap-3">

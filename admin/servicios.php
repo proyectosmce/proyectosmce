@@ -14,6 +14,12 @@ $statusMessage = $_GET['msg'] ?? '';
 $searchTerm = trim((string) ($_GET['q'] ?? ''));
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $perPage = 10;
+$toast = admin_build_toast($statusMessage, [
+    'deleted' => ['message' => 'Servicio eliminado correctamente.'],
+    'saved' => ['message' => 'Servicio guardado correctamente.'],
+    'featured' => ['type' => 'info', 'title' => 'Estado actualizado', 'message' => 'El estado destacado del servicio se actualizo.'],
+    'csrf' => ['type' => 'error', 'title' => 'Sesion no valida', 'message' => 'Recarga la pagina e intenta de nuevo.'],
+]);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!admin_validate_csrf($_POST['csrf_token'] ?? null)) {
@@ -113,6 +119,7 @@ $servicios = $conn->query($servicesSql);
 
         <div class="flex-1 overflow-y-auto">
             <div class="p-8">
+                <?php admin_render_toast($toast); ?>
                 <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                         <h1 class="text-3xl font-bold">Servicios</h1>
@@ -122,17 +129,6 @@ $servicios = $conn->query($servicesSql);
                         <i class="fas fa-plus mr-2"></i>Nuevo Servicio
                     </a>
                 </div>
-
-                <?php if ($statusMessage !== ''): ?>
-                    <div class="mb-4 rounded border px-4 py-3 <?php echo $statusMessage === 'csrf' ? 'border-red-400 bg-red-100 text-red-700' : 'border-green-400 bg-green-100 text-green-700'; ?>">
-                        <?php
-                        if ($statusMessage === 'deleted') echo 'Servicio eliminado correctamente.';
-                        if ($statusMessage === 'saved') echo 'Servicio guardado correctamente.';
-                        if ($statusMessage === 'featured') echo 'El estado destacado del servicio se actualizo.';
-                        if ($statusMessage === 'csrf') echo 'La sesion de seguridad no es valida. Recarga la pagina e intenta de nuevo.';
-                        ?>
-                    </div>
-                <?php endif; ?>
 
                 <div class="mb-6 flex flex-col gap-4 rounded-2xl bg-white p-5 shadow lg:flex-row lg:items-center lg:justify-between">
                     <form method="GET" class="flex w-full flex-col gap-3 md:flex-row md:items-center">
