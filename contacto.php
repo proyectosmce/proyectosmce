@@ -82,7 +82,7 @@ $selectedService = trim((string) ($_GET['servicio'] ?? ''));
 </section>
 
 <!-- Formulario de contacto -->
-<section id="contacto-form" class="max-w-7xl mx-auto px-4 -mt-10 lg:-mt-14 pb-16">
+<section id="contacto-form" class="max-w-7xl mx-auto px-4 mt-10 lg:mt-14 pb-16">
     <div class="grid lg:grid-cols-12 gap-8">
         <div class="lg:col-span-7 order-2 lg:order-1">
             <?php if (isset($_GET['success'])): ?>
@@ -113,7 +113,7 @@ $selectedService = trim((string) ($_GET['servicio'] ?? ''));
                 </div>
             <?php endif; ?>
 
-            <form id="contact-form" action="enviar-contacto.php" method="POST" class="bg-white p-8 rounded-2xl shadow-2xl border border-slate-100 space-y-6">
+            <form id="contact-form" action="enviar-contacto.php" method="POST" class="bg-white p-8 rounded-2xl mce-rounded-panel shadow-2xl border border-slate-100 overflow-hidden space-y-6">
                 <input type="hidden" name="form_token" value="<?php echo htmlspecialchars($contactFormGuard['token'], ENT_QUOTES, 'UTF-8'); ?>">
                 <div style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
                     <label for="company_website">No llenes este campo</label>
@@ -175,7 +175,7 @@ $selectedService = trim((string) ($_GET['servicio'] ?? ''));
         </div>
 
         <div class="lg:col-span-5 order-1 lg:order-2">
-            <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-8 space-y-4">
+            <div class="bg-white rounded-2xl mce-rounded-panel shadow-2xl border border-slate-100 overflow-hidden p-8 space-y-4">
                 <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Información clave</p>
                 <h3 class="text-2xl font-bold text-slate-900">¿Qué recibes al escribirnos?</h3>
                 <ul class="space-y-3 text-gray-800 mt-3">
