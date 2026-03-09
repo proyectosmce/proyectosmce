@@ -53,13 +53,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pendingCount = getPendingTestimonialsCount($conn);
+$statusFilter = $_GET['estado'] ?? 'todos';
+$statusFilter = in_array($statusFilter, ['todos', 'pendientes', 'publicados'], true) ? $statusFilter : 'todos';
+$publishedCount = 0;
+$totalCount = 0;
 
-$testimonios = $conn->query("
+if ($publishedResult = $conn->query('SELECT COUNT(*) AS total FROM testimonios WHERE aprobado = 1')) {
+    $publishedCount = (int) ($publishedResult->fetch_assoc()['total'] ?? 0);
+    $publishedResult->free();
+}
+
+$totalCount = $pendingCount + $publishedCount;
+
+$testimonialsSql = "
     SELECT t.*, p.titulo AS proyecto_titulo
     FROM testimonios t
     LEFT JOIN proyectos p ON t.proyecto_id = p.id
-    ORDER BY t.aprobado ASC, t.destacado DESC, t.orden ASC, t.id DESC
-");
+";
+
+if ($statusFilter === 'pendientes') {
+    $testimonialsSql .= ' WHERE t.aprobado = 0';
+} elseif ($statusFilter === 'publicados') {
+    $testimonialsSql .= ' WHERE t.aprobado = 1';
+}
+
+$testimonialsSql .= ' ORDER BY t.aprobado ASC, t.destacado DESC, t.orden ASC, t.id DESC';
+$testimonios = $conn->query($testimonialsSql);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -117,8 +136,31 @@ $testimonios = $conn->query("
                             <?php echo $pendingCount; ?> pendiente<?php echo $pendingCount === 1 ? '' : 's'; ?> de aprobacion
                         </div>
                     </div>
-                    <a href="testimonio-editar.php" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                        <i class="fas fa-plus mr-2"></i>Nuevo Testimonio
+                    <div class="flex flex-wrap gap-3">
+                        <a href="testimonio-editar.php" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            <i class="fas fa-plus mr-2"></i>Nuevo Testimonio
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mb-6 flex flex-wrap gap-3">
+                    <a href="testimonios.php" class="rounded-full px-4 py-2 text-sm font-semibold transition <?php echo $statusFilter === 'todos' ? 'bg-slate-900 text-white shadow' : 'bg-white text-gray-700 shadow hover:bg-gray-50'; ?>">
+                        Todos
+                        <span class="ml-2 rounded-full <?php echo $statusFilter === 'todos' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600'; ?> px-2 py-0.5 text-xs">
+                            <?php echo $totalCount; ?>
+                        </span>
+                    </a>
+                    <a href="testimonios.php?estado=pendientes" class="rounded-full px-4 py-2 text-sm font-semibold transition <?php echo $statusFilter === 'pendientes' ? 'bg-amber-600 text-white shadow' : 'bg-white text-gray-700 shadow hover:bg-gray-50'; ?>">
+                        Pendientes
+                        <span class="ml-2 rounded-full <?php echo $statusFilter === 'pendientes' ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-700'; ?> px-2 py-0.5 text-xs">
+                            <?php echo $pendingCount; ?>
+                        </span>
+                    </a>
+                    <a href="testimonios.php?estado=publicados" class="rounded-full px-4 py-2 text-sm font-semibold transition <?php echo $statusFilter === 'publicados' ? 'bg-green-600 text-white shadow' : 'bg-white text-gray-700 shadow hover:bg-gray-50'; ?>">
+                        Publicados
+                        <span class="ml-2 rounded-full <?php echo $statusFilter === 'publicados' ? 'bg-white/20 text-white' : 'bg-green-100 text-green-700'; ?> px-2 py-0.5 text-xs">
+                            <?php echo $publishedCount; ?>
+                        </span>
                     </a>
                 </div>
 
@@ -133,6 +175,9 @@ $testimonios = $conn->query("
                                 Hay testimonios nuevos esperando tu aprobacion. Publica solo los que quieras mostrar en la web.
                             </p>
                         </div>
+                        <a href="testimonios.php?estado=pendientes" class="rounded-full bg-white px-4 py-2 text-sm font-semibold text-amber-700 shadow-sm hover:bg-amber-100">
+                            Revisar pendientes
+                        </a>
                     </div>
                 <?php endif; ?>
 
@@ -141,14 +186,15 @@ $testimonios = $conn->query("
                         <?php
                         if ($_GET['msg'] === 'deleted') echo 'Testimonio eliminado correctamente';
                         if ($_GET['msg'] === 'saved') echo 'Testimonio guardado correctamente';
-                        if ($_GET['msg'] === 'approved') echo 'Testimonio publicado correctamente';
+                        if ($_GET['msg'] === 'approved') echo 'Testimonio confirmado y publicado correctamente';
                         if ($_GET['msg'] === 'hidden') echo 'Testimonio marcado como pendiente';
                         ?>
                     </div>
                 <?php endif; ?>
 
                 <div class="bg-white rounded-lg shadow overflow-hidden">
-                    <table class="w-full">
+                    <div class="overflow-x-auto">
+                    <table class="w-full min-w-[1100px]">
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-6 py-3 text-left">Foto</th>
@@ -163,7 +209,7 @@ $testimonios = $conn->query("
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if ($testimonios instanceof mysqli_result): ?>
+                            <?php if ($testimonios instanceof mysqli_result && $testimonios->num_rows > 0): ?>
                                 <?php while ($t = $testimonios->fetch_assoc()): ?>
                                     <tr class="border-t hover:bg-gray-50 <?php echo (int) ($t['aprobado'] ?? 1) === 0 ? 'bg-amber-50/60' : ''; ?>">
                                         <td class="px-6 py-4">
@@ -175,9 +221,17 @@ $testimonios = $conn->query("
                                                 </div>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="px-6 py-4 font-medium"><?php echo htmlspecialchars($t['nombre'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                        <td class="px-6 py-4 font-medium">
+                                            <a href="testimonio-editar.php?id=<?php echo (int) $t['id']; ?>" class="text-slate-900 hover:text-blue-600 hover:underline">
+                                                <?php echo htmlspecialchars($t['nombre'], ENT_QUOTES, 'UTF-8'); ?>
+                                            </a>
+                                        </td>
                                         <td class="px-6 py-4"><?php echo htmlspecialchars($t['empresa'] ?? '-', ENT_QUOTES, 'UTF-8'); ?></td>
-                                        <td class="px-6 py-4 max-w-xs truncate"><?php echo htmlspecialchars($t['testimonio'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                        <td class="px-6 py-4 max-w-xs">
+                                            <a href="testimonio-editar.php?id=<?php echo (int) $t['id']; ?>" class="block truncate text-gray-700 hover:text-blue-600" title="<?php echo htmlspecialchars($t['testimonio'], ENT_QUOTES, 'UTF-8'); ?>">
+                                                <?php echo htmlspecialchars($t['testimonio'], ENT_QUOTES, 'UTF-8'); ?>
+                                            </a>
+                                        </td>
                                         <td class="px-6 py-4">
                                             <div class="flex text-yellow-400">
                                                 <?php for ($i = 1; $i <= 5; $i++): ?>
@@ -205,35 +259,43 @@ $testimonios = $conn->query("
                                             <?php endif; ?>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <a href="testimonio-editar.php?id=<?php echo (int) $t['id']; ?>" class="text-blue-600 hover:text-blue-800 mr-3" title="Editar">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
+                                            <div class="flex items-center gap-3">
+                                                <a href="testimonio-editar.php?id=<?php echo (int) $t['id']; ?>" class="inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-100" title="Editar testimonio">
+                                                    <i class="fas fa-edit"></i>
+                                                    <span>Editar</span>
+                                                </a>
 
-                                            <form method="POST" class="inline">
-                                                <input type="hidden" name="id" value="<?php echo (int) $t['id']; ?>">
-                                                <input type="hidden" name="action" value="<?php echo (int) ($t['aprobado'] ?? 1) === 1 ? 'hide' : 'approve'; ?>">
-                                                <button type="submit" class="<?php echo (int) ($t['aprobado'] ?? 1) === 1 ? 'text-amber-600 hover:text-amber-800' : 'text-green-600 hover:text-green-800'; ?> mr-3" title="<?php echo (int) ($t['aprobado'] ?? 1) === 1 ? 'Marcar como pendiente' : 'Publicar'; ?>">
-                                                    <i class="fas <?php echo (int) ($t['aprobado'] ?? 1) === 1 ? 'fa-eye-slash' : 'fa-check'; ?>"></i>
-                                                </button>
-                                            </form>
+                                                <form method="POST" class="inline">
+                                                    <input type="hidden" name="id" value="<?php echo (int) $t['id']; ?>">
+                                                    <input type="hidden" name="action" value="<?php echo (int) ($t['aprobado'] ?? 1) === 1 ? 'hide' : 'approve'; ?>">
+                                                    <button type="submit" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium <?php echo (int) ($t['aprobado'] ?? 1) === 1 ? 'bg-amber-50 text-amber-700 hover:bg-amber-100' : 'bg-green-50 text-green-700 hover:bg-green-100'; ?>" title="<?php echo (int) ($t['aprobado'] ?? 1) === 1 ? 'Marcar como pendiente' : 'Confirmar y publicar'; ?>">
+                                                        <i class="fas <?php echo (int) ($t['aprobado'] ?? 1) === 1 ? 'fa-eye-slash' : 'fa-check-circle'; ?>"></i>
+                                                        <span><?php echo (int) ($t['aprobado'] ?? 1) === 1 ? 'Pendiente' : 'Confirmar'; ?></span>
+                                                    </button>
+                                                </form>
 
-                                            <form method="POST" class="inline" onsubmit="return confirm('Eliminar este testimonio?');">
-                                                <input type="hidden" name="id" value="<?php echo (int) $t['id']; ?>">
-                                                <input type="hidden" name="action" value="delete">
-                                                <button type="submit" class="text-red-600 hover:text-red-800" title="Eliminar">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
+                                                <form method="POST" class="inline" onsubmit="return confirm('Eliminar este testimonio?');">
+                                                    <input type="hidden" name="id" value="<?php echo (int) $t['id']; ?>">
+                                                    <input type="hidden" name="action" value="delete">
+                                                    <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-100" title="Eliminar testimonio">
+                                                        <i class="fas fa-trash"></i>
+                                                        <span>Eliminar</span>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
                                 <tr class="border-t">
-                                    <td colspan="9" class="px-6 py-6 text-center text-gray-500">No se pudieron cargar los testimonios.</td>
+                                    <td colspan="9" class="px-6 py-6 text-center text-gray-500">
+                                        <?php echo $statusFilter === 'pendientes' ? 'No hay testimonios pendientes por confirmar.' : ($statusFilter === 'publicados' ? 'No hay testimonios publicados en este momento.' : 'No se pudieron cargar los testimonios.'); ?>
+                                    </td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

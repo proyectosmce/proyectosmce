@@ -32,6 +32,7 @@ if ($id > 0) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $submitAction = $_POST['submit_action'] ?? 'save';
     $nombre = sanitize($_POST['nombre'] ?? '');
     $cargo = sanitize($_POST['cargo'] ?? '');
     $empresa = sanitize($_POST['empresa'] ?? '');
@@ -42,6 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $aprobado = isset($_POST['aprobado']) ? 1 : 0;
     $orden = max(0, (int) ($_POST['orden'] ?? 0));
     $foto = $testimonio['foto'] ?? null;
+
+    if ($submitAction === 'approve') {
+        $aprobado = 1;
+    }
+
+    if ($submitAction === 'pending') {
+        $aprobado = 0;
+    }
 
     if ($nombre === '' || $testimonioTexto === '') {
         $error = 'Nombre y testimonio son obligatorios.';
@@ -84,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt && $stmt->execute()) {
             $stmt->close();
-            header('Location: testimonios.php?msg=saved');
+            header('Location: testimonios.php?msg=' . ($aprobado === 1 ? 'approved' : 'saved'));
             exit;
         }
 
@@ -155,7 +164,18 @@ $isApproved = isset($testimonio['aprobado']) ? (int) $testimonio['aprobado'] ===
 
         <div class="flex-1 overflow-y-auto">
             <div class="p-8">
-                <h1 class="text-3xl font-bold mb-8"><?php echo htmlspecialchars($tituloPagina, ENT_QUOTES, 'UTF-8'); ?></h1>
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold"><?php echo htmlspecialchars($tituloPagina, ENT_QUOTES, 'UTF-8'); ?></h1>
+                    <div class="mt-3 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold <?php echo $isApproved ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-800'; ?>">
+                        <?php if (!$isApproved): ?>
+                            <span class="relative flex h-2.5 w-2.5">
+                                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-500 opacity-75"></span>
+                                <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-600"></span>
+                            </span>
+                        <?php endif; ?>
+                        <?php echo $isApproved ? 'Publicado en la web publica' : 'Pendiente de confirmacion'; ?>
+                    </div>
+                </div>
 
                 <?php if (isset($error)): ?>
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
@@ -227,9 +247,9 @@ $isApproved = isset($testimonio['aprobado']) ? (int) $testimonio['aprobado'] ===
                             <div class="space-y-3">
                                 <label class="flex items-center space-x-2">
                                     <input type="checkbox" name="aprobado" value="1" <?php echo $isApproved ? 'checked' : ''; ?> class="w-4 h-4 text-blue-600">
-                                    <span class="text-gray-700">Publicar testimonio</span>
+                                    <span class="text-gray-700">Marcar como confirmado y visible</span>
                                 </label>
-                                <p class="text-sm text-gray-500">Si lo desmarcas, el testimonio quedara pendiente y no se mostrara en la web publica.</p>
+                                <p class="text-sm text-gray-500">Si lo desmarcas, el testimonio quedara pendiente y no se mostrara en la web publica hasta que lo confirmes.</p>
 
                                 <label class="flex items-center space-x-2">
                                     <input type="checkbox" name="destacado" value="1" <?php echo !empty($testimonio['destacado']) ? 'checked' : ''; ?> class="w-4 h-4 text-blue-600">
@@ -243,9 +263,10 @@ $isApproved = isset($testimonio['aprobado']) ? (int) $testimonio['aprobado'] ===
                             </div>
                         </div>
 
-                        <div class="flex justify-end space-x-4 pt-4">
+                        <div class="flex flex-wrap justify-end gap-4 pt-4">
                             <a href="testimonios.php" class="px-6 py-2 border rounded-lg hover:bg-gray-50">Cancelar</a>
-                            <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Guardar Testimonio</button>
+                            <button type="submit" name="submit_action" value="pending" class="px-6 py-2 rounded-lg border border-amber-200 bg-amber-50 font-medium text-amber-700 hover:bg-amber-100">Guardar pendiente</button>
+                            <button type="submit" name="submit_action" value="approve" class="px-6 py-2 rounded-lg bg-green-600 font-medium text-white hover:bg-green-700">Guardar y confirmar</button>
                         </div>
                     </div>
                 </form>
