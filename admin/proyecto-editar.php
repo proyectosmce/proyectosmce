@@ -279,8 +279,13 @@ $currentImageUrl = !empty($project['imagen']) ? getProjectImageUrl($project) : n
 
                             <div>
                                 <label class="block text-gray-700 mb-2">Subir nueva imagen</label>
-                                <input type="file" name="imagen" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
+                                <input id="project-image-input" type="file" name="imagen" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
                                 <p class="text-sm text-gray-500 mt-1">Si subes una imagen, reemplaza la ruta actual y el sistema la optimiza automaticamente para que pese menos.</p>
+                                <div id="project-image-preview-wrapper" class="mt-4 hidden">
+                                    <p class="mb-2 text-sm font-semibold text-gray-700">Vista previa nueva</p>
+                                    <img id="project-image-preview" src="" alt="Vista previa nueva del proyecto" class="h-52 w-full max-w-md rounded-lg border border-blue-200 object-cover shadow-sm">
+                                    <p id="project-image-preview-name" class="mt-2 text-sm text-blue-700"></p>
+                                </div>
                             </div>
                         </div>
 
@@ -326,5 +331,33 @@ $currentImageUrl = !empty($project['imagen']) ? getProjectImageUrl($project) : n
             </div>
         </div>
     </div>
+    <script>
+        (function () {
+            var input = document.getElementById('project-image-input');
+            var wrapper = document.getElementById('project-image-preview-wrapper');
+            var preview = document.getElementById('project-image-preview');
+            var fileName = document.getElementById('project-image-preview-name');
+
+            if (!input || !wrapper || !preview || !fileName) {
+                return;
+            }
+
+            input.addEventListener('change', function () {
+                var file = input.files && input.files[0] ? input.files[0] : null;
+
+                if (!file) {
+                    wrapper.classList.add('hidden');
+                    preview.src = '';
+                    fileName.textContent = '';
+                    return;
+                }
+
+                var objectUrl = URL.createObjectURL(file);
+                preview.src = objectUrl;
+                fileName.textContent = file.name;
+                wrapper.classList.remove('hidden');
+            });
+        }());
+    </script>
 </body>
 </html>

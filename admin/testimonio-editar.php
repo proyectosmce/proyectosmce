@@ -258,8 +258,15 @@ $isApproved = isset($testimonio['aprobado']) ? (int) $testimonio['aprobado'] ===
                                     <img src="../assets/img/testimonios/<?php echo htmlspecialchars($testimonio['foto'], ENT_QUOTES, 'UTF-8'); ?>" alt="Foto" class="w-20 h-20 rounded-full object-cover">
                                 </div>
                             <?php endif; ?>
-                            <input type="file" name="foto" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
+                            <input id="testimonial-photo-input" type="file" name="foto" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
                             <p class="text-sm text-gray-500 mt-1">Formatos: JPG, PNG, GIF, WEBP. Se ajusta automaticamente a un formato ligero y se recomienda una foto cuadrada.</p>
+                            <div id="testimonial-photo-preview-wrapper" class="mt-4 hidden">
+                                <p class="mb-2 text-sm font-semibold text-gray-700">Vista previa nueva</p>
+                                <div class="flex items-center gap-4">
+                                    <img id="testimonial-photo-preview" src="" alt="Vista previa nueva del testimonio" class="h-24 w-24 rounded-full border border-blue-200 object-cover shadow-sm">
+                                    <p id="testimonial-photo-preview-name" class="text-sm text-blue-700"></p>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="grid md:grid-cols-2 gap-6">
@@ -292,5 +299,33 @@ $isApproved = isset($testimonio['aprobado']) ? (int) $testimonio['aprobado'] ===
             </div>
         </div>
     </div>
+    <script>
+        (function () {
+            var input = document.getElementById('testimonial-photo-input');
+            var wrapper = document.getElementById('testimonial-photo-preview-wrapper');
+            var preview = document.getElementById('testimonial-photo-preview');
+            var fileName = document.getElementById('testimonial-photo-preview-name');
+
+            if (!input || !wrapper || !preview || !fileName) {
+                return;
+            }
+
+            input.addEventListener('change', function () {
+                var file = input.files && input.files[0] ? input.files[0] : null;
+
+                if (!file) {
+                    wrapper.classList.add('hidden');
+                    preview.src = '';
+                    fileName.textContent = '';
+                    return;
+                }
+
+                var objectUrl = URL.createObjectURL(file);
+                preview.src = objectUrl;
+                fileName.textContent = file.name;
+                wrapper.classList.remove('hidden');
+            });
+        }());
+    </script>
 </body>
 </html>

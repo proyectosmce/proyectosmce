@@ -292,6 +292,10 @@ $mensajes = $conn->query($messagesSql);
                                         <?php
                                         $isUnread = empty($msg['leido']);
                                         $whatsAppUrl = admin_whatsapp_url($msg['telefono'] ?? '', $msg['nombre'] ?? '');
+                                        $replyTemplates = admin_get_message_reply_templates($msg['nombre'] ?? '');
+                                        $rowEmail = trim((string) ($msg['email'] ?? ''));
+                                        $rowPhone = admin_normalize_phone($msg['telefono'] ?? '');
+                                        $canUseTemplates = $rowEmail !== '' || $rowPhone !== '';
                                         ?>
                                         <tr class="border-t <?php echo $isUnread ? 'bg-sky-50' : 'bg-white'; ?> transition hover:bg-sky-100/70">
                                             <td class="px-6 py-4">
@@ -338,6 +342,44 @@ $mensajes = $conn->query($messagesSql);
                                                             <i class="fab fa-whatsapp"></i>
                                                             <span>WhatsApp</span>
                                                         </a>
+                                                    <?php endif; ?>
+
+                                                    <?php if ($canUseTemplates): ?>
+                                                        <details class="relative">
+                                                            <summary class="inline-flex cursor-pointer list-none items-center gap-2 rounded-lg bg-violet-50 px-3 py-2 text-sm font-medium text-violet-700 hover:bg-violet-100">
+                                                                <i class="fas fa-bolt"></i>
+                                                                <span>Plantillas</span>
+                                                            </summary>
+                                                            <div class="absolute right-0 z-20 mt-2 w-80 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl">
+                                                                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Respuesta rapida</p>
+                                                                <div class="mt-3 space-y-3">
+                                                                    <?php foreach ($replyTemplates as $template): ?>
+                                                                        <?php
+                                                                        $templateMailtoUrl = $rowEmail !== '' ? admin_mailto_url($rowEmail, $template['subject'], $template['body']) : null;
+                                                                        $templateWhatsappUrl = $rowPhone !== '' ? 'https://wa.me/' . $rowPhone . '?text=' . rawurlencode($template['body']) : null;
+                                                                        ?>
+                                                                        <div class="rounded-xl border border-slate-100 bg-slate-50 p-3">
+                                                                            <p class="text-sm font-semibold text-slate-900"><?php echo admin_escape($template['label']); ?></p>
+                                                                            <p class="mt-1 text-xs leading-5 text-slate-600"><?php echo admin_escape($template['description']); ?></p>
+                                                                            <div class="mt-3 flex flex-wrap gap-2">
+                                                                                <?php if ($templateMailtoUrl): ?>
+                                                                                    <a href="<?php echo admin_escape($templateMailtoUrl); ?>" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-700">
+                                                                                        <i class="fas fa-envelope"></i>
+                                                                                        <span>Correo</span>
+                                                                                    </a>
+                                                                                <?php endif; ?>
+                                                                                <?php if ($templateWhatsappUrl): ?>
+                                                                                    <a href="<?php echo admin_escape($templateWhatsappUrl); ?>" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-700">
+                                                                                        <i class="fab fa-whatsapp"></i>
+                                                                                        <span>WhatsApp</span>
+                                                                                    </a>
+                                                                                <?php endif; ?>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </details>
                                                     <?php endif; ?>
 
                                                     <form method="POST" class="inline">
