@@ -71,6 +71,12 @@ $mensajes_counts = array_reverse($mensajes_counts);
                         </a>
                     </li>
                     <li>
+                        <a href="testimonios.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
+                            <i class="fas fa-comment"></i>
+                            <span>Testimonios</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="mensajes.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
                             <i class="fas fa-envelope"></i>
                             <span>Mensajes</span>

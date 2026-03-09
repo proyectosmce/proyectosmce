@@ -1,18 +1,9 @@
 <?php require_once 'includes/config.php'; ?>
 <?php require_once 'includes/project-helpers.php'; ?>
 <?php require_once 'includes/form-guard.php'; ?>
+<?php require_once 'includes/testimonial-helpers.php'; ?>
 <?php
-// Asegurar tabla de testimonios
-$conn->query("CREATE TABLE IF NOT EXISTS testimonios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    testimonio TEXT NOT NULL,
-    valoracion INT DEFAULT 5,
-    proyecto_id INT,
-    destacado BOOLEAN DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (proyecto_id) REFERENCES proyectos(id) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+ensureTestimonialsSchema($conn);
 
 // Manejo de envío de testimonios (solo alta)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo_testimonio') {
@@ -78,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
     $mensaje = trim(strip_tags($mensaje));
 
     if ($nombre !== '' && $mensaje !== '' && $proyId > 0) {
-        if ($stmt = $conn->prepare('INSERT INTO testimonios (nombre, testimonio, proyecto_id, empresa, valoracion, destacado) VALUES (?, ?, ?, ?, ?, 0)')) {
+        if ($stmt = $conn->prepare('INSERT INTO testimonios (nombre, testimonio, proyecto_id, empresa, valoracion, destacado, aprobado) VALUES (?, ?, ?, ?, ?, 0, 0)')) {
             $stmt->bind_param('ssisi', $nombre, $mensaje, $proyId, $empresa, $valor);
             $stmt->execute();
             $stmt->close();
@@ -90,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
     redirect('testimonios.php?error=validation#form-testimonio');
 }
 
-$testimonios     = $conn->query("SELECT t.nombre, t.testimonio, t.valoracion, p.titulo AS proyecto FROM testimonios t LEFT JOIN proyectos p ON t.proyecto_id = p.id ORDER BY t.destacado DESC, t.created_at DESC LIMIT 9");
+$testimonios     = $conn->query("SELECT t.nombre, t.testimonio, t.valoracion, COALESCE(p.titulo, t.empresa, 'Proyecto MCE') AS proyecto FROM testimonios t LEFT JOIN proyectos p ON t.proyecto_id = p.id WHERE t.aprobado = 1 ORDER BY t.destacado DESC, t.created_at DESC LIMIT 9");
 $projectOptions  = fetchProjectDropdownOptions($conn);
 $testimonioOk    = isset($_GET['testimonio']) && $_GET['testimonio'] === 'ok';
 $testimonioError = $_GET['error'] ?? '';
@@ -190,7 +181,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
 <section id="testimonios" class="max-w-7xl mx-auto px-4 py-12">
     <?php if ($testimonioOk): ?>
     <div id="alert-testimonio" class="mb-8 rounded-lg border border-green-200 bg-green-50 text-green-800 px-4 py-3">
-        ¡Gracias! Tu testimonio se guardó y ya es visible.
+        Gracias. Tu testimonio fue recibido y quedo pendiente de aprobacion.
     </div>
     <?php endif; ?>
 
