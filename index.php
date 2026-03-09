@@ -136,30 +136,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
     </div>
 </section>
 
-<!-- Métricas de confianza -->
-<section class="max-w-7xl mx-auto px-4 -mt-10 lg:-mt-16">
-    <div class="bg-white rounded-2xl shadow-xl border border-slate-100 px-6 py-6 md:px-10 md:py-8">
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-            <div>
-                <p class="text-3xl font-bold text-slate-900">+120</p>
-                <p class="text-sm text-gray-600">proyectos entregados</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold text-slate-900">&lt; 48h</p>
-                <p class="text-sm text-gray-600">tiempo de respuesta</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold text-slate-900">99.9%</p>
-                <p class="text-sm text-gray-600">uptime en soportes</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold text-slate-900">9.2/10</p>
-                <p class="text-sm text-gray-600">satisfacción clientes</p>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- Presentación -->
 <section class="relative max-w-7xl mx-auto px-4 -mt-10 lg:-mt-16">
     <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
