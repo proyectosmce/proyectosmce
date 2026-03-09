@@ -40,6 +40,8 @@ jobs:
       SMTP_FROM_NAME: ${{ secrets.SMTP_FROM_NAME }}
       SMTP_TO_EMAIL: ${{ secrets.SMTP_TO_EMAIL }}
       SMTP_DEBUG: ${{ secrets.SMTP_DEBUG }}
+      RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+      RECAPTCHA_SECRET_KEY: ${{ secrets.RECAPTCHA_SECRET_KEY }}
       WHATSAPP_VERIFY_TOKEN: ${{ secrets.WHATSAPP_VERIFY_TOKEN }}
 
     steps:
@@ -62,6 +64,10 @@ jobs:
             echo "Aviso: faltan SMTP_USER o SMTP_PASS. El formulario guardara mensajes, pero no podra enviar correos."
           fi
 
+          if { [ -n "${RECAPTCHA_SITE_KEY}" ] && [ -z "${RECAPTCHA_SECRET_KEY}" ]; } || { [ -z "${RECAPTCHA_SITE_KEY}" ] && [ -n "${RECAPTCHA_SECRET_KEY}" ]; }; then
+            echo "Aviso: configura ambos secrets RECAPTCHA_SITE_KEY y RECAPTCHA_SECRET_KEY para activar reCAPTCHA."
+          fi
+
       - name: Checkout del repositorio
         uses: actions/checkout@v6
 
@@ -82,6 +88,8 @@ jobs:
           SMTP_FROM_NAME: ${{ env.SMTP_FROM_NAME }}
           SMTP_TO_EMAIL: ${{ env.SMTP_TO_EMAIL }}
           SMTP_DEBUG: ${{ env.SMTP_DEBUG }}
+          RECAPTCHA_SITE_KEY: ${{ env.RECAPTCHA_SITE_KEY }}
+          RECAPTCHA_SECRET_KEY: ${{ env.RECAPTCHA_SECRET_KEY }}
           WHATSAPP_VERIFY_TOKEN: ${{ env.WHATSAPP_VERIFY_TOKEN }}
         with:
           script: |
@@ -131,6 +139,14 @@ jobs:
 
             if (process.env.SMTP_DEBUG) {
               lines.push(`$SMTP_DEBUG = ${phpString(process.env.SMTP_DEBUG)};`);
+            }
+
+            if (process.env.RECAPTCHA_SITE_KEY) {
+              lines.push(`$RECAPTCHA_SITE_KEY = ${phpString(process.env.RECAPTCHA_SITE_KEY)};`);
+            }
+
+            if (process.env.RECAPTCHA_SECRET_KEY) {
+              lines.push(`$RECAPTCHA_SECRET_KEY = ${phpString(process.env.RECAPTCHA_SECRET_KEY)};`);
             }
 
             if (process.env.WHATSAPP_VERIFY_TOKEN) {
