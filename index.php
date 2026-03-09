@@ -230,47 +230,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
     </div>
 </section>
 
-<!-- Glosario rapido -->
-<section class="max-w-7xl mx-auto px-4 py-14">
-    <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 md:p-12">
-        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-8">
-            <div>
-                <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Glosario en lenguaje simple</p>
-                <h3 class="text-3xl font-bold text-slate-900">Que significa cada palabra que usamos</h3>
-                <p class="text-gray-700 mt-2 max-w-3xl">Titulos claros para que cualquier cliente entienda qué hacemos y cómo le sirve.</p>
-            </div>
-            <a href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-3 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
-                <i class="fas fa-eye"></i>
-                <span>Ver servicios detallados</span>
-            </a>
-        </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
-                <p class="text-sm font-semibold text-blue-700">Diseño gráfico (UX/UI)</p>
-                <p class="mt-2 text-sm text-gray-700">Cómo se ve y cómo se usa. Pantallas claras, botones obvios y flujos sin enredos.</p>
-            </div>
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
-                <p class="text-sm font-semibold text-blue-700">Conexiones a servidores (APIs)</p>
-                <p class="mt-2 text-sm text-gray-700">Puentes para que tu web o sistema se hable con pagos, inventarios, ERPs o CRMs.</p>
-            </div>
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
-                <p class="text-sm font-semibold text-blue-700">Automatización de procesos</p>
-                <p class="mt-2 text-sm text-gray-700">Bots o flujos que eliminan pasos manuales: reportes, avisos, validaciones.</p>
-            </div>
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
-                <p class="text-sm font-semibold text-blue-700">Infraestructura y seguridad</p>
-                <p class="mt-2 text-sm text-gray-700">Hosting, copias de seguridad y accesos con roles para que nada dependa de un solo equipo.</p>
-            </div>
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
-                <p class="text-sm font-semibold text-blue-700">Operación y soporte</p>
-                <p class="mt-2 text-sm text-gray-700">Monitoreo, tickets y mejoras continuas para que el sistema no se caiga cuando más lo necesitas.</p>
-            </div>
-            <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6">
-                <p class="text-sm font-semibold text-blue-700">Analítica y tableros</p>
-                <p class="mt-2 text-sm text-gray-700">Reportes claros de ventas, uso y rendimiento para decidir con datos.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
 <?php include 'includes/footer.php'; ?>

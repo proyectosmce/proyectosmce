@@ -152,45 +152,6 @@
     </div>
 </section>
 
-<!-- Diccionario simple -->
-<section class="max-w-7xl mx-auto px-4 pb-16">
-    <div class="rounded-2xl border border-slate-100 bg-white shadow-xl p-8 md:p-10">
-        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-6">
-            <div>
-                <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Diccionario rápido</p>
-                <h3 class="text-2xl font-bold text-slate-900">Explicamos cada término en español claro</h3>
-                <p class="text-gray-700 mt-2 max-w-2xl">Para que tu cliente, tu equipo comercial y tu área de operaciones entiendan lo mismo.</p>
-            </div>
-        </div>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="rounded-xl bg-slate-50 border border-slate-100 p-5">
-                <p class="text-sm font-semibold text-blue-700">Diseño gráfico (UX/UI)</p>
-                <p class="mt-2 text-sm text-gray-700">Cómo se ven y cómo se usan las pantallas. Maquetas y prototipos antes de programar.</p>
-            </div>
-            <div class="rounded-xl bg-slate-50 border border-slate-100 p-5">
-                <p class="text-sm font-semibold text-blue-700">Conexiones a servidores (APIs)</p>
-                <p class="mt-2 text-sm text-gray-700">Puentes para conectar tu sistema con pagos, inventarios, facturación o cualquier otro software.</p>
-            </div>
-            <div class="rounded-xl bg-slate-50 border border-slate-100 p-5">
-                <p class="text-sm font-semibold text-blue-700">Automatización de procesos</p>
-                <p class="mt-2 text-sm text-gray-700">Bots o reglas que hacen tareas repetitivas: avisos, conciliaciones, reportes, flujos de aprobación.</p>
-            </div>
-            <div class="rounded-xl bg-slate-50 border border-slate-100 p-5">
-                <p class="text-sm font-semibold text-blue-700">Tableros y reportes</p>
-                <p class="mt-2 text-sm text-gray-700">Indicadores listos para tomar decisiones: ventas, tiempos, uso, calidad.</p>
-            </div>
-            <div class="rounded-xl bg-slate-50 border border-slate-100 p-5">
-                <p class="text-sm font-semibold text-blue-700">Soporte y monitoreo</p>
-                <p class="mt-2 text-sm text-gray-700">Alertas, backups y respuesta a incidentes para que el sistema siga disponible.</p>
-            </div>
-            <div class="rounded-xl bg-slate-50 border border-slate-100 p-5">
-                <p class="text-sm font-semibold text-blue-700">Ciberseguridad básica</p>
-                <p class="mt-2 text-sm text-gray-700">Roles, permisos, HTTPS, auditoría de cambios y pruebas de vulnerabilidad iniciales.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- CTA final -->
 <section class="max-w-7xl mx-auto px-4 pb-16">
     <div class="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-800 text-white rounded-2xl p-10 shadow-2xl flex flex-col md:flex-row md:items-center md:justify-between gap-6">
