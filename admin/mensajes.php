@@ -187,9 +187,10 @@ $mensajes = $conn->query($messagesSql);
                             <tbody>
                                 <?php if ($mensajes instanceof mysqli_result && $mensajes->num_rows > 0): ?>
                                     <?php while ($msg = $mensajes->fetch_assoc()): ?>
-                                        <tr class="border-t hover:bg-gray-50 <?php echo empty($msg['leido']) ? 'bg-blue-50/40' : ''; ?>">
+                                        <?php $isUnread = empty($msg['leido']); ?>
+                                        <tr class="border-t <?php echo $isUnread ? 'bg-sky-50' : 'bg-white'; ?> transition hover:bg-sky-100/70">
                                             <td class="px-6 py-4">
-                                                <a href="mensaje-ver.php?id=<?php echo (int) $msg['id']; ?>" class="font-medium text-slate-900 hover:text-blue-600 hover:underline">
+                                                <a href="mensaje-ver.php?id=<?php echo (int) $msg['id']; ?>" class="font-medium <?php echo $isUnread ? 'text-slate-950' : 'text-slate-900'; ?> hover:text-blue-600 hover:underline">
                                                     <?php echo htmlspecialchars($msg['nombre'], ENT_QUOTES, 'UTF-8'); ?>
                                                 </a>
                                             </td>
@@ -217,7 +218,7 @@ $mensajes = $conn->query($messagesSql);
                                                 <?php if (!empty($msg['leido'])): ?>
                                                     <span class="rounded bg-green-100 px-2 py-1 text-sm text-green-800">Leido</span>
                                                 <?php else: ?>
-                                                    <span class="rounded bg-yellow-100 px-2 py-1 text-sm text-yellow-800">Nuevo</span>
+                                                    <span class="rounded bg-sky-100 px-2 py-1 text-sm font-semibold text-sky-800">No leido</span>
                                                 <?php endif; ?>
                                             </td>
                                             <td class="px-6 py-4">

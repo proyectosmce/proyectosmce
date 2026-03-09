@@ -235,7 +235,8 @@ $mensajes_counts = array_reverse($mensajes_counts);
                             $mensajes = $conn->query("SELECT * FROM mensajes ORDER BY created_at DESC LIMIT 5");
                             while ($msg = $mensajes->fetch_assoc()):
                             ?>
-                            <tr class="border-b hover:bg-gray-50">
+                            <?php $isUnread = empty($msg['leido']); ?>
+                            <tr class="border-b <?php echo $isUnread ? 'bg-sky-50' : 'bg-white'; ?> transition hover:bg-sky-100/70">
                                 <td class="py-2">
                                     <a href="mensaje-ver.php?id=<?php echo (int) $msg['id']; ?>" class="font-medium text-slate-900 hover:text-blue-600 hover:underline">
                                         <?php echo htmlspecialchars($msg['nombre'], ENT_QUOTES, 'UTF-8'); ?>
@@ -251,7 +252,7 @@ $mensajes_counts = array_reverse($mensajes_counts);
                                     <?php if ($msg['leido']): ?>
                                         <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Leido</span>
                                     <?php else: ?>
-                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">Nuevo</span>
+                                        <span class="bg-sky-100 text-sky-800 px-2 py-1 rounded text-sm font-semibold">No leido</span>
                                     <?php endif; ?>
                                 </td>
                                 <td class="py-2">
