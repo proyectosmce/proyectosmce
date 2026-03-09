@@ -133,7 +133,7 @@ $mensajes_counts = array_reverse($mensajes_counts);
                 
                 <!-- Tarjetas de estadísticas -->
                 <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-5">
-                    <div class="bg-white p-6 rounded-lg shadow">
+                    <a href="proyectos.php" class="block rounded-lg bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500">Proyectos</p>
@@ -141,9 +141,9 @@ $mensajes_counts = array_reverse($mensajes_counts);
                             </div>
                             <i class="fas fa-folder text-4xl text-blue-600"></i>
                         </div>
-                    </div>
+                    </a>
                     
-                    <div class="bg-white p-6 rounded-lg shadow">
+                    <a href="servicios.php" class="block rounded-lg bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500">Servicios</p>
@@ -151,9 +151,9 @@ $mensajes_counts = array_reverse($mensajes_counts);
                             </div>
                             <i class="fas fa-cog text-4xl text-green-600"></i>
                         </div>
-                    </div>
+                    </a>
                     
-                    <div class="bg-white p-6 rounded-lg shadow">
+                    <a href="mensajes.php" class="block rounded-lg bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500">Mensajes</p>
@@ -161,19 +161,19 @@ $mensajes_counts = array_reverse($mensajes_counts);
                             </div>
                             <i class="fas fa-envelope text-4xl text-yellow-600"></i>
                         </div>
-                    </div>
+                    </a>
                     
-                    <div class="bg-white p-6 rounded-lg shadow">
+                    <a href="mensajes.php?estado=nuevo" class="block rounded-lg bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-gray-500">No leídos</p>
+                                <p class="text-gray-500">No leidos</p>
                                 <p class="text-3xl font-bold text-red-600"><?php echo $mensajes_no_leidos; ?></p>
                             </div>
                             <i class="fas fa-envelope-open-text text-4xl text-red-600"></i>
                         </div>
-                    </div>
+                    </a>
 
-                    <div class="relative overflow-hidden rounded-lg border border-amber-100 bg-white p-6 shadow">
+                    <a href="testimonios.php" class="relative block overflow-hidden rounded-lg border border-amber-100 bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
                         <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-amber-50 to-transparent"></div>
                         <div class="relative flex items-center justify-between">
                             <div>
@@ -195,7 +195,7 @@ $mensajes_counts = array_reverse($mensajes_counts);
                             </div>
                             <i class="fas fa-comment-dots text-4xl <?php echo $testimonios_pendientes > 0 ? 'text-amber-500' : 'text-green-500'; ?>"></i>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- Gráficos -->
@@ -215,14 +215,19 @@ $mensajes_counts = array_reverse($mensajes_counts);
                 
                 <!-- Últimos mensajes -->
                 <div class="bg-white p-6 rounded-lg shadow">
-                    <h2 class="text-xl font-bold mb-4">Últimos mensajes</h2>
-                    <table class="w-full">
+                    <div class="mb-4 flex items-center justify-between gap-4">
+                        <h2 class="text-xl font-bold">Ultimos mensajes</h2>
+                        <a href="mensajes.php" class="text-sm font-medium text-blue-600 hover:underline">Ver todos</a>
+                    </div>
+                    <div class="overflow-x-auto">
+                    <table class="w-full min-w-[720px]">
                         <thead>
                             <tr class="border-b">
                                 <th class="text-left py-2">Nombre</th>
                                 <th class="text-left py-2">Email</th>
                                 <th class="text-left py-2">Fecha</th>
                                 <th class="text-left py-2">Estado</th>
+                                <th class="text-left py-2">Accion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -231,20 +236,35 @@ $mensajes_counts = array_reverse($mensajes_counts);
                             while ($msg = $mensajes->fetch_assoc()):
                             ?>
                             <tr class="border-b hover:bg-gray-50">
-                                <td class="py-2"><?php echo $msg['nombre']; ?></td>
-                                <td class="py-2"><?php echo $msg['email']; ?></td>
+                                <td class="py-2">
+                                    <a href="mensaje-ver.php?id=<?php echo (int) $msg['id']; ?>" class="font-medium text-slate-900 hover:text-blue-600 hover:underline">
+                                        <?php echo htmlspecialchars($msg['nombre'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </a>
+                                </td>
+                                <td class="py-2">
+                                    <a href="mailto:<?php echo htmlspecialchars($msg['email'], ENT_QUOTES, 'UTF-8'); ?>" class="text-blue-600 hover:underline">
+                                        <?php echo htmlspecialchars($msg['email'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </a>
+                                </td>
                                 <td class="py-2"><?php echo date('d/m/Y', strtotime($msg['created_at'])); ?></td>
                                 <td class="py-2">
                                     <?php if ($msg['leido']): ?>
-                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Leído</span>
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Leido</span>
                                     <?php else: ?>
                                         <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">Nuevo</span>
                                     <?php endif; ?>
+                                </td>
+                                <td class="py-2">
+                                    <a href="mensaje-ver.php?id=<?php echo (int) $msg['id']; ?>" class="inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-100">
+                                        <i class="fas fa-eye"></i>
+                                        <span>Abrir</span>
+                                    </a>
                                 </td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

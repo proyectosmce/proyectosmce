@@ -1,5 +1,4 @@
 <?php
-// admin/mensajes.php
 require_once '../includes/config.php';
 require_once '../includes/testimonial-helpers.php';
 
@@ -8,23 +7,81 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
+function buildMessagePreview(string $message): string
+{
+    $message = trim($message);
+
+    if ($message === '') {
+        return '-';
+    }
+
+    if (function_exists('mb_strimwidth')) {
+        return mb_strimwidth($message, 0, 80, '...', 'UTF-8');
+    }
+
+    return strlen($message) > 80 ? substr($message, 0, 77) . '...' : $message;
+}
+
 $pendingTestimonials = getPendingTestimonialsCount($conn);
+$messageStatus = $_GET['msg'] ?? '';
+$messageFilter = ($_GET['estado'] ?? 'todos') === 'nuevo' ? 'nuevo' : 'todos';
 
-// Marcar como leído
-if (isset($_GET['read'])) {
-    $id = (int)$_GET['read'];
-    $conn->query("UPDATE mensajes SET leido = 1 WHERE id = $id");
-    header('Location: mensajes.php');
-    exit;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? '';
+    $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+    $redirectFilter = ($_POST['estado'] ?? 'todos') === 'nuevo' ? 'nuevo' : 'todos';
+    $redirectUrl = 'mensajes.php' . ($redirectFilter === 'nuevo' ? '?estado=nuevo' : '');
+    $joiner = $redirectFilter === 'nuevo' ? '&' : '?';
+
+    if ($id > 0) {
+        if ($action === 'read' || $action === 'unread') {
+            $readState = $action === 'read' ? 1 : 0;
+
+            if ($stmt = $conn->prepare('UPDATE mensajes SET leido = ? WHERE id = ?')) {
+                $stmt->bind_param('ii', $readState, $id);
+                $stmt->execute();
+                $stmt->close();
+            }
+
+            header('Location: ' . $redirectUrl . $joiner . 'msg=' . ($readState ? 'read' : 'unread'));
+            exit;
+        }
+
+        if ($action === 'delete') {
+            if ($stmt = $conn->prepare('DELETE FROM mensajes WHERE id = ?')) {
+                $stmt->bind_param('i', $id);
+                $stmt->execute();
+                $stmt->close();
+            }
+
+            header('Location: ' . $redirectUrl . $joiner . 'msg=deleted');
+            exit;
+        }
+    }
 }
 
-// Eliminar mensaje
-if (isset($_GET['delete'])) {
-    $id = (int)$_GET['delete'];
-    $conn->query("DELETE FROM mensajes WHERE id = $id");
-    header('Location: mensajes.php?msg=deleted');
-    exit;
+$totalMessages = 0;
+$unreadMessages = 0;
+
+$totalResult = $conn->query('SELECT COUNT(*) AS total FROM mensajes');
+if ($totalResult instanceof mysqli_result) {
+    $totalMessages = (int) ($totalResult->fetch_assoc()['total'] ?? 0);
+    $totalResult->free();
 }
+
+$unreadResult = $conn->query('SELECT COUNT(*) AS total FROM mensajes WHERE leido = 0');
+if ($unreadResult instanceof mysqli_result) {
+    $unreadMessages = (int) ($unreadResult->fetch_assoc()['total'] ?? 0);
+    $unreadResult->free();
+}
+
+$messagesSql = 'SELECT * FROM mensajes';
+if ($messageFilter === 'nuevo') {
+    $messagesSql .= ' WHERE leido = 0';
+}
+$messagesSql .= ' ORDER BY created_at DESC';
+
+$mensajes = $conn->query($messagesSql);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,7 +94,6 @@ if (isset($_GET['delete'])) {
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen">
-        <!-- Sidebar -->
         <div class="w-64 bg-white shadow-lg">
             <div class="p-4 border-b">
                 <h2 class="text-xl font-bold text-blue-600">MCE Admin</h2>
@@ -62,70 +118,148 @@ if (isset($_GET['delete'])) {
                             <?php endif; ?>
                         </a>
                     </li>
-                    <li><a href="mensajes.php" class="flex items-center space-x-2 p-2 bg-blue-50 text-blue-600 rounded"><i class="fas fa-envelope"></i><span>Mensajes</span></a></li>
+                    <li>
+                        <a href="mensajes.php" class="flex items-center space-x-2 rounded bg-blue-50 p-2 text-blue-600">
+                            <i class="fas fa-envelope"></i>
+                            <span>Mensajes</span>
+                            <?php if ($unreadMessages > 0): ?>
+                                <span class="ml-auto rounded-full bg-red-500 px-2 py-1 text-xs font-semibold text-white">
+                                    <?php echo $unreadMessages; ?>
+                                </span>
+                            <?php endif; ?>
+                        </a>
+                    </li>
                     <li><a href="logout.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded text-red-600"><i class="fas fa-sign-out-alt"></i><span>Salir</span></a></li>
                 </ul>
             </nav>
         </div>
-        
-        <!-- Contenido -->
+
         <div class="flex-1 overflow-y-auto">
             <div class="p-8">
-                <h1 class="text-3xl font-bold mb-8">Mensajes de Contacto</h1>
-                
-                <?php if (isset($_GET['msg'])): ?>
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                        Mensaje eliminado correctamente
+                <div class="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold">Mensajes de Contacto</h1>
+                        <p class="mt-2 text-sm text-gray-600">
+                            Abre cada mensaje para ver el contenido completo y gestionarlo desde el panel.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="mensajes.php" class="rounded-full px-4 py-2 text-sm font-semibold transition <?php echo $messageFilter === 'todos' ? 'bg-blue-600 text-white shadow' : 'bg-white text-gray-700 shadow hover:bg-gray-50'; ?>">
+                            Todos
+                            <span class="ml-2 rounded-full <?php echo $messageFilter === 'todos' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600'; ?> px-2 py-0.5 text-xs">
+                                <?php echo $totalMessages; ?>
+                            </span>
+                        </a>
+                        <a href="mensajes.php?estado=nuevo" class="rounded-full px-4 py-2 text-sm font-semibold transition <?php echo $messageFilter === 'nuevo' ? 'bg-red-600 text-white shadow' : 'bg-white text-gray-700 shadow hover:bg-gray-50'; ?>">
+                            Nuevos
+                            <span class="ml-2 rounded-full <?php echo $messageFilter === 'nuevo' ? 'bg-white/20 text-white' : 'bg-red-100 text-red-600'; ?> px-2 py-0.5 text-xs">
+                                <?php echo $unreadMessages; ?>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <?php if ($messageStatus !== ''): ?>
+                    <div class="mb-4 rounded border border-green-400 bg-green-100 px-4 py-3 text-green-700">
+                        <?php
+                        if ($messageStatus === 'deleted') echo 'Mensaje eliminado correctamente';
+                        if ($messageStatus === 'read') echo 'Mensaje marcado como leido';
+                        if ($messageStatus === 'unread') echo 'Mensaje marcado como no leido';
+                        if ($messageStatus === 'notfound') echo 'Ese mensaje ya no existe o fue eliminado';
+                        ?>
                     </div>
                 <?php endif; ?>
-                
-                <div class="bg-white rounded-lg shadow overflow-hidden">
-                    <table class="w-full">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-6 py-3 text-left">Nombre</th>
-                                <th class="px-6 py-3 text-left">Email</th>
-                                <th class="px-6 py-3 text-left">Teléfono</th>
-                                <th class="px-6 py-3 text-left">Mensaje</th>
-                                <th class="px-6 py-3 text-left">Fecha</th>
-                                <th class="px-6 py-3 text-left">Estado</th>
-                                <th class="px-6 py-3 text-left">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $mensajes = $conn->query("SELECT * FROM mensajes ORDER BY created_at DESC");
-                            while ($msg = $mensajes->fetch_assoc()):
-                            ?>
-                            <tr class="border-t hover:bg-gray-50 <?php echo !$msg['leido'] ? 'font-bold' : ''; ?>">
-                                <td class="px-6 py-4"><?php echo $msg['nombre']; ?></td>
-                                <td class="px-6 py-4"><?php echo $msg['email']; ?></td>
-                                <td class="px-6 py-4"><?php echo $msg['telefono'] ?? '-'; ?></td>
-                                <td class="px-6 py-4 max-w-xs truncate"><?php echo substr($msg['mensaje'], 0, 50); ?>...</td>
-                                <td class="px-6 py-4"><?php echo date('d/m/Y H:i', strtotime($msg['created_at'])); ?></td>
-                                <td class="px-6 py-4">
-                                    <?php if ($msg['leido']): ?>
-                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Leído</span>
-                                    <?php else: ?>
-                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">Nuevo</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <?php if (!$msg['leido']): ?>
-                                        <a href="?read=<?php echo $msg['id']; ?>" class="text-green-600 hover:text-green-800 mr-3" title="Marcar como leído">
-                                            <i class="fas fa-check"></i>
-                                        </a>
-                                    <?php endif; ?>
-                                    <a href="?delete=<?php echo $msg['id']; ?>" 
-                                       class="text-red-600 hover:text-red-800"
-                                       onclick="return confirm('¿Eliminar este mensaje?')">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
+
+                <div class="overflow-hidden rounded-lg bg-white shadow">
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[980px]">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Nombre</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Email</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Telefono</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Vista previa</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Fecha</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Estado</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if ($mensajes instanceof mysqli_result && $mensajes->num_rows > 0): ?>
+                                    <?php while ($msg = $mensajes->fetch_assoc()): ?>
+                                        <tr class="border-t hover:bg-gray-50 <?php echo empty($msg['leido']) ? 'bg-blue-50/40' : ''; ?>">
+                                            <td class="px-6 py-4">
+                                                <a href="mensaje-ver.php?id=<?php echo (int) $msg['id']; ?>" class="font-medium text-slate-900 hover:text-blue-600 hover:underline">
+                                                    <?php echo htmlspecialchars($msg['nombre'], ENT_QUOTES, 'UTF-8'); ?>
+                                                </a>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <a href="mailto:<?php echo htmlspecialchars($msg['email'], ENT_QUOTES, 'UTF-8'); ?>" class="text-blue-600 hover:underline">
+                                                    <?php echo htmlspecialchars($msg['email'], ENT_QUOTES, 'UTF-8'); ?>
+                                                </a>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <?php if (!empty($msg['telefono'])): ?>
+                                                    <a href="tel:<?php echo htmlspecialchars(preg_replace('/[^0-9+]/', '', $msg['telefono']), ENT_QUOTES, 'UTF-8'); ?>" class="text-blue-600 hover:underline">
+                                                        <?php echo htmlspecialchars($msg['telefono'], ENT_QUOTES, 'UTF-8'); ?>
+                                                    </a>
+                                                <?php else: ?>
+                                                    -
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="max-w-xs px-6 py-4">
+                                                <a href="mensaje-ver.php?id=<?php echo (int) $msg['id']; ?>" class="block truncate text-gray-700 hover:text-blue-600" title="<?php echo htmlspecialchars($msg['mensaje'], ENT_QUOTES, 'UTF-8'); ?>">
+                                                    <?php echo htmlspecialchars(buildMessagePreview((string) ($msg['mensaje'] ?? '')), ENT_QUOTES, 'UTF-8'); ?>
+                                                </a>
+                                            </td>
+                                            <td class="px-6 py-4 text-sm text-gray-700"><?php echo date('d/m/Y H:i', strtotime($msg['created_at'])); ?></td>
+                                            <td class="px-6 py-4">
+                                                <?php if (!empty($msg['leido'])): ?>
+                                                    <span class="rounded bg-green-100 px-2 py-1 text-sm text-green-800">Leido</span>
+                                                <?php else: ?>
+                                                    <span class="rounded bg-yellow-100 px-2 py-1 text-sm text-yellow-800">Nuevo</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div class="flex items-center gap-3">
+                                                    <a href="mensaje-ver.php?id=<?php echo (int) $msg['id']; ?>" class="inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-100">
+                                                        <i class="fas fa-eye"></i>
+                                                        <span>Abrir</span>
+                                                    </a>
+
+                                                    <form method="POST" class="inline">
+                                                        <input type="hidden" name="id" value="<?php echo (int) $msg['id']; ?>">
+                                                        <input type="hidden" name="estado" value="<?php echo $messageFilter; ?>">
+                                                        <input type="hidden" name="action" value="<?php echo !empty($msg['leido']) ? 'unread' : 'read'; ?>">
+                                                        <button type="submit" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium <?php echo !empty($msg['leido']) ? 'bg-gray-100 text-gray-700 hover:bg-gray-200' : 'bg-green-50 text-green-700 hover:bg-green-100'; ?>">
+                                                            <i class="fas <?php echo !empty($msg['leido']) ? 'fa-envelope' : 'fa-check'; ?>"></i>
+                                                            <span><?php echo !empty($msg['leido']) ? 'No leido' : 'Leido'; ?></span>
+                                                        </button>
+                                                    </form>
+
+                                                    <form method="POST" class="inline" onsubmit="return confirm('Eliminar este mensaje?');">
+                                                        <input type="hidden" name="id" value="<?php echo (int) $msg['id']; ?>">
+                                                        <input type="hidden" name="estado" value="<?php echo $messageFilter; ?>">
+                                                        <input type="hidden" name="action" value="delete">
+                                                        <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-100">
+                                                            <i class="fas fa-trash"></i>
+                                                            <span>Eliminar</span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <tr class="border-t">
+                                        <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                                            <?php echo $messageFilter === 'nuevo' ? 'No hay mensajes nuevos por revisar.' : 'No hay mensajes registrados todavia.'; ?>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
