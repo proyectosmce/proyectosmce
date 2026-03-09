@@ -95,8 +95,10 @@
     <!-- Botón flotante de WhatsApp -->
     <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto"
        target="_blank"
-       class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all duration-300 hover:scale-110 z-50 group">
-        <i class="fab fa-whatsapp text-3xl"></i>
+       class="mce-whatsapp-float fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-300 z-50 group">
+        <span class="mce-whatsapp-float__icon">
+            <i class="fab fa-whatsapp text-3xl"></i>
+        </span>
         <span class="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
             ¡Chatea con nosotros!
         </span>
