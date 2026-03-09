@@ -117,6 +117,41 @@ function admin_whatsapp_url(?string $phone, string $contactName = ''): ?string
     return 'https://wa.me/' . $normalizedPhone . '?text=' . rawurlencode($message);
 }
 
+function admin_mailto_url(string $email, string $subject, string $body): string
+{
+    return 'mailto:' . rawurlencode($email) . '?subject=' . rawurlencode($subject) . '&body=' . rawurlencode($body);
+}
+
+function admin_get_message_reply_templates(?string $contactName = null): array
+{
+    $contactName = trim((string) $contactName);
+    $greeting = $contactName !== '' ? 'Hola ' . $contactName . ',' : 'Hola,';
+
+    return [
+        [
+            'id' => 'received',
+            'label' => 'Confirmar recepcion',
+            'description' => 'Confirma que ya viste el mensaje y que responderas con detalle.',
+            'subject' => 'Recibimos tu mensaje - Proyectos MCE',
+            'body' => $greeting . "\n\nGracias por escribirnos a Proyectos MCE. Ya recibimos tu mensaje y voy a revisar lo que necesitas para responderte con mas detalle en breve.\n\nSi quieres agilizar la propuesta, puedes compartirnos tambien tu presupuesto estimado y la fecha en la que te gustaria iniciar.\n\nQuedo atento.\n\nProyectos MCE",
+        ],
+        [
+            'id' => 'call',
+            'label' => 'Agendar llamada',
+            'description' => 'Propone una llamada corta para aclarar alcance y tiempos.',
+            'subject' => 'Podemos agendar una llamada corta',
+            'body' => $greeting . "\n\nGracias por tu mensaje. Para entender mejor lo que necesitas, podemos agendar una llamada corta de 15 minutos y asi revisar alcance, tiempos y presupuesto.\n\nSi te parece bien, enviame dos horarios que te funcionen y coordinamos.\n\nQuedo atento.\n\nProyectos MCE",
+        ],
+        [
+            'id' => 'quote',
+            'label' => 'Preparar cotizacion',
+            'description' => 'Pide la informacion minima para enviar una propuesta mas precisa.',
+            'subject' => 'Informacion para enviarte una cotizacion',
+            'body' => $greeting . "\n\nGracias por contactarnos. Para enviarte una cotizacion mas precisa necesito estos datos:\n- Objetivo del proyecto\n- Funciones principales que necesitas\n- Fecha ideal de entrega\n- Presupuesto aproximado\n\nCon esa informacion te respondo con una propuesta mas clara.\n\nProyectos MCE",
+        ],
+    ];
+}
+
 function admin_log_column_exists(mysqli $conn, string $columnName): bool
 {
     $safeColumn = $conn->real_escape_string($columnName);

@@ -3,6 +3,7 @@ require_once '../includes/config.php';
 require_once '../includes/project-helpers.php';
 require_once '../includes/testimonial-helpers.php';
 require_once '../includes/admin-helpers.php';
+require_once '../includes/image-helpers.php';
 
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: index.php');
@@ -12,6 +13,15 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 ensureTestimonialsSchema($conn);
 $pendingTestimonials = getPendingTestimonialsCount($conn);
 $csrfToken = admin_get_csrf_token();
+
+function canDeleteManagedTestimonialPhoto(?string $photoName): bool
+{
+    if (!$photoName) {
+        return false;
+    }
+
+    return basename($photoName) === $photoName;
+}
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 $testimonio = null;
@@ -58,33 +68,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $aprobado = 0;
     }
 
-    if ($nombre === '' || $testimonioTexto === '') {
+    if (!isset($error) && ($nombre === '' || $testimonioTexto === '')) {
         $error = 'Nombre y testimonio son obligatorios.';
     }
 
     if (!isset($error) && isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
-        $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-        $filename = $_FILES['foto']['name'];
-        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $uploadResult = image_helper_store_upload(
+            $_FILES['foto'],
+            '../assets/img/testimonios',
+            'test_',
+            [
+                'max_width' => 800,
+                'max_height' => 800,
+                'jpeg_quality' => 82,
+                'webp_quality' => 80,
+                'png_compression' => 6,
+            ]
+        );
 
-        if (!in_array($ext, $allowed, true)) {
-            $error = 'La foto debe estar en formato JPG, PNG, GIF o WEBP.';
+        if (empty($uploadResult['ok'])) {
+            $error = $uploadResult['error'] ?? 'No se pudo subir la foto del testimonio.';
         } else {
-            if (!file_exists('../assets/img/testimonios')) {
-                mkdir('../assets/img/testimonios', 0777, true);
+            if (canDeleteManagedTestimonialPhoto($foto) && file_exists('../assets/img/testimonios/' . $foto)) {
+                unlink('../assets/img/testimonios/' . $foto);
             }
-
-            $newFilename = uniqid('test_', true) . '.' . $ext;
-            $uploadPath = '../assets/img/testimonios/' . $newFilename;
-
-            if (move_uploaded_file($_FILES['foto']['tmp_name'], $uploadPath)) {
-                if ($foto && file_exists('../assets/img/testimonios/' . $foto)) {
-                    unlink('../assets/img/testimonios/' . $foto);
-                }
-                $foto = $newFilename;
-            } else {
-                $error = 'No se pudo subir la foto del testimonio.';
-            }
+            $foto = $uploadResult['filename'];
         }
     }
 
@@ -251,7 +259,7 @@ $isApproved = isset($testimonio['aprobado']) ? (int) $testimonio['aprobado'] ===
                                 </div>
                             <?php endif; ?>
                             <input type="file" name="foto" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
-                            <p class="text-sm text-gray-500 mt-1">Formatos: JPG, PNG, GIF, WEBP. Recomendado: cuadrado.</p>
+                            <p class="text-sm text-gray-500 mt-1">Formatos: JPG, PNG, GIF, WEBP. Se ajusta automaticamente a un formato ligero y se recomienda una foto cuadrada.</p>
                         </div>
 
                         <div class="grid md:grid-cols-2 gap-6">

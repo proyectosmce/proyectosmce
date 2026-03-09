@@ -4,6 +4,7 @@ require_once '../includes/config.php';
 require_once '../includes/project-helpers.php';
 require_once '../includes/testimonial-helpers.php';
 require_once '../includes/admin-helpers.php';
+require_once '../includes/image-helpers.php';
 
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: index.php');
@@ -60,37 +61,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $imagen = ltrim(str_replace('\\', '/', $imagen), '/');
     $currentImage = $project['imagen'] ?? null;
 
-    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $allowed = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-        $filename = $_FILES['imagen']['name'];
-        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+    if (!isset($error) && ($titulo === '' || $descripcion === '' || $categoria === '')) {
+        $error = 'Titulo, descripcion y categoria son obligatorios.';
+    }
 
-        if (!in_array($ext, $allowed, true)) {
-            $error = 'La imagen debe estar en formato JPG, PNG, GIF o WEBP.';
+    if (!isset($error) && isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $uploadResult = image_helper_store_upload(
+            $_FILES['imagen'],
+            '../assets/img/proyectos',
+            'proy_',
+            [
+                'max_width' => 1600,
+                'max_height' => 1200,
+                'jpeg_quality' => 82,
+                'webp_quality' => 80,
+                'png_compression' => 6,
+            ]
+        );
+
+        if (empty($uploadResult['ok'])) {
+            $error = $uploadResult['error'] ?? 'No se pudo subir la imagen del proyecto.';
         } else {
-            $uploadDir = '../assets/img/proyectos';
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
+            if (canDeleteManagedProjectImage($currentImage) && file_exists('../' . $currentImage)) {
+                unlink('../' . $currentImage);
             }
-
-            $newFilename = uniqid('proy_', true) . '.' . $ext;
-            $uploadPath = $uploadDir . '/' . $newFilename;
-
-            if (!move_uploaded_file($_FILES['imagen']['tmp_name'], $uploadPath)) {
-                $error = 'No se pudo subir la imagen del proyecto.';
-            } else {
-                if (canDeleteManagedProjectImage($currentImage) && file_exists('../' . $currentImage)) {
-                    unlink('../' . $currentImage);
-                }
-                $imagen = 'assets/img/proyectos/' . $newFilename;
-            }
+            $imagen = 'assets/img/proyectos/' . $uploadResult['filename'];
         }
     }
 
     if (!isset($error)) {
-        if ($titulo === '' || $descripcion === '' || $categoria === '') {
-            $error = 'Titulo, descripcion y categoria son obligatorios.';
-        } elseif ($id > 0) {
+        if ($id > 0) {
             $stmt = $conn->prepare('UPDATE proyectos SET titulo = ?, descripcion = ?, imagen = ?, categoria = ?, url_demo = ?, url_repo = ?, cliente = ?, fecha_completado = ?, destacado = ?, orden = ? WHERE id = ?');
             $stmt->bind_param('ssssssssiii', $titulo, $descripcion, $imagen, $categoria, $url_demo, $url_repo, $cliente, $fecha_completado, $destacado, $orden, $id);
         } else {
@@ -280,7 +280,7 @@ $currentImageUrl = !empty($project['imagen']) ? getProjectImageUrl($project) : n
                             <div>
                                 <label class="block text-gray-700 mb-2">Subir nueva imagen</label>
                                 <input type="file" name="imagen" accept="image/*" class="w-full px-4 py-2 border rounded-lg">
-                                <p class="text-sm text-gray-500 mt-1">Si subes una imagen, reemplaza la ruta actual.</p>
+                                <p class="text-sm text-gray-500 mt-1">Si subes una imagen, reemplaza la ruta actual y el sistema la optimiza automaticamente para que pese menos.</p>
                             </div>
                         </div>
 

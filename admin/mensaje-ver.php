@@ -85,6 +85,7 @@ $email = trim((string) ($mensaje['email'] ?? ''));
 $phone = trim((string) ($mensaje['telefono'] ?? ''));
 $phoneHref = admin_normalize_phone($phone);
 $whatsAppUrl = admin_whatsapp_url($phone, $mensaje['nombre'] ?? '');
+$replyTemplates = admin_get_message_reply_templates($mensaje['nombre'] ?? '');
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -249,8 +250,97 @@ $whatsAppUrl = admin_whatsapp_url($phone, $mensaje['nombre'] ?? '');
                         </div>
                     </div>
                 </div>
+
+                <div class="mt-6 rounded-2xl bg-white p-8 shadow">
+                    <div class="mb-6 border-b pb-4">
+                        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Plantillas rapidas</p>
+                        <p class="mt-2 text-sm text-gray-600">Usa respuestas base para contestar por correo, WhatsApp o copiar el texto y ajustarlo antes de enviarlo.</p>
+                    </div>
+
+                    <div class="grid gap-4 xl:grid-cols-3">
+                        <?php foreach ($replyTemplates as $template): ?>
+                            <?php
+                            $templateMailtoUrl = $email !== '' ? admin_mailto_url($email, $template['subject'], $template['body']) : null;
+                            $templateWhatsappUrl = $phoneHref !== '' ? 'https://wa.me/' . $phoneHref . '?text=' . rawurlencode($template['body']) : null;
+                            $copyText = $template['subject'] . "\n\n" . $template['body'];
+                            ?>
+                            <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div>
+                                        <h2 class="text-lg font-bold text-slate-900"><?php echo admin_escape($template['label']); ?></h2>
+                                        <p class="mt-1 text-sm text-slate-600"><?php echo admin_escape($template['description']); ?></p>
+                                    </div>
+                                    <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                                        Plantilla
+                                    </span>
+                                </div>
+
+                                <div class="mt-4 space-y-3">
+                                    <div>
+                                        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Asunto</p>
+                                        <p class="mt-1 text-sm font-semibold text-slate-900"><?php echo admin_escape($template['subject']); ?></p>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Mensaje</p>
+                                        <p class="mt-1 whitespace-pre-line text-sm leading-6 text-slate-700"><?php echo admin_escape($template['body']); ?></p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-5 flex flex-wrap gap-3">
+                                    <?php if ($templateMailtoUrl): ?>
+                                        <a href="<?php echo admin_escape($templateMailtoUrl); ?>" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                                            <i class="fas fa-envelope"></i>
+                                            <span>Usar en correo</span>
+                                        </a>
+                                    <?php endif; ?>
+
+                                    <?php if ($templateWhatsappUrl): ?>
+                                        <a href="<?php echo admin_escape($templateWhatsappUrl); ?>" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
+                                            <i class="fab fa-whatsapp"></i>
+                                            <span>Usar en WhatsApp</span>
+                                        </a>
+                                    <?php endif; ?>
+
+                                    <button type="button" data-copy-text="<?php echo admin_escape($copyText); ?>" class="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100">
+                                        <i class="fas fa-copy"></i>
+                                        <span>Copiar</span>
+                                    </button>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        document.querySelectorAll('[data-copy-text]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var text = button.getAttribute('data-copy-text') || '';
+                var label = button.querySelector('span');
+                var defaultLabel = label ? label.textContent : 'Copiar';
+
+                if (!navigator.clipboard) {
+                    return;
+                }
+
+                navigator.clipboard.writeText(text).then(function () {
+                    if (label) {
+                        label.textContent = 'Copiado';
+                    }
+                    button.classList.remove('text-slate-700', 'ring-slate-200');
+                    button.classList.add('text-emerald-700', 'ring-emerald-200', 'bg-emerald-50');
+
+                    window.setTimeout(function () {
+                        if (label) {
+                            label.textContent = defaultLabel;
+                        }
+                        button.classList.add('text-slate-700', 'ring-slate-200');
+                        button.classList.remove('text-emerald-700', 'ring-emerald-200', 'bg-emerald-50');
+                    }, 1800);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
