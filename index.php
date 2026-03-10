@@ -1,23 +1,5 @@
 ﻿<?php require_once 'includes/config.php'; ?>
 <?php require_once 'includes/project-helpers.php'; ?>
-<?php
-// Manejo de envío de testimonios (solo alta, sin edición)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo_testimonio') {
-    $nombre  = trim($_POST['nombre'] ?? '');
-    $mensaje = trim($_POST['mensaje'] ?? '');
-    $proyId  = (int) ($_POST['proyecto_id'] ?? 0);
-
-    if ($nombre !== '' && $mensaje !== '' && $proyId > 0) {
-        if ($stmt = $conn->prepare('INSERT INTO testimonios (nombre, testimonio, proyecto_id, valoracion, destacado) VALUES (?, ?, ?, 5, 0)')) {
-            $stmt->bind_param('ssi', $nombre, $mensaje, $proyId);
-            $stmt->execute();
-            $stmt->close();
-            header('Location: index.php?testimonio=ok#testimonios');
-            exit;
-        }
-    }
-}
-?>
 <?php include 'includes/header.php'; ?>
 
 <!-- Hero Section alineado con otras secciones -->

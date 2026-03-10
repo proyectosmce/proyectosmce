@@ -129,11 +129,26 @@ function image_helper_store_upload(array $file, string $destinationDirectory, st
     $originalName = (string) ($file['name'] ?? '');
     $tmpPath = (string) ($file['tmp_name'] ?? '');
     $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+    $maxBytes = max(0, (int) ($options['max_file_bytes'] ?? 5 * 1024 * 1024));
 
     if (!in_array($extension, image_helper_supported_extensions(), true)) {
         return [
             'ok' => false,
             'error' => 'La imagen debe estar en formato JPG, PNG, GIF o WEBP.',
+        ];
+    }
+
+    if ($maxBytes > 0 && (!isset($file['size']) || (int) $file['size'] > $maxBytes)) {
+        return [
+            'ok' => false,
+            'error' => 'La imagen supera el tamano maximo permitido.',
+        ];
+    }
+
+    if (!is_uploaded_file($tmpPath)) {
+        return [
+            'ok' => false,
+            'error' => 'No se pudo validar el archivo subido.',
         ];
     }
 
@@ -154,6 +169,17 @@ function image_helper_store_upload(array $file, string $destinationDirectory, st
     $filename = uniqid($filenamePrefix, true) . '.' . $extension;
     $destinationPath = rtrim($destinationDirectory, '/\\') . DIRECTORY_SEPARATOR . $filename;
     $optimized = false;
+
+    $imageInfo = @getimagesize($tmpPath);
+    if ($imageInfo !== false) {
+        $maxDimension = max(1, (int) ($options['max_dimension'] ?? 7000));
+        if ($imageInfo[0] > $maxDimension || $imageInfo[1] > $maxDimension) {
+            return [
+                'ok' => false,
+                'error' => 'La imagen es demasiado grande en dimensiones.',
+            ];
+        }
+    }
 
     if (image_helper_can_optimize($extension)) {
         $optimized = image_helper_resize_and_save($tmpPath, $extension, $destinationPath, $options);

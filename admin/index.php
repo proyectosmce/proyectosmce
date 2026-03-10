@@ -1,5 +1,38 @@
 <?php
 require_once '../includes/config.php';
+require_once '../includes/admin-helpers.php';
+
+if (!isset($_SESSION['admin_login_attempts']) || !is_array($_SESSION['admin_login_attempts'])) {
+    $_SESSION['admin_login_attempts'] = [];
+}
+
+function admin_login_attempts_key(string $username): string
+{
+    $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    return strtolower($username) . '|' . $ip;
+}
+
+function admin_login_is_limited(string $key, int $maxAttempts = 5, int $windowSeconds = 600): bool
+{
+    $now = time();
+    $attempts = $_SESSION['admin_login_attempts'][$key] ?? [];
+    $attempts = array_values(array_filter($attempts, static function ($ts) use ($now, $windowSeconds) {
+        return is_int($ts) && $ts > ($now - $windowSeconds);
+    }));
+    $_SESSION['admin_login_attempts'][$key] = $attempts;
+
+    return count($attempts) >= $maxAttempts;
+}
+
+function admin_login_record_attempt(string $key, bool $success): void
+{
+    if ($success) {
+        unset($_SESSION['admin_login_attempts'][$key]);
+        return;
+    }
+
+    $_SESSION['admin_login_attempts'][$key][] = time();
+}
 
 // Si ya esta logueado, redirigir al dashboard.
 if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
@@ -8,35 +41,46 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true
 }
 
 $error = '';
+$loginCsrf = admin_get_csrf_token();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = sanitize($_POST['username']);
-    $password = $_POST['password'];
-
-    // Buscar usuario en la base de datos.
-    $stmt = $conn->prepare("SELECT id, username, password_hash FROM usuarios WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
-
-        // Verificar la contrasena almacenada.
-        if (password_verify($password, $user['password_hash'])) {
-            $_SESSION['admin_logged_in'] = true;
-            $_SESSION['admin_id'] = $user['id'];
-            $_SESSION['admin_username'] = $user['username'];
-            header('Location: dashboard.php');
-            exit;
-        }
-
-        $error = 'Contrasena incorrecta';
+    if (!admin_validate_csrf($_POST['csrf_token'] ?? null)) {
+        $error = 'Sesion invalida. Recarga la pagina.';
     } else {
-        $error = 'Usuario no encontrado';
-    }
+        $username = sanitize($_POST['username']);
+        $password = $_POST['password'];
+        $attemptKey = admin_login_attempts_key($username);
 
-    $stmt->close();
+        if (admin_login_is_limited($attemptKey)) {
+            $error = 'Demasiados intentos fallidos. Intenta nuevamente en unos minutos.';
+        } else {
+            $stmt = $conn->prepare("SELECT id, username, password_hash FROM usuarios WHERE username = ?");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows === 1) {
+                $user = $result->fetch_assoc();
+
+                // Verificar la contrasena almacenada.
+                if (password_verify($password, $user['password_hash'])) {
+                    $_SESSION['admin_logged_in'] = true;
+                    $_SESSION['admin_id'] = $user['id'];
+                    $_SESSION['admin_username'] = $user['username'];
+                    admin_login_record_attempt($attemptKey, true);
+                    header('Location: dashboard.php');
+                    exit;
+                }
+
+                $error = 'Contrasena incorrecta';
+            } else {
+                $error = 'Usuario no encontrado';
+            }
+
+            $stmt->close();
+            admin_login_record_attempt($attemptKey, false);
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -62,6 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <form method="POST" action="">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($loginCsrf, ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="mb-4">
                     <label class="block text-gray-700 mb-2">Usuario</label>
                     <input

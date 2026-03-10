@@ -27,7 +27,7 @@ function ensureTestimonialsSchema(mysqli $conn): void
             valoracion INT DEFAULT 5,
             proyecto_id INT,
             destacado BOOLEAN DEFAULT FALSE,
-            aprobado BOOLEAN NOT NULL DEFAULT TRUE,
+            aprobado BOOLEAN NOT NULL DEFAULT FALSE,
             orden INT DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (proyecto_id) REFERENCES proyectos(id) ON DELETE SET NULL
@@ -40,7 +40,7 @@ function ensureTestimonialsSchema(mysqli $conn): void
         'foto' => "ALTER TABLE testimonios ADD COLUMN foto VARCHAR(255) NULL AFTER testimonio",
         'valoracion' => "ALTER TABLE testimonios ADD COLUMN valoracion INT DEFAULT 5 AFTER foto",
         'destacado' => "ALTER TABLE testimonios ADD COLUMN destacado BOOLEAN DEFAULT FALSE AFTER proyecto_id",
-        'aprobado' => "ALTER TABLE testimonios ADD COLUMN aprobado BOOLEAN NOT NULL DEFAULT TRUE AFTER destacado",
+        'aprobado' => "ALTER TABLE testimonios ADD COLUMN aprobado BOOLEAN NOT NULL DEFAULT FALSE AFTER destacado",
         'orden' => "ALTER TABLE testimonios ADD COLUMN orden INT DEFAULT 0 AFTER aprobado",
     ];
 
@@ -49,6 +49,8 @@ function ensureTestimonialsSchema(mysqli $conn): void
             $conn->query($sql);
         }
     }
+
+    $conn->query('ALTER TABLE testimonios MODIFY aprobado BOOLEAN NOT NULL DEFAULT FALSE');
 
     $schemaReady = true;
 }

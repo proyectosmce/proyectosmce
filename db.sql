@@ -52,8 +52,9 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 -- Insertar usuario admin por defecto (contraseña: admin123)
 -- IMPORTANTE: Cambiá esta contraseña después
-INSERT INTO usuarios (username, password_hash, email) 
-VALUES ('admin', '$2y$10$dPyVtyOAAC5U4uF.SNU3YOyzuZnYGmmugrMG/vsNlmuGnIdQ8YU1.', 'admin@proyectosmce.com');
+-- INSERT INTO usuarios (username, password_hash, email) 
+-- VALUES ('admin', '$2y$10$dPyVtyOAAC5U4uF.SNU3YOyzuZnYGmmugrMG/vsNlmuGnIdQ8YU1.', 'admin@proyectosmce.com');
+-- Reemplaza el hash anterior por uno generado para tu clave unica antes de ejecutarlo.
 
 -- Insertar datos de ejemplo
 INSERT INTO proyectos (titulo, descripcion, imagen, categoria, destacado, orden) VALUES

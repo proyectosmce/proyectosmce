@@ -5,18 +5,17 @@
 require_once __DIR__ . '/includes/config.php';
 
 // Lee el token desde secrets.php o variables de entorno.
-$verifyToken = $WHATSAPP_VERIFY_TOKEN ?? getenv('WHATSAPP_VERIFY_TOKEN') ?? 'cambia-este-token';
+$verifyToken = trim((string) ($WHATSAPP_VERIFY_TOKEN ?? getenv('WHATSAPP_VERIFY_TOKEN') ?? ''));
+if ($verifyToken === '') {
+    http_response_code(500);
+    exit('Configura WHATSAPP_VERIFY_TOKEN antes de usar el webhook.');
+}
 
 // Correo de destino
 $notifyEmail = 'proyectosmceaa@gmail.com';
 
 // 1) Verificacion del webhook (solo Meta Cloud)
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['hub_mode'])) {
-    if ($verifyToken === 'cambia-este-token') {
-        http_response_code(500);
-        exit('Configura WHATSAPP_VERIFY_TOKEN antes de usar el webhook.');
-    }
-
     if ($_GET['hub_mode'] === 'subscribe' && isset($_GET['hub_verify_token']) && $_GET['hub_verify_token'] === $verifyToken) {
         echo $_GET['hub_challenge'] ?? '';
         exit;
@@ -25,7 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['hub_mode'])) {
     exit;
 }
 
-// 2) Detectar origen y extraer datos
+// 2) Autenticacion basica para POST
+$providedToken = $_SERVER['HTTP_X_WEBHOOK_TOKEN'] ?? $_POST['token'] ?? $_GET['token'] ?? '';
+if ($providedToken !== $verifyToken) {
+    http_response_code(403);
+    exit('Token de webhook invalido');
+}
+
+// 3) Detectar origen y extraer datos
 $from = '';
 $body = '';
 
@@ -46,7 +52,7 @@ if (stripos($contentType, 'application/json') !== false) {
     $body = $_POST['Body'] ?? '';
 }
 
-// 3) Si hay datos, enviar correo y responder
+// 4) Si hay datos, enviar correo y responder
 if ($from && $body) {
     $subject = 'Nuevo WhatsApp de ' . $from;
     $message = "Remitente: {$from}\nMensaje:\n{$body}\n\nFecha: " . date('Y-m-d H:i:s');
