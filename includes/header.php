@@ -72,7 +72,7 @@
         </div>
         
         <!-- Menú móvil mejorado -->
-        <div id="mobile-menu" class="hidden md:hidden fixed inset-0 z-40 pt-20" style="background-image: linear-gradient(rgba(16,23,40,0.78), rgba(16,23,40,0.85)), url('<?php echo app_url('imag/MCE.jpg'); ?>'); background-size: cover; background-position: center;">
+        <div id="mobile-menu" class="hidden md:hidden fixed inset-0 z-40 pt-20" style="background-image: linear-gradient(rgba(16,23,40,0.78), rgba(16,23,40,0.85)), url('<?php echo app_url('imag/MCE.jpg'); ?>'); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #0f172a;">
             <div class="flex flex-col items-center space-y-6 p-8 text-white drop-shadow">
                 <a href="<?php echo app_url(); ?>" class="text-2xl font-semibold hover:text-yellow-200 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'text-yellow-300 font-bold' : ''; ?>"><i class="fas fa-home text-yellow-300/90"></i><span>Inicio</span></a>
                 <a href="<?php echo app_url('servicios.php'); ?>" class="text-2xl font-semibold hover:text-yellow-200 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'servicios.php' ? 'text-yellow-300 font-bold' : ''; ?>"><i class="fas fa-layer-group text-yellow-300/90"></i><span>Servicios</span></a>
