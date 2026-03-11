@@ -92,16 +92,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body
-    class="min-h-screen bg-center relative"
-    style="background: url('../imag/MCE.jpg') center center no-repeat; background-size: contain; background-color: #0b0b0b;"
+    class="min-h-screen bg-cover bg-center relative"
+    style="background: url('../imag/MCE.jpg') center center / cover no-repeat;"
 >
     <div class="absolute inset-0 bg-black/55"></div>
 
     <div class="relative z-10 min-h-screen flex items-center justify-center px-4">
         <div class="w-full max-w-md text-white">
             <div class="text-center mb-8 drop-shadow">
-                <h1 class="text-3xl font-bold">Proyectos MCE</h1>
-                <p class="text-lg font-medium">Panel de Administracion</p>
+                <h1 class="text-2xl font-bold">Proyectos MCE</h1>
+                <p class="text-base font-medium">Panel de Administracion</p>
             </div>
 
             <?php if ($error): ?>
@@ -135,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <button
                     type="submit"
-                    class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+                    class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition text-sm tracking-wide"
                 >
                     Ingresar
                 </button>
@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="mt-6 text-center text-sm text-white/80 drop-shadow">
                 <p>Usa las credenciales de administrador configuradas en tu base de datos.</p>
-                <p class="text-xs mt-2">Si este sitio es nuevo, cambia la contrasena inicial apenas ingreses.</p>
+                <p class="text-[11px] mt-2">Si este sitio es nuevo, cambia la contrasena inicial apenas ingreses.</p>
             </div>
         </div>
     </div>
