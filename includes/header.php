@@ -79,12 +79,6 @@
                 <a href="<?php echo app_url('portafolio.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'portafolio.php' ? 'text-blue-600' : ''; ?>"><i class="fas fa-briefcase text-blue-500/80"></i><span>Portafolio</span></a>
                 <a href="<?php echo app_url('testimonios.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'testimonios.php' ? 'text-blue-600' : ''; ?>"><i class="fas fa-comments text-blue-500/80"></i><span>Testimonios</span></a>
                 <a href="<?php echo app_url('contacto.php'); ?>" class="text-2xl font-semibold hover:text-blue-600 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'contacto.php' ? 'text-blue-600' : ''; ?>"><i class="fas fa-envelope-open-text text-blue-500/80"></i><span>Contacto</span></a>
-                
-                <!-- Botón de contacto en móvil -->
-                <a href="<?php echo app_url('contacto.php'); ?>" 
-                   class="mt-6 bg-blue-600 text-white px-8 py-3 rounded-lg text-xl">
-                    <i class="fas fa-whatsapp mr-2"></i>Contactar
-                </a>
             </div>
         </div>
     </nav>
