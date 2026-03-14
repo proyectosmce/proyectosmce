@@ -100,7 +100,7 @@ $replyTemplates = admin_get_message_reply_templates($mensaje['nombre'] ?? '');
     <div class="flex min-h-screen">
         <div class="w-64 bg-white shadow-lg">
             <div class="p-4 border-b">
-                <h2 class="text-xl font-bold text-blue-600">MCE Admin</h2>
+                <img src="../imag/MCE.jpg" alt="MCE Admin" class="h-10 w-auto object-contain">
             </div>
             <nav class="p-4">
                 <ul class="space-y-2">
@@ -344,3 +344,4 @@ $replyTemplates = admin_get_message_reply_templates($mensaje['nombre'] ?? '');
     </script>
 </body>
 </html>
+

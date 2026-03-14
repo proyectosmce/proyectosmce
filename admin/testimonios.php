@@ -187,7 +187,7 @@ $totalCount = $pendingCount + $publishedCount;
             <button id="toggleSidebar" class="p-2 rounded border border-gray-200 hover:bg-gray-100 active:scale-95 transition">
                 <i class="fas fa-bars"></i>
             </button>
-            <span class="font-semibold text-blue-600">MCE Admin</span>
+            <img src="../imag/MCE.jpg" alt="MCE Admin" class="h-10 w-auto object-contain">
         </div>
         <a href="logout.php" class="text-red-600 text-sm flex items-center gap-1"><i class="fas fa-sign-out-alt"></i>Salir</a>
     </header>
@@ -195,7 +195,7 @@ $totalCount = $pendingCount + $publishedCount;
     <div class="flex min-h-screen">
         <div id="sidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-white shadow-lg transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-40">
             <div class="p-4 border-b">
-                <h2 class="text-xl font-bold text-blue-600">MCE Admin</h2>
+                <img src="../imag/MCE.jpg" alt="MCE Admin" class="h-10 w-auto object-contain">
             </div>
             <nav class="p-4">
                 <ul class="space-y-2">
@@ -475,3 +475,4 @@ if (toggleBtn){ toggleBtn.addEventListener('click', ()=> sidebar.classList.conta
 if (overlay){ overlay.addEventListener('click', closeSidebar); }
 </script>
 </html>
+
