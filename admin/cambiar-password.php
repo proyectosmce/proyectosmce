@@ -94,7 +94,10 @@ if ($flashMessage === 'updated') {
     <div class="flex min-h-screen">
         <div class="w-64 bg-white shadow-lg">
             <div class="p-4 border-b">
-                <img src="../imag/MCE.jpg" alt="MCE Admin" class="h-10 w-auto object-contain">
+                <div class="relative h-10 w-10 shrink-0">
+    <span class="absolute inset-0 rounded-full border-2 border-blue-500/70 border-t-transparent animate-spin"></span>
+    <img src="../imag/MCE.jpg" alt="MCE Admin" class="absolute inset-1 h-8 w-8 object-contain rounded-full">
+</div>
             </div>
             <nav class="p-4">
                 <ul class="space-y-2">
@@ -216,5 +219,6 @@ if ($flashMessage === 'updated') {
     </div>
 </body>
 </html>
+
 
 

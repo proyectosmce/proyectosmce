@@ -87,7 +87,10 @@ $servicios = $conn->query($servicesSql);
     <!-- Barra móvil -->
     <header class="md:hidden sticky top-0 z-30 flex items-center justify-between bg-white px-4 py-3 shadow">
         <div class="flex items-center gap-2">
-            <img src="../imag/MCE.jpg" alt="MCE Admin" class="h-10 w-auto object-contain">
+            <div class="relative h-10 w-10 shrink-0">
+    <span class="absolute inset-0 rounded-full border-2 border-blue-500/70 border-t-transparent animate-spin"></span>
+    <img src="../imag/MCE.jpg" alt="MCE Admin" class="absolute inset-1 h-8 w-8 object-contain rounded-full">
+</div>
             <button id="toggleSidebar" class="p-2 rounded border border-gray-200 hover:bg-gray-100 active:scale-95 transition">
                 <i class="fas fa-bars"></i>
             </button>
@@ -98,7 +101,10 @@ $servicios = $conn->query($servicesSql);
     <div class="flex min-h-screen">
         <div id="sidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-white shadow-lg transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-40">
             <div class="p-4 border-b">
-                <img src="../imag/MCE.jpg" alt="MCE Admin" class="h-10 w-auto object-contain">
+                <div class="relative h-10 w-10 shrink-0">
+    <span class="absolute inset-0 rounded-full border-2 border-blue-500/70 border-t-transparent animate-spin"></span>
+    <img src="../imag/MCE.jpg" alt="MCE Admin" class="absolute inset-1 h-8 w-8 object-contain rounded-full">
+</div>
             </div>
             <nav class="p-4">
                 <ul class="space-y-2">
@@ -274,5 +280,6 @@ if (toggleBtn){ toggleBtn.addEventListener('click', ()=> sidebar.classList.conta
 if (overlay){ overlay.addEventListener('click', closeSidebar); }
 </script>
 </html>
+
 
 
