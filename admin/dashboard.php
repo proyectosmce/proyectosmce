@@ -88,11 +88,12 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                         </a>
                     </li>
                     <li>
-<<<<<<< HEAD
                         <a href="pagos.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
                             <i class="fas fa-credit-card"></i>
                             <span>Pagos</span>
-=======
+                        </a>
+                    </li>
+                    <li>
                         <a href="testimonios.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
                             <i class="fas fa-comment"></i>
                             <span>Testimonios</span>
@@ -105,7 +106,6 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                                     <?php echo $testimonios_pendientes; ?>
                                 </span>
                             <?php endif; ?>
->>>>>>> 141fcaf2e9f4a0d685dfa3a3001ee01e53efc611
                         </a>
                     </li>
                     <li>
