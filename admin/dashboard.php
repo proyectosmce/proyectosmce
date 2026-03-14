@@ -61,9 +61,20 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100">
-    <div class="flex h-screen">
+    <!-- Barra superior móvil -->
+    <header class="md:hidden sticky top-0 z-30 flex items-center justify-between bg-white px-4 py-3 shadow">
+        <div class="flex items-center gap-2">
+            <button id="toggleSidebar" class="p-2 rounded border border-gray-200 hover:bg-gray-100 active:scale-95 transition">
+                <i class="fas fa-bars"></i>
+            </button>
+            <span class="font-semibold text-blue-600">MCE Admin</span>
+        </div>
+        <a href="logout.php" class="text-red-600 text-sm flex items-center gap-1"><i class="fas fa-sign-out-alt"></i>Salir</a>
+    </header>
+
+    <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <div class="w-64 bg-white shadow-lg">
+        <div id="sidebar" class="fixed md:static inset-y-0 left-0 w-64 bg-white shadow-lg transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-40">
             <div class="p-4 border-b">
                 <h2 class="text-xl font-bold text-blue-600">MCE Admin</h2>
             </div>
@@ -140,6 +151,10 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
         </div>
         
         <!-- Contenido principal -->
+        <!-- Overlay móvil -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black/30 z-30 hidden md:hidden"></div>
+
+        <!-- Contenido principal -->
         <div class="flex-1 overflow-y-auto">
             <div class="p-8">
                 <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
@@ -164,7 +179,7 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                 
                 <!-- Tarjetas de estadísticas -->
                 <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-5">
-                    <a href="proyectos.php" class="block rounded-lg bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
+                    <a href="proyectos.php" class="block rounded-lg bg-white p-6 shadow transition transform hover:-translate-y-1 hover:shadow-lg active:scale-95">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500">Proyectos</p>
@@ -174,7 +189,7 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                         </div>
                     </a>
                     
-                    <a href="servicios.php" class="block rounded-lg bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
+                    <a href="servicios.php" class="block rounded-lg bg-white p-6 shadow transition transform hover:-translate-y-1 hover:shadow-lg active:scale-95">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500">Servicios</p>
@@ -184,7 +199,7 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                         </div>
                     </a>
                     
-                    <a href="mensajes.php" class="block rounded-lg bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
+                    <a href="mensajes.php" class="block rounded-lg bg-white p-6 shadow transition transform hover:-translate-y-1 hover:shadow-lg active:scale-95">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500">Mensajes</p>
@@ -194,7 +209,7 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                         </div>
                     </a>
                     
-                    <a href="mensajes.php?estado=nuevo" class="block rounded-lg bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
+                    <a href="mensajes.php?estado=nuevo" class="block rounded-lg bg-white p-6 shadow transition transform hover:-translate-y-1 hover:shadow-lg active:scale-95">
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-gray-500">No leidos</p>
@@ -204,7 +219,7 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                         </div>
                     </a>
 
-                    <a href="testimonios.php" class="relative block overflow-hidden rounded-lg border border-amber-100 bg-white p-6 shadow transition hover:-translate-y-1 hover:shadow-lg">
+                    <a href="testimonios.php" class="relative block overflow-hidden rounded-lg border border-amber-100 bg-white p-6 shadow transition transform hover:-translate-y-1 hover:shadow-lg active:scale-95">
                         <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-amber-50 to-transparent"></div>
                         <div class="relative flex items-center justify-between">
                             <div>
@@ -239,19 +254,19 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                             <a href="auditoria.php" class="text-sm font-medium text-blue-600 hover:underline">Ver actividad</a>
                         </div>
                         <div class="grid gap-4 md:grid-cols-2">
-                            <a href="proyecto-editar.php" class="rounded-2xl border border-blue-100 bg-blue-50 p-5 transition hover:-translate-y-1 hover:shadow-md">
+                            <a href="proyecto-editar.php" class="rounded-2xl border border-blue-100 bg-blue-50 p-5 transition transform hover:-translate-y-1 hover:shadow-md active:scale-95">
                                 <p class="text-lg font-bold text-blue-900">Nuevo proyecto</p>
                                 <p class="mt-2 text-sm text-blue-700">Carga un caso nuevo al portafolio.</p>
                             </a>
-                            <a href="servicio-editar.php" class="rounded-2xl border border-emerald-100 bg-emerald-50 p-5 transition hover:-translate-y-1 hover:shadow-md">
+                            <a href="servicio-editar.php" class="rounded-2xl border border-emerald-100 bg-emerald-50 p-5 transition transform hover:-translate-y-1 hover:shadow-md active:scale-95">
                                 <p class="text-lg font-bold text-emerald-900">Nuevo servicio</p>
                                 <p class="mt-2 text-sm text-emerald-700">Agrega o ajusta tu oferta comercial.</p>
                             </a>
-                            <a href="mensajes.php?estado=nuevo" class="rounded-2xl border border-sky-100 bg-sky-50 p-5 transition hover:-translate-y-1 hover:shadow-md">
+                            <a href="mensajes.php?estado=nuevo" class="rounded-2xl border border-sky-100 bg-sky-50 p-5 transition transform hover:-translate-y-1 hover:shadow-md active:scale-95">
                                 <p class="text-lg font-bold text-sky-900">Responder mensajes</p>
                                 <p class="mt-2 text-sm text-sky-700">Abre solo la cola de no leidos.</p>
                             </a>
-                            <a href="testimonios.php?estado=pendientes" class="rounded-2xl border border-amber-100 bg-amber-50 p-5 transition hover:-translate-y-1 hover:shadow-md">
+                            <a href="testimonios.php?estado=pendientes" class="rounded-2xl border border-amber-100 bg-amber-50 p-5 transition transform hover:-translate-y-1 hover:shadow-md active:scale-95">
                                 <p class="text-lg font-bold text-amber-900">Confirmar testimonios</p>
                                 <p class="mt-2 text-sm text-amber-700">Revisa primero lo pendiente.</p>
                             </a>
@@ -440,6 +455,31 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                 scales: { y: { beginAtZero: true } }
             }
         });
+    }
+
+    // Toggle sidebar en móvil
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    function closeSidebar() {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+    }
+    function openSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+    }
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            if (sidebar.classList.contains('-translate-x-full')) {
+                openSidebar();
+            } else {
+                closeSidebar();
+            }
+        });
+    }
+    if (overlay) {
+        overlay.addEventListener('click', closeSidebar);
     }
     </script>
 </body>
