@@ -489,6 +489,7 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
         overlay.addEventListener('click', closeSidebar);
     }
     </script>
+<?php include 'logout-modal.php'; ?>
 </body>
 </html>
 

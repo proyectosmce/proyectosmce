@@ -346,6 +346,7 @@ $replyTemplates = admin_get_message_reply_templates($mensaje['nombre'] ?? '');
             });
         });
     </script>
+<?php include 'logout-modal.php'; ?>
 </body>
 </html>
 

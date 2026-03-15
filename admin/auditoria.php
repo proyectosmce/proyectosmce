@@ -195,6 +195,7 @@ function openSidebar(){ sidebar.classList.remove('-translate-x-full'); overlay.c
 if (toggleBtn){ toggleBtn.addEventListener('click', ()=> sidebar.classList.contains('-translate-x-full') ? openSidebar() : closeSidebar()); }
 if (overlay){ overlay.addEventListener('click', closeSidebar); }
 </script>
+<?php include 'logout-modal.php'; ?>
 </html>
 
 

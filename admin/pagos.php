@@ -732,8 +732,9 @@ $pagosConfirmados = $conn->query("SELECT id, cliente, proyecto, monto, moneda FR
             </div>
         </div>
     </div>
-</body>
+</div>
 
+<?php include 'logout-modal.php'; ?>
 <script>
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('sidebarOverlay');
@@ -743,6 +744,7 @@ function openSidebar(){ sidebar.classList.remove('-translate-x-full'); overlay.c
 if (toggleBtn){ toggleBtn.addEventListener('click', ()=> sidebar.classList.contains('-translate-x-full') ? openSidebar() : closeSidebar()); }
 if (overlay){ overlay.addEventListener('click', closeSidebar); }
 </script>
+</body>
 </html>
 
 
