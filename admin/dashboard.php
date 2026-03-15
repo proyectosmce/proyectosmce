@@ -148,7 +148,7 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
                         </a>
                     </li>
                     <li>
-                        <a href="logout.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded text-red-600">
+                        <a href="logout.php" onclick="return confirm('¿Cerrar sesión?');" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded text-red-600">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Salir</span>
                         </a>
