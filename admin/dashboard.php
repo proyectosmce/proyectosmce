@@ -58,7 +58,7 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
     <title>Dashboard - Proyectos MCE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<style>.logo-ring{position:absolute;inset:0;border-radius:9999px;background:conic-gradient(from 0deg,#2563eb,#38bdf8,#2563eb);mask:radial-gradient(farthest-side,transparent calc(50% - 2px),#000 calc(50% - 1px));animation:logo-spin 4s linear infinite;}@keyframes logo-spin{to{transform:rotate(360deg);}}</style>
+<style>.logo-ring{position:absolute;inset:0;border:2px solid transparent;border-radius:8px;background:conic-gradient(from 0deg,#2563eb,#38bdf8,#2563eb);background-origin:border-box;animation:logo-spin 4s linear infinite;}@keyframes logo-spin{to{transform:rotate(360deg);}}</style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100">
@@ -491,6 +491,7 @@ $activityPreview = $conn->query("SELECT admin_username, action, entity_type, cre
     </script>
 </body>
 </html>
+
 
 
 
