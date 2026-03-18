@@ -112,7 +112,7 @@
 
     <!-- Botón flotante extra para llamada (desktop) -->
     <a href="<?php echo app_url('contacto.php'); ?>#agenda-llamada"
-       class="hidden md:inline-flex fixed bottom-6 left-6 bg-white text-slate-900 px-4 py-3 rounded-full shadow-lg hover:bg-blue-50 transition-all duration-300 hover:scale-105 z-50 border border-slate-200 mce-call-ringing">
+       class="inline-flex fixed bottom-6 left-6 bg-white text-slate-900 px-4 py-3 rounded-full shadow-lg hover:bg-blue-50 transition-all duration-300 hover:scale-105 z-50 border border-slate-200 mce-call-ringing">
         <span class="call-ico-wrap mr-2 text-slate-900">
             <i class="fas fa-phone-alt"></i>
             <span class="call-ring call-ring--1"></span>
