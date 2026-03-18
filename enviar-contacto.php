@@ -195,15 +195,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($isAgendaForm) {
                 $clientSubject = 'Confirmamos tu llamada con Proyectos MCE';
                 $clientHeroTitle = "Hola {$nombreHtml}, agenda recibida";
-                $clientHeroText = 'Recibimos tu solicitud para agendar una llamada. Revisaremos disponibilidad y te enviaremos la confirmaciÃ³n con el enlace de reuniÃ³n.';
+                $clientHeroText = 'Recibimos tu solicitud para agendar una llamada. Revisaremos disponibilidad y te enviaremos la confirmaci&oacute;n con el enlace de reuni&oacute;n.';
                 $clientSummaryTitle = 'Detalle de la llamada';
                 $clientMessageTitle = 'Notas que nos compartiste';
-                $clientNextTitle = 'QuÃ© sigue ahora';
-                $clientNextText = 'Validaremos el horario y te responderemos con la confirmaciÃ³n o una alternativa cercana.';
-                $clientFooterText = 'Este es un correo automÃ¡tico de confirmaciÃ³n de agenda. Si necesitas ajustar el horario, responde a este mensaje.';
+                $clientNextTitle = 'Qu&eacute; sigue ahora';
+                $clientNextText = 'Validaremos el horario y te responderemos con la confirmaci&oacute;n o una alternativa cercana.';
+                $clientFooterText = 'Este es un correo autom&aacute;tico de confirmaci&oacute;n de agenda. Si necesitas ajustar el horario, responde a este mensaje.';
                 $clientCtaText = 'Ver portafolio';
                 $clientPlainIntro = 'Recibimos tu solicitud para agendar una llamada. Confirmaremos el horario y te enviaremos el enlace.';
-                $clientPlainNext = 'Validaremos el horario y te responderemos con la confirmaciÃ³n o una alternativa cercana.';
+                $clientPlainNext = 'Validaremos el horario y te responderemos con la confirmacion o una alternativa cercana.';
             } elseif (strpos($serviceKey, 'tienda') !== false || strpos($serviceKey, 'e-commerce') !== false || strpos($serviceKey, 'ecommerce') !== false) {
                 $clientSubject = 'Recibimos tu solicitud para tu tienda online';
                 $clientHeroTitle = "Hola {$nombreHtml}, tu solicitud para tienda online ya está en revisión";
@@ -269,15 +269,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($isAgendaForm) {
                 $internalSubject = "Nueva agenda de llamada - {$nombreMail}";
                 $internalHeroTitle = "Solicitud de llamada: {$nombreHtml}";
-                $internalHeroText = 'Se registrÃ³ una agenda de llamada. Revisa horario solicitado y responde con la confirmaciÃ³n.';
+                $internalHeroText = 'Se registr&oacute; una agenda de llamada. Revisa horario solicitado y responde con la confirmaci&oacute;n.';
                 $internalSummaryTitle = 'Resumen de la llamada';
                 $internalMessageTitle = 'Notas del cliente';
-                $internalActionTitle = 'Siguiente acciÃ³n';
-                $internalActionText = "Confirma el horario solicitado y envÃ­a el enlace de reuniÃ³n a {$nombreHtml}.";
-                $internalFooterText = 'Lead interno generado automÃ¡ticamente desde el formulario de agenda de llamada.';
+                $internalActionTitle = 'Siguiente acci&oacute;n';
+                $internalActionText = "Confirma el horario solicitado y env&iacute;a el enlace de reuni&oacute;n a {$nombreHtml}.";
+                $internalFooterText = 'Lead interno generado autom&aacute;ticamente desde el formulario de agenda de llamada.';
                 $internalCtaText = 'Responder y confirmar';
                 $internalPlainIntro = 'Nueva solicitud de llamada recibida.';
-                $internalPlainAction = "Confirma horario y envÃ­a enlace a {$nombreMail}.";
+                $internalPlainAction = "Confirma horario y envia enlace a {$nombreMail}.";
             } elseif (strpos($serviceKey, 'tienda') !== false || strpos($serviceKey, 'e-commerce') !== false || strpos($serviceKey, 'ecommerce') !== false) {
                 $internalSubject = "Nuevo lead de tienda online - {$nombreMail}";
                 $internalHeroTitle = "Nuevo lead para tienda online: {$nombreHtml}";

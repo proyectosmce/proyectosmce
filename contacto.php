@@ -193,7 +193,7 @@ $selectedService = trim((string) ($_GET['servicio'] ?? ''));
                     </div>
                 <?php else: ?>
                     <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
-                        reCAPTCHA es obligatorio, pero no estÃ¡ configurado correctamente en este entorno.
+                        reCAPTCHA es obligatorio, pero no est&aacute; configurado correctamente en este entorno.
                     </div>
                 <?php endif; ?>
 
