@@ -62,7 +62,15 @@ function build_pdf(array $payment): string
 
     [$pr, $pg, $pb] = brand_primary();
 
-    $contentWidth = $pdf->GetPageWidth() - $pdf->GetX() - $pdf->rMargin;
+    // 🔥 CORREGIDO: Ya no usamos propiedades protegidas
+    $leftMargin = 12;   // Coincide con SetMargins()
+    $rightMargin = 12;  // Coincide con SetMargins()
+    $currentX = $pdf->GetX(); // Posición actual X (después de márgenes)
+    $pageWidth = $pdf->GetPageWidth();
+    
+    // Calculamos el ancho disponible restando márgenes
+    $contentWidth = $pageWidth - $leftMargin - $rightMargin;
+    
     // Anchos proporcionales para que se ajusten a distintos tamaños
     $colConcepto = $contentWidth * 0.55;
     $colMetodo   = $contentWidth * 0.20;
