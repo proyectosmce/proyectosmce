@@ -19,7 +19,9 @@ function ensureProjectPaymentsSchema(mysqli $conn): void
     $conn->query("
         CREATE TABLE IF NOT EXISTS proyecto_pagos (
             id INT AUTO_INCREMENT PRIMARY KEY,
+            invoice_number INT NULL UNIQUE,
             proyecto_id INT NULL,
+            cliente VARCHAR(200) NULL,
             concepto VARCHAR(200) NOT NULL,
             monto DECIMAL(12,2) NOT NULL,
             moneda VARCHAR(10) NOT NULL DEFAULT 'COP',
@@ -35,7 +37,9 @@ function ensureProjectPaymentsSchema(mysqli $conn): void
     ");
 
     $missingColumns = [
-        'concepto' => "ALTER TABLE proyecto_pagos ADD COLUMN concepto VARCHAR(200) NOT NULL AFTER proyecto_id",
+        'invoice_number' => "ALTER TABLE proyecto_pagos ADD COLUMN invoice_number INT NULL UNIQUE AFTER id",
+        'cliente' => "ALTER TABLE proyecto_pagos ADD COLUMN cliente VARCHAR(200) NULL AFTER proyecto_id",
+        'concepto' => "ALTER TABLE proyecto_pagos ADD COLUMN concepto VARCHAR(200) NOT NULL AFTER cliente",
         'moneda' => "ALTER TABLE proyecto_pagos ADD COLUMN moneda VARCHAR(10) NOT NULL DEFAULT 'COP' AFTER monto",
         'estado' => "ALTER TABLE proyecto_pagos ADD COLUMN estado VARCHAR(30) NOT NULL DEFAULT 'recibido' AFTER moneda",
         'metodo' => "ALTER TABLE proyecto_pagos ADD COLUMN metodo VARCHAR(50) NULL AFTER estado",
