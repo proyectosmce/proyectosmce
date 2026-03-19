@@ -18,7 +18,7 @@ ensureProjectPaymentsSchema($conn);
 $csrfToken = admin_get_csrf_token();
 
 $id = (int) ($_GET['id'] ?? $_POST['id'] ?? 0);
-$modo = trim((string) ($_GET['modo'] ?? $_POST['modo'] ?? 'html'));
+$modo = trim((string) ($_POST['modo'] ?? $_GET['modo'] ?? 'html'));
 $flash = $_GET['msg'] ?? '';
 $mailError = '';
 $mailError = '';
