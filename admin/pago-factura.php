@@ -57,24 +57,24 @@ function build_pdf(array $payment): string
     $pdf->Rect(0, 0, 210, 36, 'F');
     $pdf->SetY(10);
     $pdf->SetTextColor(255, 255, 255);
-    $pdf->SetFont('Helvetica', 'B', 16);
+    $pdf->SetFont('Arial', 'B', 16);
     $pdf->Cell(0, 8, pdf_text('Proyectos MCE'), 0, 1, 'L');
-    $pdf->SetFont('Helvetica', '', 11);
+    $pdf->SetFont('Arial', '', 11);
     $pdf->Cell(0, 6, pdf_text('Factura ' . invoice_number($payment)), 0, 1, 'L');
 
     $pdf->SetY(42);
     $pdf->SetTextColor(20, 23, 31);
-    $pdf->SetFont('Helvetica', 'B', 13);
+    $pdf->SetFont('Arial', 'B', 13);
     $pdf->Cell(0, 8, pdf_text('Resumen de pago'), 0, 1, 'L');
 
-    $pdf->SetFont('Helvetica', '', 11);
+    $pdf->SetFont('Arial', '', 11);
     $pdf->Cell(0, 6, pdf_text('Cliente: ' . ($payment['proyecto_cliente'] ?: 'Cliente sin nombre')), 0, 1);
     $pdf->Cell(0, 6, pdf_text('Proyecto: ' . ($payment['proyecto_titulo'] ?: 'Proyecto sin tÃ­tulo')), 0, 1);
     $pdf->Cell(0, 6, pdf_text('Factura: ' . invoice_number($payment)), 0, 1);
     $pdf->Cell(0, 6, pdf_text('Fecha de pago: ' . date('d/m/Y', strtotime($payment['fecha_pago']))), 0, 1);
 
     $pdf->Ln(6);
-    $pdf->SetFont('Helvetica', 'B', 12);
+    $pdf->SetFont('Arial', 'B', 12);
     $pdf->SetFillColor(247, 249, 252);
     $pdf->SetTextColor(60, 64, 72);
 
@@ -82,7 +82,7 @@ function build_pdf(array $payment): string
     $pdf->Cell(40, 8, pdf_text('MÃ©todo'), 1, 0, 'C', true);
     $pdf->Cell(50, 8, pdf_text('Monto'), 1, 1, 'R', true);
 
-    $pdf->SetFont('Helvetica', '', 11);
+    $pdf->SetFont('Arial', '', 11);
     $pdf->Cell(100, 8, pdf_text($payment['concepto']), 1, 0, 'L');
     $pdf->Cell(40, 8, pdf_text($payment['metodo'] ?: '-'), 1, 0, 'C');
     $pdf->Cell(50, 8, pdf_text(payment_format_amount((float) $payment['monto'], (string) $payment['moneda'])), 1, 1, 'R');
@@ -92,16 +92,16 @@ function build_pdf(array $payment): string
 
     if (!empty($payment['notas'])) {
         $pdf->Ln(6);
-        $pdf->SetFont('Helvetica', 'B', 11);
+        $pdf->SetFont('Arial', 'B', 11);
         $pdf->SetTextColor($pr, $pg, $pb);
         $pdf->Cell(0, 7, pdf_text('Notas'), 0, 1);
-        $pdf->SetFont('Helvetica', '', 10);
+        $pdf->SetFont('Arial', '', 10);
         $pdf->SetTextColor(40, 40, 40);
         $pdf->MultiCell(0, 6, pdf_text($payment['notas']));
     }
 
     $pdf->Ln(8);
-    $pdf->SetFont('Helvetica', '', 9);
+    $pdf->SetFont('Arial', '', 9);
     $pdf->SetTextColor(120, 120, 120);
     $pdf->MultiCell(0, 5, pdf_text('Gracias por confiar en Proyectos MCE. Contacto: proyectosmceaa@gmail.com | +57 311 412 59 71'));
 
@@ -134,7 +134,7 @@ $payment = fetch_payment($conn, $id);
 if (!$payment) {
     http_response_code(404);
     exit('Pago no encontrado.');
-}
+}   
 
 function invoice_number(array $payment): string
 {
@@ -161,7 +161,7 @@ function render_html(array $payment): void
     <title>Factura <?php echo htmlspecialchars($invoice, ENT_QUOTES, 'UTF-8'); ?></title>
     <style>
         :root { --dark:#0f172a; --accent:#f59e0b; --muted:#475569; --bg:#f8fafc; }
-        body { font-family:'Segoe UI', Helvetica, sans-serif; margin:0; padding:24px; background:var(--bg); color:#0f172a; }
+        body { font-family:'Segoe UI', Arial, sans-serif; margin:0; padding:24px; background:var(--bg); color:#0f172a; }
         .card { background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:24px; max-width:900px; margin:0 auto; box-shadow:0 10px 30px rgba(15,23,42,0.08); }
         .header { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
         .brand { color:#fff; background:linear-gradient(135deg, var(--dark), #111827); padding:16px 18px; border-radius:12px; }
@@ -312,7 +312,7 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Factura {$invoice}</title>
 </head>
-<body style="margin:0;padding:0;background:linear-gradient(180deg,#eff6ff 0%,#f8fafc 100%);font-family:'Segoe UI',Helvetica,sans-serif;color:#0f172a;">
+<body style="margin:0;padding:0;background:linear-gradient(180deg,#eff6ff 0%,#f8fafc 100%);font-family:'Segoe UI',Arial,sans-serif;color:#0f172a;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:28px 0;">
     <tr>
       <td align="center">
