@@ -148,7 +148,7 @@ function build_pdf(array $payment): string
     $pdf->SetTextColor(120, 120, 120);
     $pdf->MultiCell(0, 5, pdf_text('Gracias por confiar en Proyectos MCE. Si necesitas soporte, escríbenos a proyectosmceaa@gmail.com'));
 
-    return $pdf->Output('S');
+    return (string) $pdf->Output('S');
 }
 
 function render_html(array $payment): void
@@ -369,14 +369,17 @@ if ($modo === 'pdf') {
         exit('La clase FPDF no está disponible. Verifica includes/lib/fpdf.php');
     }
     $pdf = build_pdf($payment);
-    if ($pdf === '') {
+    if ($pdf === '' || strlen($pdf) < 200) { // menor a 200 bytes suena a fallo
         http_response_code(500);
-        exit('No se pudo generar el PDF. Verifica que includes/lib/fpdf.php esté en el servidor.');
+        error_log('Factura PDF vacía para pago_id=' . $payment['id']);
+        exit('No se pudo generar el PDF. Verifica que includes/lib/fpdf.php esté en el servidor o revisa caracteres especiales.');
     }
     $invoice = invoice_number($payment);
     while (ob_get_level()) { ob_end_clean(); }
     header('Content-Type: application/pdf');
     header('Content-Disposition: inline; filename="' . $invoice . '.pdf"');
+    header('Content-Transfer-Encoding: binary');
+    header('Accept-Ranges: bytes');
     header('Cache-Control: private, max-age=0, must-revalidate');
     header('Pragma: public');
     echo $pdf;
