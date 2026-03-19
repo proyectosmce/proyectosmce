@@ -211,48 +211,91 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
 
         $mail->Subject = "Factura {$invoice} · Proyectos MCE";
         $mail->isHTML(true);
-        $mail->Body = "
-        <div style=\"font-family:'Segoe UI',Arial,sans-serif;background:#0f172a;padding:32px 0; margin:0;\">
-          <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"margin:0 auto;max-width:620px;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,0.12);\">
-            <tr>
-              <td style=\"background:linear-gradient(135deg,#0f172a,#111827);padding:20px 24px;color:#e2e8f0;\">
-                <div style=\"font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#94a3b8;\">Proyectos MCE</div>
-                <div style=\"font-size:20px;font-weight:700;color:#f8fafc;\">Factura {$invoice}</div>
-              </td>
-            </tr>
-            <tr>
-              <td style=\"padding:24px 24px 8px;color:#0f172a;\">
-                <p style=\"margin:0 0 8px;font-size:15px;\">Hola <strong>{$cliente}</strong>,</p>
-                <p style=\"margin:0 0 16px;font-size:14px;color:#475569;\">Te compartimos el resumen elegante de tu pago:</p>
-                <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;\">
-                  <tr style=\"background:#f8fafc;\">
-                    <td style=\"padding:12px 14px;font-size:13px;color:#475569;\">Concepto</td>
-                    <td style=\"padding:12px 14px;font-size:14px;font-weight:600;color:#0f172a;\">{$concepto}</td>
+        $ref = htmlspecialchars($payment['referencia'] ?? '-', ENT_QUOTES, 'UTF-8');
+        $metodo = htmlspecialchars($payment['metodo'] ?? '-', ENT_QUOTES, 'UTF-8');
+        $notasRaw = trim((string) ($payment['notas'] ?? ''));
+        $notasHtml = $notasRaw !== '' ? nl2br(htmlspecialchars($notasRaw, ENT_QUOTES, 'UTF-8')) : '<em>Sin notas adicionales</em>';
+
+        $mail->Body = <<<HTML
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factura {$invoice}</title>
+</head>
+<body style="margin:0;padding:0;background:linear-gradient(180deg,#eff6ff 0%,#f8fafc 100%);font-family:'Segoe UI',Arial,sans-serif;color:#0f172a;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:28px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 18px 44px rgba(37,99,235,0.14);">
+          <tr>
+            <td style="background:linear-gradient(135deg,#0f172a 0%,#1d4ed8 50%,#06b6d4 100%);padding:32px 32px 26px;">
+              <div style="font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#bfdbfe;margin-bottom:10px;">Proyectos MCE</div>
+              <div style="font-size:28px;line-height:1.2;font-weight:700;color:#ffffff;">Factura {$invoice}</div>
+              <div style="margin-top:10px;font-size:14px;line-height:1.7;color:#dbeafe;">Hola {$cliente}, confirmamos tu pago con los detalles a continuación.</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px 8px;">
+              <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;">
+                <div style="flex:1 1 260px;background:#f8fafc;border:1px solid #dbeafe;border-radius:18px;padding:16px 18px;">
+                  <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#2563eb;margin-bottom:6px;">Cliente</div>
+                  <div style="font-size:17px;font-weight:700;color:#0f172a;">{$cliente}</div>
+                </div>
+                <div style="flex:1 1 200px;background:#f8fafc;border:1px solid #dbeafe;border-radius:18px;padding:16px 18px;">
+                  <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#2563eb;margin-bottom:6px;">Fecha</div>
+                  <div style="font-size:16px;font-weight:700;color:#0f172a;">{$fecha}</div>
+                </div>
+              </div>
+
+              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;margin-bottom:18px;">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                  <tr style="background:#f8fafc;">
+                    <td style="padding:14px;font-size:13px;color:#475569;width:35%;">Concepto</td>
+                    <td style="padding:14px;font-size:15px;font-weight:700;color:#0f172a;">{$concepto}</td>
                   </tr>
                   <tr>
-                    <td style=\"padding:12px 14px;font-size:13px;color:#475569;\">Monto</td>
-                    <td style=\"padding:12px 14px;font-size:15px;font-weight:700;color:#0f172a;\">{$monto}</td>
+                    <td style="padding:14px;font-size:13px;color:#475569;">Monto</td>
+                    <td style="padding:14px;font-size:17px;font-weight:800;color:#0f172a;">{$monto}</td>
                   </tr>
-                  <tr style=\"background:#f8fafc;\">
-                    <td style=\"padding:12px 14px;font-size:13px;color:#475569;\">Fecha de pago</td>
-                    <td style=\"padding:12px 14px;font-size:14px;font-weight:600;color:#0f172a;\">{$fecha}</td>
+                  <tr style="background:#f8fafc;">
+                    <td style="padding:14px;font-size:13px;color:#475569;">Método</td>
+                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$metodo}</td>
                   </tr>
                   <tr>
-                    <td style=\"padding:12px 14px;font-size:13px;color:#475569;\">Factura</td>
-                    <td style=\"padding:12px 14px;font-size:14px;font-weight:600;color:#0f172a;\">{$invoice}</td>
+                    <td style="padding:14px;font-size:13px;color:#475569;">Referencia</td>
+                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$ref}</td>
                   </tr>
                 </table>
-                <div style=\"margin-top:18px;padding:14px 16px;border-radius:12px;background:linear-gradient(135deg,#f59e0b1a,#fbbf24);color:#92400e;font-size:13px;border:1px solid #fcd34d;\">Esta confirmaci&oacute;n es v&aacute;lida como comprobante. Si necesitas algo m&aacute;s, resp&oacute;ndenos a <strong>proyectosmceaa@gmail.com</strong> o escr&iacute;benos al <strong>+57 311 412 59 71</strong> y te ayudamos.</div>
-                <p style=\"margin:18px 0 0;font-size:13px;color:#475569;\">Gracias por tu confianza.</p>
-                <p style=\"margin:6px 0 0;font-size:14px;font-weight:700;color:#0f172a;\">Equipo Proyectos MCE</p>
-              </td>
-            </tr>
-            <tr>
-              <td style=\"padding:16px 24px 20px;color:#94a3b8;font-size:11px;text-align:center;border-top:1px solid #e2e8f0;\">Este mensaje se gener&oacute; autom&aacute;ticamente. Si no solicitaste esta factura, cont&aacute;ctanos.</td>
-            </tr>
-          </table>
-        </div>";
-        $mail->AltBody = "Factura {$invoice}\nConcepto: {$concepto}\nMonto: {$monto}\nFecha de pago: {$fecha}\nSi necesitas algo m\u00e1s, cont\u00e1ctanos en proyectosmceaa@gmail.com o +57 311 412 59 71.\nGracias por tu confianza.\nProyectos MCE";
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #dbeafe;border-radius:18px;padding:16px 18px;margin-bottom:16px;">
+                <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#2563eb;margin-bottom:8px;">Notas</div>
+                <div style="font-size:14px;line-height:1.7;color:#1e293b;">{$notasHtml}</div>
+              </div>
+
+              <div style="margin-top:10px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,#f59e0b1a,#fbbf24);color:#92400e;font-size:13px;border:1px solid #fcd34d;">
+                Esta confirmación es válida como comprobante. Si necesitas algo más, respóndenos a <strong>proyectosmceaa@gmail.com</strong> o escríbenos al <strong>+57 311 412 59 71</strong> y te ayudamos.
+              </div>
+
+              <p style="margin:18px 0 0;font-size:13px;color:#475569;">Gracias por tu confianza.</p>
+              <p style="margin:6px 0 0;font-size:14px;font-weight:700;color:#0f172a;">Equipo Proyectos MCE</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 24px 20px;color:#94a3b8;font-size:11px;text-align:center;border-top:1px solid #e2e8f0;">
+              Este mensaje se generó automáticamente. Si no solicitaste esta factura, contáctanos.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+HTML;
+        $mail->AltBody = "Factura {$invoice}\nConcepto: {$concepto}\nMonto: {$monto}\nMétodo: {$metodo}\nReferencia: {$ref}\nFecha de pago: {$fecha}\nNotas: {$notasRaw}\nSi necesitas algo más, contáctanos en proyectosmceaa@gmail.com o +57 311 412 59 71.\nProyectos MCE";
         $mail->send();
         return true;
     } catch (Exception $e) {
