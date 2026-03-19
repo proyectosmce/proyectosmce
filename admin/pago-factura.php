@@ -1,10 +1,18 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/payment-helpers.php';
 require_once __DIR__ . '/../includes/admin-helpers.php';
 require_once __DIR__ . '/../includes/PHPMailer/Exception.php';
 require_once __DIR__ . '/../includes/PHPMailer/PHPMailer.php';
 require_once __DIR__ . '/../includes/PHPMailer/SMTP.php';
+// PDF (FPDF)
+$fpdfPath = __DIR__ . '/../includes/lib/fpdf.php';
+$fpdfMissing = false;
+if (file_exists($fpdfPath)) {
+    require_once $fpdfPath;
+} else {
+    $fpdfMissing = true;
+}
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -21,6 +29,81 @@ $id = (int) ($_GET['id'] ?? $_POST['id'] ?? 0);
 $modo = trim((string) ($_POST['modo'] ?? $_GET['modo'] ?? 'html'));
 $flash = $_GET['msg'] ?? '';
 $mailError = '';
+
+function pdf_text(string $txt): string
+{
+    // Convierte UTF-8 a ISO-8859-1 para FPDF evitando caracteres raros
+    if (function_exists('mb_convert_encoding')) {
+        return mb_convert_encoding($txt, 'ISO-8859-1', 'UTF-8');
+    }
+    return iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
+}
+
+function build_pdf(array $payment): string
+{
+    if (!class_exists('FPDF')) return '';
+
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetTitle(pdf_text('Factura ' . invoice_number($payment)));
+
+    [$pr, $pg, $pb] = brand_primary();
+
+    // Header
+    $pdf->SetFillColor($pr, $pg, $pb);
+    $pdf->Rect(0, 0, 210, 36, 'F');
+    $pdf->SetY(10);
+    $pdf->SetTextColor(255, 255, 255);
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(0, 8, pdf_text('Proyectos MCE'), 0, 1, 'L');
+    $pdf->SetFont('Arial', '', 11);
+    $pdf->Cell(0, 6, pdf_text('Factura ' . invoice_number($payment)), 0, 1, 'L');
+
+    $pdf->SetY(42);
+    $pdf->SetTextColor(20, 23, 31);
+    $pdf->SetFont('Arial', 'B', 13);
+    $pdf->Cell(0, 8, pdf_text('Resumen de pago'), 0, 1, 'L');
+
+    $pdf->SetFont('Arial', '', 11);
+    $pdf->Cell(0, 6, pdf_text('Cliente: ' . ($payment['proyecto_cliente'] ?: 'Cliente sin nombre')), 0, 1);
+    $pdf->Cell(0, 6, pdf_text('Proyecto: ' . ($payment['proyecto_titulo'] ?: 'Proyecto sin tÃ­tulo')), 0, 1);
+    $pdf->Cell(0, 6, pdf_text('Factura: ' . invoice_number($payment)), 0, 1);
+    $pdf->Cell(0, 6, pdf_text('Fecha de pago: ' . date('d/m/Y', strtotime($payment['fecha_pago']))), 0, 1);
+
+    $pdf->Ln(6);
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->SetFillColor(247, 249, 252);
+    $pdf->SetTextColor(60, 64, 72);
+
+    $pdf->Cell(100, 8, pdf_text('Concepto'), 1, 0, 'L', true);
+    $pdf->Cell(40, 8, pdf_text('MÃ©todo'), 1, 0, 'C', true);
+    $pdf->Cell(50, 8, pdf_text('Monto'), 1, 1, 'R', true);
+
+    $pdf->SetFont('Arial', '', 11);
+    $pdf->Cell(100, 8, pdf_text($payment['concepto']), 1, 0, 'L');
+    $pdf->Cell(40, 8, pdf_text($payment['metodo'] ?: '-'), 1, 0, 'C');
+    $pdf->Cell(50, 8, pdf_text(payment_format_amount((float) $payment['monto'], (string) $payment['moneda'])), 1, 1, 'R');
+
+    $pdf->Cell(100, 8, pdf_text('Referencia'), 1, 0, 'L');
+    $pdf->Cell(90, 8, pdf_text($payment['referencia'] ?: '-'), 1, 1, 'L');
+
+    if (!empty($payment['notas'])) {
+        $pdf->Ln(6);
+        $pdf->SetFont('Arial', 'B', 11);
+        $pdf->SetTextColor($pr, $pg, $pb);
+        $pdf->Cell(0, 7, pdf_text('Notas'), 0, 1);
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->SetTextColor(40, 40, 40);
+        $pdf->MultiCell(0, 6, pdf_text($payment['notas']));
+    }
+
+    $pdf->Ln(8);
+    $pdf->SetFont('Arial', '', 9);
+    $pdf->SetTextColor(120, 120, 120);
+    $pdf->MultiCell(0, 5, pdf_text('Gracias por confiar en Proyectos MCE. Contacto: proyectosmceaa@gmail.com | +57 311 412 59 71'));
+
+    return (string) $pdf->Output('S');
+}
 $mailError = '';
 
 function fetch_payment(mysqli $conn, int $id): ?array
@@ -63,7 +146,7 @@ function render_html(array $payment): void
     $monto = payment_format_amount((float) $payment['monto'], (string) $payment['moneda']);
     $invoice = invoice_number($payment);
     $fecha = date('d/m/Y', strtotime($payment['fecha_pago']));
-    $project = $payment['proyecto_titulo'] ?: 'Proyecto sin título';
+    $project = $payment['proyecto_titulo'] ?: 'Proyecto sin tÃ­tulo';
     $client = $payment['proyecto_cliente'] ?: 'Cliente sin nombre';
     $ref = $payment['referencia'] ?: '-';
     $notas = nl2br(htmlspecialchars(trim((string) ($payment['notas'] ?? '')), ENT_QUOTES, 'UTF-8'));
@@ -99,7 +182,7 @@ function render_html(array $payment): void
         <div class="header">
             <div class="brand">
                 <h1>Proyectos MCE</h1>
-                <p>Software a medida · proyectosmceaa@gmail.com · +57 311 412 59 71</p>
+                <p>Software a medida Â· proyectosmceaa@gmail.com Â· +57 311 412 59 71</p>
             </div>
             <div class="invoice-meta">
                 <div class="pill">Factura <?php echo htmlspecialchars($invoice, ENT_QUOTES, 'UTF-8'); ?></div>
@@ -123,7 +206,7 @@ function render_html(array $payment): void
             <thead>
                 <tr>
                     <th>Concepto</th>
-                    <th>Método</th>
+                    <th>MÃ©todo</th>
                     <th>Estado</th>
                     <th style="text-align:right;">Monto</th>
                 </tr>
@@ -149,6 +232,7 @@ function render_html(array $payment): void
 
         <div class="actions">
             <a class="btn" href="pagos.php">Volver</a>
+            <a class="btn" href="pago-factura.php?id=<?php echo (int) $payment['id']; ?>&modo=pdf" target="_blank" rel="noopener">Descargar PDF</a>
             <button class="btn btn-primary" onclick="window.print()">Imprimir</button>
         </div>
     </div>
@@ -209,12 +293,13 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
         $monto = payment_format_amount((float) $payment['monto'], (string) $payment['moneda']);
         $fecha = date('d/m/Y', strtotime($payment['fecha_pago']));
 
-        $mail->Subject = "Factura {$invoice} · Proyectos MCE";
+        $mail->Subject = "Factura {$invoice} Â· Proyectos MCE";
         $mail->isHTML(true);
         $ref = htmlspecialchars($payment['referencia'] ?? '-', ENT_QUOTES, 'UTF-8');
         $metodo = htmlspecialchars($payment['metodo'] ?? '-', ENT_QUOTES, 'UTF-8');
         $notasRaw = trim((string) ($payment['notas'] ?? ''));
         $notasHtml = $notasRaw !== '' ? nl2br(htmlspecialchars($notasRaw, ENT_QUOTES, 'UTF-8')) : '<em>Sin notas adicionales</em>';
+        $pdfBinary = class_exists('FPDF') ? build_pdf($payment) : '';
 
         $mail->Body = <<<HTML
 <!DOCTYPE html>
@@ -233,7 +318,7 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
             <td style="background:linear-gradient(135deg,#0f172a 0%,#1d4ed8 50%,#06b6d4 100%);padding:32px 32px 26px;">
               <div style="font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#bfdbfe;margin-bottom:10px;">Proyectos MCE</div>
               <div style="font-size:28px;line-height:1.2;font-weight:700;color:#ffffff;">Factura {$invoice}</div>
-              <div style="margin-top:10px;font-size:14px;line-height:1.7;color:#dbeafe;">Hola {$cliente}, confirmamos tu pago con los detalles a continuación.</div>
+              <div style="margin-top:10px;font-size:14px;line-height:1.7;color:#dbeafe;">Hola {$cliente}, confirmamos tu pago con los detalles a continuaciÃ³n.</div>
             </td>
           </tr>
           <tr>
@@ -260,7 +345,7 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
                     <td style="padding:14px;font-size:17px;font-weight:800;color:#0f172a;">{$monto}</td>
                   </tr>
                   <tr style="background:#f8fafc;">
-                    <td style="padding:14px;font-size:13px;color:#475569;">Método</td>
+                    <td style="padding:14px;font-size:13px;color:#475569;">MÃ©todo</td>
                     <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$metodo}</td>
                   </tr>
                   <tr>
@@ -276,7 +361,7 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
               </div>
 
               <div style="margin-top:10px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,#f59e0b1a,#fbbf24);color:#92400e;font-size:13px;border:1px solid #fcd34d;">
-                Esta confirmación es válida como comprobante. Si necesitas algo más, respóndenos a <strong>proyectosmceaa@gmail.com</strong> o escríbenos al <strong>+57 311 412 59 71</strong> y te ayudamos.
+                Esta confirmaciÃ³n es vÃ¡lida como comprobante. Si necesitas algo mÃ¡s, respÃ³ndenos a <strong>proyectosmceaa@gmail.com</strong> o escrÃ­benos al <strong>+57 311 412 59 71</strong> y te ayudamos.
               </div>
 
               <p style="margin:18px 0 0;font-size:13px;color:#475569;">Gracias por tu confianza.</p>
@@ -285,7 +370,7 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
           </tr>
           <tr>
             <td style="padding:16px 24px 20px;color:#94a3b8;font-size:11px;text-align:center;border-top:1px solid #e2e8f0;">
-              Este mensaje se generó automáticamente. Si no solicitaste esta factura, contáctanos.
+              Este mensaje se generÃ³ automÃ¡ticamente. Si no solicitaste esta factura, contÃ¡ctanos.
             </td>
           </tr>
         </table>
@@ -295,7 +380,10 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
 </body>
 </html>
 HTML;
-        $mail->AltBody = "Factura {$invoice}\nConcepto: {$concepto}\nMonto: {$monto}\nMétodo: {$metodo}\nReferencia: {$ref}\nFecha de pago: {$fecha}\nNotas: {$notasRaw}\nSi necesitas algo más, contáctanos en proyectosmceaa@gmail.com o +57 311 412 59 71.\nProyectos MCE";
+        $mail->AltBody = "Factura {$invoice}\nConcepto: {$concepto}\nMonto: {$monto}\nMÃ©todo: {$metodo}\nReferencia: {$ref}\nFecha de pago: {$fecha}\nNotas: {$notasRaw}\nSi necesitas algo mÃ¡s, contÃ¡ctanos en proyectosmceaa@gmail.com o +57 311 412 59 71.\nProyectos MCE";
+        if (!empty($pdfBinary)) {
+            $mail->addStringAttachment($pdfBinary, "{$invoice}.pdf", 'base64', 'application/pdf');
+        }
         $mail->send();
         return true;
     } catch (Exception $e) {
@@ -308,7 +396,7 @@ HTML;
 // Acciones
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $modo === 'send') {
     if (!admin_validate_csrf($_POST['csrf_token'] ?? null)) {
-        exit('CSRF inválido, recarga la página.');
+        exit('CSRF invÃ¡lido, recarga la pÃ¡gina.');
     }
     $emailDestino = trim((string) ($_POST['email_destino'] ?? ''));
     if (!filter_var($emailDestino, FILTER_VALIDATE_EMAIL)) {
@@ -340,7 +428,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $modo === 'send') {
     $modo = 'sendform';
 }
 
-// Render según modo
+// Render segÃºn modo
 if ($modo === 'html') {
     render_html($payment);
     exit;
@@ -368,7 +456,7 @@ if ($modo === 'html') {
         </div>
 
         <?php if ($flash === 'bademail'): ?>
-            <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">Correo inválido, intenta nuevamente.</div>
+            <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">Correo invÃ¡lido, intenta nuevamente.</div>
         <?php elseif ($flash === 'sendfail'): ?>
             <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">
                 No pudimos enviar la factura. Revisa SMTP o intenta de nuevo.
@@ -378,13 +466,13 @@ if ($modo === 'html') {
             </div>
         <?php elseif ($flash === 'smtp'): ?>
             <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">
-                Faltan SMTP_USER / SMTP_PASS. Configúralos en <code>includes/secrets.php</code> o variables de entorno.
+                Faltan SMTP_USER / SMTP_PASS. ConfigÃºralos en <code>includes/secrets.php</code> o variables de entorno.
                 <?php if (!empty($mailError ?? '')): ?>
                     <div class="mt-1 text-xs text-red-600"><?php echo htmlspecialchars($mailError, ENT_QUOTES, 'UTF-8'); ?></div>
                 <?php endif; ?>
             </div>
         <?php elseif ($flash === 'sent'): ?>
-            <div class="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700 text-sm">Factura enviada con éxito.</div>
+            <div class="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700 text-sm">Factura enviada con Ã©xito.</div>
         <?php endif; ?>
 
         <form method="POST" class="space-y-4">
@@ -399,8 +487,9 @@ if ($modo === 'html') {
                     <span>Enviar factura</span>
                 </button>
             </div>
-            <p class="text-xs text-slate-500">La factura se enviará por correo usando la configuración SMTP definida en secrets.php o variables de entorno.</p>
+            <p class="text-xs text-slate-500">La factura se enviarÃ¡ por correo usando la configuraciÃ³n SMTP definida en secrets.php o variables de entorno.</p>
         </form>
     </div>
 </body>
 </html>
+
