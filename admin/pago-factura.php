@@ -54,10 +54,19 @@ function build_pdf(array $payment): string
     if (!class_exists('FPDF')) return '';
 
     $pdf = new FPDF();
+    // Márgenes y salto automático para que se adapte mejor a distintas impresoras
+    $pdf->SetMargins(12, 12, 12);
+    $pdf->SetAutoPageBreak(true, 15);
     $pdf->AddPage();
     $pdf->SetTitle(pdf_text('Factura ' . invoice_number($payment)));
 
     [$pr, $pg, $pb] = brand_primary();
+
+    $contentWidth = $pdf->GetPageWidth() - $pdf->lMargin - $pdf->rMargin;
+    // Anchos proporcionales para que se ajusten a distintos tamaños
+    $colConcepto = $contentWidth * 0.55;
+    $colMetodo   = $contentWidth * 0.20;
+    $colMonto    = $contentWidth - $colConcepto - $colMetodo;
 
     // Header
     $pdf->SetFillColor($pr, $pg, $pb);
@@ -85,17 +94,22 @@ function build_pdf(array $payment): string
     $pdf->SetFillColor(247, 249, 252);
     $pdf->SetTextColor(60, 64, 72);
 
-    $pdf->Cell(100, 8, pdf_text('Concepto'), 1, 0, 'L', true);
-    $pdf->Cell(40, 8, pdf_text('Método'), 1, 0, 'C', true);
-    $pdf->Cell(50, 8, pdf_text('Monto'), 1, 1, 'R', true);
+    $pdf->Cell($colConcepto, 8, pdf_text('Concepto'), 1, 0, 'L', true);
+    $pdf->Cell($colMetodo, 8, pdf_text('Método'), 1, 0, 'C', true);
+    $pdf->Cell($colMonto, 8, pdf_text('Monto'), 1, 1, 'R', true);
 
     $pdf->SetFont('Helvetica', '', 11);
-    $pdf->Cell(100, 8, pdf_text($payment['concepto']), 1, 0, 'L');
-    $pdf->Cell(40, 8, pdf_text($payment['metodo'] ?: '-'), 1, 0, 'C');
-    $pdf->Cell(50, 8, pdf_text(payment_format_amount((float) $payment['monto'], (string) $payment['moneda'])), 1, 1, 'R');
+    // Concepto puede ser largo: usar MultiCell manualmente manteniendo alineación
+    $xStart = $pdf->GetX();
+    $yStart = $pdf->GetY();
+    $pdf->MultiCell($colConcepto, 8, pdf_text($payment['concepto']), 1, 'L');
+    $yAfterConcept = $pdf->GetY();
+    $pdf->SetXY($xStart + $colConcepto, $yStart);
+    $pdf->Cell($colMetodo, $yAfterConcept - $yStart, pdf_text($payment['metodo'] ?: '-'), 1, 0, 'C');
+    $pdf->Cell($colMonto, $yAfterConcept - $yStart, pdf_text(payment_format_amount((float) $payment['monto'], (string) $payment['moneda'])), 1, 1, 'R');
 
-    $pdf->Cell(100, 8, pdf_text('Referencia'), 1, 0, 'L');
-    $pdf->Cell(90, 8, pdf_text($payment['referencia'] ?: '-'), 1, 1, 'L');
+    $pdf->Cell($colConcepto, 8, pdf_text('Referencia'), 1, 0, 'L');
+    $pdf->Cell($colMetodo + $colMonto, 8, pdf_text($payment['referencia'] ?: '-'), 1, 1, 'L');
 
     if (!empty($payment['notas'])) {
         $pdf->Ln(6);
