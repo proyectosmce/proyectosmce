@@ -179,6 +179,9 @@
             <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl border border-white/60 text-white font-semibold hover:bg-white/10 transition">
                 <i class="fas fa-eye mr-2"></i> Ver portafolio
             </a>
+            <a href="<?php echo app_url('index.php#casos-exito'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl border border-amber-300 text-amber-100 font-semibold hover:bg-amber-200 hover:text-slate-900 transition">
+                <i class="fas fa-trophy mr-2"></i> Casos de éxito
+            </a>
         </div>
     </div>
 </section>
