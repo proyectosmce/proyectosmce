@@ -429,7 +429,7 @@ function payment_status_badge_class(string $status): string
             </div>
         </div>
     </div>
+    <?php include __DIR__ . '/partials/sidebar-script.php'; ?>
 </body>
-<?php include __DIR__ . '/partials/sidebar-script.php'; ?>
 </html>
 

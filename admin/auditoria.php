@@ -41,46 +41,20 @@ $logs = $conn->query('SELECT * FROM admin_activity_log' . $whereSql . ' ORDER BY
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
-        <div class="w-64 bg-white shadow-lg">
-            <div class="p-4 border-b">
-                <h2 class="text-xl font-bold text-blue-600">MCE Admin</h2>
-            </div>
-            <nav class="p-4">
-                <ul class="space-y-2">
-                    <li><a href="dashboard.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-                    <li><a href="proyectos.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-folder"></i><span>Proyectos</span></a></li>
-                    <li><a href="servicios.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-cog"></i><span>Servicios</span></a></li>
-                    <li>
-                        <a href="pagos.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
-                            <i class="fas fa-receipt"></i>
-                            <span>Pagos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="testimonios.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
-                            <i class="fas fa-comment"></i>
-                            <span>Testimonios</span>
-                            <?php if ($pendingTestimonials > 0): ?>
-                                <span class="ml-auto inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">
-                                    <span class="relative flex h-2 w-2">
-                                        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-500 opacity-75"></span>
-                                        <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-600"></span>
-                                    </span>
-                                    <?php echo $pendingTestimonials; ?>
-                                </span>
-                            <?php endif; ?>
-                        </a>
-                    </li>
-                    <li><a href="mensajes.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-envelope"></i><span>Mensajes</span></a></li>
-                    <li><a href="auditoria.php" class="flex items-center space-x-2 rounded bg-blue-50 p-2 text-blue-600"><i class="fas fa-clock-rotate-left"></i><span>Actividad</span></a></li>
-                    <li><a href="cambiar-password.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-lock"></i><span>Cambiar clave</span></a></li>
-                    <li><a href="logout.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded text-red-600"><i class="fas fa-sign-out-alt"></i><span>Salir</span></a></li>
-                </ul>
-            </nav>
-        </div>
+        <?php $activePage = 'auditoria'; include __DIR__ . '/partials/sidebar.php'; ?>
 
-        <div class="flex-1 overflow-y-auto">
+        <div class="flex-1 overflow-y-auto lg:ml-0">
             <div class="p-8">
+                <div class="mb-4 flex items-center justify-between lg:hidden">
+                    <button id="sidebar-open" class="inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-white px-3 py-2 text-sm font-semibold text-blue-700 shadow-sm hover:bg-blue-50">
+                        <span class="flex flex-col gap-1">
+                            <span class="block w-5 h-0.5 bg-blue-700"></span>
+                            <span class="block w-5 h-0.5 bg-blue-700"></span>
+                            <span class="block w-5 h-0.5 bg-blue-700"></span>
+                        </span>
+                        <span>Menú</span>
+                    </button>
+                </div>
                 <div class="mb-8">
                     <h1 class="text-3xl font-bold">Actividad del Admin</h1>
                     <p class="mt-2 text-sm text-gray-600">Aqui ves los cambios recientes hechos dentro del panel.</p>
@@ -171,5 +145,6 @@ $logs = $conn->query('SELECT * FROM admin_activity_log' . $whereSql . ' ORDER BY
             </div>
         </div>
     </div>
+    <?php include __DIR__ . '/partials/sidebar-script.php'; ?>
 </body>
 </html>
