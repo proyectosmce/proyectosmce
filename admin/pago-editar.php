@@ -19,6 +19,10 @@ $csrfToken = admin_get_csrf_token();
 $statusOptions = paymentStatusOptions();
 $methodOptions = paymentMethodOptions();
 $currencyOptions = paymentCurrencyOptions();
+$formaPagoOptions = [
+    'contado' => 'Contado',
+    'cuotas' => 'Cuotas',
+];
 $projectsOptions = fetchProjectDropdownOptions($conn);
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
@@ -49,6 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $concepto = sanitize($_POST['concepto'] ?? '');
     $montoInput = str_replace(',', '.', trim((string) ($_POST['monto'] ?? '0')));
     $monto = is_numeric($montoInput) ? (float) $montoInput : 0;
+    $formaPago = trim((string) ($_POST['forma_pago'] ?? 'contado'));
+    $proximaCuota = trim((string) ($_POST['proxima_cuota'] ?? ''));
     $moneda = strtoupper(trim((string) ($_POST['moneda'] ?? 'COP')));
     $estado = trim((string) ($_POST['estado'] ?? 'recibido'));
     $metodo = trim((string) ($_POST['metodo'] ?? ''));
@@ -68,7 +74,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $metodo = 'otro';
     }
 
+    if (!isset($formaPagoOptions[$formaPago])) {
+        $formaPago = 'contado';
+    }
+
     $fechaValida = DateTime::createFromFormat('Y-m-d', $fecha_pago) !== false;
+    $proximaValida = $proximaCuota !== '' ? DateTime::createFromFormat('Y-m-d', $proximaCuota) !== false : true;
+
+    if ($formaPago === 'cuotas' && $proximaCuota === '') {
+        $error = 'Indica la fecha de la próxima cuota para pagos en cuotas.';
+    }
+
+    if (!isset($error) && !$proximaValida) {
+        $error = 'La fecha de próxima cuota no es válida.';
+    }
 
     if (!isset($error) && ($concepto === '' || $monto <= 0 || !$fechaValida)) {
         $error = 'Concepto, monto y fecha de pago son obligatorios (el monto debe ser mayor a cero).';
@@ -76,11 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!isset($error)) {
         if ($id > 0) {
-            $stmt = $conn->prepare('UPDATE proyecto_pagos SET proyecto_id = NULLIF(?, 0), cliente = NULLIF(?, \'\'), concepto = ?, monto = ?, moneda = ?, estado = ?, metodo = ?, referencia = ?, notas = ?, fecha_pago = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?');
+            $stmt = $conn->prepare('UPDATE proyecto_pagos SET proyecto_id = NULLIF(?, 0), cliente = NULLIF(?, \'\'), forma_pago = ?, proxima_cuota = NULLIF(?, \'\'), concepto = ?, monto = ?, moneda = ?, estado = ?, metodo = ?, referencia = ?, notas = ?, fecha_pago = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?');
             $stmt->bind_param(
-                'issdssssssi',
+                'issssdssssssi',
                 $proyectoId,
                 $clienteLibre,
+                $formaPago,
+                $proximaCuota,
                 $concepto,
                 $monto,
                 $moneda,
@@ -92,11 +113,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id
             );
         } else {
-            $stmt = $conn->prepare('INSERT INTO proyecto_pagos (proyecto_id, cliente, concepto, monto, moneda, estado, metodo, referencia, notas, fecha_pago) VALUES (NULLIF(?, 0), NULLIF(?, \'\'), ?, ?, ?, ?, ?, ?, ?, ?)');
+            $stmt = $conn->prepare('INSERT INTO proyecto_pagos (proyecto_id, cliente, forma_pago, proxima_cuota, concepto, monto, moneda, estado, metodo, referencia, notas, fecha_pago) VALUES (NULLIF(?, 0), NULLIF(?, \'\'), ?, NULLIF(?, \'\'), ?, ?, ?, ?, ?, ?, ?, ?)');
             $stmt->bind_param(
-                'issdssssss',
+                'issssdssssss',
                 $proyectoId,
                 $clienteLibre,
+                $formaPago,
+                $proximaCuota,
                 $concepto,
                 $monto,
                 $moneda,
@@ -123,6 +146,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $payment = [
         'proyecto_id' => $proyectoId,
         'cliente' => $clienteLibre,
+        'forma_pago' => $formaPago,
+        'proxima_cuota' => $proximaCuota,
         'concepto' => $concepto,
         'monto' => $monto,
         'moneda' => $moneda,
@@ -284,6 +309,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             </div>
 
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Forma de pago</label>
+                                    <select name="forma_pago" id="forma_pago" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 focus:border-blue-600 focus:bg-white focus:outline-none">
+                                        <?php foreach ($formaPagoOptions as $key => $label): ?>
+                                            <option value="<?php echo admin_escape($key); ?>" <?php echo ($payment['forma_pago'] ?? 'contado') === $key ? 'selected' : ''; ?>>
+                                                <?php echo admin_escape($label); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Próxima cuota (si aplica)</label>
+                                    <input
+                                        type="date"
+                                        name="proxima_cuota"
+                                        id="proxima_cuota"
+                                        value="<?php echo admin_escape($payment['proxima_cuota'] ?? ''); ?>"
+                                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 focus:border-blue-600 focus:bg-white focus:outline-none"
+                                    >
+                                    <p class="mt-1 text-xs text-gray-500">Solo se requiere si la forma de pago es en cuotas.</p>
+                                </div>
+                            </div>
+
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Notas internas</label>
                                 <textarea
@@ -333,5 +382,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
     <?php include __DIR__ . '/partials/sidebar-script.php'; ?>
+    <script>
+        (function() {
+            const forma = document.getElementById('forma_pago');
+            const proxima = document.getElementById('proxima_cuota');
+            if (!forma || !proxima) return;
+            function toggle() {
+                const cuotas = forma.value === 'cuotas';
+                proxima.disabled = !cuotas;
+                proxima.classList.toggle('bg-gray-100', !cuotas);
+            }
+            forma.addEventListener('change', toggle);
+            toggle();
+        }());
+    </script>
 </body>
 </html>

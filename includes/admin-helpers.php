@@ -289,6 +289,31 @@ function admin_render_toast(?array $toast): void
     <?php
 }
 
+function admin_count_citas_hoy(mysqli $conn): int
+{
+    $count = 0;
+    $sql = "SELECT COUNT(*) AS total FROM citas WHERE fecha = CURDATE()";
+    if ($res = $conn->query($sql)) {
+        $count = (int) ($res->fetch_assoc()['total'] ?? 0);
+        $res->free();
+    }
+    return $count;
+}
+
+function admin_count_pagos_alerta(mysqli $conn): int
+{
+    $count = 0;
+    $sql = "SELECT COUNT(*) AS total 
+            FROM proyecto_pagos 
+            WHERE (estado IN ('pendiente','parcial')) 
+               OR (proxima_cuota IS NOT NULL AND proxima_cuota <= CURDATE())";
+    if ($res = $conn->query($sql)) {
+        $count = (int) ($res->fetch_assoc()['total'] ?? 0);
+        $res->free();
+    }
+    return $count;
+}
+
 function admin_log_column_exists(mysqli $conn, string $columnName): bool
 {
     $safeColumn = $conn->real_escape_string($columnName);

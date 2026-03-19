@@ -121,6 +121,14 @@ function build_pdf(array $payment): string
     $pdf->Cell($colConcepto, 8, pdf_text('Referencia'), 1, 0, 'L');
     $pdf->Cell($colMetodo + $colMonto, 8, pdf_text($payment['referencia'] ?: '-'), 1, 1, 'L');
 
+    $pdf->Cell($colConcepto, 8, pdf_text('Forma de pago'), 1, 0, 'L');
+    $pdf->Cell($colMetodo + $colMonto, 8, pdf_text(forma_pago_label($payment['forma_pago'] ?? 'contado')), 1, 1, 'L');
+
+    if (!empty($payment['proxima_cuota'])) {
+        $pdf->Cell($colConcepto, 8, pdf_text('Próxima cuota'), 1, 0, 'L');
+        $pdf->Cell($colMetodo + $colMonto, 8, pdf_text(date('d/m/Y', strtotime($payment['proxima_cuota']))), 1, 1, 'L');
+    }
+
     if (!empty($payment['notas'])) {
         $pdf->Ln(6);
         $pdf->SetFont('Helvetica', 'B', 11);
@@ -198,6 +206,11 @@ function invoice_number(array $payment): string
 
 function brand_primary(): array { return [15, 23, 42]; }    // slate-900
 function brand_accent(): array { return [245, 158, 11]; }   // amber-500
+function forma_pago_label(?string $value): string {
+    $map = ['contado' => 'Contado', 'cuotas' => 'Cuotas'];
+    $key = trim((string) $value);
+    return $map[$key] ?? ($key !== '' ? ucfirst($key) : '-');
+}
 
 function render_html(array $payment): void
 {
@@ -207,6 +220,8 @@ function render_html(array $payment): void
     $project = $payment['proyecto_titulo'] ?: 'Proyecto sin título';
     $client = $payment['cliente'] ?: ($payment['proyecto_cliente'] ?: 'Cliente sin nombre');
     $ref = $payment['referencia'] ?: '-';
+    $forma = forma_pago_label($payment['forma_pago'] ?? 'contado');
+    $proxima = !empty($payment['proxima_cuota']) ? date('d/m/Y', strtotime($payment['proxima_cuota'])) : '—';
     $notas = nl2br(htmlspecialchars(trim((string) ($payment['notas'] ?? '')), ENT_QUOTES, 'UTF-8'));
     ?>
 <!DOCTYPE html>
@@ -350,6 +365,8 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
         $concepto = htmlspecialchars($payment['concepto'], ENT_QUOTES, 'UTF-8');
         $monto = payment_format_amount((float) $payment['monto'], (string) $payment['moneda']);
         $fecha = date('d/m/Y', strtotime($payment['fecha_pago']));
+        $forma = htmlspecialchars(forma_pago_label($payment['forma_pago'] ?? 'contado'), ENT_QUOTES, 'UTF-8');
+        $proxima = !empty($payment['proxima_cuota']) ? date('d/m/Y', strtotime($payment['proxima_cuota'])) : '—';
 
         $mail->Subject = "Factura {$invoice} · Proyectos MCE";
         $mail->isHTML(true);
@@ -399,12 +416,20 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
                     <td style="padding:14px;font-size:15px;font-weight:700;color:#0f172a;">{$concepto}</td>
                   </tr>
                   <tr>
+                    <td style="padding:14px;font-size:13px;color:#475569;">Forma de pago</td>
+                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$forma}</td>
+                  </tr>
+                  <tr>
                     <td style="padding:14px;font-size:13px;color:#475569;">Monto</td>
                     <td style="padding:14px;font-size:17px;font-weight:800;color:#0f172a;">{$monto}</td>
                   </tr>
                   <tr style="background:#f8fafc;">
                     <td style="padding:14px;font-size:13px;color:#475569;">Método</td>
                     <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$metodo}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:14px;font-size:13px;color:#475569;">Próxima cuota</td>
+                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$proxima}</td>
                   </tr>
                   <tr>
                     <td style="padding:14px;font-size:13px;color:#475569;">Referencia</td>
@@ -438,7 +463,7 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
 </body>
 </html>
 HTML;
-        $mail->AltBody = "Factura {$invoice}\nConcepto: {$concepto}\nMonto: {$monto}\nMétodo: {$metodo}\nReferencia: {$ref}\nFecha de pago: {$fecha}\nNotas: {$notasRaw}\nSi necesitas algo más, contáctanos en proyectosmceaa@gmail.com o +57 311 412 59 71.\nProyectos MCE";
+        $mail->AltBody = "Factura {$invoice}\nConcepto: {$concepto}\nForma de pago: {$forma}\nMonto: {$monto}\nMétodo: {$metodo}\nPróxima cuota: {$proxima}\nReferencia: {$ref}\nFecha de pago: {$fecha}\nNotas: {$notasRaw}\nSi necesitas algo más, contáctanos en proyectosmceaa@gmail.com o +57 311 412 59 71.\nProyectos MCE";
         if (!empty($pdfBinary)) {
             $mail->addStringAttachment($pdfBinary, "{$invoice}.pdf", 'base64', 'application/pdf');
         }

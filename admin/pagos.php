@@ -21,6 +21,7 @@ $projectId = (int) ($_GET['proyecto_id'] ?? 0);
 $statusFilter = trim((string) ($_GET['estado'] ?? ''));
 $methodFilter = trim((string) ($_GET['metodo'] ?? ''));
 $currencyFilter = strtoupper(trim((string) ($_GET['moneda'] ?? '')));
+$formaPagoFilter = trim((string) ($_GET['forma_pago'] ?? ''));
 $fromDate = trim((string) ($_GET['desde'] ?? ''));
 $toDate = trim((string) ($_GET['hasta'] ?? ''));
 $page = max(1, (int) ($_GET['page'] ?? 1));
@@ -38,6 +39,7 @@ $filterParams = [
     'proyecto_id' => $projectId,
     'estado' => $statusFilter,
     'metodo' => $methodFilter,
+    'forma_pago' => $formaPagoFilter,
     'moneda' => $currencyFilter,
     'desde' => $fromDate,
     'hasta' => $toDate,
@@ -84,6 +86,15 @@ if ($methodFilter !== '' && isset($methodOptions[$methodFilter])) {
     $whereClauses[] = "pp.metodo = '{$safeMethod}'";
 }
 
+$formaPagoOptions = [
+    'contado' => 'Contado',
+    'cuotas' => 'Cuotas',
+];
+if ($formaPagoFilter !== '' && isset($formaPagoOptions[$formaPagoFilter])) {
+    $safeForma = $conn->real_escape_string($formaPagoFilter);
+    $whereClauses[] = "pp.forma_pago = '{$safeForma}'";
+}
+
 $currencyOptions = paymentCurrencyOptions();
 if ($currencyFilter !== '' && isset($currencyOptions[$currencyFilter])) {
     $safeCurrency = $conn->real_escape_string($currencyFilter);
@@ -102,14 +113,14 @@ if ($toDate !== '' && DateTime::createFromFormat('Y-m-d', $toDate) !== false) {
 
 if ($searchTerm !== '') {
     $safeSearch = $conn->real_escape_string($searchTerm);
-    $whereClauses[] = "(pp.concepto LIKE '%{$safeSearch}%' OR pp.referencia LIKE '%{$safeSearch}%' OR pp.notas LIKE '%{$safeSearch}%' OR pr.titulo LIKE '%{$safeSearch}%' OR pr.cliente LIKE '%{$safeSearch}%')";
+    $whereClauses[] = "(pp.concepto LIKE '%{$safeSearch}%' OR pp.referencia LIKE '%{$safeSearch}%' OR pp.notas LIKE '%{$safeSearch}%' OR pp.cliente LIKE '%{$safeSearch}%' OR pr.titulo LIKE '%{$safeSearch}%' OR pr.cliente LIKE '%{$safeSearch}%')";
 }
 
 $whereSql = count($whereClauses) > 0 ? 'WHERE ' . implode(' AND ', $whereClauses) : '';
 
 $exporting = isset($_GET['export']) && $_GET['export'] === 'csv';
 if ($exporting) {
-    $exportSql = "SELECT pp.id, pp.concepto, pp.monto, pp.moneda, pp.estado, pp.metodo, pp.referencia, pp.fecha_pago, pr.titulo AS proyecto, pr.cliente AS cliente FROM proyecto_pagos pp LEFT JOIN proyectos pr ON pr.id = pp.proyecto_id {$whereSql} ORDER BY pp.fecha_pago DESC, pp.id DESC";
+    $exportSql = "SELECT pp.id, pp.concepto, pp.monto, pp.moneda, pp.estado, pp.metodo, pp.forma_pago, pp.proxima_cuota, pp.referencia, pp.fecha_pago, pr.titulo AS proyecto, COALESCE(pp.cliente, pr.cliente) AS cliente FROM proyecto_pagos pp LEFT JOIN proyectos pr ON pr.id = pp.proyecto_id {$whereSql} ORDER BY pp.fecha_pago DESC, pp.id DESC";
     $exportRows = [];
     $exportResult = $conn->query($exportSql);
     if ($exportResult instanceof mysqli_result) {
@@ -123,6 +134,8 @@ if ($exporting) {
                 $row['moneda'],
                 $row['estado'],
                 $row['metodo'],
+                $row['forma_pago'],
+                $row['proxima_cuota'],
                 $row['referencia'],
                 $row['fecha_pago'],
             ];
@@ -130,7 +143,7 @@ if ($exporting) {
         $exportResult->free();
     }
 
-    admin_send_csv('pagos.csv', ['ID', 'Concepto', 'Proyecto', 'Cliente', 'Monto', 'Moneda', 'Estado', 'Metodo', 'Referencia', 'Fecha'], $exportRows);
+    admin_send_csv('pagos.csv', ['ID', 'Concepto', 'Proyecto', 'Cliente', 'Monto', 'Moneda', 'Estado', 'Metodo', 'Forma', 'Proxima cuota', 'Referencia', 'Fecha'], $exportRows);
 }
 
 $totalItems = 0;
@@ -223,7 +236,7 @@ function payment_status_badge_class(string $status): string
                 <?php endif; ?>
 
                 <div class="mb-6 flex flex-col gap-4 rounded-2xl bg-white p-5 shadow">
-                    <form method="GET" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                    <form method="GET" class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
                         <div class="col-span-2">
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Buscar</label>
                             <div class="relative">
@@ -271,6 +284,16 @@ function payment_status_badge_class(string $status): string
                         </div>
 
                         <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Forma de pago</label>
+                            <select name="forma_pago" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 focus:border-blue-600 focus:bg-white focus:outline-none">
+                                <option value="">Todas</option>
+                                <?php foreach ($formaPagoOptions as $key => $label): ?>
+                                    <option value="<?php echo admin_escape($key); ?>" <?php echo $formaPagoFilter === $key ? 'selected' : ''; ?>><?php echo admin_escape($label); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Moneda</label>
                             <select name="moneda" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-3 focus:border-blue-600 focus:bg-white focus:outline-none">
                                 <option value="">Todas</option>
@@ -309,7 +332,9 @@ function payment_status_badge_class(string $status): string
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Proyecto</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Monto</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Estado</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Metodo</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Forma</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Método</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Próxima cuota</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Fecha</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Acciones</th>
                                 </tr>
@@ -322,6 +347,9 @@ function payment_status_badge_class(string $status): string
                                             $estadoLabel = $statusOptions[$estadoKey] ?? ucfirst($estadoKey);
                                             $estadoClass = payment_status_badge_class($estadoKey);
                                             $metodoLabel = $methodOptions[$pago['metodo'] ?? ''] ?? ($pago['metodo'] ?? '-');
+                                            $formaKey = trim((string) ($pago['forma_pago'] ?? 'contado'));
+                                            $formaLabel = $formaPagoOptions[$formaKey] ?? ucfirst($formaKey);
+                                            $proximaCuota = !empty($pago['proxima_cuota']) ? date('d/m/Y', strtotime($pago['proxima_cuota'])) : '-';
                                         ?>
                                         <tr class="border-t hover:bg-gray-50">
                                             <td class="px-6 py-4 font-medium text-slate-900">
@@ -344,6 +372,9 @@ function payment_status_badge_class(string $status): string
                                                     <?php endif; ?>
                                                 <?php else: ?>
                                                     <span class="text-gray-500">Sin proyecto</span>
+                                                    <?php if (!empty($pago['cliente'])): ?>
+                                                        <p class="text-xs text-gray-500">Cliente: <?php echo admin_escape($pago['cliente']); ?></p>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             </td>
                                             <td class="px-6 py-4 text-sm font-semibold text-slate-900">
@@ -352,7 +383,13 @@ function payment_status_badge_class(string $status): string
                                             <td class="px-6 py-4">
                                                 <span class="rounded-full px-3 py-1 text-xs font-semibold <?php echo $estadoClass; ?>"><?php echo admin_escape($estadoLabel); ?></span>
                                             </td>
+                                            <td class="px-6 py-4 text-sm text-gray-700">
+                                                <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                                                    <?php echo admin_escape($formaLabel); ?>
+                                                </span>
+                                            </td>
                                             <td class="px-6 py-4 text-sm text-gray-700"><?php echo admin_escape($metodoLabel ?: '-'); ?></td>
+                                            <td class="px-6 py-4 text-sm text-gray-700"><?php echo admin_escape($proximaCuota); ?></td>
                                             <td class="px-6 py-4 text-sm text-gray-600"><?php echo date('d/m/Y', strtotime($pago['fecha_pago'])); ?></td>
                                             <td class="px-6 py-4">
                                                 <div class="flex flex-wrap items-center gap-2">
@@ -380,6 +417,7 @@ function payment_status_badge_class(string $status): string
                                                         <input type="hidden" name="proyecto_id" value="<?php echo (int) $projectId; ?>">
                                                         <input type="hidden" name="estado" value="<?php echo admin_escape($statusFilter); ?>">
                                                         <input type="hidden" name="metodo" value="<?php echo admin_escape($methodFilter); ?>">
+                                                        <input type="hidden" name="forma_pago" value="<?php echo admin_escape($formaPagoFilter); ?>">
                                                         <input type="hidden" name="moneda" value="<?php echo admin_escape($currencyFilter); ?>">
                                                         <input type="hidden" name="desde" value="<?php echo admin_escape($fromDate); ?>">
                                                         <input type="hidden" name="hasta" value="<?php echo admin_escape($toDate); ?>">

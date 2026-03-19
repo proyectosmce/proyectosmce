@@ -5,6 +5,15 @@
 // $pendingTestimonials opcional
 $activePage = $activePage ?? '';
 $pendingTestimonials = $pendingTestimonials ?? 0;
+$alertPagos = $alertPagos ?? null;
+$citasHoy = $citasHoy ?? null;
+
+if ($alertPagos === null && isset($conn) && $conn instanceof mysqli) {
+    $alertPagos = admin_count_pagos_alerta($conn);
+}
+if ($citasHoy === null && isset($conn) && $conn instanceof mysqli) {
+    $citasHoy = admin_count_citas_hoy($conn);
+}
 
 function mce_nav_item(string $slug, string $href, string $label, string $icon, string $activePage): string
 {
@@ -39,12 +48,40 @@ function mce_nav_item(string $slug, string $href, string $label, string $icon, s
             <i class="fas fa-times text-xl"></i>
         </button>
     </div>
+    <div class="px-4 pt-3">
+        <form action="buscar.php" method="get" class="relative">
+            <i class="fas fa-search pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input
+                type="text"
+                name="q"
+                placeholder="Buscar cliente, proyecto..."
+                class="w-full rounded-xl border border-gray-200 bg-gray-50 py-2.5 pl-9 pr-3 text-sm focus:border-blue-600 focus:bg-white focus:outline-none"
+            >
+        </form>
+    </div>
     <nav class="p-4">
         <ul class="space-y-2">
-            <li><?= mce_nav_item('dashboard', 'dashboard.php', 'Dashboard', 'fa-home', $activePage) ?></li>
+            <li class="flex items-center justify-between gap-2">
+                <?= mce_nav_item('dashboard', 'dashboard.php', 'Dashboard', 'fa-home', $activePage) ?>
+                <?php if (($citasHoy ?? 0) > 0): ?>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-xs font-semibold text-amber-700">Citas hoy: <?= (int)$citasHoy; ?></span>
+                <?php endif; ?>
+            </li>
+            <li><?= mce_nav_item('buscar', 'buscar.php', 'Buscar', 'fa-magnifying-glass', $activePage) ?></li>
             <li><?= mce_nav_item('proyectos', 'proyectos.php', 'Proyectos', 'fa-folder', $activePage) ?></li>
             <li><?= mce_nav_item('servicios', 'servicios.php', 'Servicios', 'fa-cog', $activePage) ?></li>
-            <li><?= mce_nav_item('pagos', 'pagos.php', 'Pagos', 'fa-receipt', $activePage) ?></li>
+            <li class="flex items-center justify-between gap-2">
+                <?= mce_nav_item('pagos', 'pagos.php', 'Pagos', 'fa-receipt', $activePage) ?>
+                <?php if (($alertPagos ?? 0) > 0): ?>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-1 text-xs font-semibold text-red-700">
+                        <span class="relative flex h-2 w-2">
+                            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75"></span>
+                            <span class="relative inline-flex h-2 w-2 rounded-full bg-red-600"></span>
+                        </span>
+                        <?= (int)$alertPagos; ?>
+                    </span>
+                <?php endif; ?>
+            </li>
             <li>
                 <div class="flex items-center space-x-2">
                     <?= mce_nav_item('testimonios', 'testimonios.php', 'Testimonios', 'fa-comment', $activePage) ?>

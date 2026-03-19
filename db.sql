@@ -71,6 +71,8 @@ CREATE TABLE IF NOT EXISTS proyecto_pagos (
     cliente VARCHAR(200) NULL,
     proyecto_id INT NULL,
     concepto VARCHAR(200) NOT NULL,
+    forma_pago ENUM('contado','cuotas') NOT NULL DEFAULT 'contado',
+    proxima_cuota DATE NULL,
     monto DECIMAL(12,2) NOT NULL,
     moneda VARCHAR(10) NOT NULL DEFAULT 'COP',
     estado VARCHAR(30) NOT NULL DEFAULT 'recibido',
@@ -86,6 +88,8 @@ CREATE TABLE IF NOT EXISTS proyecto_pagos (
 -- Si ya tienes la tabla creada y te falta el consecutivo de factura, ejecuta:
 -- ALTER TABLE proyecto_pagos ADD COLUMN invoice_number INT NULL UNIQUE;
 -- ALTER TABLE proyecto_pagos ADD COLUMN cliente VARCHAR(200) NULL;
+-- ALTER TABLE proyecto_pagos ADD COLUMN forma_pago ENUM('contado','cuotas') NOT NULL DEFAULT 'contado';
+-- ALTER TABLE proyecto_pagos ADD COLUMN proxima_cuota DATE NULL;
 
 -- Insertar usuario admin por defecto (contraseña: admin123)
 -- IMPORTANTE: Cambiá esta contraseña después
