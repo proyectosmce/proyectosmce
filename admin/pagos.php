@@ -29,6 +29,7 @@ $perPage = 12;
 $toast = admin_build_toast($_GET['msg'] ?? '', [
     'saved' => ['message' => 'Pago guardado correctamente.'],
     'deleted' => ['message' => 'Pago eliminado correctamente.'],
+    'factura_enviada' => ['message' => 'Factura enviada al correo indicado.'],
     'csrf' => ['type' => 'error', 'title' => 'Sesion no valida', 'message' => 'Recarga la pagina e intenta de nuevo.'],
 ]);
 
@@ -381,10 +382,22 @@ function payment_status_badge_class(string $status): string
                                             <td class="px-6 py-4 text-sm text-gray-700"><?php echo admin_escape($metodoLabel ?: '-'); ?></td>
                                             <td class="px-6 py-4 text-sm text-gray-600"><?php echo date('d/m/Y', strtotime($pago['fecha_pago'])); ?></td>
                                             <td class="px-6 py-4">
-                                                <div class="flex items-center gap-3">
+                                                <div class="flex flex-wrap items-center gap-2">
                                                     <a href="pago-editar.php?id=<?php echo (int) $pago['id']; ?>" class="inline-flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-100">
                                                         <i class="fas fa-edit"></i>
                                                         <span>Editar</span>
+                                                    </a>
+                                                    <a href="pago-factura.php?id=<?php echo (int) $pago['id']; ?>&modo=pdf" target="_blank" class="inline-flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700 hover:bg-emerald-100" title="Descargar PDF">
+                                                        <i class="fas fa-file-pdf"></i>
+                                                        <span>PDF</span>
+                                                    </a>
+                                                    <a href="pago-factura.php?id=<?php echo (int) $pago['id']; ?>&modo=html" target="_blank" class="inline-flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm font-medium text-amber-700 hover:bg-amber-100" title="Ver / Imprimir">
+                                                        <i class="fas fa-print"></i>
+                                                        <span>Imprimir</span>
+                                                    </a>
+                                                    <a href="pago-factura.php?id=<?php echo (int) $pago['id']; ?>&modo=sendform" class="inline-flex items-center gap-2 rounded-lg bg-purple-50 px-3 py-2 text-sm font-medium text-purple-700 hover:bg-purple-100" title="Enviar por correo">
+                                                        <i class="fas fa-paper-plane"></i>
+                                                        <span>Enviar</span>
                                                     </a>
                                                     <form method="POST" class="inline" onsubmit="return confirm('Eliminar este pago?');">
                                                         <input type="hidden" name="csrf_token" value="<?php echo admin_escape($csrfToken); ?>">
