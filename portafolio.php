@@ -28,14 +28,17 @@ $featuredProject = $projects[0] ?? null;
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-code-branch mr-2 text-yellow-300"></i>APIs, colas y webhooks</span>
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-lock mr-2 text-yellow-300"></i>Seguridad y pruebas completas</span>
                 </div>
-                <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
-                    <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
-                        <i class="fas fa-rocket mr-2"></i> Solicitar demo
-                    </a>
-                    <a href="#proyectos-grid" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
-                        <i class="fas fa-eye mr-2"></i> Ver proyectos
-                    </a>
-                </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
+                        <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
+                            <i class="fas fa-rocket mr-2"></i> Solicitar demo
+                        </a>
+                        <a href="#proyectos-grid" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
+                            <i class="fas fa-eye mr-2"></i> Ver proyectos
+                        </a>
+                        <a href="#casos-exito-portafolio" class="inline-flex items-center justify-center border-2 border-amber-300 text-amber-100 px-8 py-4 rounded-xl font-semibold hover:bg-amber-200 hover:text-slate-900 transition">
+                            <i class="fas fa-trophy mr-2"></i> Casos de éxito
+                        </a>
+                    </div>
             </div>
 
             <div class="lg:col-span-5">
@@ -173,6 +176,66 @@ $featuredProject = $projects[0] ?? null;
     </div>
 </section>
 <?php endif; ?>
+
+<!-- Caso de éxito destacado -->
+<section id="casos-exito-portafolio" class="max-w-7xl mx-auto px-4 pb-10">
+    <div class="bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-400 text-slate-900 rounded-2xl shadow-2xl border border-amber-200 overflow-hidden">
+        <div class="grid md:grid-cols-12 gap-0">
+            <div class="md:col-span-7 p-8 lg:p-10 space-y-4 bg-white/70 backdrop-blur">
+                <div class="inline-flex items-center px-3 py-1 text-xs font-semibold uppercase tracking-wide bg-amber-100 text-amber-800 rounded-full border border-amber-200">Caso de éxito</div>
+                <h3 class="text-3xl font-bold">Destello de Oro 18K</h3>
+                <p class="text-lg text-slate-800">Sistema operativo para joyería con venta en tienda, inventario en tiempo real y garantías trazables.</p>
+                <div class="grid sm:grid-cols-2 gap-3">
+                    <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Necesidad</p>
+                        <p class="text-sm text-slate-800">Unificar ventas, stock y garantías en una sola herramienta fácil para el equipo de tienda.</p>
+                    </div>
+                    <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Solución</p>
+                        <p class="text-sm text-slate-800">POS con flujos guiados, inventario por pieza, módulo de garantías y cierres de caja diarios con reportes.</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm font-semibold"><i class="fas fa-store mr-2"></i>Punto de venta</span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm font-semibold"><i class="fas fa-boxes-stacked mr-2"></i>Inventario</span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm font-semibold"><i class="fas fa-shield-heart mr-2"></i>Garantías</span>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm font-semibold"><i class="fas fa-cash-register mr-2"></i>Caja y gastos</span>
+                </div>
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="<?php echo app_url('destello-oro.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
+                        <i class="fas fa-play mr-2"></i> Ver caso completo
+                    </a>
+                    <a href="<?php echo app_url('contacto.php'); ?>#agenda-llamada" class="inline-flex items-center px-5 py-3 rounded-xl border border-slate-900 text-slate-900 font-semibold hover:bg-slate-900 hover:text-white transition">
+                        <i class="fas fa-phone-alt mr-2"></i> Agenda una llamada
+                    </a>
+                </div>
+            </div>
+            <div class="md:col-span-5 relative min-h-[260px] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.35),transparent_45%),radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.22),transparent_40%),radial-gradient(circle_at_60%_80%,rgba(255,255,255,0.28),transparent_45%)]">
+                <div class="absolute inset-0 bg-[linear-gradient(135deg,rgba(15,23,42,0.25),rgba(15,23,42,0.12))]"></div>
+                <div class="relative h-full w-full flex items-center justify-center p-8">
+                    <div class="bg-white/85 backdrop-blur-lg rounded-2xl shadow-2xl border border-amber-100 p-6 max-w-sm w-full space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-amber-700 uppercase tracking-wide">Joyería</p>
+                                <p class="text-lg font-bold text-slate-900">Destello de Oro 18K</p>
+                            </div>
+                            <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-500 text-white font-bold">DO</span>
+                        </div>
+                        <ul class="space-y-2 text-slate-800 text-sm">
+                            <li class="flex items-start gap-2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Venta en tienda con cobro y saldos.</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Inventario en tiempo real por pieza.</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Garantías trazables y reposición.</span></li>
+                            <li class="flex items-start gap-2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Reportes de caja y gastos diarios.</span></li>
+                        </ul>
+                        <a href="<?php echo app_url('destello-oro.php'); ?>" class="inline-flex items-center justify-center w-full mt-2 px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600 transition">
+                            Ver pantallas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Filtros -->
 <section class="max-w-7xl mx-auto px-4 py-6">
