@@ -13,7 +13,7 @@
             <div class="lg:col-span-7 space-y-6 text-left">
                 <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
                     <i class="fas fa-sparkles mr-2 text-yellow-300"></i>
-                    Proyectos MCE >·< Software a medida
+                    Proyectos MCE · Software a medida
                 </span>
                 <h1 class="text-4xl md:text-6xl font-bold leading-tight">
                     Software a medida para que tu operación no se detenga

@@ -104,6 +104,32 @@ $featuredProject = $projects[0] ?? null;
                         <p class="text-sm text-slate-800">POS con flujos guiados, inventario por pieza, módulo de garantías y cierres de caja diarios con reportes.</p>
                     </div>
                 </div>
+                <div class="grid sm:grid-cols-2 gap-3 mt-3">
+                    <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Necesidad</p>
+                        <p class="text-sm text-slate-800">Evitar sobreventas al vender en tienda f&amp;iacute;sica y en l&amp;iacute;nea al mismo tiempo.</p>
+                    </div>
+                    <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">SoluciÃ³n</p>
+                        <p class="text-sm text-slate-800">Sincronizaci&amp;oacute;n en tiempo real entre POS y cat&amp;aacute;logo web, reservas de stock y alertas de bajo inventario.</p>
+                    </div>
+                    <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Necesidad</p>
+                        <p class="text-sm text-slate-800">Tener trazabilidad completa de garant&amp;iacute;as, mantenimientos y repuestos por pieza.</p>
+                    </div>
+                    <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">SoluciÃ³n</p>
+                        <p class="text-sm text-slate-800">Historial por n&amp;uacute;mero de serie, evidencias adjuntas, recordatorios autom&amp;aacute;ticos y estados visibles en dashboard.</p>
+                    </div>
+                    <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Necesidad</p>
+                        <p class="text-sm text-slate-800">Auditar cierres de caja, gastos y arqueos sin depender de hojas de c&amp;aacute;lculo.</p>
+                    </div>
+                    <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">SoluciÃ³n</p>
+                        <p class="text-sm text-slate-800">Cierres con doble validaci&amp;oacute;n, anexos de soportes y reportes autom&amp;aacute;ticos listos para contabilidad.</p>
+                    </div>
+                </div>
                 <div class="flex flex-wrap gap-2">
                     <span class="inline-flex items-center px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm font-semibold"><i class="fas fa-store mr-2"></i>Punto de venta</span>
                     <span class="inline-flex items-center px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm font-semibold"><i class="fas fa-boxes-stacked mr-2"></i>Inventario</span>
