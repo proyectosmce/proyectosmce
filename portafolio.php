@@ -17,14 +17,14 @@ $featuredProject = $projects[0] ?? null;
         <div class="grid lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-7 space-y-5">
                 <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
-                    <i class="fas fa-briefcase mr-2 text-yellow-300"></i> Portafolio Â· Proyectos MCE
+                    <i class="fas fa-briefcase mr-2 text-yellow-300"></i> Portafolio · Proyectos MCE
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Productos digitales y sistemas en producciÃ³n</h1>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Productos digitales y sistemas en producción</h1>
                 <p class="text-lg text-blue-50 max-w-3xl">
                     Proyectos reales con usuarios y datos en vivo: paneles internos, portales, automatizaciones y sitios de marca conectados a pasarelas y APIs.
                 </p>
                 <div class="flex flex-wrap gap-3">
-                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-industry mr-2 text-yellow-300"></i>Retail Â· LogÃ­stica Â· Servicios</span>
+                    <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-industry mr-2 text-yellow-300"></i>Retail · Logística · Servicios</span>
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-code-branch mr-2 text-yellow-300"></i>APIs, colas y webhooks</span>
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm"><i class="fas fa-lock mr-2 text-yellow-300"></i>Seguridad y pruebas completas</span>
                 </div>
@@ -36,7 +36,7 @@ $featuredProject = $projects[0] ?? null;
                         <i class="fas fa-eye mr-2"></i> Ver proyectos
                     </a>
                     <a href="#casos-exito-portafolio" class="inline-flex items-center justify-center border-2 border-amber-300 text-amber-100 px-8 py-4 rounded-xl font-semibold hover:bg-amber-200 hover:text-slate-900 transition">
-                        <i class="fas fa-trophy mr-2"></i> Casos de Ã©xito
+                        <i class="fas fa-trophy mr-2"></i> Casos de éxito
                     </a>
                 </div>
             </div>
@@ -45,7 +45,7 @@ $featuredProject = $projects[0] ?? null;
                 <div class="bg-white/10 border border-white/20 backdrop-blur-xl rounded-2xl p-8 shadow-2xl space-y-5">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-sm text-blue-100">QuÃ© verÃ¡s</p>
+                            <p class="text-sm text-blue-100">Qué verás</p>
                             <p class="text-2xl font-semibold text-white">Casos listos para inspirar tu proyecto</p>
                         </div>
                         <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-300 text-slate-900 font-bold shadow-lg">MCE</span>
@@ -62,7 +62,7 @@ $featuredProject = $projects[0] ?? null;
                             <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-globe"></i></span>
                             <div>
                                 <p class="font-semibold">Sitios y tiendas online</p>
-                                <p class="text-sm text-blue-100">CatÃ¡logos, carrito de compra, pagos y mediciÃ³n de ventas.</p>
+                                <p class="text-sm text-blue-100">Catálogos, carrito de compra, pagos y medición de ventas.</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-3">
@@ -76,7 +76,7 @@ $featuredProject = $projects[0] ?? null;
                     <a href="#proyectos-grid" class="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between hover:bg-white/10 transition">
                         <div>
                             <p class="text-sm text-blue-100">Entrega con visibilidad</p>
-                            <p class="font-semibold">Demos frecuentes y documentaciÃ³n</p>
+                            <p class="font-semibold">Demos frecuentes y documentación</p>
                         </div>
                         <i class="fas fa-arrow-right text-yellow-300"></i>
                     </a>
@@ -86,7 +86,7 @@ $featuredProject = $projects[0] ?? null;
     </div>
 </section>
 
-<!-- Caso de Ã©xito destacado -->
+<!-- Caso de éxito destacado -->
 <section id="casos-exito-portafolio" class="max-w-7xl mx-auto px-4 pb-10 pt-10">
     <div class="bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-400 text-slate-900 rounded-2xl shadow-2xl border border-amber-200 overflow-hidden">
         <div class="grid md:grid-cols-12 gap-0">
@@ -277,7 +277,7 @@ $featuredProject = $projects[0] ?? null;
                     <?php endif; ?>
 
                     <a href="#proyectos-grid" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition">
-                        Ver mÃ¡s proyectos
+                        Ver más proyectos
                     </a>
                 </div>
             </div>
@@ -291,7 +291,7 @@ $featuredProject = $projects[0] ?? null;
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
             <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Filtrar proyectos</p>
-            <p class="text-gray-700">Explora por categorÃ­a o mira todo el portafolio.</p>
+            <p class="text-gray-700">Explora por categoría o mira todo el portafolio.</p>
         </div>
         <div class="flex flex-wrap gap-2">
             <button class="filter-btn active px-4 py-2 rounded-full bg-blue-600 text-white" data-filter="all">Todos</button>
@@ -309,7 +309,7 @@ $featuredProject = $projects[0] ?? null;
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php if (!$projects): ?>
             <div class="md:col-span-2 lg:col-span-3 rounded-2xl border border-dashed border-gray-300 bg-white p-10 text-center text-gray-600">
-                AÃºn no hay proyectos publicados en el portafolio.
+                Aún no hay proyectos publicados en el portafolio.
             </div>
         <?php endif; ?>
 
@@ -365,7 +365,7 @@ $featuredProject = $projects[0] ?? null;
                                 <?php echo $isExternal ? 'target="_blank" rel="noopener"' : ''; ?>
                                 class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold"
                             >
-                                Ver mÃ¡s <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                                Ver más <i class="fas fa-arrow-right ml-2 text-sm"></i>
                             </a>
                         <?php else: ?>
                             <span class="text-sm text-gray-400">Sin enlace disponible</span>
@@ -381,7 +381,7 @@ $featuredProject = $projects[0] ?? null;
 <section class="max-w-7xl mx-auto px-4 pb-16">
     <div class="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-800 text-white rounded-2xl mce-rounded-panel p-10 shadow-2xl flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
-            <p class="text-sm font-semibold text-blue-100 uppercase tracking-wide">Â¿Listo para tu caso?</p>
+            <p class="text-sm font-semibold text-blue-100 uppercase tracking-wide">¿Listo para tu caso?</p>
             <h3 class="text-2xl font-bold">Te mostramos un demo similar a tu industria</h3>
             <p class="text-blue-100 mt-2">Agenda una llamada y en 24 horas preparamos un recorrido de referencia.</p>
         </div>
@@ -399,7 +399,7 @@ $featuredProject = $projects[0] ?? null;
                 <i class="fas fa-eye mr-2"></i> Ver proyectos
             </a>
             <a href="#casos-exito-portafolio" class="inline-flex items-center px-5 py-3 rounded-xl border border-amber-300 text-amber-100 font-semibold hover:bg-amber-200 hover:text-slate-900 transition">
-                <i class="fas fa-trophy mr-2"></i> Casos de Ã©xito
+                <i class="fas fa-trophy mr-2"></i> Casos de éxito
             </a>
         </div>
     </div>
@@ -431,5 +431,8 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 </script>
 
 <?php include 'includes/footer.php'; ?>
+
+
+
 
 
