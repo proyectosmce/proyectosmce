@@ -364,16 +364,22 @@ if ($modo === 'pdf') {
     if (!empty($fpdfMissing)) {
         exit('Falta la librería FPDF en includes/lib/fpdf.php');
     }
+    if (!class_exists('FPDF')) {
+        http_response_code(500);
+        exit('La clase FPDF no está disponible. Verifica includes/lib/fpdf.php');
+    }
     $pdf = build_pdf($payment);
     if ($pdf === '') {
         http_response_code(500);
         exit('No se pudo generar el PDF. Verifica que includes/lib/fpdf.php esté en el servidor.');
     }
     $invoice = invoice_number($payment);
-    if (ob_get_length()) { ob_end_clean(); }
+    while (ob_get_level()) { ob_end_clean(); }
     header('Content-Type: application/pdf');
-    header('Content-Disposition: inline; filename="' . $invoice . '.pdf"');
+    header('Content-Disposition: attachment; filename="' . $invoice . '.pdf"');
     header('Content-Length: ' . strlen($pdf));
+    header('Cache-Control: private, max-age=0, must-revalidate');
+    header('Pragma: public');
     echo $pdf;
     exit;
 }
