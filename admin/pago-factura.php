@@ -345,8 +345,10 @@ if ($modo === 'pdf') {
         exit('No se pudo generar el PDF. Verifica que includes/lib/fpdf.php esté en el servidor.');
     }
     $invoice = invoice_number($payment);
+    if (ob_get_length()) { ob_end_clean(); }
     header('Content-Type: application/pdf');
     header('Content-Disposition: inline; filename="' . $invoice . '.pdf"');
+    header('Content-Length: ' . strlen($pdf));
     echo $pdf;
     exit;
 }
