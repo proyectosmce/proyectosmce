@@ -336,17 +336,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $modo === 'send') {
     }
     $emailDestino = trim((string) ($_POST['email_destino'] ?? ''));
     if (!filter_var($emailDestino, FILTER_VALIDATE_EMAIL)) {
-        header('Location: pago-factura.php?id=' . $id . '&modo=sendform&msg=bademail');
-        exit;
-    }
-    $ok = send_invoice_email($payment, $emailDestino, $conn);
-    if ($ok) {
-        header('Location: pagos.php?msg=factura_enviada');
+        $flash = 'bademail';
     } else {
-        $fallbackMsg = empty($smtpUser) || empty($smtpPass) ? 'smtp' : 'sendfail';
-        header('Location: pago-factura.php?id=' . $id . '&modo=sendform&msg=' . $fallbackMsg);
+        $ok = send_invoice_email($payment, $emailDestino, $conn);
+
+        // Log sencillo
+        $logDir = dirname(__DIR__) . '/logs';
+        if (!is_dir($logDir)) @mkdir($logDir, 0775, true);
+        $logFile = $logDir . '/facturas.log';
+        $status = $ok ? 'OK' : 'FAIL';
+        $msgLog = date('c') . " | {$status} | pago_id={$payment['id']} | to={$emailDestino}\n";
+        @file_put_contents($logFile, $msgLog, FILE_APPEND);
+
+        if ($ok) {
+            header('Location: pagos.php?msg=factura_enviada');
+            exit;
+        } else {
+            $flash = (empty($smtpUser) || empty($smtpPass)) ? 'smtp' : 'sendfail';
+        }
     }
-    exit;
+    // Si falla, seguimos renderizando el formulario con $flash
+    $modo = 'sendform';
 }
 
 // Render según modo
@@ -401,9 +411,11 @@ if ($modo === 'html') {
         <?php if ($flash === 'bademail'): ?>
             <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">Correo inválido, intenta nuevamente.</div>
         <?php elseif ($flash === 'sendfail'): ?>
-            <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">No pudimos enviar la factura. Revisa SMTP.</div>
+            <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">No pudimos enviar la factura. Revisa SMTP o intenta de nuevo.</div>
         <?php elseif ($flash === 'smtp'): ?>
             <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">Faltan SMTP_USER / SMTP_PASS. Configúralos en <code>includes/secrets.php</code> o variables de entorno.</div>
+        <?php elseif ($flash === 'sent'): ?>
+            <div class="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700 text-sm">Factura enviada con éxito.</div>
         <?php endif; ?>
 
         <form method="POST" class="space-y-4">
