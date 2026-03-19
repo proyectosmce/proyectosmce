@@ -360,10 +360,6 @@ function payment_status_badge_class(string $status): string
                                                         <i class="fas fa-edit"></i>
                                                         <span>Editar</span>
                                                     </a>
-                                                    <a href="pago-factura.php?id=<?php echo (int) $pago['id']; ?>&modo=pdf" target="_blank" class="inline-flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700 hover:bg-emerald-100" title="Descargar PDF">
-                                                        <i class="fas fa-file-pdf"></i>
-                                                        <span>PDF</span>
-                                                    </a>
                                                     <a href="pago-factura.php?id=<?php echo (int) $pago['id']; ?>&modo=html" target="_blank" class="inline-flex items-center gap-2 rounded-lg bg-amber-50 px-3 py-2 text-sm font-medium text-amber-700 hover:bg-amber-100" title="Ver / Imprimir">
                                                         <i class="fas fa-print"></i>
                                                         <span>Imprimir</span>

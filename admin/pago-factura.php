@@ -14,14 +14,6 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
-// FPDF
-$fpdfPath = __DIR__ . '/../includes/lib/fpdf.php';
-if (file_exists($fpdfPath)) {
-    require_once $fpdfPath;
-} else {
-    $fpdfMissing = true;
-}
-
 ensureProjectPaymentsSchema($conn);
 $csrfToken = admin_get_csrf_token();
 
@@ -63,93 +55,6 @@ function invoice_number(array $payment): string
 
 function brand_primary(): array { return [15, 23, 42]; }    // slate-900
 function brand_accent(): array { return [245, 158, 11]; }   // amber-500
-
-function pdf_text($txt): string
-{
-    return iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
-}
-
-function build_pdf(array $payment): string
-{
-    if (!class_exists('FPDF')) {
-        return '';
-    }
-
-    $pdf = new FPDF();
-    $pdf->AddPage();
-    [$pr, $pg, $pb] = brand_primary();
-
-    // Header
-    $pdf->SetFillColor($pr, $pg, $pb);
-    $pdf->Rect(0, 0, 210, 40, 'F');
-    $pdf->SetY(10);
-    $pdf->SetTextColor(255, 255, 255);
-    $pdf->SetFont('Arial', 'B', 16);
-    $pdf->Cell(0, 8, pdf_text('Proyectos MCE'), 0, 1, 'L');
-    $pdf->SetFont('Arial', '', 11);
-    $pdf->Cell(0, 6, pdf_text('Software a medida · proyectosmceaa@gmail.com · +57 311 412 59 71'), 0, 1, 'L');
-
-    // Title
-    $pdf->SetY(45);
-    $pdf->SetTextColor($pr, $pg, $pb);
-    $pdf->SetFont('Arial', 'B', 14);
-    $pdf->Cell(0, 10, pdf_text('Factura / Recibo de pago'), 0, 1, 'L');
-
-    $pdf->SetFont('Arial', '', 11);
-    $pdf->SetTextColor(50, 50, 50);
-    $pdf->Cell(100, 7, pdf_text('Factura: ' . invoice_number($payment)), 0, 0, 'L');
-    $pdf->Cell(0, 7, pdf_text('Fecha: ' . date('d/m/Y', strtotime($payment['fecha_pago']))), 0, 1, 'R');
-
-    // Cliente / proyecto
-    $pdf->Ln(2);
-    $pdf->SetFont('Arial', 'B', 12);
-    $pdf->SetTextColor($pr, $pg, $pb);
-    $pdf->Cell(0, 8, pdf_text('Cliente / Proyecto'), 0, 1, 'L');
-
-    $pdf->SetFont('Arial', '', 11);
-    $pdf->SetTextColor(40, 40, 40);
-    $pdf->Cell(0, 6, pdf_text('Cliente: ' . ($payment['proyecto_cliente'] ?: 'Cliente sin nombre')), 0, 1);
-    $pdf->Cell(0, 6, pdf_text('Proyecto: ' . ($payment['proyecto_titulo'] ?: 'Proyecto sin título')), 0, 1);
-    if (!empty($payment['referencia'])) {
-        $pdf->Cell(0, 6, pdf_text('Referencia: ' . $payment['referencia']), 0, 1);
-    }
-
-    // Tabla
-    $pdf->Ln(4);
-    $pdf->SetFont('Arial', 'B', 12);
-    $pdf->SetTextColor($pr, $pg, $pb);
-    $pdf->Cell(0, 8, pdf_text('Detalle de pago'), 0, 1, 'L');
-
-    $pdf->SetFillColor(247, 249, 252);
-    $pdf->SetTextColor(70, 70, 70);
-    $pdf->SetFont('Arial', 'B', 11);
-    $pdf->Cell(120, 8, pdf_text('Concepto'), 1, 0, 'L', true);
-    $pdf->Cell(40, 8, pdf_text('Método'), 1, 0, 'C', true);
-    $pdf->Cell(30, 8, pdf_text('Monto'), 1, 1, 'R', true);
-
-    $pdf->SetFont('Arial', '', 11);
-    $pdf->Cell(120, 8, pdf_text($payment['concepto']), 1, 0, 'L');
-    $pdf->Cell(40, 8, pdf_text($payment['metodo'] ?: '-'), 1, 0, 'C');
-    $monto = payment_format_amount((float) $payment['monto'], (string) $payment['moneda']);
-    $pdf->Cell(30, 8, pdf_text($monto), 1, 1, 'R');
-
-    if (!empty($payment['notas'])) {
-        $pdf->Ln(4);
-        $pdf->SetFont('Arial', 'B', 11);
-        $pdf->SetTextColor($pr, $pg, $pb);
-        $pdf->Cell(0, 7, pdf_text('Notas'), 0, 1);
-        $pdf->SetFont('Arial', '', 10);
-        $pdf->SetTextColor(60, 60, 60);
-        $pdf->MultiCell(0, 6, pdf_text($payment['notas']));
-    }
-
-    $pdf->Ln(6);
-    $pdf->SetFont('Arial', '', 9);
-    $pdf->SetTextColor(120, 120, 120);
-    $pdf->MultiCell(0, 5, pdf_text('Gracias por confiar en Proyectos MCE. Si necesitas soporte, escríbenos a proyectosmceaa@gmail.com'));
-
-    return (string) $pdf->Output('S');
-}
 
 function render_html(array $payment): void
 {
@@ -280,9 +185,6 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn): bool
         return false;
     }
 
-    $pdfBinary = build_pdf($payment);
-    $invoice = invoice_number($payment);
-
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
@@ -306,11 +208,11 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn): bool
         $monto = payment_format_amount((float) $payment['monto'], (string) $payment['moneda']);
         $fecha = date('d/m/Y', strtotime($payment['fecha_pago']));
 
-        $mail->Subject = "Factura {$invoice} - Proyectos MCE";
+        $mail->Subject = "Factura - Proyectos MCE";
         $mail->isHTML(true);
         $mail->Body = "
             <p>Hola {$cliente},</p>
-            <p>Adjuntamos la factura {$invoice} correspondiente a:</p>
+            <p>Te compartimos el resumen del pago correspondiente a:</p>
             <ul>
                 <li><strong>Concepto:</strong> {$concepto}</li>
                 <li><strong>Monto:</strong> {$monto}</li>
@@ -319,8 +221,7 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn): bool
             <p>Gracias por tu confianza.</p>
             <p>Proyectos MCE</p>
         ";
-        $mail->AltBody = "Factura {$invoice} - Concepto: {$concepto} - Monto: {$monto} - Fecha: {$fecha}";
-        $mail->addStringAttachment($pdfBinary, "{$invoice}.pdf", 'base64', 'application/pdf');
+        $mail->AltBody = "Factura - Concepto: {$concepto} - Monto: {$monto} - Fecha: {$fecha}";
         $mail->send();
         return true;
     } catch (Exception $e) {
@@ -360,32 +261,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $modo === 'send') {
 }
 
 // Render según modo
-if ($modo === 'pdf') {
-    if (!empty($fpdfMissing)) {
-        exit('Falta la librería FPDF en includes/lib/fpdf.php');
-    }
-    if (!class_exists('FPDF')) {
-        http_response_code(500);
-        exit('La clase FPDF no está disponible. Verifica includes/lib/fpdf.php');
-    }
-    $pdf = build_pdf($payment);
-    if ($pdf === '' || strlen($pdf) < 200) { // menor a 200 bytes suena a fallo
-        http_response_code(500);
-        error_log('Factura PDF vacía para pago_id=' . $payment['id']);
-        exit('No se pudo generar el PDF. Verifica que includes/lib/fpdf.php esté en el servidor o revisa caracteres especiales.');
-    }
-    $invoice = invoice_number($payment);
-    while (ob_get_level()) { ob_end_clean(); }
-    header('Content-Type: application/pdf');
-    header('Content-Disposition: inline; filename="' . $invoice . '.pdf"');
-    header('Content-Transfer-Encoding: binary');
-    header('Accept-Ranges: bytes');
-    header('Cache-Control: private, max-age=0, must-revalidate');
-    header('Pragma: public');
-    echo $pdf;
-    exit;
-}
-
 if ($modo === 'html') {
     render_html($payment);
     exit;
@@ -412,10 +287,6 @@ if ($modo === 'html') {
             <a href="pagos.php" class="text-sm text-blue-600 hover:underline">Volver</a>
         </div>
 
-        <?php if (!empty($fpdfMissing)): ?>
-            <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">Falta la librería FPDF (sube includes/lib/fpdf.php).</div>
-        <?php endif; ?>
-
         <?php if ($flash === 'bademail'): ?>
             <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">Correo inválido, intenta nuevamente.</div>
         <?php elseif ($flash === 'sendfail'): ?>
@@ -437,12 +308,8 @@ if ($modo === 'html') {
                     <i class="fas fa-paper-plane"></i>
                     <span>Enviar factura</span>
                 </button>
-                <a class="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-800 hover:bg-slate-50" href="pago-factura.php?id=<?php echo (int) $payment['id']; ?>&modo=pdf" target="_blank">
-                    <i class="fas fa-file-pdf text-amber-500"></i>
-                    <span>Descargar PDF</span>
-                </a>
             </div>
-            <p class="text-xs text-slate-500">La factura se enviará como PDF adjunto usando la configuración SMTP definida en secrets.php o variables de entorno.</p>
+            <p class="text-xs text-slate-500">La factura se enviará por correo usando la configuración SMTP definida en secrets.php o variables de entorno.</p>
         </form>
     </div>
 </body>
