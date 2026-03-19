@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare('UPDATE proyecto_pagos SET proyecto_id = NULLIF(?, 0), cliente = NULLIF(?, \'\'), forma_pago = ?, proxima_cuota = NULLIF(?, \'\'), cuotas_totales = ?, cuotas_pendientes = ?, concepto = ?, monto = ?, moneda = ?, estado = ?, metodo = ?, referencia = ?, notas = ?, fecha_pago = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?');
             if ($stmt) {
                 $stmt->bind_param(
-                    'isssiisdssssssi',
+                    'isssiisdssssss',
                     $proyectoId,
                     $clienteLibre,
                     $formaPago,
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare('INSERT INTO proyecto_pagos (proyecto_id, cliente, forma_pago, proxima_cuota, cuotas_totales, cuotas_pendientes, concepto, monto, moneda, estado, metodo, referencia, notas, fecha_pago) VALUES (NULLIF(?, 0), NULLIF(?, \'\'), ?, NULLIF(?, \'\'), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
             if ($stmt) {
                 $stmt->bind_param(
-                    'isssiisdsssssss',
+                    'isssiisdssssss',
                     $proyectoId,
                     $clienteLibre,
                     $formaPago,
