@@ -205,7 +205,7 @@ function render_html(array $payment): void
     $invoice = invoice_number($payment);
     $fecha = date('d/m/Y', strtotime($payment['fecha_pago']));
     $project = $payment['proyecto_titulo'] ?: 'Proyecto sin tÃ­tulo';
-    $client = $payment['proyecto_cliente'] ?: 'Cliente sin nombre';
+    $client = $payment['cliente'] ?: ($payment['proyecto_cliente'] ?: 'Cliente sin nombre');
     $ref = $payment['referencia'] ?: '-';
     $notas = nl2br(htmlspecialchars(trim((string) ($payment['notas'] ?? '')), ENT_QUOTES, 'UTF-8'));
     ?>
@@ -346,7 +346,7 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
         }
         $mail->addReplyTo($smtpFromEmail, $smtpFromName);
 
-        $cliente = htmlspecialchars($payment['proyecto_cliente'] ?: 'cliente', ENT_QUOTES, 'UTF-8');
+        $cliente = htmlspecialchars($payment['cliente'] ?: ($payment['proyecto_cliente'] ?? 'cliente'), ENT_QUOTES, 'UTF-8');
         $concepto = htmlspecialchars($payment['concepto'], ENT_QUOTES, 'UTF-8');
         $monto = payment_format_amount((float) $payment['monto'], (string) $payment['moneda']);
         $fecha = date('d/m/Y', strtotime($payment['fecha_pago']));
