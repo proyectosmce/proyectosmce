@@ -440,11 +440,6 @@ if ($modo === 'pdf') {
         exit('Error al crear el PDF.');
     }
     $invoice = invoice_number($payment);
-    // Debug: guarda última factura generada
-    $logDir = dirname(__DIR__) . '/logs';
-    if (!is_dir($logDir)) @mkdir($logDir, 0775, true);
-    @file_put_contents($logDir . '/last-factura.pdf', $pdfBinary);
-    @file_put_contents($logDir . '/facturas.log', date('c') . " | PDF | pago_id={$payment['id']} | bytes=" . strlen($pdfBinary) . "\n", FILE_APPEND);
     while (ob_get_level()) { ob_end_clean(); }
     header('Content-Type: application/pdf');
     header('Content-Disposition: attachment; filename="' . $invoice . '.pdf"');
