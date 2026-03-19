@@ -152,6 +152,32 @@
     100% { opacity: 0; transform: scale(1.65); }
 }
 
+/* Botón flotante de llamada */
+.mce-call-float {
+    position: fixed;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.85rem 1.1rem;
+    border-radius: 9999px;
+    background: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.25);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.25s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.mce-call-float:hover,
+.mce-call-float:focus-visible {
+    background: #eef2ff;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.32);
+}
+.mce-call-float .call-ico-wrap {
+    background: rgba(15, 23, 42, 0.06);
+}
+
 .mce-whatsapp-float:hover,
 .mce-whatsapp-float:focus-visible,
 .mce-whatsapp-float:hover::before,
