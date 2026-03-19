@@ -142,23 +142,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen">
-        <div class="w-64 bg-white shadow-lg">
-            <div class="p-4 border-b">
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden"></div>
+        <aside id="sidebar" class="fixed lg:static z-40 inset-y-0 left-0 w-64 bg-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-200">
+            <div class="p-4 border-b flex items-center justify-between lg:block">
                 <h2 class="text-xl font-bold text-blue-600">MCE Admin</h2>
+                <button id="sidebar-close" class="lg:hidden text-slate-600 hover:text-slate-900">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
             </div>
             <nav class="p-4">
                 <ul class="space-y-2">
-                    <li><a href="dashboard.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-                    <li><a href="proyectos.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-folder"></i><span>Proyectos</span></a></li>
-                    <li><a href="servicios.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-cog"></i><span>Servicios</span></a></li>
+                    <li><a href="dashboard.php" class="nav-link flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+                    <li><a href="proyectos.php" class="nav-link flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-folder"></i><span>Proyectos</span></a></li>
+                    <li><a href="servicios.php" class="nav-link flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-cog"></i><span>Servicios</span></a></li>
                     <li>
-                        <a href="pagos.php" class="flex items-center space-x-2 p-2 bg-blue-50 text-blue-600 rounded">
+                        <a href="pagos.php" class="nav-link flex items-center space-x-2 p-2 bg-blue-50 text-blue-600 rounded">
                             <i class="fas fa-receipt"></i>
                             <span>Pagos</span>
                         </a>
                     </li>
                     <li>
-                        <a href="testimonios.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
+                        <a href="testimonios.php" class="nav-link flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
                             <i class="fas fa-comment"></i>
                             <span>Testimonios</span>
                             <?php if ($pendingTestimonials > 0): ?>
@@ -172,16 +176,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php endif; ?>
                         </a>
                     </li>
-                    <li><a href="mensajes.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-envelope"></i><span>Mensajes</span></a></li>
-                    <li><a href="auditoria.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-clock-rotate-left"></i><span>Actividad</span></a></li>
-                    <li><a href="cambiar-password.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-lock"></i><span>Cambiar clave</span></a></li>
-                    <li><a href="logout.php" class="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded text-red-600"><i class="fas fa-sign-out-alt"></i><span>Salir</span></a></li>
+                    <li><a href="mensajes.php" class="nav-link flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-envelope"></i><span>Mensajes</span></a></li>
+                    <li><a href="auditoria.php" class="nav-link flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-clock-rotate-left"></i><span>Actividad</span></a></li>
+                    <li><a href="cambiar-password.php" class="nav-link flex items-center space-x-2 p-2 hover:bg-gray-100 rounded"><i class="fas fa-lock"></i><span>Cambiar clave</span></a></li>
+                    <li><a href="logout.php" class="nav-link flex items-center space-x-2 p-2 hover:bg-gray-100 rounded text-red-600"><i class="fas fa-sign-out-alt"></i><span>Salir</span></a></li>
                 </ul>
             </nav>
-        </div>
+        </aside>
 
         <div class="flex-1 overflow-y-auto">
             <div class="p-8">
+                <div class="mb-4 flex items-center justify-between lg:hidden">
+                    <button id="sidebar-open" class="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-slate-800">
+                        <i class="fas fa-bars"></i> <span>Menú</span>
+                    </button>
+                </div>
                 <div class="mb-6 flex items-center justify-between gap-3">
                     <div>
                         <h1 class="text-3xl font-bold"><?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></h1>
@@ -344,5 +353,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </body>
+<script>
+(() => {
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const openBtn = document.getElementById('sidebar-open');
+    const closeBtn = document.getElementById('sidebar-close');
+    const links = document.querySelectorAll('.nav-link');
+    const closeSidebar = () => { sidebar.classList.add('-translate-x-full'); backdrop.classList.add('hidden'); };
+    const openSidebar = () => { sidebar.classList.remove('-translate-x-full'); backdrop.classList.remove('hidden'); };
+    openBtn?.addEventListener('click', openSidebar);
+    closeBtn?.addEventListener('click', closeSidebar);
+    backdrop?.addEventListener('click', closeSidebar);
+    links.forEach(l => l.addEventListener('click', () => { if (window.innerWidth < 1024) closeSidebar(); }));
+})();
+</script>
 </html>
+
+
 
