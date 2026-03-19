@@ -36,7 +36,7 @@ function pdf_text(string $txt): string
     if (function_exists('mb_convert_encoding')) {
         return mb_convert_encoding($txt, 'ISO-8859-1', 'UTF-8');
     }
-    return iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $txt);
+    return utf8_decode($txt);
 }
 
 function build_pdf(array $payment): string
@@ -434,14 +434,16 @@ if ($modo === 'pdf') {
         exit('No se pudo generar el PDF (falta includes/lib/fpdf.php).');
     }
     $pdfBinary = build_pdf($payment);
-    if ($pdfBinary === '') {
+    if ($pdfBinary === '' || strlen($pdfBinary) < 50) {
         http_response_code(500);
+        error_log('PDF vacío o muy pequeño para pago_id=' . $payment['id']);
         exit('Error al crear el PDF.');
     }
     $invoice = invoice_number($payment);
     while (ob_get_level()) { ob_end_clean(); }
     header('Content-Type: application/pdf');
     header('Content-Disposition: inline; filename="' . $invoice . '.pdf"');
+    header('Content-Length: ' . strlen($pdfBinary));
     header('Cache-Control: private, max-age=0, must-revalidate');
     header('Pragma: public');
     echo $pdfBinary;
