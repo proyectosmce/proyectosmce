@@ -1,4 +1,5 @@
 ﻿<?php
+header('Content-Type: text/html; charset=UTF-8');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -238,7 +239,7 @@ function render_html(array $payment): void
             <thead>
                 <tr>
                     <th>Concepto</th>
-                    <th>MÃ©todo</th>
+                    <th>Método</th>
                     <th>Estado</th>
                     <th style="text-align:right;">Monto</th>
                 </tr>
