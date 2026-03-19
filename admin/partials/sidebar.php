@@ -18,10 +18,18 @@ function mce_nav_item(string $slug, string $href, string $label, string $icon, s
 ?>
 <div id="sidebar-backdrop" class="fixed inset-0 bg-black/40 z-30 hidden lg:hidden"></div>
 <aside id="sidebar" class="fixed lg:static z-40 inset-y-0 left-0 w-64 bg-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-200">
+    <style>
+        @keyframes spin-slow { to { transform: rotate(360deg); } }
+        .animate-spin-slow { animation: spin-slow 6s linear infinite; }
+    </style>
     <div class="p-4 border-b flex items-center justify-between lg:block">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl overflow-hidden border border-blue-100 shadow-sm">
-                <img src="../MCE.jpg" alt="MCE" class="w-full h-full object-cover">
+            <div class="relative w-12 h-12">
+                <div class="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-700 animate-spin-slow"></div>
+                <div class="absolute inset-[3px] rounded-full bg-white"></div>
+                <div class="relative w-full h-full rounded-full overflow-hidden border border-blue-100 shadow-sm">
+                    <img src="../MCE.jpg" alt="MCE" class="w-full h-full object-cover">
+                </div>
             </div>
             <div>
                 <p class="text-xs font-semibold text-blue-400 uppercase tracking-[0.2em]">MCE</p>
