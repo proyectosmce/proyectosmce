@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!isset($error)) {
         if ($id > 0) {
-            $stmt = $conn->prepare('UPDATE proyecto_pagos SET proyecto_id = NULLIF(?, 0), cliente = ?, concepto = ?, monto = ?, moneda = ?, estado = ?, metodo = ?, referencia = ?, notas = ?, fecha_pago = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?');
+            $stmt = $conn->prepare('UPDATE proyecto_pagos SET proyecto_id = NULLIF(?, 0), cliente = NULLIF(?, \'\'), concepto = ?, monto = ?, moneda = ?, estado = ?, metodo = ?, referencia = ?, notas = ?, fecha_pago = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?');
             $stmt->bind_param(
                 'issdssssssi',
                 $proyectoId,
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $id
             );
         } else {
-            $stmt = $conn->prepare('INSERT INTO proyecto_pagos (proyecto_id, cliente, concepto, monto, moneda, estado, metodo, referencia, notas, fecha_pago) VALUES (NULLIF(?, 0), ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $stmt = $conn->prepare('INSERT INTO proyecto_pagos (proyecto_id, cliente, concepto, monto, moneda, estado, metodo, referencia, notas, fecha_pago) VALUES (NULLIF(?, 0), NULLIF(?, \'\'), ?, ?, ?, ?, ?, ?, ?, ?)');
             $stmt->bind_param(
                 'issdssssss',
                 $proyectoId,
