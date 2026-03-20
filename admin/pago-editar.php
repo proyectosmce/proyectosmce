@@ -1,7 +1,20 @@
 ﻿<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+ini_set('display_errors', '1');
+ini_set('log_errors', '1');
+ini_set('error_log', __DIR__ . '/../error.log');
 error_reporting(E_ALL);
+set_error_handler(function ($severity, $message, $file, $line) {
+    $log = sprintf("[%s] %s (%s:%d)\n", date('Y-m-d H:i:s'), $message, $file, $line);
+    error_log($log);
+    return false; // permite que PHP también lo maneje
+});
+set_exception_handler(function ($ex) {
+    $log = sprintf("[%s] Uncaught %s: %s (%s:%d)\nStack: %s\n", date('Y-m-d H:i:s'), get_class($ex), $ex->getMessage(), $ex->getFile(), $ex->getLine(), $ex->getTraceAsString());
+    error_log($log);
+    http_response_code(500);
+    echo "Error: " . htmlspecialchars($ex->getMessage(), ENT_QUOTES, 'UTF-8');
+    exit;
+});
 
 require_once '../includes/config.php';
 require_once '../includes/project-helpers.php';
