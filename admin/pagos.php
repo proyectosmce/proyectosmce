@@ -214,28 +214,14 @@ $safeDateDiff = function (?string $dateString) {
 
 $pagination = admin_paginate($totalItems, $perPage, $page);
 
-// Función para obtener pagos por forma (contado o cuotas)
-$paymentsByForm = [
-    'contado' => null,
-    'cuotas' => null,
-];
-
-foreach (['contado', 'cuotas'] as $forma) {
-    // Si hay filtro de forma_pago, respétalo
-    if ($formaPagoFilter !== '' && $formaPagoFilter !== $forma) {
-        continue;
-    }
-    $whereWithForma = $whereClauses;
-    $whereWithForma[] = "pp.forma_pago = '" . $conn->real_escape_string($forma) . "'";
-    $whereSqlForma = 'WHERE ' . implode(' AND ', $whereWithForma);
-    $sql = "SELECT pp.*, pr.titulo AS proyecto_titulo, pr.cliente AS proyecto_cliente 
-            FROM proyecto_pagos pp 
-            LEFT JOIN proyectos pr ON pr.id = pp.proyecto_id 
-            {$whereSqlForma}
-            ORDER BY pp.fecha_pago DESC, pp.id DESC
-            LIMIT {$pagination['per_page']}";
-    $paymentsByForm[$forma] = $conn->query($sql);
-}
+// Consulta principal (se había perdido en el refactor)
+$paymentsSql = "SELECT pp.*, pr.titulo AS proyecto_titulo, pr.cliente AS proyecto_cliente 
+                FROM proyecto_pagos pp 
+                LEFT JOIN proyectos pr ON pr.id = pp.proyecto_id 
+                {$whereSql} 
+                ORDER BY pp.fecha_pago DESC, pp.id DESC 
+                LIMIT {$pagination['offset']}, {$pagination['per_page']}";
+$payments = $conn->query($paymentsSql);
 $projectsOptions = fetchProjectDropdownOptions($conn);
 
 function payment_status_badge_class(string $status): string
