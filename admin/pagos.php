@@ -199,6 +199,74 @@ if ($totalsByCurrency instanceof mysqli_result) {
     $totalsByCurrency->free();
 }
 
+// Aseguramos que COP y USD siempre aparezcan aunque no tengan movimientos
+foreach (['COP', 'USD'] as $defaultCurrency) {
+    if (!isset($totalesMoneda[$defaultCurrency])) {
+        $totalesMoneda[$defaultCurrency] = [
+            'items' => 0,
+            'monto' => 0.0,
+        ];
+    }
+}
+
+// Totales por forma de pago y progreso global de cuotas
+$totalesForma = [
+    'contado' => ['items' => 0, 'monto' => 0.0],
+    'cuotas' => ['items' => 0, 'monto' => 0.0, 'pagado' => 0.0, 'total' => 0.0],
+];
+$progresoCuotasProyectos = [];
+
+foreach (['contado', 'cuotas'] as $forma) {
+    $whereForma = $whereClauses;
+    $whereForma[] = "pp.forma_pago = '{$conn->real_escape_string($forma)}'";
+    $whereSqlForma = 'WHERE ' . implode(' AND ', $whereForma);
+    $resForma = $conn->query("SELECT COUNT(*) AS total_items, COALESCE(SUM(pp.monto), 0) AS monto_total FROM proyecto_pagos pp {$whereSqlForma}");
+    if ($resForma instanceof mysqli_result) {
+        if ($row = $resForma->fetch_assoc()) {
+            $totalesForma[$forma]['items'] = (int) ($row['total_items'] ?? 0);
+            $totalesForma[$forma]['monto'] = (float) ($row['monto_total'] ?? 0);
+        }
+        $resForma->free();
+    }
+}
+
+// Progreso de pagos en cuotas (global y por proyecto)
+$whereCuotas = $whereClauses;
+$whereCuotas[] = "pp.forma_pago = 'cuotas'";
+$whereSqlCuotas = 'WHERE ' . implode(' AND ', $whereCuotas);
+$cuotasResult = $conn->query("SELECT pp.*, pr.titulo AS proyecto_titulo, pr.cliente AS proyecto_cliente FROM proyecto_pagos pp LEFT JOIN proyectos pr ON pr.id = pp.proyecto_id {$whereSqlCuotas}");
+if ($cuotasResult instanceof mysqli_result) {
+    while ($row = $cuotasResult->fetch_assoc()) {
+        $totalCuotas = (int) ($row['cuotas_totales'] ?? 0);
+        $pendientes = $row['cuotas_pendientes'] !== null ? (int) $row['cuotas_pendientes'] : $totalCuotas;
+        $pendientes = max(0, $pendientes);
+        $pagadas = $totalCuotas > 0 ? max(0, min($totalCuotas, $totalCuotas - $pendientes)) : 0;
+
+        $monto = (float) ($row['monto'] ?? 0);
+        $pagadoMonto = $totalCuotas > 0 ? $monto * ($pagadas / $totalCuotas) : $monto;
+
+        $totalesForma['cuotas']['pagado'] += $pagadoMonto;
+        $totalesForma['cuotas']['total'] += $monto;
+
+        $proyectoId = (int) ($row['proyecto_id'] ?? 0);
+        $projectKey = $proyectoId > 0 ? 'pr_' . $proyectoId : 'sin_proyecto';
+        if (!isset($progresoCuotasProyectos[$projectKey])) {
+            $progresoCuotasProyectos[$projectKey] = [
+                'id' => $proyectoId,
+                'titulo' => $row['proyecto_titulo'] ?? ($row['cliente'] ?? 'Sin proyecto'),
+                'cliente' => $row['proyecto_cliente'] ?? ($row['cliente'] ?? ''),
+                'total' => 0.0,
+                'pagado' => 0.0,
+                'moneda' => strtoupper(trim((string) ($row['moneda'] ?? 'COP'))),
+            ];
+        }
+
+        $progresoCuotasProyectos[$projectKey]['total'] += $monto;
+        $progresoCuotasProyectos[$projectKey]['pagado'] += $pagadoMonto;
+    }
+    $cuotasResult->free();
+}
+
 $safeDateDiff = function (?string $dateString) {
     if (empty($dateString)) {
         return null;
@@ -285,6 +353,85 @@ function payment_status_badge_class(string $status): string
                                 <p class="text-sm text-gray-500 mt-1"><?php echo (int) $summary['items']; ?> pago<?php echo ((int) $summary['items'] === 1) ? '' : 's'; ?></p>
                             </div>
                         <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
+                <div class="mb-6 grid gap-4 md:grid-cols-2">
+                    <div class="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+                        <p class="text-sm font-semibold text-gray-500">Total a contado</p>
+                        <p class="mt-2 text-2xl font-bold text-slate-900"><?php echo payment_format_amount((float) $totalesForma['contado']['monto'], 'COP'); ?></p>
+                        <p class="text-sm text-gray-500 mt-1"><?php echo (int) $totalesForma['contado']['items']; ?> pago<?php echo ((int) $totalesForma['contado']['items'] === 1) ? '' : 's'; ?></p>
+                    </div>
+                    <div class="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-semibold text-gray-500">Total en cuotas</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900"><?php echo payment_format_amount((float) $totalesForma['cuotas']['total'], 'COP'); ?></p>
+                                <p class="text-sm text-gray-500 mt-1"><?php echo (int) $totalesForma['cuotas']['items']; ?> plan<?php echo ((int) $totalesForma['cuotas']['items'] === 1) ? '' : 'es'; ?> en cuotas</p>
+                            </div>
+                            <?php
+                                $progresoGlobal = ($totalesForma['cuotas']['total'] > 0)
+                                    ? round(($totalesForma['cuotas']['pagado'] / $totalesForma['cuotas']['total']) * 100)
+                                    : 0;
+                                $progresoGlobal = max(0, min(100, $progresoGlobal));
+                                $barColorGlobal = $progresoGlobal >= 90 ? 'bg-emerald-500' : ($progresoGlobal >= 50 ? 'bg-amber-500' : 'bg-rose-500');
+                            ?>
+                        </div>
+                        <div class="mt-3 space-y-2">
+                            <div class="flex items-center justify-between text-xs text-gray-600">
+                                <span>Progreso global</span>
+                                <span><?php echo payment_format_amount((float) $totalesForma['cuotas']['pagado'], 'COP'); ?> de <?php echo payment_format_amount((float) $totalesForma['cuotas']['total'], 'COP'); ?></span>
+                            </div>
+                            <div class="h-2 w-full rounded-full bg-slate-100">
+                                <div class="h-2 rounded-full <?php echo $barColorGlobal; ?>" style="width: <?php echo $progresoGlobal; ?>%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <?php if (count($progresoCuotasProyectos) > 0): ?>
+                    <div class="mb-6 rounded-2xl bg-white p-5 shadow">
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <div>
+                                <p class="text-sm font-semibold text-gray-500">Seguimiento de cuotas por proyecto</p>
+                                <h3 class="text-xl font-bold text-slate-900">Progreso individual</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 space-y-4">
+                            <?php foreach ($progresoCuotasProyectos as $proyecto): ?>
+                                <?php
+                                    $pct = ($proyecto['total'] > 0) ? round(($proyecto['pagado'] / $proyecto['total']) * 100) : 0;
+                                    $pct = max(0, min(100, $pct));
+                                    $color = $pct >= 90 ? 'bg-emerald-500' : ($pct >= 50 ? 'bg-amber-500' : 'bg-rose-500');
+                                ?>
+                                <div class="rounded-xl border border-gray-100 p-4">
+                                    <div class="flex items-center justify-between gap-3 flex-wrap">
+                                        <div>
+                                            <p class="text-sm font-semibold text-gray-500"><?php echo $proyecto['id'] > 0 ? 'Proyecto' : 'Sin proyecto'; ?></p>
+                                            <p class="text-base font-bold text-slate-900">
+                                                <?php echo admin_escape($proyecto['titulo']); ?>
+                                            </p>
+                                            <?php if (!empty($proyecto['cliente'])): ?>
+                                                <p class="text-xs text-gray-500">Cliente: <?php echo admin_escape($proyecto['cliente']); ?></p>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="text-sm text-gray-700 text-right">
+                                            <p><span class="font-semibold text-slate-900"><?php echo payment_format_amount((float) $proyecto['pagado'], $proyecto['moneda']); ?></span> pagado</p>
+                                            <p class="text-xs text-gray-500"><?php echo payment_format_amount((float) $proyecto['total'], $proyecto['moneda']); ?> total</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="flex items-center justify-between text-xs text-gray-600">
+                                            <span>Progreso</span>
+                                            <span><?php echo $pct; ?>%</span>
+                                        </div>
+                                        <div class="mt-1 h-2 w-full rounded-full bg-slate-100">
+                                            <div class="h-2 rounded-full <?php echo $color; ?>" style="width: <?php echo $pct; ?>%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 <?php endif; ?>
 
