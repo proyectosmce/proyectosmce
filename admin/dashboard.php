@@ -166,9 +166,9 @@ $lastPayments = $conn->query("
                     <?php $flash = $_SESSION['agenda_flash']; unset($_SESSION['agenda_flash']); ?>
                     <div class="mb-4 rounded-xl border <?php echo ($flash['ok'] ?? false) ? 'border-green-200 bg-green-50 text-green-800' : 'border-red-200 bg-red-50 text-red-800'; ?> px-4 py-3">
                         <?php if (!empty($flash['ok'])): ?>
-                            Correo enviado al cliente (<?php echo admin_escape($flash['email'] ?? ''); ?>) con estado <?php echo admin_escape($flash['estado'] ?? ''); ?>.
+                            Correo enviado al cliente (<?php echo admin_escape($flash['email'] ?? ''); ?>) con estado <?php echo admin_escape($flash['estado'] ?? ''); ?>. ID cita: <?php echo (int) ($flash['id'] ?? 0); ?>.
                         <?php else: ?>
-                            No se pudo enviar el correo al cliente. <?php if (!empty($flash['error'])): ?>Detalle: <?php echo admin_escape($flash['error']); ?><?php endif; ?>
+                            No se pudo enviar el correo al cliente (ID <?php echo (int) ($flash['id'] ?? 0); ?>). <?php if (!empty($flash['error'])): ?>Detalle: <?php echo admin_escape($flash['error']); ?><?php endif; ?>
                             <?php if (!empty($flash['debug'])): ?>
                                 <div class="mt-1 text-xs opacity-80">Debug: <?php echo admin_escape($flash['debug']); ?></div>
                             <?php endif; ?>

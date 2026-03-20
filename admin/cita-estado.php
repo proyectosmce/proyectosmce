@@ -35,12 +35,29 @@ ensureCitasSchema($conn);
 
 // Obtener datos de la cita antes de actualizar para notificar al cliente.
 $cita = null;
+$selectError = null;
 if ($stmt = $conn->prepare('SELECT id, nombre, email, telefono, servicio, fecha, hora, COALESCE(estado, \"pendiente\") AS estado FROM citas WHERE id = ?')) {
     $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $cita = $res ? $res->fetch_assoc() : null;
+    if ($stmt->execute()) {
+        $stmt->bind_result($cid, $cnombre, $cemail, $ctelefono, $cservicio, $cfecha, $chora, $cestado);
+        if ($stmt->fetch()) {
+            $cita = [
+                'id' => $cid,
+                'nombre' => $cnombre,
+                'email' => $cemail,
+                'telefono' => $ctelefono,
+                'servicio' => $cservicio,
+                'fecha' => $cfecha,
+                'hora' => $chora,
+                'estado' => $cestado,
+            ];
+        }
+    } else {
+        $selectError = $stmt->error;
+    }
     $stmt->close();
+} else {
+    $selectError = $conn->error;
 }
 
 if (!$cita) {
@@ -48,7 +65,8 @@ if (!$cita) {
         'ok' => false,
         'estado' => $estado,
         'email' => '',
-        'error' => 'Cita no encontrada.',
+        'id' => $id,
+        'error' => 'Cita no encontrada. ' . ($selectError ? 'SQL: ' . $selectError : ''),
     ];
     header('Location: ' . $redirect);
     exit;
@@ -170,6 +188,7 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
             'ok' => true,
             'estado' => $estadoNuevo,
             'email' => $destino,
+            'id' => $cita['id'] ?? $id,
         ];
     } catch (Exception $e) {
         error_log('No se pudo enviar correo de cita: ' . $mail->ErrorInfo);
@@ -177,6 +196,7 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
             'ok' => false,
             'estado' => $estadoNuevo,
             'email' => $destino,
+            'id' => $cita['id'] ?? $id,
             'error' => $mail->ErrorInfo ?: 'Error desconocido al enviar correo.',
             'debug' => implode(' | ', $smtpDebugLog),
         ];
