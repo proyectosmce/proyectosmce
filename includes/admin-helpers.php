@@ -300,6 +300,32 @@ function admin_count_citas_hoy(mysqli $conn): int
     return $count;
 }
 
+function ensureCitasSchema(mysqli $conn): void
+{
+    static $ready = false;
+
+    if ($ready) {
+        return;
+    }
+
+    $conn->query("
+        CREATE TABLE IF NOT EXISTS citas (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            fecha DATE NOT NULL,
+            hora TIME NOT NULL,
+            nombre VARCHAR(100) NOT NULL,
+            email VARCHAR(120) NOT NULL,
+            telefono VARCHAR(50),
+            servicio VARCHAR(120),
+            notas TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE KEY uniq_fecha_hora (fecha, hora)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ");
+
+    $ready = true;
+}
+
 function admin_count_pagos_alerta(mysqli $conn): int
 {
     $count = 0;

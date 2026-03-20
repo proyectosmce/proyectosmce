@@ -15,6 +15,34 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
 ensureTestimonialsSchema($conn);
 ensureAdminActivityLogSchema($conn);
 ensureProjectPaymentsSchema($conn);
+ensureCitasSchema($conn);
+
+$citasHoy = admin_count_citas_hoy($conn);
+$citasAgendadas = [];
+$citasAgendaError = null;
+
+$citasStmt = $conn->prepare("
+    SELECT id, nombre, email, telefono, servicio, fecha, hora, notas
+    FROM citas
+    WHERE fecha >= CURDATE()
+    ORDER BY fecha ASC, hora ASC
+    LIMIT 8
+");
+
+if ($citasStmt) {
+    if ($citasStmt->execute()) {
+        $resCitas = $citasStmt->get_result();
+        if ($resCitas instanceof mysqli_result) {
+            $citasAgendadas = $resCitas->fetch_all(MYSQLI_ASSOC);
+            $resCitas->free();
+        }
+    } else {
+        $citasAgendaError = $citasStmt->error ?? 'No se pudieron cargar las citas.';
+    }
+    $citasStmt->close();
+} else {
+    $citasAgendaError = $conn->error ?? 'No se pudieron cargar las citas.';
+}
 
 $total_proyectos = $conn->query("SELECT COUNT(*) as total FROM proyectos")->fetch_assoc()['total'];
 $total_servicios = $conn->query("SELECT COUNT(*) as total FROM servicios")->fetch_assoc()['total'];
@@ -208,6 +236,100 @@ $lastPayments = $conn->query("
                             <i class="fas fa-comment-dots text-4xl <?php echo $testimonios_pendientes > 0 ? 'text-amber-500' : 'text-green-500'; ?>"></i>
                         </div>
                     </a>
+                </div>
+
+                <!-- Agenda de llamadas -->
+                <div class="mb-8 rounded-2xl bg-white p-6 shadow">
+                    <div class="mb-4 flex items-center justify-between gap-4">
+                        <div>
+                            <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Agenda de llamadas</p>
+                            <h2 class="mt-1 text-2xl font-bold text-slate-900">Citas programadas</h2>
+                            <p class="text-sm text-gray-500">Mostramos las proximas solicitudes (hasta 8).</p>
+                        </div>
+                        <div class="flex flex-col items-end gap-2 text-sm">
+                            <span class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 font-semibold text-amber-700">
+                                <i class="fas fa-phone-volume"></i>
+                                Hoy: <?php echo (int) ($citasHoy ?? 0); ?>
+                            </span>
+                            <span class="text-gray-500">Total listadas: <?php echo count($citasAgendadas); ?></span>
+                        </div>
+                    </div>
+                    <div class="divide-y divide-gray-100">
+                        <?php if ($citasAgendaError): ?>
+                            <div class="rounded-xl bg-red-50 p-4 text-sm text-red-700">
+                                No pudimos cargar la agenda. <?php echo admin_escape($citasAgendaError); ?>
+                            </div>
+                        <?php elseif (count($citasAgendadas) === 0): ?>
+                            <div class="rounded-xl bg-gray-50 p-4 text-sm text-gray-700">
+                                No hay citas programadas para hoy ni los proximos dias.
+                            </div>
+                        <?php else: ?>
+                            <?php foreach ($citasAgendadas as $cita): ?>
+                                <?php
+                                    $fechaRaw = $cita['fecha'] ?? '';
+                                    $horaRaw = $cita['hora'] ?? '';
+                                    $fechaTs = strtotime($fechaRaw);
+                                    $horaLabel = $horaRaw ? date('H:i', strtotime($horaRaw)) : '--';
+                                    $hoy = date('Y-m-d');
+                                    $manana = date('Y-m-d', strtotime('+1 day'));
+                                    if ($fechaRaw === $hoy) {
+                                        $fechaEtiqueta = 'Hoy';
+                                    } elseif ($fechaRaw === $manana) {
+                                        $fechaEtiqueta = 'Mañana';
+                                    } elseif ($fechaTs) {
+                                        $fechaEtiqueta = date('d/m', $fechaTs);
+                                    } else {
+                                        $fechaEtiqueta = 'Agendada';
+                                    }
+                                    $notasPreview = '';
+                                    if (!empty($cita['notas'])) {
+                                        $notasPreview = trim((string) $cita['notas']);
+                                        if (strlen($notasPreview) > 140) {
+                                            $notasPreview = substr($notasPreview, 0, 140) . '…';
+                                        }
+                                    }
+                                ?>
+                                <div class="flex items-start justify-between gap-4 py-3">
+                                    <div class="flex items-start gap-3">
+                                        <div class="min-w-[100px] rounded-xl bg-blue-50 px-3 py-2 text-center text-blue-800">
+                                            <p class="text-[11px] font-semibold uppercase tracking-[0.2em]"><?php echo admin_escape($fechaEtiqueta); ?></p>
+                                            <p class="text-xl font-bold leading-tight"><?php echo admin_escape($horaLabel); ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-slate-900"><?php echo admin_escape($cita['nombre']); ?></p>
+                                            <p class="text-sm text-gray-600">
+                                                <?php echo admin_escape($cita['email']); ?>
+                                                <?php if (!empty($cita['telefono'])): ?>
+                                                    <span class="mx-1 text-gray-400">&bull;</span>
+                                                    <?php echo admin_escape($cita['telefono']); ?>
+                                                <?php endif; ?>
+                                            </p>
+                                            <?php if (!empty($cita['servicio'])): ?>
+                                                <p class="mt-1 text-xs font-semibold text-blue-700 uppercase tracking-[0.08em]">Interes: <?php echo admin_escape($cita['servicio']); ?></p>
+                                            <?php endif; ?>
+                                            <?php if ($notasPreview !== ''): ?>
+                                                <p class="mt-1 text-xs text-gray-600">Nota: <?php echo admin_escape($notasPreview); ?></p>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-end gap-2">
+                                        <?php if ($fechaTs): ?>
+                                            <span class="inline-flex items-center gap-2 rounded-full <?php echo ($fechaRaw === $hoy) ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'; ?> px-3 py-1 text-xs font-semibold">
+                                                <i class="fas fa-calendar-day"></i>
+                                                <?php echo date('d/m', $fechaTs); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                        <div class="flex gap-2">
+                                            <a href="mailto:<?php echo admin_escape($cita['email']); ?>" class="text-xs font-medium text-blue-600 hover:underline">Correo</a>
+                                            <?php if (!empty($cita['telefono'])): ?>
+                                                <a href="https://wa.me/<?php echo preg_replace('/\D+/', '', $cita['telefono']); ?>" class="text-xs font-medium text-green-600 hover:underline" target="_blank" rel="noopener">WhatsApp</a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
                 <div class="mb-8 grid gap-6 xl:grid-cols-[1.2fr_1fr]">
