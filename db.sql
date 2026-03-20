@@ -51,8 +51,9 @@ CREATE TABLE IF NOT EXISTS citas (
     telefono VARCHAR(50),
     servicio VARCHAR(120),
     notas TEXT,
+    estado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY uniq_fecha_hora (fecha, hora)
+    KEY idx_fecha_hora (fecha, hora)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Tabla de usuarios (admin)

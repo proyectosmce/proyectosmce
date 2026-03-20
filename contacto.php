@@ -16,8 +16,9 @@ $conn->query("
         telefono VARCHAR(50),
         servicio VARCHAR(120),
         notas TEXT,
+        estado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE KEY uniq_fecha_hora (fecha, hora)
+        KEY idx_fecha_hora (fecha, hora)
     ) ENGINE=InnoDB
 ");
 
@@ -27,6 +28,7 @@ $bookedQuery = $conn->query("
     SELECT fecha, DATE_FORMAT(hora, '%H:%i') AS hora
     FROM citas
     WHERE fecha BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 14 DAY)
+      AND (estado IS NULL OR estado <> 'cancelada')
 ");
 if ($bookedQuery) {
     while ($row = $bookedQuery->fetch_assoc()) {

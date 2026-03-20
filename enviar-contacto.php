@@ -143,14 +143,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             telefono VARCHAR(50),
             servicio VARCHAR(120),
             notas TEXT,
+            estado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE KEY uniq_fecha_hora (fecha, hora)
+            KEY idx_fecha_hora (fecha, hora)
         ) ENGINE=InnoDB
     ");
 
     // Verificar disponibilidad
     if ($isAgendaForm) {
-        $checkSlot = $conn->prepare("SELECT COUNT(*) FROM citas WHERE fecha = ? AND hora = ?");
+        $checkSlot = $conn->prepare("
+            SELECT COUNT(*) 
+            FROM citas 
+            WHERE fecha = ? AND hora = ? 
+              AND (estado IS NULL OR estado <> 'cancelada')
+        ");
         if ($checkSlot) {
             $checkSlot->bind_param("ss", $fechaCitaLabel, $horaCitaLabel);
             $checkSlot->execute();
@@ -174,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         // Guardar cita si aplica
         if ($isAgendaForm) {
-            $insertCita = $conn->prepare("INSERT INTO citas (fecha, hora, nombre, email, telefono, servicio, notas) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $insertCita = $conn->prepare("INSERT INTO citas (fecha, hora, nombre, email, telefono, servicio, notas, estado) VALUES (?, ?, ?, ?, ?, ?, ?, 'pendiente')");
             if ($insertCita) {
                 $insertCita->bind_param("sssssss", $fechaCitaLabel, $horaCitaLabel, $nombre, $email, $telefono, $servicio, $mensaje);
                 if (!$insertCita->execute()) {

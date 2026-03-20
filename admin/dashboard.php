@@ -18,30 +18,61 @@ ensureProjectPaymentsSchema($conn);
 ensureCitasSchema($conn);
 
 $citasHoy = admin_count_citas_hoy($conn);
-$citasAgendadas = [];
+$csrfAgenda = admin_get_csrf_token();
+
+$citasProximas = [];
+$citasPendientes = [];
+$citasCanceladas = [];
 $citasAgendaError = null;
 
-$citasStmt = $conn->prepare("
-    SELECT id, nombre, email, telefono, servicio, fecha, hora, notas
+$citasUpcomingStmt = $conn->prepare("
+    SELECT id, nombre, email, telefono, servicio, fecha, hora, notas, COALESCE(estado,'pendiente') AS estado
     FROM citas
     WHERE fecha >= CURDATE()
     ORDER BY fecha ASC, hora ASC
-    LIMIT 8
+    LIMIT 20
 ");
 
-if ($citasStmt) {
-    if ($citasStmt->execute()) {
-        $resCitas = $citasStmt->get_result();
-        if ($resCitas instanceof mysqli_result) {
-            $citasAgendadas = $resCitas->fetch_all(MYSQLI_ASSOC);
-            $resCitas->free();
+if ($citasUpcomingStmt) {
+    if ($citasUpcomingStmt->execute()) {
+        $res = $citasUpcomingStmt->get_result();
+        if ($res instanceof mysqli_result) {
+            while ($cita = $res->fetch_assoc()) {
+                $estado = strtolower(trim((string) ($cita['estado'] ?? 'pendiente')));
+                if ($estado !== 'cancelada') {
+                    $citasProximas[] = $cita;
+                }
+                if ($estado === 'pendiente') {
+                    $citasPendientes[] = $cita;
+                }
+            }
+            $res->free();
         }
     } else {
-        $citasAgendaError = $citasStmt->error ?? 'No se pudieron cargar las citas.';
+        $citasAgendaError = $citasUpcomingStmt->error ?? 'No se pudieron cargar las citas.';
     }
-    $citasStmt->close();
+    $citasUpcomingStmt->close();
 } else {
     $citasAgendaError = $conn->error ?? 'No se pudieron cargar las citas.';
+}
+
+$citasCanceladasStmt = $conn->prepare("
+    SELECT id, nombre, email, telefono, servicio, fecha, hora, notas, COALESCE(estado,'pendiente') AS estado
+    FROM citas
+    WHERE estado = 'cancelada'
+    ORDER BY fecha DESC, hora DESC, id DESC
+    LIMIT 10
+");
+
+if ($citasCanceladasStmt) {
+    if ($citasCanceladasStmt->execute()) {
+        $res = $citasCanceladasStmt->get_result();
+        if ($res instanceof mysqli_result) {
+            $citasCanceladas = $res->fetch_all(MYSQLI_ASSOC);
+            $res->free();
+        }
+    }
+    $citasCanceladasStmt->close();
 }
 
 $total_proyectos = $conn->query("SELECT COUNT(*) as total FROM proyectos")->fetch_assoc()['total'];
@@ -239,96 +270,170 @@ $lastPayments = $conn->query("
                 </div>
 
                 <!-- Agenda de llamadas -->
-                <div class="mb-8 rounded-2xl bg-white p-6 shadow">
+                <div id="agenda-llamadas" class="mb-8 rounded-2xl bg-white p-6 shadow">
                     <div class="mb-4 flex items-center justify-between gap-4">
                         <div>
                             <p class="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">Agenda de llamadas</p>
                             <h2 class="mt-1 text-2xl font-bold text-slate-900">Citas programadas</h2>
-                            <p class="text-sm text-gray-500">Mostramos las proximas solicitudes (hasta 8).</p>
+                            <p class="text-sm text-gray-500">Divide por proximas, por confirmar y canceladas.</p>
                         </div>
                         <div class="flex flex-col items-end gap-2 text-sm">
                             <span class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 font-semibold text-amber-700">
                                 <i class="fas fa-phone-volume"></i>
                                 Hoy: <?php echo (int) ($citasHoy ?? 0); ?>
                             </span>
-                            <span class="text-gray-500">Total listadas: <?php echo count($citasAgendadas); ?></span>
+                            <span class="text-gray-500">Próximas: <?php echo count($citasProximas); ?> · Por confirmar: <?php echo count($citasPendientes); ?> · Canceladas: <?php echo count($citasCanceladas); ?></span>
                         </div>
                     </div>
+
+                    <div class="mb-4 flex flex-wrap gap-2">
+                        <button type="button" class="agenda-tab active rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700" data-tab="proximas">Próximas</button>
+                        <button type="button" class="agenda-tab rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700" data-tab="pendientes">Por confirmar</button>
+                        <button type="button" class="agenda-tab rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700" data-tab="canceladas">Canceladas</button>
+                    </div>
+
                     <div class="divide-y divide-gray-100">
                         <?php if ($citasAgendaError): ?>
                             <div class="rounded-xl bg-red-50 p-4 text-sm text-red-700">
                                 No pudimos cargar la agenda. <?php echo admin_escape($citasAgendaError); ?>
                             </div>
-                        <?php elseif (count($citasAgendadas) === 0): ?>
-                            <div class="rounded-xl bg-gray-50 p-4 text-sm text-gray-700">
-                                No hay citas programadas para hoy ni los proximos dias.
-                            </div>
-                        <?php else: ?>
-                            <?php foreach ($citasAgendadas as $cita): ?>
-                                <?php
-                                    $fechaRaw = $cita['fecha'] ?? '';
-                                    $horaRaw = $cita['hora'] ?? '';
-                                    $fechaTs = strtotime($fechaRaw);
-                                    $horaLabel = $horaRaw ? date('H:i', strtotime($horaRaw)) : '--';
-                                    $hoy = date('Y-m-d');
-                                    $manana = date('Y-m-d', strtotime('+1 day'));
-                                    if ($fechaRaw === $hoy) {
-                                        $fechaEtiqueta = 'Hoy';
-                                    } elseif ($fechaRaw === $manana) {
-                                        $fechaEtiqueta = 'Mañana';
-                                    } elseif ($fechaTs) {
-                                        $fechaEtiqueta = date('d/m', $fechaTs);
-                                    } else {
-                                        $fechaEtiqueta = 'Agendada';
-                                    }
-                                    $notasPreview = '';
-                                    if (!empty($cita['notas'])) {
-                                        $notasPreview = trim((string) $cita['notas']);
-                                        if (strlen($notasPreview) > 140) {
-                                            $notasPreview = substr($notasPreview, 0, 140) . '…';
-                                        }
-                                    }
-                                ?>
-                                <div class="flex items-start justify-between gap-4 py-3">
-                                    <div class="flex items-start gap-3">
-                                        <div class="min-w-[100px] rounded-xl bg-blue-50 px-3 py-2 text-center text-blue-800">
-                                            <p class="text-[11px] font-semibold uppercase tracking-[0.2em]"><?php echo admin_escape($fechaEtiqueta); ?></p>
-                                            <p class="text-xl font-bold leading-tight"><?php echo admin_escape($horaLabel); ?></p>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold text-slate-900"><?php echo admin_escape($cita['nombre']); ?></p>
-                                            <p class="text-sm text-gray-600">
-                                                <?php echo admin_escape($cita['email']); ?>
-                                                <?php if (!empty($cita['telefono'])): ?>
-                                                    <span class="mx-1 text-gray-400">&bull;</span>
-                                                    <?php echo admin_escape($cita['telefono']); ?>
-                                                <?php endif; ?>
-                                            </p>
-                                            <?php if (!empty($cita['servicio'])): ?>
-                                                <p class="mt-1 text-xs font-semibold text-blue-700 uppercase tracking-[0.08em]">Interes: <?php echo admin_escape($cita['servicio']); ?></p>
-                                            <?php endif; ?>
-                                            <?php if ($notasPreview !== ''): ?>
-                                                <p class="mt-1 text-xs text-gray-600">Nota: <?php echo admin_escape($notasPreview); ?></p>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col items-end gap-2">
-                                        <?php if ($fechaTs): ?>
-                                            <span class="inline-flex items-center gap-2 rounded-full <?php echo ($fechaRaw === $hoy) ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'; ?> px-3 py-1 text-xs font-semibold">
-                                                <i class="fas fa-calendar-day"></i>
-                                                <?php echo date('d/m', $fechaTs); ?>
-                                            </span>
-                                        <?php endif; ?>
-                                        <div class="flex gap-2">
-                                            <a href="mailto:<?php echo admin_escape($cita['email']); ?>" class="text-xs font-medium text-blue-600 hover:underline">Correo</a>
-                                            <?php if (!empty($cita['telefono'])): ?>
-                                                <a href="https://wa.me/<?php echo preg_replace('/\D+/', '', $cita['telefono']); ?>" class="text-xs font-medium text-green-600 hover:underline" target="_blank" rel="noopener">WhatsApp</a>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
                         <?php endif; ?>
+
+                        <?php
+                        $agendaLists = [
+                            'proximas' => $citasProximas,
+                            'pendientes' => $citasPendientes,
+                            'canceladas' => $citasCanceladas,
+                        ];
+                        foreach ($agendaLists as $tabKey => $listaCitas):
+                        ?>
+                            <div class="agenda-panel <?php echo $tabKey === 'proximas' ? '' : 'hidden'; ?>" data-tab-panel="<?php echo $tabKey; ?>">
+                                <?php if (count($listaCitas) === 0): ?>
+                                    <div class="rounded-xl bg-gray-50 p-4 text-sm text-gray-700 my-2">
+                                        <?php if ($tabKey === 'proximas'): ?>
+                                            No hay citas programadas para hoy ni los próximos días.
+                                        <?php elseif ($tabKey === 'pendientes'): ?>
+                                            No hay citas pendientes de confirmación.
+                                        <?php else: ?>
+                                            No hay cancelaciones recientes.
+                                        <?php endif; ?>
+                                    </div>
+                                <?php else: ?>
+                                    <?php foreach ($listaCitas as $cita): ?>
+                                        <?php
+                                            $fechaRaw = $cita['fecha'] ?? '';
+                                            $horaRaw = $cita['hora'] ?? '';
+                                            $fechaTs = strtotime($fechaRaw);
+                                            $horaLabel = $horaRaw ? date('H:i', strtotime($horaRaw)) : '--';
+                                            $hoy = date('Y-m-d');
+                                            $manana = date('Y-m-d', strtotime('+1 day'));
+                                            if ($fechaRaw === $hoy) {
+                                                $fechaEtiqueta = 'Hoy';
+                                            } elseif ($fechaRaw === $manana) {
+                                                $fechaEtiqueta = 'Mañana';
+                                            } elseif ($fechaTs) {
+                                                $fechaEtiqueta = date('d/m', $fechaTs);
+                                            } else {
+                                                $fechaEtiqueta = 'Agendada';
+                                            }
+                                            $notasPreview = '';
+                                            if (!empty($cita['notas'])) {
+                                                $notasPreview = trim((string) $cita['notas']);
+                                                if (strlen($notasPreview) > 140) {
+                                                    $notasPreview = substr($notasPreview, 0, 140) . '…';
+                                                }
+                                            }
+                                            $estado = strtolower(trim((string) ($cita['estado'] ?? 'pendiente')));
+                                            $estadoLabel = ucfirst($estado);
+                                            $estadoClasses = [
+                                                'pendiente' => 'bg-amber-100 text-amber-800',
+                                                'confirmada' => 'bg-green-100 text-green-800',
+                                                'cancelada' => 'bg-red-100 text-red-800',
+                                            ];
+                                            $badgeClass = $estadoClasses[$estado] ?? 'bg-slate-100 text-slate-700';
+                                        ?>
+                                        <div class="flex items-start justify-between gap-4 py-3">
+                                            <div class="flex items-start gap-3">
+                                                <div class="min-w-[100px] rounded-xl bg-blue-50 px-3 py-2 text-center text-blue-800">
+                                                    <p class="text-[11px] font-semibold uppercase tracking-[0.2em]"><?php echo admin_escape($fechaEtiqueta); ?></p>
+                                                    <p class="text-xl font-bold leading-tight"><?php echo admin_escape($horaLabel); ?></p>
+                                                </div>
+                                                <div>
+                                                    <div class="flex items-center gap-2">
+                                                        <p class="font-semibold text-slate-900"><?php echo admin_escape($cita['nombre']); ?></p>
+                                                        <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold <?php echo $badgeClass; ?>">
+                                                            <span class="h-2 w-2 rounded-full bg-current opacity-70"></span>
+                                                            <?php echo admin_escape($estadoLabel); ?>
+                                                        </span>
+                                                    </div>
+                                                    <p class="text-sm text-gray-600">
+                                                        <?php echo admin_escape($cita['email']); ?>
+                                                        <?php if (!empty($cita['telefono'])): ?>
+                                                            <span class="mx-1 text-gray-400">&bull;</span>
+                                                            <?php echo admin_escape($cita['telefono']); ?>
+                                                        <?php endif; ?>
+                                                    </p>
+                                                    <?php if (!empty($cita['servicio'])): ?>
+                                                        <p class="mt-1 text-xs font-semibold text-blue-700 uppercase tracking-[0.08em]">Interes: <?php echo admin_escape($cita['servicio']); ?></p>
+                                                    <?php endif; ?>
+                                                    <?php if ($notasPreview !== ''): ?>
+                                                        <p class="mt-1 text-xs text-gray-600">Nota: <?php echo admin_escape($notasPreview); ?></p>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col items-end gap-2">
+                                                <?php if ($fechaTs): ?>
+                                                    <span class="inline-flex items-center gap-2 rounded-full <?php echo ($fechaRaw === $hoy) ? 'bg-amber-100 text-amber-800' : 'bg-slate-100 text-slate-700'; ?> px-3 py-1 text-xs font-semibold">
+                                                        <i class="fas fa-calendar-day"></i>
+                                                        <?php echo date('d/m', $fechaTs); ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                                <div class="flex gap-2">
+                                                    <a href="mailto:<?php echo admin_escape($cita['email']); ?>" class="text-xs font-medium text-blue-600 hover:underline">Correo</a>
+                                                    <?php if (!empty($cita['telefono'])): ?>
+                                                        <a href="https://wa.me/<?php echo preg_replace('/\D+/', '', $cita['telefono']); ?>" class="text-xs font-medium text-green-600 hover:underline" target="_blank" rel="noopener">WhatsApp</a>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <?php if ($estado !== 'cancelada'): ?>
+                                                    <div class="flex gap-2">
+                                                        <?php if ($estado !== 'confirmada'): ?>
+                                                            <form method="post" action="cita-estado.php">
+                                                                <input type="hidden" name="csrf" value="<?php echo admin_escape($csrfAgenda); ?>">
+                                                                <input type="hidden" name="id" value="<?php echo (int) $cita['id']; ?>">
+                                                                <input type="hidden" name="estado" value="confirmada">
+                                                                <input type="hidden" name="redirect" value="dashboard.php#agenda-llamadas">
+                                                                <button type="submit" class="inline-flex items-center gap-1 rounded-lg bg-green-50 px-3 py-1 text-xs font-semibold text-green-700 hover:bg-green-100">
+                                                                    <i class="fas fa-check"></i> Confirmar
+                                                                </button>
+                                                            </form>
+                                                        <?php endif; ?>
+                                                        <form method="post" action="cita-estado.php">
+                                                            <input type="hidden" name="csrf" value="<?php echo admin_escape($csrfAgenda); ?>">
+                                                            <input type="hidden" name="id" value="<?php echo (int) $cita['id']; ?>">
+                                                            <input type="hidden" name="estado" value="cancelada">
+                                                            <input type="hidden" name="redirect" value="dashboard.php#agenda-llamadas">
+                                                            <button type="submit" class="inline-flex items-center gap-1 rounded-lg bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-100">
+                                                                <i class="fas fa-ban"></i> Cancelar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <form method="post" action="cita-estado.php">
+                                                        <input type="hidden" name="csrf" value="<?php echo admin_escape($csrfAgenda); ?>">
+                                                        <input type="hidden" name="id" value="<?php echo (int) $cita['id']; ?>">
+                                                        <input type="hidden" name="estado" value="confirmada">
+                                                        <input type="hidden" name="redirect" value="dashboard.php#agenda-llamadas">
+                                                        <button type="submit" class="inline-flex items-center gap-1 rounded-lg bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-100">
+                                                            <i class="fas fa-rotate-left"></i> Reabrir
+                                                        </button>
+                                                    </form>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 
@@ -592,6 +697,26 @@ $lastPayments = $conn->query("
             }
         });
     }
+
+    // Tabs agenda
+    const agendaTabs = document.querySelectorAll('.agenda-tab');
+    const agendaPanels = document.querySelectorAll('.agenda-panel');
+    agendaTabs.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const tab = btn.getAttribute('data-tab');
+            agendaTabs.forEach(function (b) {
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+            agendaPanels.forEach(function (panel) {
+                if (panel.getAttribute('data-tab-panel') === tab) {
+                    panel.classList.remove('hidden');
+                } else {
+                    panel.classList.add('hidden');
+                }
+            });
+        });
+    });
     </script>
     <?php include __DIR__ . '/partials/sidebar-script.php'; ?>
 </body>

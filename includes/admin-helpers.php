@@ -292,7 +292,10 @@ function admin_render_toast(?array $toast): void
 function admin_count_citas_hoy(mysqli $conn): int
 {
     $count = 0;
-    $sql = "SELECT COUNT(*) AS total FROM citas WHERE fecha = CURDATE()";
+    $sql = "SELECT COUNT(*) AS total 
+            FROM citas 
+            WHERE fecha = CURDATE() 
+              AND (estado IS NULL OR estado <> 'cancelada')";
     if ($res = $conn->query($sql)) {
         $count = (int) ($res->fetch_assoc()['total'] ?? 0);
         $res->free();
@@ -318,10 +321,41 @@ function ensureCitasSchema(mysqli $conn): void
             telefono VARCHAR(50),
             servicio VARCHAR(120),
             notas TEXT,
+            estado VARCHAR(20) NOT NULL DEFAULT 'pendiente',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             UNIQUE KEY uniq_fecha_hora (fecha, hora)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ");
+
+    // Añadir columna estado si faltaba.
+    $hasEstado = false;
+    if ($res = $conn->query("SHOW COLUMNS FROM citas LIKE 'estado'")) {
+        $hasEstado = $res instanceof mysqli_result && $res->num_rows > 0;
+        $res->free();
+    }
+    if (!$hasEstado) {
+        $conn->query("ALTER TABLE citas ADD COLUMN estado VARCHAR(20) NOT NULL DEFAULT 'pendiente' AFTER notas");
+    }
+
+    // Retirar índice único antiguo para permitir reabrir horarios cancelados.
+    $hasUnique = false;
+    if ($res = $conn->query("SHOW INDEX FROM citas WHERE Key_name = 'uniq_fecha_hora'")) {
+        $hasUnique = $res instanceof mysqli_result && $res->num_rows > 0;
+        $res->free();
+    }
+    if ($hasUnique) {
+        $conn->query("ALTER TABLE citas DROP INDEX uniq_fecha_hora");
+    }
+
+    // Agregar índice normal si no existe.
+    $hasIdx = false;
+    if ($res = $conn->query("SHOW INDEX FROM citas WHERE Key_name = 'idx_fecha_hora'")) {
+        $hasIdx = $res instanceof mysqli_result && $res->num_rows > 0;
+        $res->free();
+    }
+    if (!$hasIdx) {
+        $conn->query("ALTER TABLE citas ADD INDEX idx_fecha_hora (fecha, hora)");
+    }
 
     $ready = true;
 }
