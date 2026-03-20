@@ -43,6 +43,17 @@ if ($stmt = $conn->prepare('SELECT id, nombre, email, telefono, servicio, fecha,
     $stmt->close();
 }
 
+if (!$cita) {
+    $_SESSION['agenda_flash'] = [
+        'ok' => false,
+        'estado' => $estado,
+        'email' => '',
+        'error' => 'Cita no encontrada.',
+    ];
+    header('Location: ' . $redirect);
+    exit;
+}
+
 if ($stmt = $conn->prepare('UPDATE citas SET estado = ? WHERE id = ?')) {
     $stmt->bind_param('si', $estado, $id);
     $stmt->execute();
