@@ -225,14 +225,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $servicioMail = html_entity_decode($servicio, ENT_QUOTES, 'UTF-8');
             $mensajeMail = html_entity_decode($mensaje, ENT_QUOTES, 'UTF-8');
 
-            $nombreHtml = htmlspecialchars($nombreMail, ENT_QUOTES, 'UTF-8');
-            $emailHtml = htmlspecialchars($emailMail, ENT_QUOTES, 'UTF-8');
-            $telefonoHtml = htmlspecialchars($telefonoMail !== '' ? $telefonoMail : 'No proporcionado', ENT_QUOTES, 'UTF-8');
-            $servicioHtml = htmlspecialchars($servicioMail !== '' ? $servicioMail : 'No especificado', ENT_QUOTES, 'UTF-8');
-            $mensajeHtml = nl2br(htmlspecialchars($mensajeMail, ENT_QUOTES, 'UTF-8'));
-            $fechaCitaHtml = htmlspecialchars($fechaCitaLabel, ENT_QUOTES, 'UTF-8');
-            $horaCitaHtml = htmlspecialchars($horaCitaLabel, ENT_QUOTES, 'UTF-8');
-            $portfolioAbsoluteUrl = htmlspecialchars(app_absolute_url('portafolio.php'), ENT_QUOTES, 'UTF-8');
+    $nombreHtml = htmlspecialchars($nombreMail, ENT_QUOTES, 'UTF-8');
+    $emailHtml = htmlspecialchars($emailMail, ENT_QUOTES, 'UTF-8');
+    $telefonoHtml = htmlspecialchars($telefonoMail !== '' ? $telefonoMail : 'No proporcionado', ENT_QUOTES, 'UTF-8');
+    $servicioHtml = htmlspecialchars($servicioMail !== '' ? $servicioMail : 'No especificado', ENT_QUOTES, 'UTF-8');
+    $mensajeHtml = nl2br(htmlspecialchars($mensajeMail, ENT_QUOTES, 'UTF-8'));
+    $fechaCitaHtml = htmlspecialchars($fechaCitaLabel, ENT_QUOTES, 'UTF-8');
+    $horaCitaHtml = htmlspecialchars($horaCitaLabel, ENT_QUOTES, 'UTF-8');
+    $portfolioAbsoluteUrl = htmlspecialchars(app_absolute_url('portafolio.php'), ENT_QUOTES, 'UTF-8');
+    $modoLlamadaHtml = htmlspecialchars($modoLlamada === 'video' ? 'Videollamada' : 'Teléfono', ENT_QUOTES, 'UTF-8');
+    $enlaceReunionHtml = $enlaceReunion !== '' ? '<a href="' . htmlspecialchars($enlaceReunion, ENT_QUOTES, 'UTF-8') . '" style="color:#2563eb;">' . htmlspecialchars($enlaceReunion, ENT_QUOTES, 'UTF-8') . '</a>' : 'Se compartirá en la confirmación';
 
             $serviceKey = function_exists('mb_strtolower')
                 ? mb_strtolower($servicioMail, 'UTF-8')
@@ -590,6 +592,20 @@ HTML;
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td width="50%" valign="top" style="padding:0 8px 14px 0;">
+                                            <div style="background-color:#ffffff; border:1px solid #dbeafe; border-radius:16px; padding:16px;">
+                                                <div style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#64748b; margin-bottom:8px;">Modalidad</div>
+                                                <div style="font-size:16px; font-weight:700; color:#0f172a;">{$modoLlamadaHtml}</div>
+                                            </div>
+                                        </td>
+                                        <td width="50%" valign="top" style="padding:0 0 14px 8px;">
+                                            <div style="background-color:#ffffff; border:1px solid #dbeafe; border-radius:16px; padding:16px;">
+                                                <div style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#64748b; margin-bottom:8px;">Enlace (si aplica)</div>
+                                                <div style="font-size:14px; font-weight:700; color:#0f172a;">{$enlaceReunionHtml}</div>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </table>
                                 <div style="background:linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%); border:1px solid #bfdbfe; border-radius:18px; padding:18px 20px;">
                                     <div style="font-size:12px; text-transform:uppercase; letter-spacing:0.08em; color:#2563eb; font-weight:700; margin-bottom:10px;">{$clientMessageTitle}</div>
@@ -627,6 +643,8 @@ HTML;
                     . "{$clientPlainIntro}\n\n"
                     . "Servicio de interes: " . ($servicioMail !== '' ? $servicioMail : 'No especificado') . "\n"
                     . "Canal de respuesta: {$emailMail}\n"
+                    . "Modalidad: " . ($modoLlamada === 'video' ? 'Videollamada' : 'Telefono') . "\n"
+                    . "Enlace: " . ($enlaceReunion !== '' ? $enlaceReunion : 'Se compartira en la confirmacion') . "\n"
                     . "Fecha solicitada: {$fechaCitaLabel}\n"
                     . "Hora: {$horaCitaLabel}\n\n"
                     . "Resumen de tu consulta:\n{$mensajeMail}\n\n"

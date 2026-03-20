@@ -33,13 +33,14 @@ if ($id <= 0 || !in_array($estado, $allowed, true)) {
 
 ensureCitasSchema($conn);
 
-// Obtener datos de la cita antes de actualizar para notificar al cliente.
+// Obtener datos de la cita antes de actualizar
 $cita = null;
 $selectError = null;
-if ($stmt = $conn->prepare('SELECT id, nombre, email, telefono, servicio, fecha, hora, COALESCE(estado, "pendiente") AS estado FROM citas WHERE id = ?')) {
+$stmt = $conn->prepare('SELECT id, nombre, email, telefono, servicio, fecha, hora, COALESCE(estado, "pendiente") AS estado, COALESCE(tipo_llamada, "telefono") AS tipo_llamada, enlace_reunion FROM citas WHERE id = ?');
+if ($stmt) {
     $stmt->bind_param('i', $id);
     if ($stmt->execute()) {
-        $stmt->bind_result($cid, $cnombre, $cemail, $ctelefono, $cservicio, $cfecha, $chora, $cestado);
+        $stmt->bind_result($cid, $cnombre, $cemail, $ctelefono, $cservicio, $cfecha, $chora, $cestado, $ctipo, $cenlace);
         if ($stmt->fetch()) {
             $cita = [
                 'id' => $cid,
@@ -50,6 +51,8 @@ if ($stmt = $conn->prepare('SELECT id, nombre, email, telefono, servicio, fecha,
                 'fecha' => $cfecha,
                 'hora' => $chora,
                 'estado' => $cestado,
+                'tipo_llamada' => $ctipo,
+                'enlace_reunion' => $cenlace,
             ];
         }
     } else {
@@ -72,16 +75,17 @@ if (!$cita) {
     exit;
 }
 
+// Actualizar estado
 if ($stmt = $conn->prepare('UPDATE citas SET estado = ? WHERE id = ?')) {
     $stmt->bind_param('si', $estado, $id);
     $stmt->execute();
     $stmt->close();
 }
 
-// Config SMTP (igual que contacto).
+// SMTP config
 $secretPath = __DIR__ . '/../includes/secrets.php';
 if (file_exists($secretPath)) {
-    require $secretPath; // Debe definir $SMTP_USER y $SMTP_PASS
+    require $secretPath; // define $SMTP_USER, $SMTP_PASS, etc.
 }
 $smtpUser = $SMTP_USER ?? getenv('SMTP_USER') ?? 'proyectosmceaa@gmail.com';
 $smtpPass = $SMTP_PASS ?? getenv('SMTP_PASS') ?? '';
@@ -105,13 +109,14 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
             'estado' => $estadoNuevo,
             'email' => '',
             'id' => $cita['id'] ?? null,
-            'error' => 'Email del cliente vacÃ­o.',
+            'error' => 'Email del cliente vacío.',
         ];
         return;
     }
 
     $mail = new PHPMailer(true);
     $smtpDebugLog = [];
+
     try {
         $mail->isSMTP();
         $mail->Host = $smtp['host'];
@@ -133,6 +138,7 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
         } else {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         }
+
         $mail->CharSet = 'UTF-8';
         $mail->setFrom($smtp['from_email'], $smtp['from_name']);
         $mail->addAddress($destino, $cita['nombre'] ?? '');
@@ -146,18 +152,21 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
         $hora = $cita['hora'] ?? '';
         $servicio = $cita['servicio'] ?? 'Llamada';
         $nombre = $cita['nombre'] ?? 'Cliente';
+        $tipo = strtolower(trim((string) ($cita['tipo_llamada'] ?? 'telefono'))) === 'video' ? 'Videollamada' : 'Teléfono';
+        $enlace = trim((string) ($cita['enlace_reunion'] ?? ''));
+
         $fechaLabel = $fecha !== '' ? date('d/m/Y', strtotime($fecha)) : 'por definir';
         $horaLabel = $hora !== '' ? date('H:i', strtotime($hora)) : 'por definir';
 
         if ($estadoNuevo === 'confirmada') {
-            $subject = 'Tu cita fue confirmada Â· Proyectos MCE';
-            $hero = 'Tu llamada estÃ¡ confirmada';
+            $subject = 'Tu cita fue confirmada · Proyectos MCE';
+            $hero = 'Tu llamada está confirmada';
             $lead = 'Gracias por agendar. Te esperamos en el horario elegido.';
-            $ctaText = 'Agregar al calendario';
-            $ctaUrl = '#';
+            $ctaText = $enlace !== '' ? 'Entrar a la videollamada' : 'Agregar al calendario';
+            $ctaUrl = $enlace !== '' ? $enlace : '#';
             $statusColor = '#16a34a';
         } else {
-            $subject = 'Tu cita fue cancelada Â· Proyectos MCE';
+            $subject = 'Tu cita fue cancelada · Proyectos MCE';
             $hero = 'Hemos cancelado la cita';
             $lead = 'Podemos reprogramar cuando te convenga. Reagenda en el enlace siguiente.';
             $ctaText = 'Reagendar ahora';
@@ -173,6 +182,9 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
         $fechaEsc = htmlspecialchars($fechaLabel, ENT_QUOTES, 'UTF-8');
         $horaEsc = htmlspecialchars($horaLabel, ENT_QUOTES, 'UTF-8');
         $servicioEsc = htmlspecialchars($servicio, ENT_QUOTES, 'UTF-8');
+        $tipoEsc = htmlspecialchars($tipo, ENT_QUOTES, 'UTF-8');
+        $enlaceEsc = htmlspecialchars($enlace, ENT_QUOTES, 'UTF-8');
+        $enlaceHtml = $enlaceEsc !== '' ? '<a href="' . $enlaceEsc . '" style="color:#2563eb;">' . $enlaceEsc . '</a>' : 'No aplica / se compartirá si es necesario';
         $ctaEsc = htmlspecialchars($ctaUrl, ENT_QUOTES, 'UTF-8');
         $ctaTextEsc = htmlspecialchars($ctaText, ENT_QUOTES, 'UTF-8');
         $statusColorEsc = htmlspecialchars($statusColor, ENT_QUOTES, 'UTF-8');
@@ -207,11 +219,13 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
                 <p style="margin:4px 0;color:#0f172a;"><strong>Fecha:</strong> {$fechaEsc}</p>
                 <p style="margin:4px 0;color:#0f172a;"><strong>Hora:</strong> {$horaEsc}</p>
                 <p style="margin:4px 0;color:#0f172a;"><strong>Servicio:</strong> {$servicioEsc}</p>
+                <p style="margin:4px 0;color:#0f172a;"><strong>Modalidad:</strong> {$tipoEsc}</p>
+                <p style="margin:4px 0;color:#0f172a;"><strong>Enlace:</strong> {$enlaceHtml}</p>
               </div>
               <div style="margin:14px 0;">
                 <a href="{$ctaEsc}" style="display:inline-block;padding:12px 18px;border-radius:12px;background:{$statusColorEsc};color:#ffffff;text-decoration:none;font-weight:700;">{$ctaTextEsc}</a>
               </div>
-              <p style="color:#94a3b8;font-size:12px;margin:14px 0 4px;">Si no solicitaste esta actualizaciÃ³n, responde a este correo.</p>
+              <p style="color:#94a3b8;font-size:12px;margin:14px 0 4px;">Si no solicitaste esta actualización, responde a este correo.</p>
             </td>
           </tr>
         </table>
@@ -222,14 +236,14 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
 </html>
 HTML;
 
-        $mail->AltBody = "Estado de tu cita: {$estadoNuevo}\nFecha: {$fechaLabel}\nHora: {$horaLabel}\nServicio: {$servicio}\nCTA: {$ctaUrl}\n\nSi no solicitaste esta actualizaciÃ³n, responde este correo.";
+        $mail->AltBody = "Estado de tu cita: {$estadoNuevo}\nFecha: {$fechaLabel}\nHora: {$horaLabel}\nServicio: {$servicio}\nModalidad: {$tipo}\nEnlace: " . ($enlace !== '' ? $enlace : 'No aplica / se enviará si es necesario') . "\nCTA: {$ctaUrl}\n\nSi no solicitaste esta actualización, responde este correo.";
 
         $mail->send();
         $_SESSION['agenda_flash'] = [
             'ok' => true,
             'estado' => $estadoNuevo,
             'email' => $destino,
-            'id' => $cita['id'] ?? $id,
+            'id' => $cita['id'] ?? null,
         ];
     } catch (Exception $e) {
         error_log('No se pudo enviar correo de cita: ' . $mail->ErrorInfo);
@@ -237,7 +251,7 @@ HTML;
             'ok' => false,
             'estado' => $estadoNuevo,
             'email' => $destino,
-            'id' => $cita['id'] ?? $id,
+            'id' => $cita['id'] ?? null,
             'error' => $mail->ErrorInfo ?: 'Error desconocido al enviar correo.',
             'debug' => implode(' | ', $smtpDebugLog),
         ];
@@ -259,3 +273,4 @@ admin_log_action($conn, 'Actualizar cita', 'cita', $id, 'Estado: ' . $estado);
 
 header('Location: ' . $redirect);
 exit;
+?>
