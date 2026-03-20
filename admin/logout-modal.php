@@ -1,9 +1,11 @@
 <?php
-// Modal de confirmacion de salida para todo el panel admin.
+// Modal de confirmación de salida para todo el panel admin.
 ?>
-<div id="logout-modal" class="fixed inset-0 z-50 hidden">
-    <div class="absolute inset-0 bg-black/50"></div>
-    <div class="relative mx-auto mt-28 w-11/12 max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
+<div id="logout-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
+    <div class="relative w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
+        <button type="button" id="logoutClose" class="absolute right-4 top-4 text-gray-400 hover:text-gray-600">
+            <i class="fas fa-times"></i>
+        </button>
         <div class="flex items-center gap-3">
             <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                 <i class="fas fa-sign-out-alt text-xl"></i>
@@ -28,13 +30,13 @@
 (function() {
     const modal = document.getElementById('logout-modal');
     if (!modal) return;
-    const backdrop = modal.firstElementChild;
     const confirmBtn = document.getElementById('logoutConfirm');
     const cancelBtn = document.getElementById('logoutCancel');
+    const closeBtn = document.getElementById('logoutClose');
     let targetHref = null;
 
-    const close = () => { modal.classList.add('hidden'); targetHref = null; };
-    const open = (href) => { targetHref = href; modal.classList.remove('hidden'); };
+    const close = () => { modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); targetHref = null; };
+    const open = (href) => { targetHref = href; modal.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); };
 
     document.querySelectorAll('a[href="logout.php"]').forEach(link => {
         link.classList.add('logout-link');
@@ -45,9 +47,13 @@
         }, true); // captura para adelantarse a cualquier onclick inline
     });
 
-    [backdrop, cancelBtn].forEach(el => el && el.addEventListener('click', close));
+    [cancelBtn, closeBtn].forEach(el => el && el.addEventListener('click', close));
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) close();
+    });
     if (confirmBtn) {
         confirmBtn.addEventListener('click', () => { if (targetHref) window.location.href = targetHref; });
     }
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 })();
 </script>
