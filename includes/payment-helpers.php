@@ -55,6 +55,7 @@ function ensureProjectPaymentsSchema(mysqli $conn): void
         'notas' => "ALTER TABLE proyecto_pagos ADD COLUMN notas TEXT NULL AFTER referencia",
         'fecha_pago' => "ALTER TABLE proyecto_pagos ADD COLUMN fecha_pago DATE NOT NULL AFTER notas",
         'updated_at' => "ALTER TABLE proyecto_pagos ADD COLUMN updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER created_at",
+        'fecha_ultimo_abono' => "ALTER TABLE proyecto_pagos ADD COLUMN fecha_ultimo_abono DATETIME NULL AFTER proxima_cuota",
     ];
 
     foreach ($missingColumns as $column => $sql) {
