@@ -69,11 +69,19 @@ if (stripos($smtpHost, 'gmail.com') !== false) {
 
 function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): void
 {
-    if (empty($cita['email'])) {
+    $destino = filter_var(trim((string) ($cita['email'] ?? '')), FILTER_VALIDATE_EMAIL);
+    if (!$destino) {
+        $_SESSION['agenda_flash'] = [
+            'ok' => false,
+            'estado' => $estadoNuevo,
+            'email' => $cita['email'] ?? '',
+            'error' => 'Email del cliente vacío o inválido.',
+        ];
         return;
     }
 
     $mail = new PHPMailer(true);
+    $smtpDebugLog = [];
     try {
         $mail->isSMTP();
         $mail->Host = $smtp['host'];
@@ -83,8 +91,8 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
         $mail->Password = $smtp['pass'];
         $mail->Timeout = 30;
         $mail->SMTPDebug = $smtp['debug'] ? 2 : 0;
-        $mail->Debugoutput = static function ($str, $level) {
-            error_log('SMTP[' . $level . ']: ' . $str);
+        $mail->Debugoutput = static function ($str, $level) use (&$smtpDebugLog) {
+            $smtpDebugLog[] = "[{$level}] {$str}";
         };
 
         if ($smtp['secure'] === 'ssl' || $smtp['secure'] === 'smtps' || (int) $smtp['port'] === 465) {
@@ -97,7 +105,11 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
         }
         $mail->CharSet = 'UTF-8';
         $mail->setFrom($smtp['from_email'], $smtp['from_name']);
-        $mail->addAddress($cita['email'], $cita['nombre'] ?? '');
+        $mail->addAddress($destino, $cita['nombre'] ?? '');
+        // Copia interna para confirmar envío
+        if (!empty($smtp['from_email'])) {
+            $mail->addBCC($smtp['from_email']);
+        }
         $mail->addReplyTo($smtp['from_email'], $smtp['from_name']);
         $mail->isHTML(true);
 
@@ -146,15 +158,16 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
         $_SESSION['agenda_flash'] = [
             'ok' => true,
             'estado' => $estadoNuevo,
-            'email' => $cita['email'],
+            'email' => $destino,
         ];
     } catch (Exception $e) {
         error_log('No se pudo enviar correo de cita: ' . $mail->ErrorInfo);
         $_SESSION['agenda_flash'] = [
             'ok' => false,
             'estado' => $estadoNuevo,
-            'email' => $cita['email'] ?? '',
-            'error' => $mail->ErrorInfo,
+            'email' => $destino,
+            'error' => $mail->ErrorInfo ?: 'Error desconocido al enviar correo.',
+            'debug' => implode(' | ', $smtpDebugLog),
         ];
     }
 }

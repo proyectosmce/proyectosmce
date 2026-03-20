@@ -169,6 +169,9 @@ $lastPayments = $conn->query("
                             Correo enviado al cliente (<?php echo admin_escape($flash['email'] ?? ''); ?>) con estado <?php echo admin_escape($flash['estado'] ?? ''); ?>.
                         <?php else: ?>
                             No se pudo enviar el correo al cliente. <?php if (!empty($flash['error'])): ?>Detalle: <?php echo admin_escape($flash['error']); ?><?php endif; ?>
+                            <?php if (!empty($flash['debug'])): ?>
+                                <div class="mt-1 text-xs opacity-80">Debug: <?php echo admin_escape($flash['debug']); ?></div>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
