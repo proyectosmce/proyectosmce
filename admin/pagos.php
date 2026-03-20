@@ -427,16 +427,16 @@ function payment_status_badge_class(string $status): string
         <?php $activePage = $openReset ? '' : 'pagos'; include __DIR__ . '/partials/sidebar.php'; ?>
         <div class="flex-1 overflow-y-auto lg:ml-0">
             <div class="p-8">
-                <div id="reset-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
-                    <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+                <div id="reset-modal" class="fixed inset-0 z-50 hidden bg-black/50 px-4">
+                    <div class="relative mx-auto mt-20 w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+                        <button type="button" id="reset-close" class="absolute right-4 top-4 text-gray-400 hover:text-gray-600">
+                            <i class="fas fa-times"></i>
+                        </button>
                         <div class="flex items-start justify-between gap-3">
                             <div>
                                 <h2 class="text-xl font-bold text-slate-900">Limpiar panel</h2>
                                 <p class="mt-1 text-sm text-gray-600">Eliminará pagos, proyectos, servicios, citas, mensajes y testimonios. No borra usuarios.</p>
                             </div>
-                            <button type="button" id="reset-close" class="text-gray-400 hover:text-gray-600">
-                                <i class="fas fa-times"></i>
-                            </button>
                         </div>
                         <form method="POST" action="pagos-reset.php" class="mt-4 space-y-4">
                             <input type="hidden" name="csrf_token" value="<?php echo admin_escape($csrfToken); ?>">
