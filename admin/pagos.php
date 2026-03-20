@@ -24,6 +24,7 @@ $currencyFilter = strtoupper(trim((string) ($_GET['moneda'] ?? '')));
 $formaPagoFilter = trim((string) ($_GET['forma_pago'] ?? ''));
 $fromDate = trim((string) ($_GET['desde'] ?? ''));
 $toDate = trim((string) ($_GET['hasta'] ?? ''));
+$onlyCuotas = isset($_GET['solo_cuotas']) && $_GET['solo_cuotas'] === '1';
 $page = max(1, (int) ($_GET['page'] ?? 1));
 $perPage = 12;
 
@@ -43,6 +44,7 @@ $filterParams = [
     'moneda' => $currencyFilter,
     'desde' => $fromDate,
     'hasta' => $toDate,
+    'solo_cuotas' => $onlyCuotas ? '1' : null,
     'page' => $page,
 ];
 
@@ -116,6 +118,10 @@ if ($searchTerm !== '') {
     $whereClauses[] = "(pp.concepto LIKE '%{$safeSearch}%' OR pp.referencia LIKE '%{$safeSearch}%' OR pp.notas LIKE '%{$safeSearch}%' OR pp.cliente LIKE '%{$safeSearch}%' OR pr.titulo LIKE '%{$safeSearch}%' OR pr.cliente LIKE '%{$safeSearch}%')";
 }
 
+if ($onlyCuotas) {
+    $whereClauses[] = '(pp.cuotas_totales > 1 OR (pp.cuotas_pendientes IS NOT NULL AND pp.cuotas_pendientes > 0))';
+}
+
 $whereSql = count($whereClauses) > 0 ? 'WHERE ' . implode(' AND ', $whereClauses) : '';
 
 $exporting = isset($_GET['export']) && $_GET['export'] === 'csv';
@@ -125,6 +131,19 @@ if ($exporting) {
     $exportResult = $conn->query($exportSql);
     if ($exportResult instanceof mysqli_result) {
         while ($row = $exportResult->fetch_assoc()) {
+            $risk = '';
+            if (!empty($row['proxima_cuota'])) {
+                $today = new DateTime('today');
+                $proxima = new DateTime($row['proxima_cuota']);
+                $diffDays = (int) $today->diff($proxima)->format('%r%a');
+                if ($diffDays < 0) {
+                    $risk = 'vencida';
+                } elseif ($diffDays <= 7) {
+                    $risk = 'proxima_7d';
+                } else {
+                    $risk = 'ok';
+                }
+            }
             $exportRows[] = [
                 $row['id'],
                 $row['concepto'],
@@ -140,12 +159,13 @@ if ($exporting) {
                 $row['proxima_cuota'],
                 $row['referencia'],
                 $row['fecha_pago'],
+                $risk,
             ];
         }
         $exportResult->free();
     }
 
-    admin_send_csv('pagos.csv', ['ID', 'Concepto', 'Proyecto', 'Cliente', 'Monto', 'Moneda', 'Estado', 'Metodo', 'Forma', 'Cuotas totales', 'Cuotas pendientes', 'Proxima cuota', 'Referencia', 'Fecha'], $exportRows);
+    admin_send_csv('pagos.csv', ['ID', 'Concepto', 'Proyecto', 'Cliente', 'Monto', 'Moneda', 'Estado', 'Metodo', 'Forma', 'Cuotas totales', 'Cuotas pendientes', 'Proxima cuota', 'Referencia', 'Fecha', 'Riesgo'], $exportRows);
 }
 
 $totalItems = 0;
@@ -320,8 +340,12 @@ function payment_status_badge_class(string $status): string
                             <a href="pagos.php" class="rounded-xl border border-gray-200 px-5 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50">Limpiar</a>
                         </div>
                     </form>
-                    <div class="text-sm text-gray-500">
-                        <?php echo $totalItems; ?> pago<?php echo $totalItems === 1 ? '' : 's'; ?> encontrado<?php echo $totalItems === 1 ? '' : 's'; ?>
+                    <div class="flex items-center gap-3 text-sm text-gray-500">
+                        <span><?php echo $totalItems; ?> pago<?php echo $totalItems === 1 ? '' : 's'; ?> encontrado<?php echo $totalItems === 1 ? '' : 's'; ?></span>
+                        <label class="inline-flex items-center gap-2 text-xs font-semibold text-slate-700">
+                            <input type="checkbox" name="solo_cuotas" value="1" form="filter-form" <?php echo $onlyCuotas ? 'checked' : ''; ?> class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            Solo cuotas activas
+                        </label>
                     </div>
                 </div>
 
@@ -398,10 +422,42 @@ function payment_status_badge_class(string $status): string
                                                     $pendC = ($pago['cuotas_pendientes'] !== null) ? (int) $pago['cuotas_pendientes'] : $totalC;
                                                     $pendC = max(0, $pendC);
                                                     $pagadas = max(0, $totalC - $pendC);
-                                                    echo $totalC > 0 ? admin_escape($pagadas . ' / ' . $totalC . ' pagadas') : '—';
+                                                    $percent = ($totalC > 0) ? round(($pagadas / $totalC) * 100) : 0;
+                                                    $barColor = 'bg-slate-300';
+                                                    if ($percent >= 90) { $barColor = 'bg-emerald-500'; }
+                                                    elseif ($percent >= 50) { $barColor = 'bg-amber-500'; }
+                                                    elseif ($percent > 0) { $barColor = 'bg-rose-500'; }
+                                                ?>
+                                                <?php if ($totalC > 0): ?>
+                                                    <div class="space-y-1">
+                                                        <div class="text-xs text-gray-600"><?php echo admin_escape("{$pagadas} de {$totalC} pagadas"); ?> (<?php echo $percent; ?>%)</div>
+                                                        <div class="h-2 w-32 rounded-full bg-slate-100">
+                                                            <div class="h-2 rounded-full <?php echo $barColor; ?>" style="width: <?php echo min(100, max(0, $percent)); ?>%;"></div>
+                                                        </div>
+                                                    </div>
+                                                <?php else: ?>
+                                                    —
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="px-6 py-4 text-sm text-gray-700">
+                                                <?php
+                                                    $proximaCuotaRaw = $pago['proxima_cuota'] ?? '';
+                                                    $proximaCuota = !empty($proximaCuotaRaw) ? date('d/m/Y', strtotime($proximaCuotaRaw)) : '-';
+                                                    $badge = '';
+                                                    if (!empty($proximaCuotaRaw)) {
+                                                        $today = new DateTime('today');
+                                                        $pDate = new DateTime($proximaCuotaRaw);
+                                                        $diff = (int) $today->diff($pDate)->format('%r%a');
+                                                        if ($diff < 0) {
+                                                            $badge = '<span class="ml-2 inline-flex items-center rounded-full bg-red-100 px-2 py-0.5 text-[11px] font-semibold text-red-700">Vencida</span>';
+                                                        } elseif ($diff <= 7) {
+                                                            $badge = '<span class="ml-2 inline-flex items-center rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-700">Próx 7 días</span>';
+                                                        }
+                                                    }
+                                                    echo admin_escape($proximaCuota);
+                                                    echo $badge;
                                                 ?>
                                             </td>
-                                            <td class="px-6 py-4 text-sm text-gray-700"><?php echo admin_escape($proximaCuota); ?></td>
                                             <td class="px-6 py-4 text-sm text-gray-600"><?php echo date('d/m/Y', strtotime($pago['fecha_pago'])); ?></td>
                                             <td class="px-6 py-4">
                                                 <div class="flex flex-wrap items-center gap-2">
@@ -421,6 +477,12 @@ function payment_status_badge_class(string $status): string
                                                         <i class="fas fa-paper-plane"></i>
                                                         <span>Enviar</span>
                                                     </a>
+                                                    <?php if ((int) ($pago['cuotas_totales'] ?? 0) > 1): ?>
+                                                        <a href="pago-editar.php?id=<?php echo (int) $pago['id']; ?>#cuotas_wrapper" class="inline-flex items-center gap-2 rounded-lg bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700 hover:bg-emerald-100" title="Registrar cuota / actualizar cuotas">
+                                                            <i class="fas fa-plus-circle"></i>
+                                                            <span>Registrar cuota</span>
+                                                        </a>
+                                                    <?php endif; ?>
                                                     <form method="POST" class="inline" onsubmit="return confirm('Eliminar este pago?');">
                                                         <input type="hidden" name="csrf_token" value="<?php echo admin_escape($csrfToken); ?>">
                                                         <input type="hidden" name="action" value="delete">
