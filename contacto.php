@@ -224,7 +224,9 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
                         <label class="block text-gray-800 mb-2 font-semibold">Hora disponible *</label>
                         <select id="agenda-hora" name="hora_llamada" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
                         </select>
-                        <p id="agenda-hora-msg" class="text-sm text-red-600 mt-2 hidden">No hay horarios disponibles para esta fecha.</p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <p id="agenda-hora-msg" class="text-sm text-red-600 mt-1 hidden">No hay horarios disponibles para esta fecha.</p>
                     </div>
                     <div class="md:col-span-2">
                         <label class="block text-gray-800 mb-2 font-semibold">¿Prefieres videollamada o teléfono?</label>
