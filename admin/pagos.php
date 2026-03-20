@@ -622,11 +622,11 @@ function payment_status_badge_class(string $status): string
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
-                </div>
+                    </div>
 
-                <div id="panel-cuotas" class="mb-6 hidden rounded-2xl bg-white p-5 shadow">
-                    <div class="flex items-center justify-between gap-2 flex-wrap">
-                        <h3 class="text-lg font-bold text-slate-900">Pagos en cuotas</h3>
+                    <div id="panel-cuotas" class="mb-6 hidden rounded-2xl bg-white p-5 shadow">
+                        <div class="flex items-center justify-between gap-2 flex-wrap">
+                            <h3 class="text-lg font-bold text-slate-900">Pagos en cuotas</h3>
                         <a href="<?php echo admin_build_url('pagos.php', array_merge($filterParams, ['forma_pago' => 'cuotas', 'page' => 1])); ?>" class="text-sm text-blue-700 hover:underline">Ver todo filtrado</a>
                     </div>
                     <div class="mt-3 divide-y divide-gray-100">
@@ -670,53 +670,53 @@ function payment_status_badge_class(string $status): string
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
-                </div>
 
-                <?php if (count($progresoCuotasProyectos) > 0): ?>
-                    <div class="mb-6 rounded-2xl bg-white p-5 shadow">
-                        <div class="flex items-center justify-between gap-2 flex-wrap">
-                            <div>
-                                <p class="text-sm font-semibold text-gray-500">Seguimiento de cuotas por proyecto</p>
-                                <h3 class="text-xl font-bold text-slate-900">Progreso individual</h3>
+                    <?php if (count($progresoCuotasProyectos) > 0): ?>
+                        <div class="mt-6 rounded-xl border border-gray-100 p-4 bg-slate-50">
+                            <div class="flex items-center justify-between gap-2 flex-wrap">
+                                <div>
+                                    <p class="text-xs font-semibold text-gray-500 uppercase">Seguimiento de cuotas por proyecto</p>
+                                    <h4 class="text-lg font-bold text-slate-900">Progreso individual</h4>
+                                </div>
+                            </div>
+                            <div class="mt-3 space-y-3">
+                                <?php foreach ($progresoCuotasProyectos as $proyecto): ?>
+                                    <?php
+                                        $pct = ($proyecto['total'] > 0) ? round(($proyecto['pagado'] / $proyecto['total']) * 100) : 0;
+                                        $pct = max(0, min(100, $pct));
+                                        $color = $pct >= 90 ? 'bg-emerald-500' : ($pct >= 50 ? 'bg-amber-500' : 'bg-rose-500');
+                                    ?>
+                                    <div class="rounded-lg border border-gray-200 p-3 bg-white">
+                                        <div class="flex items-center justify-between gap-3 flex-wrap">
+                                            <div>
+                                                <p class="text-xs font-semibold text-gray-500"><?php echo $proyecto['id'] > 0 ? 'Proyecto' : 'Sin proyecto'; ?></p>
+                                                <p class="text-sm font-bold text-slate-900">
+                                                    <?php echo admin_escape($proyecto['titulo']); ?>
+                                                </p>
+                                                <?php if (!empty($proyecto['cliente'])): ?>
+                                                    <p class="text-[11px] text-gray-500">Cliente: <?php echo admin_escape($proyecto['cliente']); ?></p>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="text-xs text-gray-700 text-right">
+                                                <p><span class="font-semibold text-slate-900"><?php echo payment_format_amount((float) $proyecto['pagado'], $proyecto['moneda']); ?></span> pagado</p>
+                                                <p class="text-[11px] text-gray-500"><?php echo payment_format_amount((float) $proyecto['total'], $proyecto['moneda']); ?> total</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <div class="flex items-center justify-between text-[11px] text-gray-600">
+                                                <span>Progreso</span>
+                                                <span><?php echo $pct; ?>%</span>
+                                            </div>
+                                            <div class="mt-1 h-2 w-full rounded-full bg-slate-100">
+                                                <div class="h-2 rounded-full <?php echo $color; ?>" style="width: <?php echo $pct; ?>%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
-                        <div class="mt-4 space-y-4">
-                            <?php foreach ($progresoCuotasProyectos as $proyecto): ?>
-                                <?php
-                                    $pct = ($proyecto['total'] > 0) ? round(($proyecto['pagado'] / $proyecto['total']) * 100) : 0;
-                                    $pct = max(0, min(100, $pct));
-                                    $color = $pct >= 90 ? 'bg-emerald-500' : ($pct >= 50 ? 'bg-amber-500' : 'bg-rose-500');
-                                ?>
-                                <div class="rounded-xl border border-gray-100 p-4">
-                                    <div class="flex items-center justify-between gap-3 flex-wrap">
-                                        <div>
-                                            <p class="text-sm font-semibold text-gray-500"><?php echo $proyecto['id'] > 0 ? 'Proyecto' : 'Sin proyecto'; ?></p>
-                                            <p class="text-base font-bold text-slate-900">
-                                                <?php echo admin_escape($proyecto['titulo']); ?>
-                                            </p>
-                                            <?php if (!empty($proyecto['cliente'])): ?>
-                                                <p class="text-xs text-gray-500">Cliente: <?php echo admin_escape($proyecto['cliente']); ?></p>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="text-sm text-gray-700 text-right">
-                                            <p><span class="font-semibold text-slate-900"><?php echo payment_format_amount((float) $proyecto['pagado'], $proyecto['moneda']); ?></span> pagado</p>
-                                            <p class="text-xs text-gray-500"><?php echo payment_format_amount((float) $proyecto['total'], $proyecto['moneda']); ?> total</p>
-                                        </div>
-                                    </div>
-                                    <div class="mt-3">
-                                        <div class="flex items-center justify-between text-xs text-gray-600">
-                                            <span>Progreso</span>
-                                            <span><?php echo $pct; ?>%</span>
-                                        </div>
-                                        <div class="mt-1 h-2 w-full rounded-full bg-slate-100">
-                                            <div class="h-2 rounded-full <?php echo $color; ?>" style="width: <?php echo $pct; ?>%;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
 
                 <div class="mb-6 flex flex-col gap-4 rounded-2xl bg-white p-5 shadow">
                     <form id="filter-form" method="GET" class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
