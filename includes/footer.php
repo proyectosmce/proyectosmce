@@ -726,7 +726,15 @@
                 'pf-b3-title': 'Automatizaciones',
                 'pf-b3-text': 'Integraciones que conectan sistemas y reducen tareas manuales.',
                 'pf-cta-small': 'Entrega con visibilidad',
-                'pf-cta-big': 'Demos frecuentes y documentación'
+                'pf-cta-big': 'Demos frecuentes y documentación',
+                'ts-badge': 'Testimonios · Proyectos MCE',
+                'ts-hero-title': 'Lo que dicen quienes operan con nuestro software',
+                'ts-hero-sub': 'Comentarios de equipos que hoy usan las soluciones en producción: releases frecuentes, soporte real y métricas visibles.',
+                'ts-b1': 'Acompañamiento end-to-end en cada release.',
+                'ts-b2': 'Equipos de negocio y tecnología siempre informados.',
+                'ts-b3': 'Feedback directo que usamos para mejorar el producto.',
+                'ts-btn-read': 'Leer testimonios',
+                'ts-btn-share': 'Compartir mi experiencia'
             },
             'en': {
                 'nav-home': 'Home',
@@ -804,7 +812,15 @@
                 'pf-b3-title': 'Automations',
                 'pf-b3-text': 'Integrations that connect systems and cut manual work.',
                 'pf-cta-small': 'Delivery with visibility',
-                'pf-cta-big': 'Frequent demos and documentation'
+                'pf-cta-big': 'Frequent demos and documentation',
+                'ts-badge': 'Testimonials · MCE Projects',
+                'ts-hero-title': 'What users say about our software',
+                'ts-hero-sub': 'Feedback from teams running the solutions in production: frequent releases, real support and visible metrics.',
+                'ts-b1': 'End-to-end support on every release.',
+                'ts-b2': 'Business and tech teams always informed.',
+                'ts-b3': 'Direct feedback we use to improve the product.',
+                'ts-btn-read': 'Read testimonials',
+                'ts-btn-share': 'Share my experience'
             },
             'fr': {
                 'nav-home': 'Accueil',
@@ -882,7 +898,15 @@
                 'pf-b3-title': 'Automatisations',
                 'pf-b3-text': 'Intégrations qui connectent les systèmes et réduisent le manuel.',
                 'pf-cta-small': 'Livraison avec visibilité',
-                'pf-cta-big': 'Démos fréquentes et documentation'
+                'pf-cta-big': 'Démos fréquentes et documentation',
+                'ts-badge': 'Témoignages · Projets MCE',
+                'ts-hero-title': 'Ce que disent ceux qui utilisent notre logiciel',
+                'ts-hero-sub': 'Retours d’équipes en production : releases fréquentes, support réel et métriques visibles.',
+                'ts-b1': 'Accompagnement bout en bout à chaque release.',
+                'ts-b2': 'Équipes métiers et tech toujours informées.',
+                'ts-b3': 'Feedback direct que nous utilisons pour améliorer le produit.',
+                'ts-btn-read': 'Lire les témoignages',
+                'ts-btn-share': 'Partager mon expérience'
             },
             'de': {
                 'nav-home': 'Start',
@@ -960,7 +984,15 @@
                 'pf-b3-title': 'Automatisierungen',
                 'pf-b3-text': 'Integrationen, die Systeme verbinden und Handarbeit senken.',
                 'pf-cta-small': 'Lieferung mit Transparenz',
-                'pf-cta-big': 'Häufige Demos und Dokumentation'
+                'pf-cta-big': 'Häufige Demos und Dokumentation',
+                'ts-badge': 'Referenzen · Proyectos MCE',
+                'ts-hero-title': 'Was Nutzer über unsere Software sagen',
+                'ts-hero-sub': 'Feedback von Teams in Produktion: häufige Releases, echter Support und sichtbare Metriken.',
+                'ts-b1': 'End-to-end Begleitung bei jedem Release.',
+                'ts-b2': 'Business- und Tech-Teams stets informiert.',
+                'ts-b3': 'Direktes Feedback, das wir zur Verbesserung nutzen.',
+                'ts-btn-read': 'Referenzen lesen',
+                'ts-btn-share': 'Meine Erfahrung teilen'
             },
             'pt': {
                 'nav-home': 'Início',
@@ -1038,7 +1070,15 @@
                 'pf-b3-title': 'Automatizações',
                 'pf-b3-text': 'Integrações que conectam sistemas e reduzem trabalho manual.',
                 'pf-cta-small': 'Entrega com visibilidade',
-                'pf-cta-big': 'Demos frequentes e documentação'
+                'pf-cta-big': 'Demos frequentes e documentação',
+                'ts-badge': 'Depoimentos · Proyectos MCE',
+                'ts-hero-title': 'O que dizem quem opera com nosso software',
+                'ts-hero-sub': 'Feedback de equipes em produção: releases frequentes, suporte real e métricas visíveis.',
+                'ts-b1': 'Acompanhamento ponta a ponta em cada release.',
+                'ts-b2': 'Times de negócio e tech sempre informados.',
+                'ts-b3': 'Feedback direto que usamos para melhorar o produto.',
+                'ts-btn-read': 'Ler depoimentos',
+                'ts-btn-share': 'Compartilhar minha experiência'
             },
             'it': {
                 'nav-home': 'Home',
@@ -1116,7 +1156,15 @@
                 'pf-b3-title': 'Automazioni',
                 'pf-b3-text': 'Integrazioni che collegano sistemi e riducono il lavoro manuale.',
                 'pf-cta-small': 'Consegna con visibilità',
-                'pf-cta-big': 'Demo frequenti e documentazione'
+                'pf-cta-big': 'Demo frequenti e documentazione',
+                'ts-badge': 'Testimonianze · Proyectos MCE',
+                'ts-hero-title': 'Cosa dicono di chi usa il nostro software',
+                'ts-hero-sub': 'Feedback di team in produzione: release frequenti, supporto reale e metriche visibili.',
+                'ts-b1': 'Supporto end-to-end a ogni release.',
+                'ts-b2': 'Team business e tech sempre informati.',
+                'ts-b3': 'Feedback diretto che usiamo per migliorare il prodotto.',
+                'ts-btn-read': 'Leggi le testimonianze',
+                'ts-btn-share': 'Condividi la mia esperienza'
             }
         };
 

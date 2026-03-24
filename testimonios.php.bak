@@ -103,31 +103,31 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         <div class="grid lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-7 space-y-5">
                 <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
-                    <i class="fas fa-comment-dots mr-2 text-yellow-300"></i> <span class="i18n-ts-badge" data-i18n="ts-badge">Testimonios · Proyectos MCE</span>
+                    <i class="fas fa-comment-dots mr-2 text-yellow-300"></i> Testimonios Â· Proyectos MCE
                 </span>
                 <h1 class="text-4xl md:text-5xl font-bold leading-tight i18n-ts-hero-title" data-i18n="ts-hero-title">Lo que dicen quienes operan con nuestro software</h1>
                 <p class="text-lg text-blue-50 max-w-3xl i18n-ts-hero-sub" data-i18n="ts-hero-sub">
-                    Comentarios de equipos que hoy usan las soluciones en producción: releases frecuentes, soporte real y métricas visibles.
+                    Comentarios de equipos que hoy usan las soluciones en producciÃ³n: releases frecuentes, soporte real y mÃ©tricas visibles.
                 </p>
                 <div class="space-y-3">
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50 i18n-ts-b1" data-i18n="ts-b1">Acompañamiento end-to-end en cada release.</p>
+                        <p class="text-blue-50">AcompaÃ±amiento end-to-end en cada release.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50 i18n-ts-b2" data-i18n="ts-b2">Equipos de negocio y tecnología siempre informados.</p>
+                        <p class="text-blue-50">Equipos de negocio y tecnologÃ­a siempre informados.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50 i18n-ts-b3" data-i18n="ts-b3">Feedback directo que usamos para mejorar el producto.</p>
+                        <p class="text-blue-50">Feedback directo que usamos para mejorar el producto.</p>
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
-                    <a href="#testimonios" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition i18n-ts-btn-read" data-i18n="ts-btn-read">
+                    <a href="#testimonios" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition">
                         <i class="fas fa-comments mr-2"></i> Leer testimonios
                     </a>
-                    <a href="#form-testimonio" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition i18n-ts-btn-share" data-i18n="ts-btn-share">
+                    <a href="#form-testimonio" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
                         <i class="fas fa-handshake mr-2"></i> Compartir mi experiencia
                     </a>
                 </div>
