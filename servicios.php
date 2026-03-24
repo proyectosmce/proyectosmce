@@ -13,30 +13,30 @@
                 <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
                     <i class="fas fa-layer-group mr-2 text-yellow-300"></i> Servicios · Proyectos MCE
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight">Software a medida para operaciones, ventas y servicio</h1>
-                <p class="text-lg text-blue-50 max-w-3xl">
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight i18n-srv-hero-title" data-i18n="srv-hero-title">Software a medida para operaciones, ventas y servicio</h1>
+                <p class="text-lg text-blue-50 max-w-3xl i18n-srv-hero-sub" data-i18n="srv-hero-sub">
                     Te acompañamos de punta a punta: entendemos el proceso, diseñamos la experiencia, desarrollamos, probamos, desplegamos y dejamos todo documentado.
                 </p>
                 <div class="space-y-3">
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50">Sistemas de gestión alineados a procesos y métricas del negocio.</p>
+                        <p class="text-blue-50 i18n-srv-b1" data-i18n="srv-b1">Sistemas de gestión alineados a procesos y métricas del negocio.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50">Sitios, tiendas y landing pages pensadas para vender y posicionar tu marca.</p>
+                        <p class="text-blue-50 i18n-srv-b2" data-i18n="srv-b2">Sitios, tiendas y landing pages pensadas para vender y posicionar tu marca.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50">Automatización de procesos (bots) e integraciones con servidores (APIs) para reducir tareas manuales.</p>
+                        <p class="text-blue-50 i18n-srv-b3" data-i18n="srv-b3">Automatización de procesos (bots) e integraciones con servidores (APIs) para reducir tareas manuales.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50">Software personalizado con monitoreo, seguridad y control de accesos por rol.</p>
+                        <p class="text-blue-50 i18n-srv-b4" data-i18n="srv-b4">Software personalizado con monitoreo, seguridad y control de accesos por rol.</p>
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
-                    <a href="<?php echo app_url('contacto.php'); ?>#agenda-llamada" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition mce-call-ringing">
+                    <a href="<?php echo app_url('contacto.php'); ?>#agenda-llamada" class="inline-flex items-center justify-center bg-yellow-300 text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-yellow-900/20 hover:bg-yellow-200 transition mce-call-ringing i18n-srv-btn-call" data-i18n="srv-btn-call">
                         <span class="call-ico-wrap mr-2 text-slate-900">
                             <i class="fas fa-phone-alt"></i>
                             <span class="call-ring call-ring--1"></span>
@@ -45,10 +45,10 @@
                         </span>
                         Agenda una reunión
                     </a>
-                    <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition">
+                    <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition i18n-srv-btn-portfolio" data-i18n="srv-btn-portfolio">
                         <i class="fas fa-eye mr-2"></i> Ver proyectos
                     </a>
-                    <a href="<?php echo app_url('portafolio.php#casos-exito-portafolio'); ?>" class="inline-flex items-center justify-center border-2 border-amber-300 text-amber-200 px-8 py-4 rounded-xl font-semibold hover:bg-amber-200 hover:text-slate-900 transition">
+                    <a href="<?php echo app_url('portafolio.php#casos-exito-portafolio'); ?>" class="inline-flex items-center justify-center border-2 border-amber-300 text-amber-200 px-8 py-4 rounded-xl font-semibold hover:bg-amber-200 hover:text-slate-900 transition i18n-srv-btn-cases" data-i18n="srv-btn-cases">
                         <i class="fas fa-trophy mr-2"></i> Casos de éxito
                     </a>
                 </div>

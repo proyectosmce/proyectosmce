@@ -699,7 +699,16 @@
                 'availability-label': 'Disponibilidad',
                 'availability-text': 'Equipo listo para comenzar en menos de 7 días',
                 'lang-title': 'Idioma del sitio',
-                'lang-desc': 'Elige el idioma para navegar esta página'
+                'lang-desc': 'Elige el idioma para navegar esta página',
+                'srv-hero-title': 'Software a medida para operaciones, ventas y servicio',
+                'srv-hero-sub': 'Te acompañamos de punta a punta: entendemos el proceso, diseñamos la experiencia, desarrollamos, probamos, desplegamos y dejamos todo documentado.',
+                'srv-b1': 'Sistemas de gestión alineados a procesos y métricas del negocio.',
+                'srv-b2': 'Sitios, tiendas y landing pages pensadas para vender y posicionar tu marca.',
+                'srv-b3': 'Automatización de procesos (bots) e integraciones con servidores (APIs) para reducir tareas manuales.',
+                'srv-b4': 'Software personalizado con monitoreo, seguridad y control de accesos por rol.',
+                'srv-btn-call': 'Agenda una reunión',
+                'srv-btn-portfolio': 'Ver proyectos',
+                'srv-btn-cases': 'Casos de éxito'
             },
             'en': {
                 'nav-home': 'Home',
@@ -750,7 +759,16 @@
                 'availability-label': 'Availability',
                 'availability-text': 'Team ready to start in under 7 days',
                 'lang-title': 'Site language',
-                'lang-desc': 'Pick the language to browse this page'
+                'lang-desc': 'Pick the language to browse this page',
+                'srv-hero-title': 'Custom software for operations, sales and service',
+                'srv-hero-sub': 'We handle end to end: understand the process, design the experience, build, test, deploy and document everything.',
+                'srv-b1': 'Management systems aligned to your processes and business metrics.',
+                'srv-b2': 'Websites, shops and landing pages designed to sell and boost your brand.',
+                'srv-b3': 'Process automation (bots) and API integrations to cut manual work.',
+                'srv-b4': 'Custom software with monitoring, security and role-based access.',
+                'srv-btn-call': 'Book a meeting',
+                'srv-btn-portfolio': 'See projects',
+                'srv-btn-cases': 'Case studies'
             },
             'fr': {
                 'nav-home': 'Accueil',
@@ -801,7 +819,16 @@
                 'availability-label': 'Disponibilité',
                 'availability-text': 'Équipe prête à démarrer en moins de 7 jours',
                 'lang-title': 'Langue du site',
-                'lang-desc': 'Choisissez la langue pour naviguer cette page'
+                'lang-desc': 'Choisissez la langue pour naviguer cette page',
+                'srv-hero-title': 'Logiciel sur mesure pour opérations, ventes et service',
+                'srv-hero-sub': 'On s’occupe de bout en bout : comprendre le process, concevoir l’expérience, développer, tester, déployer et documenter.',
+                'srv-b1': 'Systèmes de gestion alignés sur vos processus et métriques métier.',
+                'srv-b2': 'Sites, boutiques et landing pages conçus pour vendre et valoriser votre marque.',
+                'srv-b3': 'Automatisation (bots) et intégrations API pour réduire le travail manuel.',
+                'srv-b4': 'Logiciel personnalisé avec monitoring, sécurité et accès par rôles.',
+                'srv-btn-call': 'Planifier un rendez-vous',
+                'srv-btn-portfolio': 'Voir les projets',
+                'srv-btn-cases': 'Études de cas'
             },
             'de': {
                 'nav-home': 'Start',
@@ -852,7 +879,16 @@
                 'availability-label': 'Verfügbarkeit',
                 'availability-text': 'Team startklar in unter 7 Tagen',
                 'lang-title': 'Seitensprache',
-                'lang-desc': 'Wähle die Sprache für diese Seite'
+                'lang-desc': 'Wähle die Sprache für diese Seite',
+                'srv-hero-title': 'Individuelle Software für Betrieb, Vertrieb und Service',
+                'srv-hero-sub': 'Wir kümmern uns end-to-end: Prozess verstehen, Experience designen, entwickeln, testen, deployen und dokumentieren.',
+                'srv-b1': 'Management-Systeme abgestimmt auf deine Prozesse und Business-KPIs.',
+                'srv-b2': 'Websites, Shops und Landing Pages, die verkaufen und deine Marke stärken.',
+                'srv-b3': 'Prozessautomatisierung (Bots) und API-Integrationen, um manuelle Arbeit zu senken.',
+                'srv-b4': 'Individuelle Software mit Monitoring, Sicherheit und Rollen-Rechten.',
+                'srv-btn-call': 'Termin vereinbaren',
+                'srv-btn-portfolio': 'Projekte ansehen',
+                'srv-btn-cases': 'Erfolgscases'
             },
             'pt': {
                 'nav-home': 'Início',
@@ -903,7 +939,16 @@
                 'availability-label': 'Disponibilidade',
                 'availability-text': 'Equipe pronta para começar em menos de 7 dias',
                 'lang-title': 'Idioma do site',
-                'lang-desc': 'Escolha o idioma para navegar na página'
+                'lang-desc': 'Escolha o idioma para navegar na página',
+                'srv-hero-title': 'Software sob medida para operações, vendas e atendimento',
+                'srv-hero-sub': 'Cuidamos ponta a ponta: entendemos o processo, desenhamos a experiência, desenvolvemos, testamos, publicamos e documentamos tudo.',
+                'srv-b1': 'Sistemas de gestão alinhados a processos e métricas do negócio.',
+                'srv-b2': 'Sites, lojas e landing pages pensadas para vender e fortalecer a marca.',
+                'srv-b3': 'Automação de processos (bots) e integrações API para reduzir trabalho manual.',
+                'srv-b4': 'Software personalizado com monitoramento, segurança e acesso por papéis.',
+                'srv-btn-call': 'Agendar uma reunião',
+                'srv-btn-portfolio': 'Ver projetos',
+                'srv-btn-cases': 'Cases de sucesso'
             },
             'it': {
                 'nav-home': 'Home',
@@ -954,21 +999,20 @@
                 'availability-label': 'Disponibilità',
                 'availability-text': 'Team pronto a partire in meno di 7 giorni',
                 'lang-title': 'Lingua del sito',
-                'lang-desc': 'Scegli la lingua per navigare questa pagina'
+                'lang-desc': 'Scegli la lingua per navigare questa pagina',
+                'srv-hero-title': 'Software su misura per operazioni, vendite e assistenza',
+                'srv-hero-sub': 'Gestiamo tutto end-to-end: capire il processo, progettare l’esperienza, sviluppare, testare, pubblicare e documentare.',
+                'srv-b1': 'Sistemi gestionali allineati ai tuoi processi e KPI di business.',
+                'srv-b2': 'Siti, shop e landing page pensati per vendere e rafforzare il brand.',
+                'srv-b3': 'Automazione (bot) e integrazioni API per ridurre il lavoro manuale.',
+                'srv-b4': 'Software personalizzato con monitoraggio, sicurezza e accessi per ruolo.',
+                'srv-btn-call': 'Fissa un incontro',
+                'srv-btn-portfolio': 'Vedi progetti',
+                'srv-btn-cases': 'Casi di successo'
             }
         };
 
         const elems = (cls, key) => document.querySelectorAll('.i18n-' + key) || [];
-
-        function applyLang(lang) {
-            const dict = t[lang] || t.es;
-            for (const key in dict) {
-                elems('', key).forEach(el => el.innerHTML = dict[key]);
-                const dataElems = document.querySelectorAll(`[data-i18n=\"${key}\"]`);
-                dataElems.forEach(el => el.querySelector('span') ? el.querySelector('span').innerHTML = dict[key] : el.innerHTML = dict[key]);
-            }
-            localStorage.setItem('siteLang', lang);
-        }
 
         // Map keys to elements
         const mapClass = {
