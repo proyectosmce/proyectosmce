@@ -692,6 +692,10 @@
         return 'es';
     };
 
+    const linkify = (str) => {
+        return (str || '').replace(/https?:\/\/\S+/g, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
+    };
+
     const isRelevant = (q) => faqs.some(f => f.keywords.some(k => q.includes(k)));
     const findAnswer = (q, lang) => {
         const match = faqs.find(f => f.keywords.some(k => q.includes(k)));
@@ -703,7 +707,8 @@
         const q = (questionInput.value || '').trim().toLowerCase();
         if (!q) return;
         const lang = detectLang(q);
-        answerBox.textContent = isRelevant(q) ? findAnswer(q, lang) : (defaultMsg[lang] || defaultMsg.es);
+        const raw = isRelevant(q) ? findAnswer(q, lang) : (defaultMsg[lang] || defaultMsg.es);
+        answerBox.innerHTML = linkify(raw);
     }
 
     function openPanel() {
