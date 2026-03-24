@@ -27,6 +27,167 @@
     
     <!-- Tu CSS personalizado (pequenas modificaciones) -->
     <link rel="stylesheet" href="<?php echo $styleUrl; ?>">
+    <!-- Estilos asistente flotante -->
+    <style>
+        .floating-buttons {
+            position: fixed;
+            bottom: 100px;
+            right: 18px;
+            display: grid;
+            gap: 10px;
+            justify-items: end;
+            grid-auto-rows: min-content;
+            grid-auto-flow: row;
+            z-index: 99999;
+        }
+        .float-btn {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            border: 2px solid #0a1630;
+            cursor: pointer;
+            color: #0f274b;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            font-size: 1.3rem;
+        }
+        .float-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(0,0,0,0.32); }
+        .float-btn.assistant {
+            position: relative;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            width: auto;
+            height: auto;
+            border-radius: 0;
+            padding: 0;
+        }
+        .float-btn.assistant img.bot-img {
+            display: block;
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            border-radius: 0;
+            animation: botWaveCycle 14s ease-in-out infinite;
+        }
+        .float-btn.assistant:hover img.bot-img,
+        .float-btn.assistant.paused img.bot-img {
+            animation-play-state: paused;
+        }
+        @keyframes botWaveCycle {
+            0%,70%   { transform: rotate(0deg); }
+            80%      { transform: rotate(10deg); }
+            88%      { transform: rotate(-10deg); }
+            95%      { transform: rotate(6deg); }
+            100%     { transform: rotate(0deg); }
+        }
+        .assistant-panel {
+            position: fixed;
+            bottom: 180px;
+            right: 18px;
+            width: 320px;
+            max-height: 420px;
+            background: #ffffff;
+            border: 1px solid #e3e9f3;
+            box-shadow: 0 18px 36px rgba(0,0,0,0.25);
+            border-radius: 14px;
+            display: none;
+            flex-direction: column;
+            overflow: visible;
+            z-index: 99998;
+        }
+        .assistant-panel.open { display: flex; }
+        .assistant-header {
+            background: linear-gradient(135deg, #0a1630, #12325f);
+            color: white;
+            padding: 10px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .assistant-header .left { display: flex; align-items: center; gap: 10px; }
+        .assistant-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 2px solid #ffd700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }
+        .assistant-body { padding: 12px; display: grid; gap: 10px; font-size: 0.9rem; color: #1b2b48; }
+        .assistant-answer {
+            background: #f5f7fb;
+            border: 1px solid #e3e9f3;
+            border-radius: 10px;
+            padding: 10px;
+            min-height: 60px;
+            line-height: 1.4;
+        }
+        .assistant-lang {
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+        .assistant-lang select { display: none; }
+        .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            border: 1px solid #d4dce7;
+            font-size: 0.85rem;
+            background: #fff;
+            color: #1b2b48;
+            cursor: pointer;
+        }
+        .lang-toggle img {
+            width: 18px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+        .lang-list {
+            position: absolute;
+            right: 0;
+            top: 110%;
+            background: #fff;
+            border: 1px solid #d4dce7;
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+            padding: 8px 8px 10px;
+            display: none;
+            z-index: 5;
+            max-height: 200px;
+            overflow-y: auto;
+            min-width: 180px;
+        }
+        .lang-list::-webkit-scrollbar { width: 8px; }
+        .lang-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
+        .lang-list::-webkit-scrollbar-track { background: #f8fafc; border-radius: 6px; }
+        .lang-list.open { display: block; }
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #1b2b48;
+        }
+        .lang-option:hover { background: #f1f5f9; }
+        .lang-option img {
+            width: 18px;
+            height: 14px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+    </style>
     <!-- Favicon -->
     <link rel="icon" href="<?php echo $faviconIcoUrl; ?>" sizes="any">
     <link rel="icon" type="image/png" href="<?php echo $faviconPngUrl; ?>" sizes="64x64">
