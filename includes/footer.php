@@ -91,50 +91,6 @@
                 </div>
             </div>
             
-            <!-- Selector de idioma dentro del footer, justo después del bloque de contacto -->
-            <div id="site-language" class="border-t border-white/10 pt-8">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div class="space-y-1">
-                        <p class="text-sm font-semibold text-blue-200 uppercase tracking-[0.2em] i18n-lang-title">Idioma del sitio</p>
-                        <p class="text-gray-300 i18n-lang-desc">Elige en qué idioma quieres navegar esta página.</p>
-                    </div>
-                    <div class="relative site-lang-wrap">
-                        <select id="site-lang" aria-hidden="true">
-                            <option value="es" selected>Español</option>
-                            <option value="en">English</option>
-                            <option value="fr">Français</option>
-                            <option value="de">Deutsch</option>
-                            <option value="pt">Português</option>
-                            <option value="it">Italiano</option>
-                        </select>
-                        <button id="site-lang-toggle" class="lang-toggle" type="button" style="background:#0b1224;color:#fff;border-color:#334155;">
-                            <img id="site-lang-flag" src="https://flagcdn.com/w20/es.png" alt="Español">
-                            <span id="site-lang-label">Español</span>
-                        </button>
-                        <div class="lang-list" id="site-lang-list">
-                            <div class="lang-option" data-lang="es" data-flag="es" data-label="Español">
-                                <img src="https://flagcdn.com/w20/es.png" alt="Español"><span>Español</span>
-                            </div>
-                            <div class="lang-option" data-lang="en" data-flag="us" data-label="English">
-                                <img src="https://flagcdn.com/w20/us.png" alt="English"><span>English</span>
-                            </div>
-                            <div class="lang-option" data-lang="fr" data-flag="fr" data-label="Français">
-                                <img src="https://flagcdn.com/w20/fr.png" alt="Français"><span>Français</span>
-                            </div>
-                            <div class="lang-option" data-lang="de" data-flag="de" data-label="Deutsch">
-                                <img src="https://flagcdn.com/w20/de.png" alt="Deutsch"><span>Deutsch</span>
-                            </div>
-                            <div class="lang-option" data-lang="pt" data-flag="br" data-label="Português">
-                                <img src="https://flagcdn.com/w20/br.png" alt="Português"><span>Português</span>
-                            </div>
-                            <div class="lang-option" data-lang="it" data-flag="it" data-label="Italiano">
-                                <img src="https://flagcdn.com/w20/it.png" alt="Italiano"><span>Italiano</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
             <!-- Copyright -->
             <div class="border-t border-white/10 mt-10 pt-6 text-center text-gray-400 text-sm">
                 <p>&copy; <?php echo date('Y'); ?> Proyectos MCE. Todos los derechos reservados.</p>

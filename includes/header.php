@@ -215,12 +215,48 @@
                 </a>
                 
                 <!-- Menú desktop -->
-                <div class="hidden md:flex space-x-8">
+                <div class="hidden md:flex space-x-8 items-center">
                     <a data-i18n="nav-home" href="<?php echo app_url(); ?>" class="inline-flex items-center gap-2 text-gray-700 hover:text-blue-600 transition <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'font-bold text-blue-600' : ''; ?>"><i class="fas fa-home text-blue-500/80"></i><span>Inicio</span></a>
                     <a data-i18n="nav-services" href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center gap-2 text-gray-700 hover:text-blue-600 transition <?php echo basename($_SERVER['PHP_SELF']) == 'servicios.php' ? 'font-bold text-blue-600' : ''; ?>"><i class="fas fa-layer-group text-blue-500/80"></i><span>Servicios</span></a>
                     <a data-i18n="nav-portfolio" href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center gap-2 text-gray-700 hover:text-blue-600 transition <?php echo basename($_SERVER['PHP_SELF']) == 'portafolio.php' ? 'font-bold text-blue-600' : ''; ?>"><i class="fas fa-briefcase text-blue-500/80"></i><span>Portafolio</span></a>
                     <a data-i18n="nav-testimonials" href="<?php echo app_url('testimonios.php'); ?>" class="inline-flex items-center gap-2 text-gray-700 hover:text-blue-600 transition <?php echo basename($_SERVER['PHP_SELF']) == 'testimonios.php' ? 'font-bold text-blue-600' : ''; ?>"><i class="fas fa-comments text-blue-500/80"></i><span>Testimonios</span></a>
                     <a data-i18n="nav-contact" href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center gap-2 text-gray-700 hover:text-blue-600 transition <?php echo basename($_SERVER['PHP_SELF']) == 'contacto.php' ? 'font-bold text-blue-600' : ''; ?>"><i class="fas fa-envelope-open-text text-blue-500/80"></i><span>Contacto</span></a>
+                    
+                    <!-- Selector de idioma en desktop, justo después de Contacto -->
+                    <div class="relative">
+                        <select id="site-lang" aria-hidden="true">
+                            <option value="es" selected>Español</option>
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                            <option value="de">Deutsch</option>
+                            <option value="pt">Português</option>
+                            <option value="it">Italiano</option>
+                        </select>
+                        <button id="site-lang-toggle" class="lang-toggle" type="button" style="background:#0b1224;color:#fff;border-color:#334155;">
+                            <img id="site-lang-flag" src="https://flagcdn.com/w20/es.png" alt="Español">
+                            <span id="site-lang-label">Español</span>
+                        </button>
+                        <div class="lang-list" id="site-lang-list">
+                            <div class="lang-option" data-lang="es" data-flag="es" data-label="Español">
+                                <img src="https://flagcdn.com/w20/es.png" alt="Español"><span>Español</span>
+                            </div>
+                            <div class="lang-option" data-lang="en" data-flag="us" data-label="English">
+                                <img src="https://flagcdn.com/w20/us.png" alt="English"><span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr" data-flag="fr" data-label="Français">
+                                <img src="https://flagcdn.com/w20/fr.png" alt="Français"><span>Français</span>
+                            </div>
+                            <div class="lang-option" data-lang="de" data-flag="de" data-label="Deutsch">
+                                <img src="https://flagcdn.com/w20/de.png" alt="Deutsch"><span>Deutsch</span>
+                            </div>
+                            <div class="lang-option" data-lang="pt" data-flag="br" data-label="Português">
+                                <img src="https://flagcdn.com/w20/br.png" alt="Português"><span>Português</span>
+                            </div>
+                            <div class="lang-option" data-lang="it" data-flag="it" data-label="Italiano">
+                                <img src="https://flagcdn.com/w20/it.png" alt="Italiano"><span>Italiano</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Botón móvil -->
