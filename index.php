@@ -656,12 +656,12 @@
             it: 'TikTok: https://www.tiktok.com/@proyectosmce'
         }},
         { keywords: ['mce'], answers: {
-            es: 'Proyectos MCE es nuestra marca: MCE. Son las iniciales de Marlon Carabalí, programador y líder del equipo.',
-            en: 'Proyectos MCE is our brand: MCE. It’s the initials of Marlon Carabalí, programmer and team lead.',
-            fr: 'Proyectos MCE est notre marque : MCE. Ce sont les initiales de Marlon Carabalí, développeur et lead.',
-            de: 'Proyectos MCE ist unsere Marke: MCE. Es sind die Initialen von Marlon Carabalí, Entwickler und Lead.',
-            pt: 'Proyectos MCE é nossa marca: MCE. São as iniciais de Marlon Carabalí, programador e líder.',
-            it: 'Proyectos MCE è il nostro brand: MCE. Sono le iniziali di Marlon Carabalí, programmatore e lead.'
+            es: 'Proyectos MCE es nuestra marca. MCE Son las iniciales de Marlon Carabalí, programador y líder del equipo.',
+            en: 'Proyectos MCE is our brand. MCE It’s the initials of Marlon Carabalí, programmer and team lead.',
+            fr: 'Proyectos MCE est notre marque.  MCE Ce sont les initiales de Marlon Carabalí, développeur et lead.',
+            de: 'Proyectos MCE ist unsere Marke. MCE Es sind die Initialen von Marlon Carabalí, Entwickler und Lead.',
+            pt: 'Proyectos MCE é nossa marca. MCE São as iniciais de Marlon Carabalí, programador e líder.',
+            it: 'Proyectos MCE è il nostro brand. MCE Sono le iniziali di Marlon Carabalí, programmatore e lead.'
         }},
         { keywords: ['contacto', 'correo', 'email', 'whatsapp'], answers: {
             es: 'Escríbenos a proyectosmceaa@gmail.com o por WhatsApp al +57 311 412 5971.',
