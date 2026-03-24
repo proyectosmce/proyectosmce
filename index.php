@@ -30,6 +30,7 @@
 }
 .float-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(0,0,0,0.32); }
 .float-btn.assistant {
+    position: relative;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -37,6 +38,14 @@
     height: auto;
     border-radius: 0;
     padding: 0;
+}
+.float-btn.assistant img.bot-img {
+    display: block;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 0;
+    animation: botBobCycle 14s ease-in-out infinite;
 }
 .float-btn.whatsapp {
     width: 64px;
@@ -47,6 +56,40 @@
     border: 2px solid #128C7E;
     box-shadow: 0 10px 20px rgba(0,0,0,0.25);
     font-size: 1.2rem;
+}
+.float-btn.assistant::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ffd700;
+    top: 8px;
+    right: -6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transform-origin: left center;
+    animation: botWaveCycle 14s ease-in-out infinite;
+}
+.float-btn.assistant:hover img.bot-img,
+.float-btn.assistant:hover::after,
+.float-btn.assistant.paused img.bot-img,
+.float-btn.assistant.paused::after {
+    animation-play-state: paused;
+}
+
+@keyframes botBobCycle {
+    0%,70%   { transform: translateY(0) rotate(0deg); }
+    78%      { transform: translateY(-4px) rotate(-2deg); }
+    86%      { transform: translateY(2px) rotate(2deg); }
+    94%      { transform: translateY(-2px) rotate(-1deg); }
+    100%     { transform: translateY(0) rotate(0deg); }
+}
+@keyframes botWaveCycle {
+    0%,72%   { transform: rotate(0deg); }
+    80%      { transform: rotate(20deg); }
+    88%      { transform: rotate(-16deg); }
+    95%      { transform: rotate(8deg); }
+    100%     { transform: rotate(0deg); }
 }
 .assistant-panel {
     position: fixed;
@@ -313,7 +356,7 @@
 <!-- Botón flotante del asistente (botón de WhatsApp original permanece en footer) -->
 <div class="floating-buttons" id="floating-buttons">
     <button class="float-btn assistant" id="assistant-toggle" aria-label="Asistente virtual">
-        <img src="<?php echo app_url('asstv.webp'); ?>" alt="Abrir asistente MCE" style="width:64px;height:64px;object-fit:cover;border-radius:0;">
+        <img src="<?php echo app_url('asstv.webp'); ?>" alt="Abrir asistente MCE" class="bot-img">
         <span style="position:absolute;opacity:0;">Asistente</span>
     </button>
 </div>
@@ -356,12 +399,14 @@
 
     function openPanel() {
         panel.classList.add('open');
+        toggle.classList.add('paused');
         toggle.style.display = 'none';
         setTimeout(() => questionInput.focus(), 50);
     }
 
     function closePanel() {
         panel.classList.remove('open');
+        toggle.classList.remove('paused');
         toggle.style.display = 'grid';
     }
 
