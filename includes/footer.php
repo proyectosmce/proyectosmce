@@ -1087,14 +1087,15 @@
             }
         });
 
-        // replace function using dataset
+        // Reemplazo robusto: traduce cualquier elemento con clase i18n-* o data-i18n
         function applyLang(lang) {
             const dict = t[lang] || t.es;
-            for (const key in mapClass) {
-                document.querySelectorAll(mapClass[key]).forEach(el => {
-                    if (dict[key]) el.innerHTML = dict[key];
-                });
-            }
+            // Clases i18n-*
+            document.querySelectorAll('[class*=\"i18n-\"]').forEach(el => {
+                const key = Array.from(el.classList).find(c => c.startsWith('i18n-'))?.replace('i18n-','');
+                if (key && dict[key]) el.innerHTML = dict[key];
+            });
+            // Atributo data-i18n
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.dataset.i18n;
                 if (dict[key]) {
