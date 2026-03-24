@@ -337,13 +337,13 @@
     <div class="assistant-body">
         <div class="assistant-lang">
             <select id="assistant-lang">
-                <option value="auto">Auto</option>
-                <option value="es">Español</option>
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-                <option value="de">Deutsch</option>
-                <option value="pt">Português</option>
-                <option value="it">Italiano</option>
+                <option value="auto">🌐 Auto</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="pt">🇧🇷 Português</option>
+                <option value="it">🇮🇹 Italiano</option>
             </select>
         </div>
         <div class="assistant-answer" id="assistant-answer"></div>
