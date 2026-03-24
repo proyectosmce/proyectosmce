@@ -155,8 +155,8 @@
             position: absolute;
             right: 0;
             top: 110%;
-            background: #fff;
-            border: 1px solid #d4dce7;
+            background: #0f172a;
+            border: 1px solid #1e293b;
             border-radius: 10px;
             box-shadow: 0 10px 24px rgba(0,0,0,0.12);
             padding: 8px 8px 10px;
@@ -178,15 +178,17 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.85rem;
-            color: #1b2b48;
+            color: #e2e8f0;
         }
-        .lang-option:hover { background: #f1f5f9; }
+        .lang-option:hover { background: #111827; }
         .lang-option img {
             width: 18px;
             height: 14px;
             object-fit: cover;
             border-radius: 2px;
         }
+        /* Ocultar select nativo del selector de idiomas del sitio (desktop) */
+        #site-lang { display: none; }
     </style>
     <!-- Favicon -->
     <link rel="icon" href="<?php echo $faviconIcoUrl; ?>" sizes="any">
