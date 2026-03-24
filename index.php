@@ -381,49 +381,5 @@
     </div>
 </section>
 
-<!-- Selector de idioma global -->
-<section class="max-w-7xl mx-auto px-4 mt-10">
-    <div class="bg-white rounded-xl shadow-md border border-slate-200 p-4 flex items-center justify-between">
-        <div class="space-y-1">
-            <p class="text-sm text-slate-500 i18n-lang-title">Idioma del sitio</p>
-            <p class="text-lg font-semibold i18n-lang-desc">Elige el idioma para navegar esta página</p>
-        </div>
-        <div class="assistant-lang" style="position:relative;">
-            <select id="site-lang" aria-hidden="true">
-                <option value="es" selected>ES</option>
-                <option value="en">EN</option>
-                <option value="fr">FR</option>
-                <option value="de">DE</option>
-                <option value="pt">PT</option>
-                <option value="it">IT</option>
-            </select>
-            <button id="site-lang-toggle" class="lang-toggle" type="button">
-                <img id="site-lang-flag" src="https://flagcdn.com/w20/es.png" alt="Español">
-                <span id="site-lang-label">Español</span>
-            </button>
-            <div class="lang-list" id="site-lang-list">
-                <div class="lang-option" data-lang="es" data-flag="es" data-label="Español">
-                    <img src="https://flagcdn.com/w20/es.png" alt="Español"><span>Español</span>
-                </div>
-                <div class="lang-option" data-lang="en" data-flag="us" data-label="English">
-                    <img src="https://flagcdn.com/w20/us.png" alt="English"><span>English</span>
-                </div>
-                <div class="lang-option" data-lang="fr" data-flag="fr" data-label="Français">
-                    <img src="https://flagcdn.com/w20/fr.png" alt="Français"><span>Français</span>
-                </div>
-                <div class="lang-option" data-lang="de" data-flag="de" data-label="Deutsch">
-                    <img src="https://flagcdn.com/w20/de.png" alt="Deutsch"><span>Deutsch</span>
-                </div>
-                <div class="lang-option" data-lang="pt" data-flag="br" data-label="Português">
-                    <img src="https://flagcdn.com/w20/br.png" alt="Português"><span>Português</span>
-                </div>
-                <div class="lang-option" data-lang="it" data-flag="it" data-label="Italiano">
-                    <img src="https://flagcdn.com/w20/it.png" alt="Italiano"><span>Italiano</span>
-                </div>
-            </div>
-        </div>
-    </div>
- </section>
-
 <?php include 'includes/footer.php'; ?>
 

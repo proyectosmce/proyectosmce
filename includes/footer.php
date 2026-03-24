@@ -1,5 +1,49 @@
 ﻿    </main>
     
+    <!-- Selector de idioma global del sitio -->
+    <section id="site-language" class="bg-white border-t border-gray-200/70 py-10">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div class="space-y-2">
+                <p class="text-sm font-semibold text-blue-600 uppercase tracking-wide i18n-lang-title">Idioma del sitio</p>
+                <p class="text-gray-700 i18n-lang-desc">Elige en qué idioma quieres navegar esta página.</p>
+            </div>
+            <div class="relative site-lang-wrap">
+                <select id="site-lang" aria-hidden="true">
+                    <option value="es" selected>Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="pt">Português</option>
+                    <option value="it">Italiano</option>
+                </select>
+                <button id="site-lang-toggle" class="lang-toggle" type="button">
+                    <img id="site-lang-flag" src="https://flagcdn.com/w20/es.png" alt="Español">
+                    <span id="site-lang-label">Español</span>
+                </button>
+                <div class="lang-list" id="site-lang-list">
+                    <div class="lang-option" data-lang="es" data-flag="es" data-label="Español">
+                        <img src="https://flagcdn.com/w20/es.png" alt="Español"><span>Español</span>
+                    </div>
+                    <div class="lang-option" data-lang="en" data-flag="us" data-label="English">
+                        <img src="https://flagcdn.com/w20/us.png" alt="English"><span>English</span>
+                    </div>
+                    <div class="lang-option" data-lang="fr" data-flag="fr" data-label="Français">
+                        <img src="https://flagcdn.com/w20/fr.png" alt="Français"><span>Français</span>
+                    </div>
+                    <div class="lang-option" data-lang="de" data-flag="de" data-label="Deutsch">
+                        <img src="https://flagcdn.com/w20/de.png" alt="Deutsch"><span>Deutsch</span>
+                    </div>
+                    <div class="lang-option" data-lang="pt" data-flag="br" data-label="Português">
+                        <img src="https://flagcdn.com/w20/br.png" alt="Português"><span>Português</span>
+                    </div>
+                    <div class="lang-option" data-lang="it" data-flag="it" data-label="Italiano">
+                        <img src="https://flagcdn.com/w20/it.png" alt="Italiano"><span>Italiano</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <!-- Footer profesional -->
     <footer class="bg-gradient-to-t from-slate-950 via-slate-900 to-slate-900 text-white mt-16 mce-rounded-footer">
         <!-- CTA superior -->
@@ -1024,8 +1068,12 @@
             const label = labelMap[lang] || 'Español';
             const flagEl = document.getElementById('site-lang-flag');
             const labelEl = document.getElementById('site-lang-label');
+            const flagElM = document.getElementById('site-lang-flag-mobile');
+            const labelElM = document.getElementById('site-lang-label-mobile');
             if (flagEl) flagEl.src = `https://flagcdn.com/w20/${flag}.png`;
             if (labelEl) labelEl.textContent = label;
+            if (flagElM) flagElM.src = `https://flagcdn.com/w20/${flag}.png`;
+            if (labelElM) labelElM.textContent = label;
             const select = document.getElementById('site-lang');
             if (select) select.value = lang;
         }
@@ -1049,12 +1097,24 @@
                 applyLang(lang);
             });
         });
+        document.getElementById('site-lang-toggle-mobile')?.addEventListener('click', () => {
+            document.getElementById('site-lang-list-mobile')?.classList.toggle('open');
+        });
+        document.querySelectorAll('#site-lang-list-mobile .lang-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                const lang = opt.dataset.lang;
+                document.getElementById('site-lang-list-mobile')?.classList.remove('open');
+                setSiteLangUI(lang);
+                applyLang(lang);
+            });
+        });
         document.addEventListener('click', (e) => {
             const list = document.getElementById('site-lang-list');
             const toggle = document.getElementById('site-lang-toggle');
-            if (list && toggle && !list.contains(e.target) && !toggle.contains(e.target)) {
-                list.classList.remove('open');
-            }
+            const listM = document.getElementById('site-lang-list-mobile');
+            const toggleM = document.getElementById('site-lang-toggle-mobile');
+            if (list && toggle && !list.contains(e.target) && !toggle.contains(e.target)) list.classList.remove('open');
+            if (listM && toggleM && !listM.contains(e.target) && !toggleM.contains(e.target)) listM.classList.remove('open');
         });
 
         // apply classes mapping

@@ -240,6 +240,36 @@
                 <a data-i18n="nav-portfolio" href="<?php echo app_url('portafolio.php'); ?>" class="text-2xl font-semibold hover:text-yellow-200 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'portafolio.php' ? 'text-yellow-300 font-bold' : ''; ?>"><i class="fas fa-briefcase text-yellow-300/90"></i><span>Portafolio</span></a>
                 <a data-i18n="nav-testimonials" href="<?php echo app_url('testimonios.php'); ?>" class="text-2xl font-semibold hover:text-yellow-200 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'testimonios.php' ? 'text-yellow-300 font-bold' : ''; ?>"><i class="fas fa-comments text-yellow-300/90"></i><span>Testimonios</span></a>
                 <a data-i18n="nav-contact" href="<?php echo app_url('contacto.php'); ?>" class="text-2xl font-semibold hover:text-yellow-200 transition inline-flex items-center gap-3 <?php echo basename($_SERVER['PHP_SELF']) == 'contacto.php' ? 'text-yellow-300 font-bold' : ''; ?>"><i class="fas fa-envelope-open-text text-yellow-300/90"></i><span>Contacto</span></a>
+                
+                <div class="w-full pt-4 border-t border-white/20">
+                    <p class="text-sm uppercase tracking-wide text-yellow-200 mb-2 i18n-lang-title">Idioma del sitio</p>
+                    <div class="relative w-full flex justify-center">
+                        <button id="site-lang-toggle-mobile" class="lang-toggle" type="button" style="background:#0b1224;color:#fff;border-color:#334155;">
+                            <img id="site-lang-flag-mobile" src="https://flagcdn.com/w20/es.png" alt="Español">
+                            <span id="site-lang-label-mobile">Español</span>
+                        </button>
+                        <div class="lang-list" id="site-lang-list-mobile">
+                            <div class="lang-option" data-lang="es" data-flag="es" data-label="Español">
+                                <img src="https://flagcdn.com/w20/es.png" alt="Español"><span>Español</span>
+                            </div>
+                            <div class="lang-option" data-lang="en" data-flag="us" data-label="English">
+                                <img src="https://flagcdn.com/w20/us.png" alt="English"><span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="fr" data-flag="fr" data-label="Français">
+                                <img src="https://flagcdn.com/w20/fr.png" alt="Français"><span>Français</span>
+                            </div>
+                            <div class="lang-option" data-lang="de" data-flag="de" data-label="Deutsch">
+                                <img src="https://flagcdn.com/w20/de.png" alt="Deutsch"><span>Deutsch</span>
+                            </div>
+                            <div class="lang-option" data-lang="pt" data-flag="br" data-label="Português">
+                                <img src="https://flagcdn.com/w20/br.png" alt="Português"><span>Português</span>
+                            </div>
+                            <div class="lang-option" data-lang="it" data-flag="it" data-label="Italiano">
+                                <img src="https://flagcdn.com/w20/it.png" alt="Italiano"><span>Italiano</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
