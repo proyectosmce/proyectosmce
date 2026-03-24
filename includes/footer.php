@@ -1087,14 +1087,9 @@
             }
         });
 
-        // Reemplazo robusto: traduce cualquier elemento con clase i18n-* o data-i18n
+        // Reemplazo robusto: traduce data-i18n, data-i18n-key y clases i18n-*
         function applyLang(lang) {
             const dict = t[lang] || t.es;
-            // Clases i18n-*
-            document.querySelectorAll('[class*=\"i18n-\"]').forEach(el => {
-                const key = Array.from(el.classList).find(c => c.startsWith('i18n-'))?.replace('i18n-','');
-                if (key && dict[key]) el.innerHTML = dict[key];
-            });
             // Atributo data-i18n
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.dataset.i18n;
@@ -1103,6 +1098,16 @@
                     if (span) span.textContent = dict[key];
                     else el.textContent = dict[key];
                 }
+            });
+            // Atributo data-i18n-key (marcado desde mapClass)
+            document.querySelectorAll('[data-i18n-key]').forEach(el => {
+                const key = el.dataset.i18nKey;
+                if (dict[key]) el.innerHTML = dict[key];
+            });
+            // Clases i18n-*
+            document.querySelectorAll('[class*=\"i18n-\"]').forEach(el => {
+                const key = Array.from(el.classList).find(c => c.startsWith('i18n-'))?.replace('i18n-','');
+                if (key && dict[key]) el.innerHTML = dict[key];
             });
             localStorage.setItem('siteLang', lang);
         }
