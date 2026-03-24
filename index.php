@@ -6,7 +6,7 @@
 /* Botones flotantes y asistente */
 .floating-buttons {
     position: fixed;
-    bottom: 18px;
+    bottom: 100px;
     right: 18px;
     display: grid;
     gap: 10px;
@@ -42,7 +42,7 @@
 }
 .assistant-panel {
     position: fixed;
-    bottom: 110px;
+    bottom: 180px;
     right: 18px;
     width: 320px;
     max-height: 420px;
