@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label class="block text-gray-700 mb-2">Icono (FontAwesome) *</label>
                                 <input type="text" name="icono" required 
                                        value="<?php echo $servicio['icono'] ?? 'code'; ?>"
-                                       placeholder="ej: code, shopping-cart, boxes"
+                                       placeholder="ej: code, boxes, file-alt"
                                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-600">
                                 <p class="text-sm text-gray-500 mt-1">Ver iconos en <a href="https://fontawesome.com/icons" target="_blank" class="text-blue-600">FontAwesome</a></p>
                             </div>

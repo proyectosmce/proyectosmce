@@ -56,7 +56,6 @@
                     <h4 class="text-lg font-semibold mb-4">Servicios</h4>
                     <ul class="space-y-2 text-gray-300">
                         <li>Desarrollo a Medida</li>
-                        <li>Tiendas Online</li>
                         <li>Sistemas de Inventario</li>
                         <li>Mantenimiento Web</li>
                     </ul>
@@ -233,14 +232,6 @@
             de: 'Wir entwickeln maßgeschneiderte Software und Websites, abgestimmt auf deine Prozesse und Ziele.',
             pt: 'Criamos software e sites sob medida, alinhados aos seus processos e objetivos.',
             it: 'Creiamo software e siti web su misura, allineati ai tuoi processi e obiettivi.'
-        }},
-        { keywords: ['tienda', 'ecommerce', 'online', 'shop', 'store'], answers: {
-            es: 'Construimos tiendas online integradas con inventarios, pagos y logística.',
-            en: 'We build online stores integrated with inventory, payments, and logistics.',
-            fr: 'Nous créons des boutiques en ligne intégrées aux stocks, paiements et logistique.',
-            de: 'Wir bauen Online-Shops mit Integration von Lager, Zahlungen und Logistik.',
-            pt: 'Construímos lojas online integradas a estoque, pagamentos e logística.',
-            it: 'Realizziamo e-commerce integrati con inventario, pagamenti e logistica.'
         }},
         { keywords: ['inventario', 'stock', 'bodega'], answers: {
             es: 'Implementamos sistemas de inventario con control de stock y trazabilidad en tiempo real.',
@@ -443,12 +434,12 @@
             it: 'Home: pagina di ingresso con value proposition MCE e CTA per prenotare o vedere il portfolio.'
         }},
         { keywords: ['servicios', 'services'], answers: {
-            es: 'Servicios: lista de lo que hacemos (desarrollo a medida, ecommerce, inventarios, UX/UI, integraciones, soporte 24/7).',
-            en: 'Services: what we deliver (custom dev, ecommerce, inventory, UX/UI, integrations, 24/7 support).',
-            fr: 'Services : ce que nous faisons (dev sur mesure, ecommerce, inventaires, UX/UI, intégrations, support 24/7).',
-            de: 'Services: unsere Leistungen (Custom Dev, E‑Commerce, Inventar, UX/UI, Integrationen, 24/7 Support).',
-            pt: 'Serviços: o que fazemos (dev sob medida, ecommerce, inventário, UX/UI, integrações, suporte 24/7).',
-            it: 'Servizi: cosa offriamo (sviluppo su misura, ecommerce, inventari, UX/UI, integrazioni, supporto 24/7).'
+            es: 'Servicios: lista de lo que hacemos (desarrollo a medida, inventarios, UX/UI, integraciones, soporte 24/7).',
+            en: 'Services: what we deliver (custom dev, inventory, UX/UI, integrations, 24/7 support).',
+            fr: 'Services : ce que nous faisons (dev sur mesure, inventaires, UX/UI, intégrations, support 24/7).',
+            de: 'Services: unsere Leistungen (Custom Dev, Inventar, UX/UI, Integrationen, 24/7 Support).',
+            pt: 'Serviços: o que fazemos (dev sob medida, inventário, UX/UI, integrações, suporte 24/7).',
+            it: 'Servizi: cosa offriamo (sviluppo su misura, inventari, UX/UI, integrazioni, supporto 24/7).'
         }},
         { keywords: ['portafolio', 'portfolio'], answers: {
             es: 'Portafolio: casos en vivo y proyectos entregados para que veas ejemplos reales.',
@@ -541,11 +532,11 @@
     ];
 
         const defaultMsg = {
-            es: "Solo puedo responder sobre los contenidos y servicios de esta página: desarrollo web a medida, tiendas online, inventarios, UX/UI, APIs, soporte y sesiones Discovery.",
-            en: "I can answer only about this site’s content and services: custom web dev, online stores, inventory, UX/UI, APIs, support, and Discovery sessions.",
+            es: "Solo puedo responder sobre los contenidos y servicios de esta página: desarrollo web a medida, inventarios, UX/UI, APIs, soporte y sesiones Discovery.",
+            en: "I can answer only about this site’s content and services: custom web dev, inventory, UX/UI, APIs, support, and Discovery sessions.",
             fr: "Je peux répondre uniquement sur les contenus et services de ce site : dev web sur mesure, boutiques en ligne, inventaires, UX/UI, APIs, support, et sessions Discovery.",
             de: "Ich antworte nur zu Inhalten/Services dieser Seite: individuelle Webentwicklung, Shops, Inventar, UX/UI, APIs, Support und Discovery-Sessions.",
-            pt: "Posso responder apenas sobre o conteúdo e serviços deste site: desenvolvimento web sob medida, lojas online, inventários, UX/UI, APIs, suporte e sessões Discovery.",
+            pt: "Posso responder apenas sobre o conteúdo e serviços deste site: desenvolvimento web sob medida, inventários, UX/UI, APIs, suporte e sessões Discovery.",
             it: "Posso rispondere solo sui contenuti e servizi di questo sito: sviluppo web su misura, e-commerce, inventari, UX/UI, API, supporto e sessioni Discovery."
         };
 
@@ -709,7 +700,7 @@
                 'srv-hero-title': 'Software a medida para operaciones, ventas y servicio',
                 'srv-hero-sub': 'Te acompañamos de punta a punta: entendemos el proceso, diseñamos la experiencia, desarrollamos, probamos, desplegamos y dejamos todo documentado.',
                 'srv-b1': 'Sistemas de gestión alineados a procesos y métricas del negocio.',
-                'srv-b2': 'Sitios, tiendas y landing pages pensadas para vender y posicionar tu marca.',
+                'srv-b2': 'Sitios y landing pages pensadas para vender y posicionar tu marca.',
                 'srv-b3': 'Automatización de procesos (bots) e integraciones con servidores (APIs) para reducir tareas manuales.',
                 'srv-b4': 'Software personalizado con monitoreo, seguridad y control de accesos por rol.',
                 'srv-btn-call': 'Agenda una reunión',
@@ -754,7 +745,7 @@
                 'pf-what-title': 'Casos listos para inspirar tu proyecto',
                 'pf-b1-title': 'Aplicaciones internas',
                 'pf-b1-text': 'Paneles internos con roles y flujos simples.',
-                'pf-b2-title': 'Sitios y tiendas online',
+                'pf-b2-title': 'Sitios y landing pages',
                 'pf-b2-text': 'Catálogos, carrito de compra, pagos y medición de ventas.',
                 'pf-b3-title': 'Automatizaciones',
                 'pf-b3-text': 'Integraciones que conectan sistemas y reducen tareas manuales.',
@@ -800,7 +791,7 @@
                 'pf-case-btn-full': 'Ver caso completo',
                 'pf-case-btn-call': 'Agenda una llamada',
                 'pf-card-industry': 'Joyería',
-                'pf-card-b1': 'Venta en tienda con cobro y saldos.',
+                'pf-card-b1': 'Ventas con control de cobros y saldos.',
                 'pf-card-b2': 'Inventario en tiempo real por pieza.',
                 'pf-card-b3': 'Garantías trazables y reposición.',
                 'pf-card-b4': 'Reportes de caja y gastos diarios.',
@@ -1016,7 +1007,7 @@
                 'srv-hero-title': 'Custom software for operations, sales and service',
                 'srv-hero-sub': 'We handle end to end: understand the process, design the experience, build, test, deploy and document everything.',
                 'srv-b1': 'Management systems aligned to your processes and business metrics.',
-                'srv-b2': 'Websites, shops and landing pages designed to sell and boost your brand.',
+                'srv-b2': 'Websites and landing pages designed to sell and boost your brand.',
                 'srv-b3': 'Process automation (bots) and API integrations to cut manual work.',
                 'srv-b4': 'Custom software with monitoring, security and role-based access.',
                 'srv-btn-call': 'Book a meeting',
@@ -1061,7 +1052,7 @@
                 'pf-what-title': 'Cases ready to inspire your project',
                 'pf-b1-title': 'Internal applications',
                 'pf-b1-text': 'Internal dashboards with roles and simple flows.',
-                'pf-b2-title': 'Websites and online stores',
+                'pf-b2-title': 'Websites and landing pages',
                 'pf-b2-text': 'Catalogs, cart, payments and sales tracking.',
                 'pf-b3-title': 'Automations',
                 'pf-b3-text': 'Integrations that connect systems and cut manual work.',
@@ -1107,7 +1098,7 @@
                 'pf-case-btn-full': 'View full case',
                 'pf-case-btn-call': 'Book a call',
                 'pf-card-industry': 'Jewelry',
-                'pf-card-b1': 'In-store sales with payments and balances.',
+                'pf-card-b1': 'Sales with payment control and balances.',
                 'pf-card-b2': 'Real-time inventory per item.',
                 'pf-card-b3': 'Traceable warranties and replacements.',
                 'pf-card-b4': 'Cash and daily expense reports.',
@@ -1323,7 +1314,7 @@
                 'srv-hero-title': 'Logiciel sur mesure pour opérations, ventes et service',
                 'srv-hero-sub': 'On s’occupe de bout en bout : comprendre le process, concevoir l’expérience, développer, tester, déployer et documenter.',
                 'srv-b1': 'Systèmes de gestion alignés sur vos processus et métriques métier.',
-                'srv-b2': 'Sites, boutiques et landing pages conçus pour vendre et valoriser votre marque.',
+                'srv-b2': 'Sites et landing pages conçus pour vendre et valoriser votre marque.',
                 'srv-b3': 'Automatisation (bots) et intégrations API pour réduire le travail manuel.',
                 'srv-b4': 'Logiciel personnalisé avec monitoring, sécurité et accès par rôles.',
                 'srv-btn-call': 'Planifier un rendez-vous',
@@ -1368,7 +1359,7 @@
                 'pf-what-title': 'Cas prêts à inspirer votre projet',
                 'pf-b1-title': 'Applications internes',
                 'pf-b1-text': 'Tableaux internes avec rôles et flux simples.',
-                'pf-b2-title': 'Sites et boutiques en ligne',
+                'pf-b2-title': 'Sites et landing pages',
                 'pf-b2-text': 'Catalogues, panier, paiements et suivi des ventes.',
                 'pf-b3-title': 'Automatisations',
                 'pf-b3-text': 'Intégrations qui connectent les systèmes et réduisent le manuel.',
@@ -1414,7 +1405,7 @@
                 'pf-case-btn-full': 'Voir le cas complet',
                 'pf-case-btn-call': 'Planifier un appel',
                 'pf-card-industry': 'Bijouterie',
-                'pf-card-b1': 'Vente en boutique avec paiements et soldes.',
+                'pf-card-b1': 'Ventes avec contrôle des paiements et soldes.',
                 'pf-card-b2': 'Inventaire en temps réel par pièce.',
                 'pf-card-b3': 'Garanties traçables et remplacement.',
                 'pf-card-b4': 'Rapports de caisse et dépenses quotidiennes.',
@@ -1630,7 +1621,7 @@
                 'srv-hero-title': 'Individuelle Software für Betrieb, Vertrieb und Service',
                 'srv-hero-sub': 'Wir kümmern uns end-to-end: Prozess verstehen, Experience designen, entwickeln, testen, deployen und dokumentieren.',
                 'srv-b1': 'Management-Systeme abgestimmt auf deine Prozesse und Business-KPIs.',
-                'srv-b2': 'Websites, Shops und Landing Pages, die verkaufen und deine Marke stärken.',
+                'srv-b2': 'Websites und Landing Pages, die verkaufen und deine Marke stärken.',
                 'srv-b3': 'Prozessautomatisierung (Bots) und API-Integrationen, um manuelle Arbeit zu senken.',
                 'srv-b4': 'Individuelle Software mit Monitoring, Sicherheit und Rollen-Rechten.',
                 'srv-btn-call': 'Termin vereinbaren',
@@ -1675,7 +1666,7 @@
                 'pf-what-title': 'Cases, die dein Projekt inspirieren',
                 'pf-b1-title': 'Interne Anwendungen',
                 'pf-b1-text': 'Interne Dashboards mit Rollen und einfachen Flows.',
-                'pf-b2-title': 'Websites & Online-Shops',
+                'pf-b2-title': 'Websites & Landing Pages',
                 'pf-b2-text': 'Kataloge, Warenkorb, Payments und Sales-Tracking.',
                 'pf-b3-title': 'Automatisierungen',
                 'pf-b3-text': 'Integrationen, die Systeme verbinden und Handarbeit senken.',
@@ -1721,7 +1712,7 @@
                 'pf-case-btn-full': 'Gesamten Case ansehen',
                 'pf-case-btn-call': 'Anruf vereinbaren',
                 'pf-card-industry': 'Juwelier',
-                'pf-card-b1': 'Verkauf im Laden mit Zahlungen und Salden.',
+                'pf-card-b1': 'Verkauf mit Zahlungs- und Saldenkontrolle.',
                 'pf-card-b2': 'Echtzeit-Inventar pro Stück.',
                 'pf-card-b3': 'Nachverfolgbare Garantien und Ersatz.',
                 'pf-card-b4': 'Kassen- und Tagesausgabenberichte.',
@@ -1937,7 +1928,7 @@
                 'srv-hero-title': 'Software sob medida para operações, vendas e atendimento',
                 'srv-hero-sub': 'Cuidamos ponta a ponta: entendemos o processo, desenhamos a experiência, desenvolvemos, testamos, publicamos e documentamos tudo.',
                 'srv-b1': 'Sistemas de gestão alinhados a processos e métricas do negócio.',
-                'srv-b2': 'Sites, lojas e landing pages pensadas para vender e fortalecer a marca.',
+                'srv-b2': 'Sites e landing pages pensadas para vender e fortalecer a marca.',
                 'srv-b3': 'Automação de processos (bots) e integrações API para reduzir trabalho manual.',
                 'srv-b4': 'Software personalizado com monitoramento, segurança e acesso por papéis.',
                 'srv-btn-call': 'Agendar uma reunião',
@@ -1982,7 +1973,7 @@
                 'pf-what-title': 'Cases para inspirar seu projeto',
                 'pf-b1-title': 'Aplicações internas',
                 'pf-b1-text': 'Painéis internos com papéis e fluxos simples.',
-                'pf-b2-title': 'Sites e lojas online',
+                'pf-b2-title': 'Sites e landing pages',
                 'pf-b2-text': 'Catálogos, carrinho, pagamentos e acompanhamento de vendas.',
                 'pf-b3-title': 'Automatizações',
                 'pf-b3-text': 'Integrações que conectam sistemas e reduzem trabalho manual.',
@@ -2028,7 +2019,7 @@
                 'pf-case-btn-full': 'Ver caso completo',
                 'pf-case-btn-call': 'Agendar uma chamada',
                 'pf-card-industry': 'Joalheria',
-                'pf-card-b1': 'Venda em loja com cobranças e saldos.',
+                'pf-card-b1': 'Vendas com controle de cobranças e saldos.',
                 'pf-card-b2': 'Inventário em tempo real por peça.',
                 'pf-card-b3': 'Garantias rastreáveis e reposição.',
                 'pf-card-b4': 'Relatórios de caixa e gastos diários.',
@@ -2244,7 +2235,7 @@
                 'srv-hero-title': 'Software su misura per operazioni, vendite e assistenza',
                 'srv-hero-sub': 'Gestiamo tutto end-to-end: capire il processo, progettare l’esperienza, sviluppare, testare, pubblicare e documentare.',
                 'srv-b1': 'Sistemi gestionali allineati ai tuoi processi e KPI di business.',
-                'srv-b2': 'Siti, shop e landing page pensati per vendere e rafforzare il brand.',
+                'srv-b2': 'Siti e landing page pensati per vendere e rafforzare il brand.',
                 'srv-b3': 'Automazione (bot) e integrazioni API per ridurre il lavoro manuale.',
                 'srv-b4': 'Software personalizzato con monitoraggio, sicurezza e accessi per ruolo.',
                 'srv-btn-call': 'Fissa un incontro',
@@ -2289,7 +2280,7 @@
                 'pf-what-title': 'Casi pronti a ispirare il tuo progetto',
                 'pf-b1-title': 'Applicazioni interne',
                 'pf-b1-text': 'Dashboard interni con ruoli e flussi semplici.',
-                'pf-b2-title': 'Siti e shop online',
+                'pf-b2-title': 'Siti e landing page',
                 'pf-b2-text': 'Cataloghi, carrello, pagamenti e tracking vendite.',
                 'pf-b3-title': 'Automazioni',
                 'pf-b3-text': 'Integrazioni che collegano sistemi e riducono il lavoro manuale.',
@@ -2335,7 +2326,7 @@
                 'pf-case-btn-full': 'Vedi il caso completo',
                 'pf-case-btn-call': 'Prenota una chiamata',
                 'pf-card-industry': 'Gioielleria',
-                'pf-card-b1': 'Vendita in negozio con incassi e saldi.',
+                'pf-card-b1': 'Vendite con controllo di incassi e saldi.',
                 'pf-card-b2': 'Inventario in tempo reale per pezzo.',
                 'pf-card-b3': 'Garanzie tracciabili e sostituzione.',
                 'pf-card-b4': 'Report di cassa e spese giornaliere.',

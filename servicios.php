@@ -24,7 +24,7 @@
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>
-                        <p class="text-blue-50 i18n-srv-b2" data-i18n="srv-b2">Sitios, tiendas y landing pages pensadas para vender y posicionar tu marca.</p>
+                        <p class="text-blue-50 i18n-srv-b2" data-i18n="srv-b2">Sitios y landing pages pensadas para vender y posicionar tu marca.</p>
                     </div>
                     <div class="flex items-start gap-3">
                         <span class="text-yellow-300 mt-1"><i class="fas fa-check-circle"></i></span>

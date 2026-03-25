@@ -61,7 +61,7 @@ $featuredProject = $projects[0] ?? null;
                         <li class="flex items-start gap-3">
                             <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-globe"></i></span>
                             <div>
-                                <p class="font-semibold i18n-pf-b2-title" data-i18n="pf-b2-title">Sitios y tiendas online</p>
+                                <p class="font-semibold i18n-pf-b2-title" data-i18n="pf-b2-title">Sitios y landing pages</p>
                                 <p class="text-sm text-blue-100 i18n-pf-b2-text" data-i18n="pf-b2-text">Catálogos, carrito de compra, pagos y medición de ventas.</p>
                             </div>
                         </li>
@@ -180,7 +180,7 @@ $featuredProject = $projects[0] ?? null;
                             <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-500 text-white font-bold">DO</span>
                         </div>
                         <ul class="space-y-2 text-slate-800 text-sm">
-                            <li class="flex items-start gap-2 i18n-pf-card-b1" data-i18n="pf-card-b1"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Venta en tienda con cobro y saldos.</span></li>
+                            <li class="flex items-start gap-2 i18n-pf-card-b1" data-i18n="pf-card-b1"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Ventas con control de cobros y saldos.</span></li>
                             <li class="flex items-start gap-2 i18n-pf-card-b2" data-i18n="pf-card-b2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Inventario en tiempo real por pieza.</span></li>
                             <li class="flex items-start gap-2 i18n-pf-card-b3" data-i18n="pf-card-b3"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Garantías trazables y reposición.</span></li>
                             <li class="flex items-start gap-2 i18n-pf-card-b4" data-i18n="pf-card-b4"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Reportes de caja y gastos diarios.</span></li>

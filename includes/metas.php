@@ -1,12 +1,12 @@
 ﻿<?php
 // includes/metas.php
 $meta_titulo = $meta_titulo ?? 'Proyectos MCE - Desarrollo Web Profesional';
-$meta_descripcion = $meta_descripcion ?? 'Desarrollo de sistemas web a medida, tiendas online y aplicaciones. Transformamos tus ideas en codigo.';
+$meta_descripcion = $meta_descripcion ?? 'Desarrollo de sistemas web a medida y aplicaciones. Transformamos tus ideas en código.';
 $meta_imagen = $meta_imagen ?? app_absolute_url('imag/MCE.jpg');
 ?>
 <!-- Meta tags basicos -->
 <meta name="description" content="<?php echo $meta_descripcion; ?>">
-<meta name="keywords" content="desarrollo web, sistemas a medida, tiendas online, php, mysql, inventario">
+<meta name="keywords" content="desarrollo web, sistemas a medida, php, mysql, inventario">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
