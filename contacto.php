@@ -66,11 +66,11 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
         <div class="grid lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-7 space-y-5">
                 <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
-                    <i class="fas fa-headset mr-2 text-yellow-300"></i> <span class="i18n-ct-badge" data-i18n="ct-badge">Contacto · Proyectos MCE</span>
+                    <i class="fas fa-headset mr-2 text-yellow-300"></i> <span class="i18n-ct-badge" data-i18n="ct-badge">Contacto ? Proyectos MCE</span>
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight i18n-ct-hero-title" data-i18n="ct-hero-title">Agenda un diagnóstico técnico</h1>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight i18n-ct-hero-title" data-i18n="ct-hero-title">Agenda un diagn?stico t?cnico</h1>
                 <p class="text-lg text-blue-50 max-w-3xl i18n-ct-hero-sub" data-i18n="ct-hero-sub">
-                    Cuéntanos qué necesitas automatizar o lanzar. Te respondemos con esfuerzo estimado, riesgos visibles, tecnología recomendada y primeros pasos.
+                    Cu?ntanos qu? necesitas automatizar o lanzar. Te respondemos con esfuerzo estimado, riesgos visibles, tecnolog?a recomendada y primeros pasos.
                 </p>
                 <div class="flex flex-wrap gap-3">
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm i18n-ct-chip1" data-i18n="ct-chip1"><i class="fas fa-bolt mr-2 text-yellow-300"></i><span>Respuesta en &lt; 24h</span></span>
@@ -84,7 +84,7 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm text-blue-100 i18n-ct-card-title" data-i18n="ct-card-title">Contacta directo</p>
-                            <p class="text-2xl font-semibold text-white i18n-ct-card-sub" data-i18n="ct-card-sub">Equipo técnico listo para ayudarte</p>
+                            <p class="text-2xl font-semibold text-white i18n-ct-card-sub" data-i18n="ct-card-sub">Equipo t?cnico listo para ayudarte</p>
                         </div>
                         <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-yellow-300 text-slate-900 font-bold shadow-lg">MCE</span>
                     </div>
@@ -92,7 +92,7 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
                         <li class="flex items-start gap-3">
                             <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-phone"></i></span>
                             <div>
-                                <p class="font-semibold i18n-ct-phone" data-i18n="ct-phone">Teléfono</p>
+                                <p class="font-semibold i18n-ct-phone" data-i18n="ct-phone">teléfono</p>
                                 <p class="text-sm text-blue-100">
                                     <a class="hover:underline" href="tel:+573114125971">+57 311 412 59 71</a>
                                 </p>
@@ -120,7 +120,7 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
                     <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
                         <div>
                             <p class="text-sm text-blue-100 i18n-ct-hours" data-i18n="ct-hours">Horario</p>
-                            <p class="font-semibold i18n-ct-hours-detail" data-i18n="ct-hours-detail">Lunes a Viernes · 8:00 - 17:00 <br>Sábados · 9:00 - 13:00</p>
+                            <p class="font-semibold i18n-ct-hours-detail" data-i18n="ct-hours-detail">Lunes a Viernes ? 8:00 - 17:00 <br>S?bados ? 9:00 - 13:00</p>
                         </div>
                         <i class="fas fa-arrow-right text-yellow-300"></i>
                     </div>
@@ -155,7 +155,7 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
             <?php elseif ($_GET['error'] == 8): ?>
                 Debes completar la verificacion reCAPTCHA antes de enviar el formulario.
             <?php elseif ($_GET['error'] == 9): ?>
-                El horario elegido ya no estÃ¡ disponible. Por favor elige otra hora.
+                El horario elegido ya no está disponible. Por favor elige otra hora.
             <?php else: ?>
                 Hubo un error. Por favor intenta nuevamente.
             <?php endif; ?>
@@ -167,13 +167,13 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
 <section id="agenda-llamada" class="max-w-7xl mx-auto px-4 mt-10 lg:mt-14">
     <div class="grid lg:grid-cols-12 gap-8 items-start">
         <div class="lg:col-span-5 space-y-4 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-800 text-white rounded-2xl shadow-2xl p-8 border border-white/10">
-            <p class="text-sm font-semibold text-blue-100 uppercase tracking-wide">Coordina tu llamada</p>
-            <h2 class="text-3xl font-bold leading-tight">Elige fecha y hora para hablar</h2>
-            <p class="text-blue-50">Agendamos una llamada corta para revisar tu necesidad y darte siguientes pasos. Confirmamos por correo con el enlace de la reuni&oacute;n.</p>
+            <p class="text-sm font-semibold text-blue-100 uppercase tracking-wide i18n-ct-call-label" data-i18n="ct-call-label">Coordina tu llamada</p>
+            <h2 class="text-3xl font-bold leading-tight i18n-ct-call-title" data-i18n="ct-call-title">Elige fecha y hora para hablar</h2>
+            <p class="text-blue-50 i18n-ct-call-desc" data-i18n="ct-call-desc">Agendamos una llamada corta para revisar tu necesidad y darte siguientes pasos. Confirmamos por correo con el enlace de la reunión.</p>
             <ul class="space-y-3 text-blue-100">
-                <li class="flex items-start gap-3"><span class="mt-1 text-yellow-300"><i class="fas fa-clock"></i></span><span>Duraci&oacute;n estimada: 20 minutos.</span></li>
-                <li class="flex items-start gap-3"><span class="mt-1 text-yellow-300"><i class="fas fa-video"></i></span><span>Formato: videollamada o tel&eacute;fono, seg&uacute;n prefieras.</span></li>
-                <li class="flex items-start gap-3"><span class="mt-1 text-yellow-300"><i class="fas fa-bolt"></i></span><span>Confirmaci&oacute;n r&aacute;pida con link y agenda en tu correo.</span></li>
+                <li class="flex items-start gap-3"><span class="mt-1 text-yellow-300"><i class="fas fa-clock"></i></span><span class="i18n-ct-call-b1" data-i18n="ct-call-b1">Duración estimada: 20 minutos.</span></li>
+                <li class="flex items-start gap-3"><span class="mt-1 text-yellow-300"><i class="fas fa-video"></i></span><span class="i18n-ct-call-b2" data-i18n="ct-call-b2">Formato: videollamada o teléfono, según prefieras.</span></li>
+                <li class="flex items-start gap-3"><span class="mt-1 text-yellow-300"><i class="fas fa-bolt"></i></span><span class="i18n-ct-call-b3" data-i18n="ct-call-b3">Confirmación rápida con link y agenda en tu correo.</span></li>
             </ul>
         </div>
 
@@ -188,21 +188,21 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
                 </div>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">Nombre *</label>
-                        <input type="text" name="nombre" required minlength="2" maxlength="100" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-form-name" data-i18n="ct-form-name">Nombre *</label>
+                        <input type="text" name="nombre" required minlength="2" maxlength="100" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600" data-i18n-placeholder="ct-form-name-ph" placeholder="Tu nombre completo">
                     </div>
                     <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">Email *</label>
-                        <input type="email" name="email" required maxlength="120" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-form-email" data-i18n="ct-form-email">Email *</label>
+                        <input type="email" name="email" required maxlength="120" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600" data-i18n-placeholder="ct-form-email-ph" placeholder="tucorreo@ejemplo.com">
                     </div>
                     <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">Tel&eacute;fono</label>
-                        <input type="tel" name="telefono" maxlength="25" inputmode="tel" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-form-phone" data-i18n="ct-form-phone">teléfono</label>
+                        <input type="tel" name="telefono" maxlength="25" inputmode="tel" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600" data-i18n-placeholder="ct-form-phone-ph" placeholder="Opcional">
                     </div>
                     <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">Servicio de inter&eacute;s (opcional)</label>
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-form-service" data-i18n="ct-form-service">Servicio de interés (opcional)</label>
                         <select name="servicio" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
-                            <option value="">Solo llamada de exploraci&oacute;n</option>
+                            <option value="" class="i18n-ct-form-service-opt0" data-i18n="ct-form-service-opt0">Solo llamada de exploración</option>
                             <?php
                             $servicios = $conn->query("SELECT titulo FROM servicios ORDER BY orden");
                             while ($s = $servicios->fetch_assoc()) {
@@ -217,175 +217,87 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
                         </select>
                     </div>
                     <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">Fecha de la llamada *</label>
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-form-date" data-i18n="ct-form-date">Fecha de la llamada *</label>
                         <input type="date" id="agenda-fecha" name="fecha_llamada" required min="<?php echo date('Y-m-d'); ?>" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
                     </div>
                     <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">Hora disponible *</label>
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-form-time" data-i18n="ct-form-time">Hora disponible *</label>
                         <select id="agenda-hora" name="hora_llamada" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
                         </select>
                     </div>
                     <div class="md:col-span-2">
-                        <p id="agenda-hora-msg" class="text-sm text-red-600 mt-1 hidden">No hay horarios disponibles para esta fecha.</p>
+                        <p id="agenda-hora-msg" class="text-sm text-red-600 mt-1 hidden i18n-ct-form-time-msg" data-i18n="ct-form-time-msg">No hay horarios disponibles para esta fecha.</p>
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-gray-800 mb-2 font-semibold">Â¿Prefieres videollamada o telÃ©fono?</label>
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-form-pref" data-i18n="ct-form-pref">¿Prefieres videollamada o teléfono?</label>
                         <div class="flex flex-wrap gap-4">
                             <label class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700">
                                 <input type="radio" name="modo_llamada" value="video" class="h-4 w-4 text-blue-600" checked>
-                                Videollamada (te enviamos el enlace)
+                                <span class="i18n-ct-form-pref-video" data-i18n="ct-form-pref-video">Videollamada (te enviamos el enlace)</span>
                             </label>
                             <label class="inline-flex items-center gap-2 text-sm font-semibold text-gray-700">
                                 <input type="radio" name="modo_llamada" value="telefono" class="h-4 w-4 text-blue-600">
-                                Solo llamada telef&oacute;nica
+                                <span class="i18n-ct-form-pref-phone" data-i18n="ct-form-pref-phone">Solo llamada telefónica</span>
                             </label>
                         </div>
                     </div>
                     <div class="md:col-span-2">
-                        <label class="block text-gray-800 mb-2 font-semibold">Objetivo de la llamada *</label>
-                        <textarea name="mensaje" rows="4" required minlength="10" maxlength="2000" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600" placeholder="Cu&eacute;ntanos en breve qu&eacute; necesitas revisar en la llamada."></textarea>
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-form-obj" data-i18n="ct-form-obj">Objetivo de la llamada *</label>
+                        <textarea name="mensaje" rows="4" required minlength="10" maxlength="2000" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600" data-i18n-placeholder="ct-form-obj-ph" placeholder="Cuéntanos en breve qué necesitas revisar en la llamada."></textarea>
                     </div>
                 </div>
 
                 <?php if ($contactRecaptchaEnabled): ?>
-                    <div class="pt-2">
-                        <div class="g-recaptcha" data-sitekey="<?php echo htmlspecialchars(form_guard_recaptcha_site_key(), ENT_QUOTES, 'UTF-8'); ?>"></div>
-                    </div>
-                <?php else: ?>
-                    <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
-                        reCAPTCHA es obligatorio, pero no est&aacute; configurado correctamente en este entorno.
-                    </div>
-                <?php endif; ?>
-
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <p class="text-sm text-gray-600">Confirmaremos tu llamada por correo con el enlace de reuni&oacute;n.</p>
-                    <button type="submit" id="agenda-submit" <?php echo $contactRecaptchaEnabled ? '' : 'disabled'; ?> class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition w-full sm:w-auto disabled:cursor-not-allowed disabled:bg-slate-400">
-                        <i class="fas fa-calendar-check mr-2"></i> Confirmar llamada
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</section>
-
-<!-- Separador visual -->
-<div class="max-w-7xl mx-auto px-4 mt-14">
-    <div class="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-</div>
-
-<!-- Formulario de contacto (correo) -->
-<section id="contacto-form" class="max-w-7xl mx-auto px-4 mt-12 pb-16">
-    <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-8 lg:p-10 mb-10">
-        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-            <div>
-                <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Contacto por correo</p>
-                <h2 class="text-3xl font-bold text-slate-900">Prefieres escribirnos</h2>
-                <p class="text-gray-600 mt-2">EnvÃ­anos detalles y te respondemos por el mismo medio en menos de 24h.</p>
-            </div>
-            <a href="#agenda-llamada" class="inline-flex items-center text-blue-700 font-semibold hover:text-blue-900">
-                <i class="fas fa-phone-alt mr-2"></i> Â¿Mejor una llamada? Agenda aquÃ­
-            </a>
-        </div>
-    </div>
-
-    <div class="grid lg:grid-cols-12 gap-8">
-        <div class="lg:col-span-7 order-2 lg:order-1">
-            <form id="contact-form" action="enviar-contacto.php" method="POST" class="bg-white p-8 rounded-2xl mce-rounded-panel shadow-2xl border border-slate-100 overflow-hidden space-y-6">
-                <input type="hidden" name="form_token" value="<?php echo htmlspecialchars($contactFormGuard['token'], ENT_QUOTES, 'UTF-8'); ?>">
-                <input type="hidden" name="form_context" value="contacto">
-                <input type="hidden" name="redirect_anchor" value="form-feedback">
-                <div style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
-                    <label for="company_website">No llenes este campo</label>
-                    <input id="company_website" type="text" name="company_website" tabindex="-1" autocomplete="off">
-                </div>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">Nombre *</label>
-                        <input type="text" name="nombre" required minlength="2" maxlength="100" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">Email *</label>
-                        <input type="email" name="email" required maxlength="120" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">TelÃ©fono</label>
-                        <input type="tel" name="telefono" maxlength="25" inputmode="tel" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-gray-800 mb-2 font-semibold">Â¿QuÃ© servicio te interesa?</label>
-                        <select name="servicio" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
-                            <option value="">Seleccionar...</option>
-                            <?php
-                            $servicios = $conn->query("SELECT titulo FROM servicios ORDER BY orden");
-                            while ($s = $servicios->fetch_assoc()) {
-                                $serviceTitle = (string) ($s['titulo'] ?? '');
-                                ?>
-                                <option value="<?php echo htmlspecialchars($serviceTitle, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $selectedService !== '' && strcasecmp($selectedService, $serviceTitle) === 0 ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($serviceTitle, ENT_QUOTES, 'UTF-8'); ?>
-                                </option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-gray-800 mb-2 font-semibold">Mensaje *</label>
-                        <textarea name="mensaje" rows="5" required minlength="20" maxlength="2000" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600"></textarea>
-                    </div>
-                </div>
-
-                <?php if ($contactRecaptchaEnabled): ?>
-                    <div class="pt-2">
-                        <div class="g-recaptcha" data-sitekey="<?php echo htmlspecialchars(form_guard_recaptcha_site_key(), ENT_QUOTES, 'UTF-8'); ?>"></div>
-                    </div>
-                <?php else: ?>
-                    <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
-                        reCAPTCHA es obligatorio, pero no est\u00e1 configurado correctamente en este entorno.
-                    </div>
-                <?php endif; ?>
-
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <p class="text-sm text-gray-600">Al enviar aceptas ser contactado por nuestro equipo.</p>
-                    <button type="submit" id="contact-submit" <?php echo $contactRecaptchaEnabled ? '' : 'disabled'; ?> class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition w-full sm:w-auto disabled:cursor-not-allowed disabled:bg-slate-400">
-                        <i class="fas fa-paper-plane mr-2"></i> Enviar mensaje
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <div class="lg:col-span-5 order-1 lg:order-2">
-            <div class="bg-white rounded-2xl mce-rounded-panel shadow-2xl border border-slate-100 overflow-hidden p-8 space-y-4">
-                <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">InformaciÃ³n clave</p>
-                <h3 class="text-2xl font-bold text-slate-900">Â¿QuÃ© recibes al escribirnos?</h3>
-                <ul class="space-y-3 text-gray-800 mt-3">
-                    <li class="flex items-start gap-3"><span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span><span>Respuesta personalizada con una ruta inicial y esfuerzos aproximados.</span></li>
-                    <li class="flex items-start gap-3"><span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span><span>ReuniÃ³n virtual de discovery para entender procesos y objetivos.</span></li>
-                    <li class="flex items-start gap-3"><span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span><span>Documento de alcance con los prÃ³ximos pasos para aprobar o iterar.</span></li>
-                </ul>
-                <div class="mt-6 p-4 rounded-xl bg-blue-50 text-blue-800 flex items-start gap-3">
-                    <i class="fas fa-info-circle mt-1"></i>
-                    <p class="text-sm">Si necesitas NDA antes de compartir detalles, indÃ­calo en el mensaje y lo enviamos.</p>
-                </div>
-                <div class="grid sm:grid-cols-2 gap-3">
-                    <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-4 py-3 rounded-xl bg-green-500 text-white font-semibold shadow hover:bg-green-600 transition">
-                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp
-                    </a>
-                    <a href="mailto:proyectosmceaa@gmail.com" class="inline-flex items-center justify-center px-4 py-3 rounded-xl border border-slate-200 text-slate-900 font-semibold hover:bg-slate-50 transition">
-                        <i class="fas fa-envelope mr-2"></i> Correo
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<?php if ($contactRecaptchaEnabled): ?>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
 (() => {
-    const forms = ['contact-form', 'agenda-form']
-        .map(id => document.getElementById(id))
-        .filter(Boolean);
+    // recaptcha dinámico con idioma
+    let placeholders = Array.from(document.querySelectorAll('.g-recaptcha[data-sitekey]'));
+    const forms = ['contact-form', 'agenda-form'].map(id => document.getElementById(id)).filter(Boolean);
+    if (placeholders.length) {
+        function renderAll() {
+            if (!window.grecaptcha) return;
+            placeholders.forEach(el => {
+                if (el.dataset.recaptchaId) return;
+                const id = grecaptcha.render(el, { sitekey: el.dataset.sitekey });
+                el.dataset.recaptchaId = id;
+            });
+            document.querySelectorAll('.recaptcha-old').forEach(old => old.remove());
+        }
+        function loadRecaptcha(lang) {
+            const existing = document.querySelector('script[data-mce-recaptcha]');
+            if (existing && existing.dataset.lang === lang) {
+                renderAll();
+                return;
+            }
+            if (existing) existing.remove();
+            delete window.grecaptcha;
+            delete window.___grecaptcha_cfg;
+            const s = document.createElement('script');
+            s.src = https://www.google.com/recaptcha/api.js?onload=mceRenderRecaptcha&render=explicit&hl=;
+            s.async = true;
+            s.defer = true;
+            s.dataset.mceRecaptcha = '1';
+            s.dataset.lang = lang;
+            document.head.appendChild(s);
+            window.mceRenderRecaptcha = renderAll;
+        }
+        const currentLang = localStorage.getItem('siteLang') || 'es';
+        loadRecaptcha(currentLang);
+        window.addEventListener('mce-lang-changed', (e) => {
+            const lang = e.detail?.lang || 'es';
+            const fresh = [];
+            placeholders.forEach(el => {
+                const clone = document.createElement('div');
+                clone.className = el.className;
+                clone.dataset.sitekey = el.dataset.sitekey;
+                el.insertAdjacentElement('afterend', clone);
+                el.classList.add('recaptcha-old');
+                fresh.push(clone);
+            });
+            placeholders = fresh;
+            loadRecaptcha(lang);
+        });
+    }
 
     // Slots disponibles
     const availableHours = <?php echo json_encode($availableHours, JSON_UNESCAPED_UNICODE); ?>;
@@ -399,7 +311,6 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
         const booked = bookedSlots[dateStr] || [];
         let options = availableHours.filter(h => !booked.includes(h));
 
-        // Si es hoy, eliminar horas que ya pasaron
         const todayStr = new Date().toISOString().slice(0, 10);
         if (dateStr === todayStr) {
             const now = new Date();
@@ -424,9 +335,7 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
     };
 
     if (fechaInput) {
-        fechaInput.addEventListener('change', (e) => {
-            renderHours(e.target.value);
-        });
+        fechaInput.addEventListener('change', (e) => renderHours(e.target.value));
         renderHours(fechaInput.value || fechaInput.getAttribute('min'));
     }
 
@@ -437,13 +346,342 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
                 alert('reCAPTCHA aun no termina de cargar. Intenta nuevamente en unos segundos.');
                 return;
             }
+            const widgetId = form.querySelector('.g-recaptcha')?.dataset.recaptchaId;
+            const response = widgetId !== undefined ? grecaptcha.getResponse(Number(widgetId)) : '';
+            if (!response) {
+                event.preventDefault();
+                alert('Completa la verificacion reCAPTCHA antes de enviar.');
+            }
+        });
+    });
+})();
+</script>
+<?php endif; ?>
 
-            const widget = form.querySelector('.g-recaptcha');
-            const widgetId = widget?.getAttribute('data-widget-id');
-            const response = typeof window.grecaptcha.getResponse === 'function'
-                ? window.grecaptcha.getResponse(widgetId ? Number(widgetId) : undefined)
-                : '';
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <p class="text-sm text-gray-600 i18n-ct-form-note" data-i18n="ct-form-note">Confirmaremos tu llamada por correo con el enlace de reunión.</p>
+                    <button type="submit" id="agenda-submit" <?php echo $contactRecaptchaEnabled ? '' : 'disabled'; ?> class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition w-full sm:w-auto disabled:cursor-not-allowed disabled:bg-slate-400 i18n-ct-form-submit" data-i18n="ct-form-submit">
+                        <i class="fas fa-calendar-check mr-2"></i> <span class="i18n-ct-form-submit" data-i18n="ct-form-submit">Confirmar llamada</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 
+<!-- Separador visual -->
+<div class="max-w-7xl mx-auto px-4 mt-14">
+    <div class="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+</div>
+
+<!-- Formulario de contacto (correo) -->
+<section id="contacto-form" class="max-w-7xl mx-auto px-4 mt-12 pb-16">
+    <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-8 lg:p-10 mb-10">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+                <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide i18n-ct-mail-label" data-i18n="ct-mail-label">Contacto por correo</p>
+                <h2 class="text-3xl font-bold text-slate-900 i18n-ct-mail-title" data-i18n="ct-mail-title">Prefieres escribirnos</h2>
+                <p class="text-gray-600 mt-2">Envíanos detalles y te respondemos por el mismo medio en menos de 24h.</p>
+            </div>
+            <a href="#agenda-llamada" class="inline-flex items-center text-blue-700 font-semibold hover:text-blue-900">
+                <i class="fas fa-phone-alt mr-2"></i> ¿Mejor una llamada? Agenda aquí
+            </a>
+        </div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-7 order-2 lg:order-1">
+            <form id="contact-form" action="enviar-contacto.php" method="POST" class="bg-white p-8 rounded-2xl mce-rounded-panel shadow-2xl border border-slate-100 overflow-hidden space-y-6">
+                <input type="hidden" name="form_token" value="<?php echo htmlspecialchars($contactFormGuard['token'], ENT_QUOTES, 'UTF-8'); ?>">
+                <input type="hidden" name="form_context" value="contacto">
+                <input type="hidden" name="redirect_anchor" value="form-feedback">
+                <div style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+                    <label for="company_website">No llenes este campo</label>
+                    <input id="company_website" type="text" name="company_website" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-mail-name" data-i18n="ct-mail-name">Nombre *</label>
+                        <input type="text" name="nombre" required minlength="2" maxlength="100" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600" data-i18n-placeholder="ct-form-name-ph" placeholder="Tu nombre completo">
+                    </div>
+                    <div>
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-mail-email" data-i18n="ct-mail-email">Email *</label>
+                        <input type="email" name="email" required maxlength="120" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600" data-i18n-placeholder="ct-form-email-ph" placeholder="tucorreo@ejemplo.com">
+                    </div>
+                    <div>
+                        <label class="block text-gray-800 mb-2 font-semibold">teléfono</label>
+                        <input type="tel" name="telefono" maxlength="25" inputmode="tel" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-800 mb-2 font-semibold">¿Qué servicio te interesa??</label>
+                        <select name="servicio" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600">
+                            <option value="">Seleccionar...</option>
+                            <?php
+                            $servicios = $conn->query("SELECT titulo FROM servicios ORDER BY orden");
+                            while ($s = $servicios->fetch_assoc()) {
+                                $serviceTitle = (string) ($s['titulo'] ?? '');
+                                ?>
+                                <option value="<?php echo htmlspecialchars($serviceTitle, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $selectedService !== '' && strcasecmp($selectedService, $serviceTitle) === 0 ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($serviceTitle, ENT_QUOTES, 'UTF-8'); ?>
+                                </option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-gray-800 mb-2 font-semibold i18n-ct-mail-msg" data-i18n="ct-mail-msg">Mensaje *</label>
+                        <textarea name="mensaje" rows="5" required minlength="20" maxlength="2000" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus-border-blue-600" data-i18n-placeholder="ct-mail-msg-ph" placeholder="Cuéntanos los detalles y cómo podemos ayudarte."></textarea>
+                    </div>
+                </div>
+
+                <?php if ($contactRecaptchaEnabled): ?>
+<script>
+(() => {
+    // recaptcha dinámico con idioma
+    let placeholders = Array.from(document.querySelectorAll('.g-recaptcha[data-sitekey]'));
+    const forms = ['contact-form', 'agenda-form'].map(id => document.getElementById(id)).filter(Boolean);
+    if (placeholders.length) {
+        function renderAll() {
+            if (!window.grecaptcha) return;
+            placeholders.forEach(el => {
+                if (el.dataset.recaptchaId) return;
+                const id = grecaptcha.render(el, { sitekey: el.dataset.sitekey });
+                el.dataset.recaptchaId = id;
+            });
+            document.querySelectorAll('.recaptcha-old').forEach(old => old.remove());
+        }
+        function loadRecaptcha(lang) {
+            const existing = document.querySelector('script[data-mce-recaptcha]');
+            if (existing && existing.dataset.lang === lang) {
+                renderAll();
+                return;
+            }
+            if (existing) existing.remove();
+            delete window.grecaptcha;
+            delete window.___grecaptcha_cfg;
+            const s = document.createElement('script');
+            s.src = https://www.google.com/recaptcha/api.js?onload=mceRenderRecaptcha&render=explicit&hl=;
+            s.async = true;
+            s.defer = true;
+            s.dataset.mceRecaptcha = '1';
+            s.dataset.lang = lang;
+            document.head.appendChild(s);
+            window.mceRenderRecaptcha = renderAll;
+        }
+        const currentLang = localStorage.getItem('siteLang') || 'es';
+        loadRecaptcha(currentLang);
+        window.addEventListener('mce-lang-changed', (e) => {
+            const lang = e.detail?.lang || 'es';
+            const fresh = [];
+            placeholders.forEach(el => {
+                const clone = document.createElement('div');
+                clone.className = el.className;
+                clone.dataset.sitekey = el.dataset.sitekey;
+                el.insertAdjacentElement('afterend', clone);
+                el.classList.add('recaptcha-old');
+                fresh.push(clone);
+            });
+            placeholders = fresh;
+            loadRecaptcha(lang);
+        });
+    }
+
+    // Slots disponibles
+    const availableHours = <?php echo json_encode(, JSON_UNESCAPED_UNICODE); ?>;
+    const bookedSlots = <?php echo json_encode(, JSON_UNESCAPED_UNICODE); ?>;
+    const horaSelect = document.getElementById('agenda-hora');
+    const fechaInput = document.getElementById('agenda-fecha');
+    const horaMsg = document.getElementById('agenda-hora-msg');
+
+    const renderHours = (dateStr) => {
+        if (!horaSelect || !fechaInput) return;
+        const booked = bookedSlots[dateStr] || [];
+        let options = availableHours.filter(h => !booked.includes(h));
+
+        const todayStr = new Date().toISOString().slice(0, 10);
+        if (dateStr === todayStr) {
+            const now = new Date();
+            const currentHHMM = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+            options = options.filter(h => h > currentHHMM);
+        }
+
+        horaSelect.innerHTML = '';
+        if (options.length === 0) {
+            horaSelect.disabled = true;
+            horaMsg?.classList.remove('hidden');
+            return;
+        }
+        horaSelect.disabled = false;
+        horaMsg?.classList.add('hidden');
+        options.forEach(h => {
+            const opt = document.createElement('option');
+            opt.value = h;
+            opt.textContent = h;
+            horaSelect.appendChild(opt);
+        });
+    };
+
+    if (fechaInput) {
+        fechaInput.addEventListener('change', (e) => renderHours(e.target.value));
+        renderHours(fechaInput.value || fechaInput.getAttribute('min'));
+    }
+
+    forms.forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            if (typeof window.grecaptcha === 'undefined') {
+                event.preventDefault();
+                alert('reCAPTCHA aun no termina de cargar. Intenta nuevamente en unos segundos.');
+                return;
+            }
+            const widgetId = form.querySelector('.g-recaptcha')?.dataset.recaptchaId;
+            const response = widgetId !== undefined ? grecaptcha.getResponse(Number(widgetId)) : '';
+            if (!response) {
+                event.preventDefault();
+                alert('Completa la verificacion reCAPTCHA antes de enviar.');
+            }
+        });
+    });
+})();
+</script>
+<?php endif; ?>
+
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <p class="text-sm text-gray-600">Al enviar aceptas ser contactado por nuestro equipo.</p>
+                    <button type="submit" id="contact-submit" <?php echo $contactRecaptchaEnabled ? '' : 'disabled'; ?> class="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition w-full sm:w-auto disabled:cursor-not-allowed disabled:bg-slate-400">
+                        <i class="fas fa-paper-plane mr-2"></i> Enviar mensaje
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="lg:col-span-5 order-1 lg:order-2">
+            <div class="bg-white rounded-2xl mce-rounded-panel shadow-2xl border border-slate-100 overflow-hidden p-8 space-y-4">
+                <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Informaci?n clave</p>
+                <h3 class="text-2xl font-bold text-slate-900">?Qu? recibes al escribirnos?</h3>
+                <ul class="space-y-3 text-gray-800 mt-3">
+                    <li class="flex items-start gap-3"><span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span><span><span class="i18n-ct-info-b1" data-i18n="ct-info-b1">Respuesta personalizada con una ruta inicial y esfuerzos aproximados.</span></span></li>
+                    <li class="flex items-start gap-3"><span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span><span>reunión virtual de discovery para entender procesos y objetivos.</span></li>
+                    <li class="flex items-start gap-3"><span class="text-blue-600 mt-1"><i class="fas fa-check-circle"></i></span><span>Documento de alcance con los próximos pasos para aprobar o iterar.</span></li>
+                </ul>
+                <div class="mt-6 p-4 rounded-xl bg-blue-50 text-blue-800 flex items-start gap-3">
+                    <i class="fas fa-info-circle mt-1"></i>
+                    <p class="text-sm">Si necesitas NDA antes de compartir detalles, ind?calo en el mensaje y lo enviamos.</p>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-3">
+                    <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex items-center justify-center px-4 py-3 rounded-xl bg-green-500 text-white font-semibold shadow hover:bg-green-600 transition">
+                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                    </a>
+                    <a href="mailto:proyectosmceaa@gmail.com" class="inline-flex items-center justify-center px-4 py-3 rounded-xl border border-slate-200 text-slate-900 font-semibold hover:bg-slate-50 transition">
+                        <i class="fas fa-envelope mr-2"></i> Correo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php if ($contactRecaptchaEnabled): ?>
+<script>
+(() => {
+    // recaptcha dinámico con idioma
+    let placeholders = Array.from(document.querySelectorAll('.g-recaptcha[data-sitekey]'));
+    const forms = ['contact-form', 'agenda-form'].map(id => document.getElementById(id)).filter(Boolean);
+    if (placeholders.length) {
+        function renderAll() {
+            if (!window.grecaptcha) return;
+            placeholders.forEach(el => {
+                if (el.dataset.recaptchaId) return;
+                const id = grecaptcha.render(el, { sitekey: el.dataset.sitekey });
+                el.dataset.recaptchaId = id;
+            });
+            document.querySelectorAll('.recaptcha-old').forEach(old => old.remove());
+        }
+        function loadRecaptcha(lang) {
+            const existing = document.querySelector('script[data-mce-recaptcha]');
+            if (existing && existing.dataset.lang === lang) {
+                renderAll();
+                return;
+            }
+            if (existing) existing.remove();
+            delete window.grecaptcha;
+            delete window.___grecaptcha_cfg;
+            const s = document.createElement('script');
+            s.src = https://www.google.com/recaptcha/api.js?onload=mceRenderRecaptcha&render=explicit&hl=;
+            s.async = true;
+            s.defer = true;
+            s.dataset.mceRecaptcha = '1';
+            s.dataset.lang = lang;
+            document.head.appendChild(s);
+            window.mceRenderRecaptcha = renderAll;
+        }
+        const currentLang = localStorage.getItem('siteLang') || 'es';
+        loadRecaptcha(currentLang);
+        window.addEventListener('mce-lang-changed', (e) => {
+            const lang = e.detail?.lang || 'es';
+            const fresh = [];
+            placeholders.forEach(el => {
+                const clone = document.createElement('div');
+                clone.className = el.className;
+                clone.dataset.sitekey = el.dataset.sitekey;
+                el.insertAdjacentElement('afterend', clone);
+                el.classList.add('recaptcha-old');
+                fresh.push(clone);
+            });
+            placeholders = fresh;
+            loadRecaptcha(lang);
+        });
+    }
+
+    // Slots disponibles
+    const availableHours = <?php echo json_encode(, JSON_UNESCAPED_UNICODE); ?>;
+    const bookedSlots = <?php echo json_encode(, JSON_UNESCAPED_UNICODE); ?>;
+    const horaSelect = document.getElementById('agenda-hora');
+    const fechaInput = document.getElementById('agenda-fecha');
+    const horaMsg = document.getElementById('agenda-hora-msg');
+
+    const renderHours = (dateStr) => {
+        if (!horaSelect || !fechaInput) return;
+        const booked = bookedSlots[dateStr] || [];
+        let options = availableHours.filter(h => !booked.includes(h));
+
+        const todayStr = new Date().toISOString().slice(0, 10);
+        if (dateStr === todayStr) {
+            const now = new Date();
+            const currentHHMM = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+            options = options.filter(h => h > currentHHMM);
+        }
+
+        horaSelect.innerHTML = '';
+        if (options.length === 0) {
+            horaSelect.disabled = true;
+            horaMsg?.classList.remove('hidden');
+            return;
+        }
+        horaSelect.disabled = false;
+        horaMsg?.classList.add('hidden');
+        options.forEach(h => {
+            const opt = document.createElement('option');
+            opt.value = h;
+            opt.textContent = h;
+            horaSelect.appendChild(opt);
+        });
+    };
+
+    if (fechaInput) {
+        fechaInput.addEventListener('change', (e) => renderHours(e.target.value));
+        renderHours(fechaInput.value || fechaInput.getAttribute('min'));
+    }
+
+    forms.forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            if (typeof window.grecaptcha === 'undefined') {
+                event.preventDefault();
+                alert('reCAPTCHA aun no termina de cargar. Intenta nuevamente en unos segundos.');
+                return;
+            }
+            const widgetId = form.querySelector('.g-recaptcha')?.dataset.recaptchaId;
+            const response = widgetId !== undefined ? grecaptcha.getResponse(Number(widgetId)) : '';
             if (!response) {
                 event.preventDefault();
                 alert('Completa la verificacion reCAPTCHA antes de enviar.');
@@ -455,3 +693,33 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
 <?php endif; ?>
 
 <?php include 'includes/footer.php'; ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
