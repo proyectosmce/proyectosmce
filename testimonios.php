@@ -244,7 +244,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                             else if ($v == 4) { $lbl = 'Recomiendo'; $cls = 'text-green-600'; }
                             else { $lbl = 'Sí recomiendo'; $cls = 'text-green-600'; }
                         ?>
-                        <p class="text-xs font-semibold <?php echo $cls; ?> mt-1"><?php echo $v; ?> / 5 · <?php echo $lbl; ?></p>
+                        <p class="text-xs font-semibold <?php echo $cls; ?> mt-1 ts-rating-card" data-rating="<?php echo $v; ?>"><?php echo $v; ?> / 5 · <?php echo $lbl; ?></p>
                     </div>
                 </div>
                 <?php
@@ -435,6 +435,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     const starLabels = document.querySelectorAll('[data-star]');
     const ratingText = document.getElementById('rating-text');
     const likeButtons = document.querySelectorAll('.like-btn');
+    const cardRatings = document.querySelectorAll('.ts-rating-card');
 
     // Likes testimonios
     likeButtons.forEach((btn) => {
@@ -518,6 +519,17 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
             }
         }
     };
+
+    const updateCardRatings = () => {
+        const dict = window.mceTranslations || {};
+        cardRatings.forEach(el => {
+            const val = parseInt(el.dataset.rating || '0', 10);
+            const key = 'ts-rating-' + (val || 0);
+            const txt = dict[key] || `${val} / 5`;
+            el.textContent = txt;
+        });
+    };
+
     ratingInputs.forEach(r => {
         r.addEventListener('change', () => {
             updateStars();
@@ -525,6 +537,14 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         });
     });
     updateStars();
+    updateCardRatings();
+
+    // Si el usuario cambia de idioma en caliente, actualiza textos dinámicos sin recargar
+    window.addEventListener('mce-lang-changed', () => {
+        updateStars();
+        updatePreview();
+        updateCardRatings();
+    });
 
     // Búsqueda rápida en el select de proyectos
     if (proyectoSearch) {

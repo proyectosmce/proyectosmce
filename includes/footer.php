@@ -2393,6 +2393,12 @@
         document.getElementById('site-lang-toggle')?.addEventListener('click', () => {
             document.getElementById('site-lang-list')?.classList.toggle('open');
         });
+        const siteLangSelect = document.getElementById('site-lang');
+        siteLangSelect?.addEventListener('change', (e) => {
+            const lang = e.target.value || 'es';
+            setSiteLangUI(lang);
+            applyLang(lang);
+        });
         document.querySelectorAll('#site-lang-list .lang-option').forEach(opt => {
             opt.addEventListener('click', () => {
                 const lang = opt.dataset.lang;
@@ -2440,6 +2446,13 @@
         // Reemplazo robusto: traduce data-i18n, data-i18n-key y clases i18n-*
         function applyLang(lang) {
             const dict = t[lang] || t.es;
+            // expone idioma y diccionario para otros scripts (previas, reCAPTCHA, etc.)
+            window.mceCurrentLang = lang;
+            window.mceTranslations = dict;
+            if (document && document.documentElement) {
+                document.documentElement.lang = lang;
+                document.documentElement.setAttribute('data-site-lang', lang);
+            }
             // Atributo data-i18n
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.dataset.i18n;
