@@ -390,7 +390,9 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
             return;
         }
         if (existing) existing.remove();
-        window.grecaptcha = undefined;
+        // limpiar configuraciones previas para forzar idioma nuevo
+        delete window.grecaptcha;
+        delete window.___grecaptcha_cfg;
         const s = document.createElement('script');
         s.src = `https://www.google.com/recaptcha/api.js?onload=mceRenderRecaptcha&render=explicit&hl=${lang}`;
         s.async = true;
