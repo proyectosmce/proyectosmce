@@ -104,7 +104,7 @@
         <span class="mce-whatsapp-float__icon">
             <i class="fab fa-whatsapp text-3xl"></i>
         </span>
-        <span class="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+        <span class="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity i18n-wa-tooltip" data-i18n="wa-tooltip">
             ¡Chatea con nosotros!
         </span>
     </a>
@@ -756,6 +756,7 @@
                 'pf-cta2-call': 'Agendar llamada',
                 'pf-cta2-see': 'Ver proyectos',
                 'pf-cta2-cases': 'Casos de éxito',
+                'wa-tooltip': '¡Chatea con nosotros!',
                 'ts-badge': 'Testimonios · Proyectos MCE',
                 'ts-hero-title': 'Lo que dicen quienes operan con nuestro software',
                 'ts-hero-sub': 'Comentarios de equipos que hoy usan las soluciones en producción: releases frecuentes, soporte real y métricas visibles.',
@@ -1081,6 +1082,7 @@
                 'pf-cta2-call': 'Schedule a call',
                 'pf-cta2-see': 'See projects',
                 'pf-cta2-cases': 'Success stories',
+                'wa-tooltip': 'Chat with us!',
                 'ts-badge': 'Testimonials · MCE Projects',
                 'ts-hero-title': 'What users say about our software',
                 'ts-hero-sub': 'Feedback from teams running the solutions in production: frequent releases, real support and visible metrics.',
@@ -1406,6 +1408,7 @@
                 'pf-cta2-call': 'Planifier un appel',
                 'pf-cta2-see': 'Voir les projets',
                 'pf-cta2-cases': 'Succès clients',
+                'wa-tooltip': 'Discuter avec nous !',
                 'ts-badge': 'Témoignages · Projets MCE',
                 'ts-hero-title': 'Ce que disent ceux qui utilisent notre logiciel',
                 'ts-hero-sub': 'Retours d’équipes en production : releases fréquentes, support réel et métriques visibles.',
@@ -1731,6 +1734,7 @@
                 'pf-cta2-call': 'Call vereinbaren',
                 'pf-cta2-see': 'Projekte ansehen',
                 'pf-cta2-cases': 'Erfolgsgeschichten',
+                'wa-tooltip': 'Chatte mit uns!',
                 'ts-badge': 'Referenzen · Proyectos MCE',
                 'ts-hero-title': 'Was Nutzer über unsere Software sagen',
                 'ts-hero-sub': 'Feedback von Teams in Produktion: häufige Releases, echter Support und sichtbare Metriken.',
@@ -2056,6 +2060,7 @@
                 'pf-cta2-call': 'Agendar chamada',
                 'pf-cta2-see': 'Ver projetos',
                 'pf-cta2-cases': 'Cases de sucesso',
+                'wa-tooltip': 'Fale com a gente!',
                 'ts-badge': 'Depoimentos · Proyectos MCE',
                 'ts-hero-title': 'O que dizem quem opera com nosso software',
                 'ts-hero-sub': 'Feedback de equipes em produção: releases frequentes, suporte real e métricas visíveis.',
@@ -2381,6 +2386,7 @@
                 'pf-cta2-call': 'Prenota chiamata',
                 'pf-cta2-see': 'Vedi progetti',
                 'pf-cta2-cases': 'Casi di successo',
+                'wa-tooltip': 'Chatta con noi!',
                 'ts-badge': 'Testimonianze · Proyectos MCE',
                 'ts-hero-title': 'Cosa dicono di chi usa il nostro software',
                 'ts-hero-sub': 'Feedback di team in produzione: release frequenti, supporto reale e metriche visibili.',
