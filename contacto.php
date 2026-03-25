@@ -138,26 +138,26 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
             data-query-flag="success"
             class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 transition-opacity duration-500"
         >
-            Mensaje enviado. Te contactaremos a la brevedad.
+            <span class="i18n-ct-alert-success" data-i18n="ct-alert-success">Mensaje enviado. Te contactaremos a la brevedad.</span>
         </div>
     <?php endif; ?>
 
     <?php if (isset($_GET['error'])): ?>
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
             <?php if ($_GET['error'] == 4): ?>
-                El formulario se guardo, pero falta configurar el correo del sitio. Intentalo mas tarde.
+                <span class="i18n-ct-error-4" data-i18n="ct-error-4">El formulario se guardó, pero falta configurar el correo del sitio. Inténtalo más tarde.</span>
             <?php elseif ($_GET['error'] == 5): ?>
-                El formulario se guardo, pero no se pudo conectar con el servicio de correo. Revisa SMTP_USER, SMTP_PASS y la App Password.
+                <span class="i18n-ct-error-5" data-i18n="ct-error-5">El formulario se guardó, pero no se pudo conectar con el servicio de correo. Revisa SMTP_USER, SMTP_PASS y la App Password.</span>
             <?php elseif ($_GET['error'] == 6): ?>
-                No pudimos validar el envio. Revisa los datos e intenta nuevamente.
+                <span class="i18n-ct-error-6" data-i18n="ct-error-6">No pudimos validar el envío. Revisa los datos e intenta nuevamente.</span>
             <?php elseif ($_GET['error'] == 7): ?>
-                Has enviado demasiados mensajes en poco tiempo. Espera unos minutos antes de intentar otra vez.
+                <span class="i18n-ct-error-7" data-i18n="ct-error-7">Has enviado demasiados mensajes en poco tiempo. Espera unos minutos antes de intentar otra vez.</span>
             <?php elseif ($_GET['error'] == 8): ?>
-                Debes completar la verificacion reCAPTCHA antes de enviar el formulario.
+                <span class="i18n-ct-error-8" data-i18n="ct-error-8">Debes completar la verificación reCAPTCHA antes de enviar el formulario.</span>
             <?php elseif ($_GET['error'] == 9): ?>
-                El horario elegido ya no está disponible. Por favor elige otra hora.
+                <span class="i18n-ct-error-9" data-i18n="ct-error-9">El horario elegido ya no está disponible. Por favor elige otra hora.</span>
             <?php else: ?>
-                Hubo un error. Por favor intenta nuevamente.
+                <span class="i18n-ct-error-default" data-i18n="ct-error-default">Hubo un error. Por favor intenta nuevamente.</span>
             <?php endif; ?>
         </div>
     <?php endif; ?>

@@ -941,7 +941,15 @@
                 'ct-info-b1': 'Respuesta personalizada con una ruta inicial y esfuerzos aproximados.',
                 'ct-info-b2': 'Reunión virtual de discovery para entender procesos y objetivos.',
                 'ct-info-b3': 'Documento de alcance con los próximos pasos para aprobar o iterar.',
-                'ct-info-nda': 'Si necesitas NDA antes de compartir detalles, indícalo en el mensaje y lo enviamos.'
+                'ct-info-nda': 'Si necesitas NDA antes de compartir detalles, indícalo en el mensaje y lo enviamos.',
+                'ct-alert-success': 'Mensaje enviado. Te contactaremos a la brevedad.',
+                'ct-error-4': 'El formulario se guardó, pero falta configurar el correo del sitio. Inténtalo más tarde.',
+                'ct-error-5': 'El formulario se guardó, pero no se pudo conectar con el servicio de correo. Revisa SMTP_USER, SMTP_PASS y la App Password.',
+                'ct-error-6': 'No pudimos validar el envío. Revisa los datos e intenta nuevamente.',
+                'ct-error-7': 'Has enviado demasiados mensajes en poco tiempo. Espera unos minutos antes de intentar otra vez.',
+                'ct-error-8': 'Debes completar la verificación reCAPTCHA antes de enviar el formulario.',
+                'ct-error-9': 'El horario elegido ya no está disponible. Por favor elige otra hora.',
+                'ct-error-default': 'Hubo un error. Por favor intenta nuevamente.'
             },
             'en': {
                 'nav-home': 'Home',
@@ -1234,7 +1242,15 @@
                 'ct-info-b1': 'Personalized response with an initial path and rough effort.',
                 'ct-info-b2': 'Virtual discovery meeting to understand processes and goals.',
                 'ct-info-b3': 'Scope document with next steps to approve or iterate.',
-                'ct-info-nda': 'If you need an NDA before sharing details, mention it and we’ll send it.'
+                'ct-info-nda': 'If you need an NDA before sharing details, mention it and we’ll send it.',
+                'ct-alert-success': 'Message sent. We will contact you shortly.',
+                'ct-error-4': 'The form was saved, but site email is not configured. Please try again later.',
+                'ct-error-5': 'The form was saved, but we could not connect to the mail service. Check SMTP_USER, SMTP_PASS and the app password.',
+                'ct-error-6': 'We could not validate the submission. Please check the data and try again.',
+                'ct-error-7': 'You have sent too many messages in a short time. Please wait a few minutes and try again.',
+                'ct-error-8': 'Please complete the reCAPTCHA verification before submitting the form.',
+                'ct-error-9': 'The selected time slot is no longer available. Please choose another time.',
+                'ct-error-default': 'An error occurred. Please try again.'
             },
             'fr': {
                 'nav-home': 'Accueil',
@@ -1527,7 +1543,15 @@
                 'ct-info-b1': 'Réponse personnalisée avec première piste et effort estimé.',
                 'ct-info-b2': 'Réunion discovery pour comprendre processus et objectifs.',
                 'ct-info-b3': 'Document de cadrage avec prochaines étapes à valider ou ajuster.',
-                'ct-info-nda': "Si tu as besoin d'un NDA avant de partager, indique-le et on l'envoie."
+                'ct-info-nda': "Si tu as besoin d'un NDA avant de partager, indique-le et on l'envoie.",
+                'ct-alert-success': 'Message envoyé. Nous te contacterons rapidement.',
+                'ct-error-4': "Le formulaire a été enregistré, mais l'email du site n'est pas configuré. Réessaie plus tard.",
+                'ct-error-5': "Le formulaire a été enregistré, mais connexion au service mail impossible. Vérifie SMTP_USER, SMTP_PASS et le mot de passe d'application.",
+                'ct-error-6': "Nous n'avons pas pu valider l'envoi. Vérifie les données et réessaie.",
+                'ct-error-7': 'Tu as envoyé trop de messages en peu de temps. Attends quelques minutes et réessaie.',
+                'ct-error-8': 'Merci de compléter le reCAPTCHA avant de soumettre.',
+                'ct-error-9': "Le créneau choisi n'est plus disponible. Choisis une autre heure.",
+                'ct-error-default': 'Une erreur est survenue. Réessaie.'
             },
             'de': {
                 'nav-home': 'Start',
@@ -1820,7 +1844,15 @@
                 'ct-info-b1': 'Individuelle Antwort mit erster Route und Aufwandsschätzung.',
                 'ct-info-b2': 'Virtuelles Discovery-Meeting zum Verständnis von Prozessen und Zielen.',
                 'ct-info-b3': 'Scope-Dokument mit nächsten Schritten zum Freigeben oder Anpassen.',
-                'ct-info-nda': 'Wenn du vorher ein NDA brauchst, sag Bescheid und wir senden es.'
+                'ct-info-nda': 'Wenn du vorher ein NDA brauchst, sag Bescheid und wir senden es.',
+                'ct-alert-success': 'Nachricht gesendet. Wir melden uns in Kürze.',
+                'ct-error-4': 'Formular gespeichert, aber E-Mail des Standorts ist nicht konfiguriert. Bitte später erneut versuchen.',
+                'ct-error-5': 'Formular gespeichert, aber keine Verbindung zum Mail-Service. Prüfe SMTP_USER, SMTP_PASS und das App-Passwort.',
+                'ct-error-6': 'Wir konnten die Einsendung nicht validieren. Bitte Daten prüfen und erneut versuchen.',
+                'ct-error-7': 'Zu viele Nachrichten in kurzer Zeit. Bitte einige Minuten warten und erneut versuchen.',
+                'ct-error-8': 'Bitte reCAPTCHA bestätigen, bevor du absendest.',
+                'ct-error-9': 'Der gewählte Zeitraum ist nicht mehr verfügbar. Wähle eine andere Uhrzeit.',
+                'ct-error-default': 'Ein Fehler ist aufgetreten. Bitte erneut versuchen.'
             },
             'pt': {
                 'nav-home': 'Início',
@@ -2113,7 +2145,15 @@
                 'ct-info-b1': 'Resposta personalizada com rota inicial e esforço aproximado.',
                 'ct-info-b2': 'Reunião virtual de discovery para entender processos e objetivos.',
                 'ct-info-b3': 'Documento de escopo com próximos passos para aprovar ou iterar.',
-                'ct-info-nda': 'Se precisar de NDA antes de compartilhar, avise e enviamos.'
+                'ct-info-nda': 'Se precisar de NDA antes de compartilhar, avise e enviamos.',
+                'ct-alert-success': 'Mensagem enviada. Entraremos em contato em breve.',
+                'ct-error-4': 'O formulário foi salvo, mas o email do site não está configurado. Tente novamente mais tarde.',
+                'ct-error-5': 'O formulário foi salvo, mas não conseguimos conectar ao serviço de email. Verifique SMTP_USER, SMTP_PASS e a App Password.',
+                'ct-error-6': 'Não conseguimos validar o envio. Revise os dados e tente de novo.',
+                'ct-error-7': 'Você enviou muitas mensagens em pouco tempo. Aguarde alguns minutos e tente novamente.',
+                'ct-error-8': 'Complete a verificação reCAPTCHA antes de enviar o formulário.',
+                'ct-error-9': 'O horário escolhido não está mais disponível. Escolha outro horário.',
+                'ct-error-default': 'Ocorreu um erro. Tente novamente.'
             },
             'it': {
                 'nav-home': 'Home',
@@ -2406,7 +2446,15 @@
                 'ct-info-b1': 'Risposta personalizzata con percorso iniziale e stima di sforzo.',
                 'ct-info-b2': 'Meeting virtuale di discovery per capire processi e obiettivi.',
                 'ct-info-b3': 'Documento di scope con i prossimi passi da approvare o iterare.',
-                'ct-info-nda': 'Se serve un NDA prima di condividere, indicalo e lo inviamo.'
+                'ct-info-nda': 'Se serve un NDA prima di condividere, indicalo e lo inviamo.',
+                'ct-alert-success': 'Messaggio inviato. Ti contatteremo a breve.',
+                'ct-error-4': "Il form è stato salvato, ma l'email del sito non è configurata. Riprova più tardi.",
+                'ct-error-5': "Il form è stato salvato, ma non è stato possibile connettersi al servizio email. Controlla SMTP_USER, SMTP_PASS e la App Password.",
+                'ct-error-6': "Non abbiamo potuto validare l'invio. Controlla i dati e riprova.",
+                'ct-error-7': 'Hai inviato troppi messaggi in poco tempo. Attendi alcuni minuti e riprova.',
+                'ct-error-8': 'Completa la verifica reCAPTCHA prima di inviare il form.',
+                'ct-error-9': "L'orario scelto non è più disponibile. Scegli un altro orario.",
+                'ct-error-default': 'Si è verificato un errore. Riprova.'
             }
         };
 
