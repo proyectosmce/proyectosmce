@@ -7,7 +7,7 @@
             <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div class="space-y-1">
                     <p class="text-sm uppercase tracking-[0.2em] text-blue-200 font-semibold">Proyectos MCE</p>
-                    <p class="text-lg md:text-xl font-semibold">Transformamos tus ideas en software listo para usar.</p>
+                    <p class="text-lg md:text-xl font-semibold"><span class="i18n-ft-cta-desc" data-i18n="ft-cta-desc">Transformamos tus ideas en software listo para usar.</span></p>
                 </div>
                 <div class="flex flex-wrap gap-3">
                     <a href="<?php echo app_url('contacto.php'); ?>#agenda-llamada" class="inline-flex items-center px-4 py-3 rounded-lg bg-white text-slate-900 font-semibold shadow hover:bg-blue-50 transition mce-call-ringing">
@@ -17,10 +17,10 @@
                             <span class="call-ring call-ring--2"></span>
                             <span class="call-ring call-ring--3"></span>
                         </span>
-                        Agenda una llamada
+                        <span class="i18n-ft-cta-call" data-i18n="ft-cta-call">Agenda una llamada</span>
                     </a>
                     <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex items-center px-4 py-3 rounded-lg border border-white/30 text-white font-semibold hover:bg-white/10 transition">
-                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp inmediato
+                        <i class="fab fa-whatsapp mr-2"></i> <span class="i18n-ft-cta-wa" data-i18n="ft-cta-wa">WhatsApp inmediato</span>
                     </a>
                 </div>
             </div>
@@ -32,38 +32,38 @@
                 <div class="space-y-3">
                     <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-blue-100 uppercase tracking-[0.18em]">MCE</div>
                     <h3 class="text-xl font-bold">Proyectos MCE</h3>
-                    <p class="text-gray-300 leading-relaxed">Software a medida, sitios web y automatizaciones hechas con foco en tu operación diaria.</p>
+                    <p class="text-gray-300 leading-relaxed"><span class="i18n-ft-about-desc" data-i18n="ft-about-desc">Software a medida, sitios web y automatizaciones hechas con foco en tu operación diaria.</span></p>
                     <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center text-blue-200 hover:text-white font-semibold">
-                        <span>Ver casos en vivo</span>
+                        <span><span class="i18n-ft-about-link" data-i18n="ft-about-link">Ver casos en vivo</span></span>
                         <i class="fas fa-arrow-right ml-2 text-sm"></i>
                     </a>
                 </div>
                 
                 <!-- Col 2: Enlaces rápidos -->
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Enlaces</h4>
+                    <h4 class="text-lg font-semibold mb-4 i18n-ft-links-title" data-i18n="ft-links-title">Enlaces</h4>
                     <ul class="space-y-2 text-gray-300">
-                        <li><a href="<?php echo app_url(); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-home text-blue-300"></i><span>Inicio</span></a></li>
-                        <li><a href="<?php echo app_url('servicios.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-layer-group text-blue-300"></i><span>Servicios</span></a></li>
-                        <li><a href="<?php echo app_url('portafolio.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-briefcase text-blue-300"></i><span>Portafolio</span></a></li>
-                        <li><a href="<?php echo app_url('testimonios.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-comments text-blue-300"></i><span>Testimonios</span></a></li>
-                        <li><a href="<?php echo app_url('contacto.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-envelope-open-text text-blue-300"></i><span>Contacto</span></a></li>
+                        <li><a href="<?php echo app_url(); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-home text-blue-300"></i><span><span data-i18n="nav-home">Inicio</span></span></a></li>
+                        <li><a href="<?php echo app_url('servicios.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-layer-group text-blue-300"></i><span><span data-i18n="nav-services">Servicios</span></span></a></li>
+                        <li><a href="<?php echo app_url('portafolio.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-briefcase text-blue-300"></i><span><span data-i18n="nav-portfolio">Portafolio</span></span></a></li>
+                        <li><a href="<?php echo app_url('testimonios.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-comments text-blue-300"></i><span><span data-i18n="nav-testimonials">Testimonios</span></span></a></li>
+                        <li><a href="<?php echo app_url('contacto.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-envelope-open-text text-blue-300"></i><span><span data-i18n="nav-contact">Contacto</span></span></a></li>
                     </ul>
                 </div>
                 
                 <!-- Col 3: Servicios -->
                 <div>
-                    <h4 class="text-lg font-semibold mb-4">Servicios</h4>
+                    <h4 class="text-lg font-semibold mb-4"><span data-i18n="nav-services">Servicios</span></h4>
                     <ul class="space-y-2 text-gray-300">
-                        <li>Desarrollo a Medida</li>
-                        <li>Sistemas de Inventario</li>
-                        <li>Mantenimiento Web</li>
+                        <li><span class="i18n-ft-srv1" data-i18n="ft-srv1">Desarrollo a Medida</span></li>
+                        <li><span class="i18n-ft-srv2" data-i18n="ft-srv2">Sistemas de Inventario</span></li>
+                        <li><span class="i18n-ft-srv3" data-i18n="ft-srv3">Mantenimiento Web</span></li>
                     </ul>
                 </div>
                 
                 <!-- Col 4: Contacto y redes -->
                 <div class="space-y-4">
-                    <h4 class="text-lg font-semibold">Contacto</h4>
+                    <h4 class="text-lg font-semibold"><span data-i18n="nav-contact">Contacto</span></h4>
                     <ul class="space-y-3 text-gray-300">
                         <li>
                             <a href="mailto:proyectosmceaa@gmail.com" class="inline-flex items-center hover:text-white transition">
@@ -76,7 +76,7 @@
                             </a>
                         </li>
                         <li class="inline-flex items-center text-gray-300">
-                            <i class="fas fa-clock mr-2"></i><span>Lunes a sábado · 8:00 - 18:00 (GMT-5)</span>
+                            <i class="fas fa-clock mr-2"></i><span><span class="i18n-ft-hours" data-i18n="ft-hours">Lunes a sábado · 8:00 - 18:00 (GMT-5)</span></span>
                         </li>
                         <li class="flex flex-wrap items-center gap-4 pt-2">
                             <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
@@ -118,7 +118,7 @@
             <span class="call-ring call-ring--2"></span>
             <span class="call-ring call-ring--3"></span>
         </span>
-        Agenda una llamada
+        <span class="i18n-ft-cta-call" data-i18n="ft-cta-call">Agenda una llamada</span>
     </a>
 
     <!-- Panel de asistente global -->
@@ -592,7 +592,7 @@
                 'chip3': 'Entregas cortas con pruebas y control',
                 'chip4': 'Conexiones a servidores (APIs) y datos en orden',
                 'btn-plan': 'Armar mi plan',
-                'btn-portfolio': 'Ver casos en vivo',
+                'btn-portfolio': '<span class="i18n-ft-about-link" data-i18n="ft-about-link">Ver casos en vivo</span>',
                 'btn-cases': 'Casos de éxito',
                 'link-services': 'Servicios',
                 'card1-label': 'Gobernanza',
@@ -725,7 +725,7 @@
                 'pf-test-title': 'Testimonio',
                 'pf-test-text': '“Superó mis expectativas, lo recomiendo 100%” – Jose Delgado, Destello de Oro 18K.',
                 'pf-case-btn-full': 'Ver caso completo',
-                'pf-case-btn-call': 'Agenda una llamada',
+                'pf-case-btn-call': '<span class="i18n-ft-cta-call" data-i18n="ft-cta-call">Agenda una llamada</span>',
                 'pf-card-industry': 'Joyería',
                 'pf-card-b1': 'Ventas con control de cobros y saldos.',
                 'pf-card-b2': 'Inventario en tiempo real por pieza.',
@@ -746,7 +746,7 @@
                 'pf-no-link': 'Sin enlace disponible',
                 'pf-cta2-label': '¿Listo para tu caso?',
                 'pf-cta2-title': 'Te mostramos un demo similar a tu industria',
-                'pf-cta2-desc': 'Agenda una llamada y en 24 horas preparamos un recorrido de referencia.',
+                'pf-cta2-desc': '<span class="i18n-ft-cta-call" data-i18n="ft-cta-call">Agenda una llamada</span> y en 24 horas preparamos un recorrido de referencia.',
                 'pf-cta2-call': 'Agendar llamada',
                 'pf-cta2-see': 'Ver proyectos',
                 'pf-cta2-cases': 'Casos de éxito',
@@ -872,6 +872,17 @@
                 'ct-info-b2': 'Reunión virtual de discovery para entender procesos y objetivos.',
                 'ct-info-b3': 'Documento de alcance con los próximos pasos para aprobar o iterar.',
                 'ct-info-nda': 'Si necesitas NDA antes de compartir detalles, indícalo en el mensaje y lo enviamos.',
+                'ft-cta-desc': 'Transformamos tus ideas en software listo para usar.',
+                'ft-cta-call': 'Agenda una llamada',
+                'ft-cta-wa': 'WhatsApp inmediato',
+                'ft-about-desc': 'Software a medida, sitios web y automatizaciones hechas con foco en tu operación diaria.',
+                'ft-about-link': 'Ver casos en vivo',
+                'ft-links-title': 'Enlaces',
+                'ft-services-title': 'Servicios',
+                'ft-srv1': 'Desarrollo a Medida',
+                'ft-srv2': 'Sistemas de Inventario',
+                'ft-srv3': 'Mantenimiento Web',
+                'ft-hours': 'Lunes a sábado · 8:00 - 18:00 (GMT-5)',
                 'ct-field-required': 'Este campo es obligatorio.',
                 'ct-field-email': 'Ingresa un correo válido.',
                 'ct-field-minlength': 'Debes ingresar al menos {min} caracteres.',
@@ -1179,6 +1190,17 @@
                 'ct-info-b2': 'Virtual discovery meeting to understand processes and goals.',
                 'ct-info-b3': 'Scope document with next steps to approve or iterate.',
                 'ct-info-nda': 'If you need an NDA before sharing details, mention it and we’ll send it.',
+                'ft-cta-desc': 'We turn your ideas into ready-to-use software.',
+                'ft-cta-call': 'Book a call',
+                'ft-cta-wa': 'WhatsApp now',
+                'ft-about-desc': 'Custom software, websites and automations focused on your daily operation.',
+                'ft-about-link': 'See live cases',
+                'ft-links-title': 'Links',
+                'ft-services-title': 'Services',
+                'ft-srv1': 'Custom Development',
+                'ft-srv2': 'Inventory Systems',
+                'ft-srv3': 'Web Maintenance',
+                'ft-hours': 'Mon to Sat · 8:00 - 18:00 (GMT-5)',
                 'ct-field-required': 'This field is required.',
                 'ct-field-email': 'Enter a valid email.',
                 'ct-field-minlength': 'Please enter at least {min} characters.',
@@ -1486,6 +1508,17 @@
                 'ct-info-b2': 'Réunion discovery pour comprendre processus et objectifs.',
                 'ct-info-b3': 'Document de cadrage avec prochaines étapes à valider ou ajuster.',
                 'ct-info-nda': "Si tu as besoin d'un NDA avant de partager, indique-le et on l'envoie.",
+                'ft-cta-desc': 'Nous transformons vos idées en logiciels prêts à l’emploi.',
+                'ft-cta-call': 'Planifier un appel',
+                'ft-cta-wa': 'WhatsApp immédiat',
+                'ft-about-desc': 'Logiciels sur mesure, sites web et automatisations centrés sur votre opération.',
+                'ft-about-link': 'Voir des cas en direct',
+                'ft-links-title': 'Liens',
+                'ft-services-title': 'Services',
+                'ft-srv1': 'Développement sur mesure',
+                'ft-srv2': "Systèmes d'inventaire",
+                'ft-srv3': 'Maintenance web',
+                'ft-hours': 'Lun au Sam · 8:00 - 18:00 (GMT-5)',
                 'ct-field-required': 'Ce champ est obligatoire.',
                 'ct-field-email': 'Saisis un email valide.',
                 'ct-field-minlength': 'Merci de saisir au moins {min} caractères.',
@@ -1793,6 +1826,17 @@
                 'ct-info-b2': 'Virtuelles Discovery-Meeting zum Verständnis von Prozessen und Zielen.',
                 'ct-info-b3': 'Scope-Dokument mit nächsten Schritten zum Freigeben oder Anpassen.',
                 'ct-info-nda': 'Wenn du vorher ein NDA brauchst, sag Bescheid und wir senden es.',
+                'ft-cta-desc': 'Wir verwandeln deine Ideen in einsatzbereite Software.',
+                'ft-cta-call': 'Ruf mich an',
+                'ft-cta-wa': 'WhatsApp sofort',
+                'ft-about-desc': 'Maßgeschneiderte Software, Websites und Automatisierungen für deinen Betrieb.',
+                'ft-about-link': 'Live-Cases ansehen',
+                'ft-links-title': 'Links',
+                'ft-services-title': 'Services',
+                'ft-srv1': 'Individuelle Entwicklung',
+                'ft-srv2': 'Warenwirtschaftssysteme',
+                'ft-srv3': 'Web-Wartung',
+                'ft-hours': 'Mo bis Sa · 8:00 - 18:00 (GMT-5)',
                 'ct-field-required': 'Dieses Feld ist erforderlich.',
                 'ct-field-email': 'Bitte eine gültige E-Mail eingeben.',
                 'ct-field-minlength': 'Bitte mindestens {min} Zeichen eingeben.',
@@ -2100,6 +2144,17 @@
                 'ct-info-b2': 'Reunião virtual de discovery para entender processos e objetivos.',
                 'ct-info-b3': 'Documento de escopo com próximos passos para aprovar ou iterar.',
                 'ct-info-nda': 'Se precisar de NDA antes de compartilhar, avise e enviamos.',
+                'ft-cta-desc': 'Transformamos suas ideias em software pronto para uso.',
+                'ft-cta-call': 'Agendar uma ligação',
+                'ft-cta-wa': 'WhatsApp imediato',
+                'ft-about-desc': 'Software sob medida, sites e automações focadas na sua operação diária.',
+                'ft-about-link': 'Ver casos ao vivo',
+                'ft-links-title': 'Links',
+                'ft-services-title': 'Serviços',
+                'ft-srv1': 'Desenvolvimento sob medida',
+                'ft-srv2': 'Sistemas de Inventário',
+                'ft-srv3': 'Manutenção Web',
+                'ft-hours': 'Seg a Sáb · 8:00 - 18:00 (GMT-5)',
                 'ct-field-required': 'Este campo é obrigatório.',
                 'ct-field-email': 'Insira um email válido.',
                 'ct-field-minlength': 'Digite pelo menos {min} caracteres.',
@@ -2407,6 +2462,17 @@
                 'ct-info-b2': 'Meeting virtuale di discovery per capire processi e obiettivi.',
                 'ct-info-b3': 'Documento di scope con i prossimi passi da approvare o iterare.',
                 'ct-info-nda': 'Se serve un NDA prima di condividere, indicalo e lo inviamo.',
+                'ft-cta-desc': 'Trasformiamo le tue idee in software pronto all’uso.',
+                'ft-cta-call': 'Prenota una call',
+                'ft-cta-wa': 'WhatsApp immediato',
+                'ft-about-desc': 'Software su misura, siti web e automazioni focalizzate sulla tua operatività quotidiana.',
+                'ft-about-link': 'Vedi casi live',
+                'ft-links-title': 'Link',
+                'ft-services-title': 'Servizi',
+                'ft-srv1': 'Sviluppo su misura',
+                'ft-srv2': 'Sistemi di inventario',
+                'ft-srv3': 'Manutenzione Web',
+                'ft-hours': 'Lun a Sab · 8:00 - 18:00 (GMT-5)',
                 'ct-field-required': 'Questo campo è obbligatorio.',
                 'ct-field-email': "Inserisci un'email valida.",
                 'ct-field-minlength': 'Inserisci almeno {min} caratteri.',
@@ -2758,6 +2824,7 @@
     </script>
 </body>
 </html>
+
 
 
 
