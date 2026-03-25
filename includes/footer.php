@@ -92,7 +92,7 @@
             
             <!-- Copyright -->
             <div class="border-t border-white/10 mt-10 pt-6 text-center text-gray-400 text-sm">
-                <p>&copy; <?php echo date('Y'); ?> Proyectos MCE. Todos los derechos reservados.</p>
+                <p>&copy; <?php echo date('Y'); ?> <span class="i18n-ft-copy" data-i18n="ft-copy">Proyectos MCE. Todos los derechos reservados.</span></p>
             </div>
         </div>
     </footer>
@@ -889,6 +889,7 @@
                 'ft-srv2': 'Sistemas de Inventario',
                 'ft-srv3': 'Mantenimiento Web',
                 'ft-hours': 'Lunes a sábado · 8:00 - 18:00 (GMT-5)',
+                'ft-copy': 'Proyectos MCE. Todos los derechos reservados.',
                 'ct-field-required': 'Este campo es obligatorio.',
                 'ct-field-email': 'Ingresa un correo válido.',
                 'ct-field-minlength': 'Debes ingresar al menos {min} caracteres.',
@@ -1213,6 +1214,7 @@
                 'ft-srv2': 'Inventory Systems',
                 'ft-srv3': 'Web Maintenance',
                 'ft-hours': 'Mon to Sat · 8:00 - 18:00 (GMT-5)',
+                'ft-copy': 'Proyectos MCE. All rights reserved.',
                 'ct-field-required': 'This field is required.',
                 'ct-field-email': 'Enter a valid email.',
                 'ct-field-minlength': 'Please enter at least {min} characters.',
@@ -1537,6 +1539,7 @@
                 'ft-srv2': "Systèmes d'inventaire",
                 'ft-srv3': 'Maintenance web',
                 'ft-hours': 'Lun au Sam · 8:00 - 18:00 (GMT-5)',
+                'ft-copy': 'Proyectos MCE. Tous droits réservés.',
                 'ct-field-required': 'Ce champ est obligatoire.',
                 'ct-field-email': 'Saisis un email valide.',
                 'ct-field-minlength': 'Merci de saisir au moins {min} caractères.',
@@ -1861,6 +1864,7 @@
                 'ft-srv2': 'Warenwirtschaftssysteme',
                 'ft-srv3': 'Web-Wartung',
                 'ft-hours': 'Mo bis Sa · 8:00 - 18:00 (GMT-5)',
+                'ft-copy': 'Proyectos MCE. Alle Rechte vorbehalten.',
                 'ct-field-required': 'Dieses Feld ist erforderlich.',
                 'ct-field-email': 'Bitte eine gültige E-Mail eingeben.',
                 'ct-field-minlength': 'Bitte mindestens {min} Zeichen eingeben.',
@@ -2185,6 +2189,7 @@
                 'ft-srv2': 'Sistemas de Inventário',
                 'ft-srv3': 'Manutenção Web',
                 'ft-hours': 'Seg a Sáb · 8:00 - 18:00 (GMT-5)',
+                'ft-copy': 'Proyectos MCE. Todos os direitos reservados.',
                 'ct-field-required': 'Este campo é obrigatório.',
                 'ct-field-email': 'Insira um email válido.',
                 'ct-field-minlength': 'Digite pelo menos {min} caracteres.',
@@ -2509,6 +2514,7 @@
                 'ft-srv2': 'Sistemi di inventario',
                 'ft-srv3': 'Manutenzione Web',
                 'ft-hours': 'Lun a Sab · 8:00 - 18:00 (GMT-5)',
+                'ft-copy': 'Proyectos MCE. Tutti i diritti riservati.',
                 'ct-field-required': 'Questo campo è obbligatorio.',
                 'ct-field-email': "Inserisci un'email valida.",
                 'ct-field-minlength': 'Inserisci almeno {min} caratteri.',
