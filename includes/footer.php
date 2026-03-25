@@ -131,44 +131,7 @@
             <button id="assistant-close" style="background:none;border:none;color:#ffd700;font-weight:800;font-size:1rem;cursor:pointer;">×</button>
         </div>
         <div class="assistant-body">
-            <div class="assistant-lang">
-                <select id="assistant-lang" aria-hidden="true">
-                    <option value="auto" selected>Auto</option>
-                    <option value="es">ES</option>
-                    <option value="en">EN</option>
-                    <option value="fr">FR</option>
-                    <option value="de">DE</option>
-                    <option value="pt">PT</option>
-                    <option value="it">IT</option>
-                </select>
-            <button id="assistant-lang-toggle" class="lang-toggle" type="button" style="background:#ffffffd9;color:#0f172a;border-color:#e2e8f0;">
-                <img id="assistant-lang-flag" src="https://flagcdn.com/w20/un.png" alt="Auto">
-                <span id="assistant-lang-label">Auto</span>
-            </button>
-            <div class="lang-list" id="assistant-lang-list">
-                <div class="lang-option" data-lang="auto" data-flag="un" data-label="Auto">
-                        <img src="https://flagcdn.com/w20/un.png" alt="Auto"><span>Auto</span>
-                    </div>
-                    <div class="lang-option" data-lang="es" data-flag="es" data-label="Español">
-                        <img src="https://flagcdn.com/w20/es.png" alt="Español"><span style="color:#c1121f;">Español</span>
-                    </div>
-                    <div class="lang-option" data-lang="en" data-flag="us" data-label="English">
-                        <img src="https://flagcdn.com/w20/us.png" alt="English"><span style="color:#0a3161;">English</span>
-                    </div>
-                    <div class="lang-option" data-lang="fr" data-flag="fr" data-label="Français">
-                        <img src="https://flagcdn.com/w20/fr.png" alt="Français"><span style="color:#002654;">Français</span>
-                    </div>
-                    <div class="lang-option" data-lang="de" data-flag="de" data-label="Deutsch">
-                        <img src="https://flagcdn.com/w20/de.png" alt="Deutsch"><span style="color:#000000;">Deutsch</span>
-                    </div>
-                <div class="lang-option" data-lang="pt" data-flag="pt" data-label="Português">
-                    <img src="https://flagcdn.com/w20/pt.png" alt="Português"><span style="color:#046a38;">Português</span>
-                </div>
-                    <div class="lang-option" data-lang="it" data-flag="it" data-label="Italiano">
-                        <img src="https://flagcdn.com/w20/it.png" alt="Italiano"><span style="color:#009246;">Italiano</span>
-                    </div>
-                </div>
-            </div>
+            <div class="assistant-lang" style="height:0;visibility:hidden;"></div>
             <div class="assistant-answer" id="assistant-answer"></div>
             <div class="assistant-input">
                 <input id="assistant-question" type="text" placeholder="Escribe tu pregunta..." />
@@ -208,12 +171,6 @@
         const sendBtn = document.getElementById("assistant-send");
         const questionInput = document.getElementById("assistant-question");
         const answerBox = document.getElementById("assistant-answer");
-        const langSelect = document.getElementById("assistant-lang");
-        const langToggle = document.getElementById("assistant-lang-toggle");
-        const langFlag = document.getElementById("assistant-lang-flag");
-        const langLabel = document.getElementById("assistant-lang-label");
-        const langList = document.getElementById("assistant-lang-list");
-
         if (!panel || !toggle || !answerBox || !questionInput) return;
 
         const faqs = [
@@ -568,21 +525,13 @@
             return match.answers[lang] || match.answers.es || defaultMsg[lang] || defaultMsg.es;
         };
 
-        const setLangUI = (lang, flag, label) => {
-            if (langSelect) langSelect.value = lang;
-            if (langFlag) { langFlag.src = `https://flagcdn.com/w20/${flag}.png`; langFlag.alt = label; }
-            if (langLabel) langLabel.textContent = label;
-        };
-        setLangUI('auto', 'un', 'Auto');
-
         const lockScroll = () => { document.body.dataset.scrollLock = '1'; document.body.style.overflow = 'hidden'; };
         const unlockScroll = () => { delete document.body.dataset.scrollLock; document.body.style.overflow = ''; };
 
         function handleAsk() {
             const q = (questionInput.value || '').trim().toLowerCase();
             if (!q) return;
-            const choice = langSelect ? langSelect.value : 'auto';
-            const lang = choice === 'auto' ? detectLang(q) : choice;
+            const lang = window.mceCurrentLang || 'es';
             const raw = isRelevant(q) ? findAnswer(q, lang) : (defaultMsg[lang] || defaultMsg.es);
             answerBox.innerHTML = linkify(raw);
         }
@@ -599,7 +548,6 @@
             panel.classList.remove('open');
             toggle.classList.remove('paused');
             toggle.style.display = 'grid';
-            langList?.classList.remove('open');
             unlockScroll();
         }
 
@@ -609,30 +557,18 @@
         questionInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') { e.preventDefault(); handleAsk(); }
         });
-        langList?.querySelectorAll('.lang-option').forEach((opt) => {
-            opt.addEventListener('click', () => {
-                const lang = opt.dataset.lang || 'auto';
-                const flag = opt.dataset.flag || 'un';
-                const label = opt.dataset.label || lang.toUpperCase();
-                setLangUI(lang, flag, label);
-                langList.classList.remove('open');
-                const gLang = lang === 'auto' ? 'es' : lang;
-                answerBox.innerHTML = linkify(greeting[gLang] || greeting.es);
-            });
-        });
-        langToggle?.addEventListener('click', () => { langList?.classList.toggle('open'); lockScroll(); });
         document.addEventListener('click', (e) => {
             const clickInsidePanel = panel.contains(e.target);
             const clickToggle = toggle.contains(e.target);
-            const clickLangToggle = langToggle?.contains(e.target);
 
-            if (langList && langToggle && !langList.contains(e.target) && !clickLangToggle) {
-                langList.classList.remove('open');
-                if (!panel.classList.contains('open')) unlockScroll();
-            }
             if (panel.classList.contains('open') && !clickInsidePanel && !clickToggle) {
                 closePanel();
             }
+        });
+        window.addEventListener('mce-lang-changed', (e) => {
+            const lang = e.detail?.lang || 'es';
+            const greet = greeting[lang] || greeting.es;
+            answerBox.innerHTML = linkify(greet);
         });
     })();
     </script>
