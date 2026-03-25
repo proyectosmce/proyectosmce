@@ -5,7 +5,7 @@
 <?php
 ensureTestimonialsSchema($conn);
 
-// Manejo de envÃ­o de testimonios (solo alta)
+// Manejo de envío de testimonios (solo alta)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo_testimonio') {
     if (!form_guard_honeypot_is_clear($_POST['company_website'] ?? '')) {
         redirect('testimonios.php?error=validation#form-testimonio');
@@ -147,13 +147,13 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                             <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-clock"></i></span>
                             <div>
                                 <p class="font-semibold">Visibilidad constante</p>
-                                <p class="text-sm text-blue-100">Demos en cada sprint, tableros y comunicaciÃ³n directa.</p>
+                                <p class="text-sm text-blue-100">Demos en cada sprint, tableros y comunicación directa.</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-3">
                             <span class="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 border border-white/15 text-yellow-300"><i class="fas fa-shield-alt"></i></span>
                             <div>
-                                <p class="font-semibold">Cuidado de la operaciÃ³n</p>
+                                <p class="font-semibold">Cuidado de la operación</p>
                                 <p class="text-sm text-blue-100">Backups, roles, permisos y monitoreo activo.</p>
                             </div>
                         </li>
@@ -190,7 +190,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         <?php if ($testimonioError === 'rate'): ?>
             Has enviado demasiados testimonios en poco tiempo. Espera antes de intentar nuevamente.
         <?php elseif ($testimonioError === 'captcha'): ?>
-            Debes completar la verificaciÃ³n reCAPTCHA antes de enviar el testimonio.
+            Debes completar la verificación reCAPTCHA antes de enviar el testimonio.
         <?php else: ?>
             No pudimos validar el testimonio. Revisa los datos del formulario e intenta otra vez.
         <?php endif; ?>
@@ -201,7 +201,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         <div>
             <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Experiencias reales</p>
             <h2 class="text-3xl font-bold text-slate-900">Historias de equipos que confiaron en Proyectos MCE</h2>
-            <p class="text-gray-700 mt-2 max-w-3xl">Lee cÃ³mo usamos entregas iterativas, acompaÃ±amiento y soporte para llevar sus proyectos a producciÃ³n.</p>
+            <p class="text-gray-700 mt-2 max-w-3xl">Lee cómo usamos entregas iterativas, acompañamiento y soporte para llevar sus proyectos a producción.</p>
         </div>
         <a href="#form-testimonio" class="inline-flex items-center px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
             <i class="fas fa-comments mr-2"></i> Quiero contar mi experiencia
@@ -215,7 +215,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
             </div>
         <?php elseif (!$hasTestimonios): ?>
             <div class="md:col-span-3 bg-white border border-dashed border-gray-300 rounded-xl p-6 text-center text-gray-600">
-                AÃºn no hay testimonios. Â¡SÃ© el primero en dejar el tuyo!
+                Aún no hay testimonios. ¡Sé el primero en dejar el tuyo!
             </div>
         <?php else: ?>
             <?php while ($t = $testimonios->fetch_assoc()):
@@ -242,14 +242,14 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                             else if ($v == 2) { $lbl = 'Poco recomendable'; $cls = 'text-red-600'; }
                             else if ($v == 3) { $lbl = 'Neutral'; $cls = 'text-gray-600'; }
                             else if ($v == 4) { $lbl = 'Recomiendo'; $cls = 'text-green-600'; }
-                            else { $lbl = 'SÃ­ recomiendo'; $cls = 'text-green-600'; }
+                            else { $lbl = 'Sí recomiendo'; $cls = 'text-green-600'; }
                         ?>
                         <p class="text-xs font-semibold <?php echo $cls; ?> mt-1"><?php echo $v; ?> / 5 Â· <?php echo $lbl; ?></p>
                     </div>
                 </div>
                 <?php
                     $projName = $t['proyecto'] ?? 'su proyecto';
-                    $textoFinal = "Yo, {$t['nombre']} dueÃ±o de {$projName}, {$t['testimonio']}";
+                    $textoFinal = "Yo, {$t['nombre']} dueño de {$projName}, {$t['testimonio']}";
                 ?>
                 <p class="text-gray-700 leading-relaxed text-sm mb-4">"<?php echo nl2br(htmlspecialchars($textoFinal, ENT_QUOTES, 'UTF-8')); ?>"</p>
                 <div class="flex items-center justify-between">
@@ -272,7 +272,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
             <span class="inline-flex items-center justify-center w-5 h-5 bg-amber-500 text-white rounded-full text-xs mt-0.5">
                 <i class="fas fa-exclamation"></i>
             </span>
-            <span>Advertencia: si el nombre no coincide con el propietario del proyecto, el testimonio podrÃ¡ ser eliminado.</span>
+            <span>Advertencia: si el nombre no coincide con el propietario del proyecto, el testimonio podrá ser eliminado.</span>
         </div>
         <form id="testimonio-form" method="POST" action="#testimonios" class="grid md:grid-cols-2 gap-6">
             <input type="hidden" name="action" value="nuevo_testimonio">
@@ -297,14 +297,14 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Nombre completo</label>
-                    <input id="t-nombre" name="nombre" required type="text" minlength="2" maxlength="100" class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej. Ana MartÃ­nez">
+                    <input id="t-nombre" name="nombre" required type="text" minlength="2" maxlength="100" class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej. Ana Martínez">
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Escribe tu experiencia</label>
-                    <textarea id="t-mensaje" name="mensaje" required rows="5" minlength="30" maxlength="1200" class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Cuenta cÃ³mo te fue con el proyecto"></textarea>
+                    <textarea id="t-mensaje" name="mensaje" required rows="5" minlength="30" maxlength="1200" class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Cuenta cómo te fue con el proyecto"></textarea>
                 </div>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">CalificaciÃ³n (1 = no recomiendo, 5 = sÃ­ recomiendo)</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Calificación (1 = no recomiendo, 5 = sí recomiendo)</label>
                     <div class="flex items-center gap-2" id="rating-group">
                         <?php for ($i = 1; $i <= 5; $i++): ?>
                         <label class="cursor-pointer text-2xl transition text-gray-300" data-star="<?php echo $i; ?>">
@@ -313,7 +313,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                         </label>
                         <?php endfor; ?>
                     </div>
-                    <p id="rating-text" class="text-sm text-green-600 mt-2">5 / 5 (sÃ­ recomiendo)</p>
+                    <p id="rating-text" class="text-sm text-green-600 mt-2">5 / 5 (sí recomiendo)</p>
                 </div>
                 <div class="flex gap-3">
                     <button type="button" id="t-prev-btn" class="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition">Ver vista previa</button>
@@ -328,19 +328,19 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                     </div>
                 <?php else: ?>
                     <div class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
-                        reCAPTCHA es obligatorio, pero no estÃ¡ configurado correctamente en este entorno.
+                        reCAPTCHA es obligatorio, pero no está configurado correctamente en este entorno.
                     </div>
                 <?php endif; ?>
             </div>
             <div class="space-y-3">
                 <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
-                    <p class="text-sm font-semibold text-gray-700 mb-2">Lo que estÃ¡s escribiendo</p>
-                    <p id="t-live-raw" class="text-gray-600 whitespace-pre-line min-h-[120px]">AquÃ­ verÃ¡s tu texto a medida que escribesâ¦</p>
+                    <p class="text-sm font-semibold text-gray-700 mb-2">Lo que estás escribiendo</p>
+                    <p id="t-live-raw" class="text-gray-600 whitespace-pre-line min-h-[120px]">Aquí verás tu texto a medida que escribes…</p>
                 </div>
                 <div class="bg-blue-50 rounded-xl p-4 border border-blue-100">
-                    <p class="text-sm font-semibold text-blue-700 mb-2">AsÃ­ se verÃ¡ publicado</p>
+                    <p class="text-sm font-semibold text-blue-700 mb-2">Así se verá publicado</p>
                     <p id="t-live-final" class="text-gray-800 leading-relaxed min-h-[120px]">
-                        Yo, [tu nombre] dueÃ±o de [tu proyecto], aquÃ­ aparecerÃ¡ tu testimonio final.
+                        Yo, [tu nombre] dueño de [tu proyecto], aquí aparecerá tu testimonio final.
                     </p>
                 </div>
             </div>
@@ -353,8 +353,8 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     <div class="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-800 text-white rounded-2xl mce-rounded-panel p-10 shadow-2xl flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
             <p class="text-sm font-semibold text-blue-100 uppercase tracking-wide">Hablemos</p>
-            <h3 class="text-2xl font-bold">Â¿Quieres aparecer en esta secciÃ³n?</h3>
-            <p class="text-blue-100 mt-2">CuÃ©ntanos cÃ³mo te fue con tu proyecto y te contactamos para publicarlo.</p>
+            <h3 class="text-2xl font-bold">¿Quieres aparecer en esta sección?</h3>
+            <p class="text-blue-100 mt-2">Cuéntanos cómo te fue con tu proyecto y te contactamos para publicarlo.</p>
         </div>
         <div class="flex flex-wrap gap-3">
             <a href="#form-testimonio" class="inline-flex items-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold shadow-lg hover:bg-blue-50 transition">
@@ -425,9 +425,9 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     function updatePreview() {
         const n = (nombre.value || 'tu nombre').trim();
         const p = (proyecto.selectedOptions[0]?.text || 'tu proyecto').trim();
-        const msg = mensaje.value.trim() || 'escribe aquÃ­ tu experiencia con el proyecto';
-        liveRaw.textContent = mensaje.value || 'AquÃ­ verÃ¡s tu texto a medida que escribesâ¦';
-        liveFinal.textContent = `Yo, ${n} dueÃ±o de ${p}, ${msg}`;
+        const msg = mensaje.value.trim() || 'escribe aquí tu experiencia con el proyecto';
+        liveRaw.textContent = mensaje.value || 'Aquí verás tu texto a medida que escribes…';
+        liveFinal.textContent = `Yo, ${n} dueño de ${p}, ${msg}`;
     }
 
     nombre.addEventListener('input', updatePreview);
@@ -458,7 +458,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                 ratingText.textContent = '4 / 5 (recomiendo)';
                 ratingText.classList.add('text-green-600');
             } else if (value === 5) {
-                ratingText.textContent = '5 / 5 (sÃ­ recomiendo)';
+                ratingText.textContent = '5 / 5 (sí recomiendo)';
                 ratingText.classList.add('text-green-600');
             } else {
                 ratingText.textContent = `${value} / 5`;
@@ -474,7 +474,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     });
     updateStars();
 
-    // BÃºsqueda rÃ¡pida en el select de proyectos
+    // Búsqueda rápida en el select de proyectos
     if (proyectoSearch) {
         proyectoSearch.addEventListener('input', () => {
             const term = proyectoSearch.value.toLowerCase();
