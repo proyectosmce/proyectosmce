@@ -17,7 +17,7 @@ $featuredProject = $projects[0] ?? null;
         <div class="grid lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-7 space-y-5">
                 <span class="inline-flex items-center px-3 py-1 text-sm font-semibold bg-white/10 border border-white/20 rounded-full backdrop-blur">
-                    <i class="fas fa-briefcase mr-2 text-yellow-300"></i> Portafolio · Proyectos MCE
+                    <i class="fas fa-briefcase mr-2 text-yellow-300"></i> <span class="i18n-pf-badge" data-i18n="pf-badge">Portafolio · Proyectos MCE</span>
                 </span>
                 <h1 class="text-4xl md:text-5xl font-bold leading-tight i18n-pf-hero-title" data-i18n="pf-hero-title">Productos digitales y sistemas en producción</h1>
                 <p class="text-lg text-blue-50 max-w-3xl i18n-pf-hero-sub" data-i18n="pf-hero-sub">
@@ -91,80 +91,80 @@ $featuredProject = $projects[0] ?? null;
     <div class="bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-400 text-slate-900 rounded-2xl shadow-2xl border border-amber-200 overflow-hidden">
         <div class="grid md:grid-cols-12 gap-0">
             <div class="md:col-span-7 p-8 lg:py-10 lg:px-10 space-y-6 bg-white/70 backdrop-blur">
-                <div class="inline-flex items-center px-3 py-1 text-xs font-semibold uppercase tracking-wide bg-amber-100 text-amber-800 rounded-full border border-amber-200">Caso de éxito</div>
-                <h3 class="text-3xl font-bold">Destello de Oro 18K – Sistema de gestión para joyería</h3>
-                <p class="text-lg text-slate-800">El dueño enfrentaba descontrol total: inventario incierto, ventas en papel, garantías sin orden, gastos sin registrar y cierres de caja que tomaban horas.</p>
+                <div class="inline-flex items-center px-3 py-1 text-xs font-semibold uppercase tracking-wide bg-amber-100 text-amber-800 rounded-full border border-amber-200 i18n-pf-case-badge" data-i18n="pf-case-badge">Caso de éxito</div>
+                <h3 class="text-3xl font-bold i18n-pf-case-title" data-i18n="pf-case-title">Destello de Oro 18K – Sistema de gestión para joyería</h3>
+                <p class="text-lg text-slate-800 i18n-pf-case-desc" data-i18n="pf-case-desc">El dueño enfrentaba descontrol total: inventario incierto, ventas en papel, garantías sin orden, gastos sin registrar y cierres de caja que tomaban horas.</p>
 
                 <div class="grid lg:grid-cols-2 gap-4">
                     <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Necesidades del cliente</p>
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700 i18n-pf-case-need-title" data-i18n="pf-case-need-title">Necesidades del cliente</p>
                         <ul class="mt-2 space-y-2 text-sm text-slate-800">
-                            <li><span class="font-semibold text-amber-700">1.</span> Descontrol de inventario: sin claridad de stock y garantías.</li>
-                            <li><span class="font-semibold text-amber-700">2.</span> Pérdida de información en cuadernos/Excel.</li>
-                            <li><span class="font-semibold text-amber-700">3.</span> Garantías desordenadas: plazos y costos sin trazabilidad.</li>
-                            <li><span class="font-semibold text-amber-700">4.</span> Dos precios (mayorista/detal) manejados a mano con errores.</li>
-                            <li><span class="font-semibold text-amber-700">5.</span> Gastos diarios sin registrar ni controlar.</li>
-                            <li><span class="font-semibold text-amber-700">6.</span> Falta de roles: necesitaba limitar accesos de empleados.</li>
-                            <li><span class="font-semibold text-amber-700">7.</span> Cierres de caja tediosos y manuales.</li>
-                            <li><span class="font-semibold text-amber-700">8.</span> Sin respaldos: riesgo de perder toda la información.</li>
+                            <li class="i18n-pf-need1" data-i18n="pf-need1"><span class="font-semibold text-amber-700">1.</span> Descontrol de inventario: sin claridad de stock y garantías.</li>
+                            <li class="i18n-pf-need2" data-i18n="pf-need2"><span class="font-semibold text-amber-700">2.</span> Pérdida de información en cuadernos/Excel.</li>
+                            <li class="i18n-pf-need3" data-i18n="pf-need3"><span class="font-semibold text-amber-700">3.</span> Garantías desordenadas: plazos y costos sin trazabilidad.</li>
+                            <li class="i18n-pf-need4" data-i18n="pf-need4"><span class="font-semibold text-amber-700">4.</span> Dos precios (mayorista/detal) manejados a mano con errores.</li>
+                            <li class="i18n-pf-need5" data-i18n="pf-need5"><span class="font-semibold text-amber-700">5.</span> Gastos diarios sin registrar ni controlar.</li>
+                            <li class="i18n-pf-need6" data-i18n="pf-need6"><span class="font-semibold text-amber-700">6.</span> Falta de roles: necesitaba limitar accesos de empleados.</li>
+                            <li class="i18n-pf-need7" data-i18n="pf-need7"><span class="font-semibold text-amber-700">7.</span> Cierres de caja tediosos y manuales.</li>
+                            <li class="i18n-pf-need8" data-i18n="pf-need8"><span class="font-semibold text-amber-700">8.</span> Sin respaldos: riesgo de perder toda la información.</li>
                         </ul>
                     </div>
                     <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Soluciones implementadas</p>
+                        <p class="text-xs font-semibold uppercase tracking-wide text-amber-700 i18n-pf-sol-title" data-i18n="pf-sol-title">Soluciones implementadas</p>
                         <ul class="mt-2 space-y-2 text-sm text-slate-800">
-                            <li><span class="font-semibold text-amber-700">1.</span> Inventario en tiempo real por pieza.</li>
-                            <li><span class="font-semibold text-amber-700">2.</span> Base de datos en la nube (Hostinger) con backups automáticos.</li>
-                            <li><span class="font-semibold text-amber-700">3.</span> Módulo de garantías trazable (motivo, costos, estado, historial).</li>
-                            <li><span class="font-semibold text-amber-700">4.</span> Precios mayorista/detal automáticos según tipo de cliente.</li>
-                            <li><span class="font-semibold text-amber-700">5.</span> Módulo de gastos diarios con filtros y totales por período.</li>
-                            <li><span class="font-semibold text-amber-700">6.</span> Roles: Administrador (total) y Trabajador (ventas/consultas).</li>
-                            <li><span class="font-semibold text-amber-700">7.</span> Cierre de caja automático con ventas, medios de pago, gastos y utilidad.</li>
-                            <li><span class="font-semibold text-amber-700">8.</span> Respaldos diarios con restauración rápida.</li>
+                            <li class="i18n-pf-sol1" data-i18n="pf-sol1"><span class="font-semibold text-amber-700">1.</span> Inventario en tiempo real por pieza.</li>
+                            <li class="i18n-pf-sol2" data-i18n="pf-sol2"><span class="font-semibold text-amber-700">2.</span> Base de datos en la nube (Hostinger) con backups automáticos.</li>
+                            <li class="i18n-pf-sol3" data-i18n="pf-sol3"><span class="font-semibold text-amber-700">3.</span> Módulo de garantías trazable (motivo, costos, estado, historial).</li>
+                            <li class="i18n-pf-sol4" data-i18n="pf-sol4"><span class="font-semibold text-amber-700">4.</span> Precios mayorista/detal automáticos según tipo de cliente.</li>
+                            <li class="i18n-pf-sol5" data-i18n="pf-sol5"><span class="font-semibold text-amber-700">5.</span> Módulo de gastos diarios con filtros y totales por período.</li>
+                            <li class="i18n-pf-sol6" data-i18n="pf-sol6"><span class="font-semibold text-amber-700">6.</span> Roles: Administrador (total) y Trabajador (ventas/consultas).</li>
+                            <li class="i18n-pf-sol7" data-i18n="pf-sol7"><span class="font-semibold text-amber-700">7.</span> Cierre de caja automático con ventas, medios de pago, gastos y utilidad.</li>
+                            <li class="i18n-pf-sol8" data-i18n="pf-sol8"><span class="font-semibold text-amber-700">8.</span> Respaldos diarios con restauración rápida.</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Resultados</p>
+                    <p class="text-xs font-semibold uppercase tracking-wide text-amber-700 i18n-pf-res-title" data-i18n="pf-res-title">Resultados</p>
                     <div class="mt-2 grid sm:grid-cols-2 gap-3 text-sm text-slate-800">
                         <div>
-                            <p class="font-semibold text-amber-700">Inventario</p>
-                            <p>Antes: se perdían piezas. Después: control exacto por pieza en tiempo real.</p>
+                            <p class="font-semibold text-amber-700 i18n-pf-res1-title" data-i18n="pf-res1-title">Inventario</p>
+                            <p class="i18n-pf-res1-text" data-i18n="pf-res1-text">Antes: se perdían piezas. Después: control exacto por pieza en tiempo real.</p>
                         </div>
                         <div>
-                            <p class="font-semibold text-amber-700">Ventas</p>
-                            <p>Antes: papel/Excel. Después: registro digital consultable siempre.</p>
+                            <p class="font-semibold text-amber-700 i18n-pf-res2-title" data-i18n="pf-res2-title">Ventas</p>
+                            <p class="i18n-pf-res2-text" data-i18n="pf-res2-text">Antes: papel/Excel. Después: registro digital consultable siempre.</p>
                         </div>
                         <div>
-                            <p class="font-semibold text-amber-700">Garantías</p>
-                            <p>Antes: sin orden. Después: trazabilidad completa y costos controlados.</p>
+                            <p class="font-semibold text-amber-700 i18n-pf-res3-title" data-i18n="pf-res3-title">Garantías</p>
+                            <p class="i18n-pf-res3-text" data-i18n="pf-res3-text">Antes: sin orden. Después: trazabilidad completa y costos controlados.</p>
                         </div>
                         <div>
-                            <p class="font-semibold text-amber-700">Gastos</p>
-                            <p>Antes: no se medían. Después: reportes y detección de fugas.</p>
+                            <p class="font-semibold text-amber-700 i18n-pf-res4-title" data-i18n="pf-res4-title">Gastos</p>
+                            <p class="i18n-pf-res4-text" data-i18n="pf-res4-text">Antes: no se medían. Después: reportes y detección de fugas.</p>
                         </div>
                         <div>
-                            <p class="font-semibold text-amber-700">Tiempo</p>
-                            <p>Antes: 2 horas diarias en papeleo. Después: cierres automáticos.</p>
+                            <p class="font-semibold text-amber-700 i18n-pf-res5-title" data-i18n="pf-res5-title">Tiempo</p>
+                            <p class="i18n-pf-res5-text" data-i18n="pf-res5-text">Antes: 2 horas diarias en papeleo. Después: cierres automáticos.</p>
                         </div>
                         <div>
-                            <p class="font-semibold text-amber-700">Tranquilidad</p>
-                            <p>Antes: riesgo de perder datos. Después: información segura y respaldada.</p>
+                            <p class="font-semibold text-amber-700 i18n-pf-res6-title" data-i18n="pf-res6-title">Tranquilidad</p>
+                            <p class="i18n-pf-res6-text" data-i18n="pf-res6-text">Antes: riesgo de perder datos. Después: información segura y respaldada.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-white rounded-xl border border-amber-100 p-4 shadow-sm">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Testimonio</p>
-                    <p class="text-sm text-slate-800 mt-2 italic">“Superó mis expectativas, lo recomiendo 100%” – Jose Delgado, Destello de Oro 18K.</p>
+                    <p class="text-xs font-semibold uppercase tracking-wide text-amber-700 i18n-pf-test-title" data-i18n="pf-test-title">Testimonio</p>
+                    <p class="text-sm text-slate-800 mt-2 italic i18n-pf-test-text" data-i18n="pf-test-text">“Superó mis expectativas, lo recomiendo 100%” – Jose Delgado, Destello de Oro 18K.</p>
                 </div>
 
                 <div class="flex flex-wrap gap-3 pt-1">
                     <a href="<?php echo app_url('destello-oro.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
-                        <i class="fas fa-play mr-2"></i> Ver caso completo
+                        <i class="fas fa-play mr-2"></i> <span class="i18n-pf-case-btn-full" data-i18n="pf-case-btn-full">Ver caso completo</span>
                     </a>
                     <a href="<?php echo app_url('contacto.php'); ?>#agenda-llamada" class="inline-flex items-center px-5 py-3 rounded-xl border border-slate-900 text-slate-900 font-semibold hover:bg-slate-900 hover:text-white transition">
-                        <i class="fas fa-phone-alt mr-2"></i> Agenda una llamada
+                        <i class="fas fa-phone-alt mr-2"></i> <span class="i18n-pf-case-btn-call" data-i18n="pf-case-btn-call">Agenda una llamada</span>
                     </a>
                 </div>
             </div>
@@ -174,19 +174,19 @@ $featuredProject = $projects[0] ?? null;
                     <div class="bg-white/85 backdrop-blur-lg rounded-2xl shadow-2xl border border-amber-100 p-6 max-w-sm w-full space-y-3">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-xs font-semibold text-amber-700 uppercase tracking-wide">Joyería</p>
+                                <p class="text-xs font-semibold text-amber-700 uppercase tracking-wide i18n-pf-card-industry" data-i18n="pf-card-industry">Joyería</p>
                                 <p class="text-lg font-bold text-slate-900">Destello de Oro 18K</p>
                             </div>
                             <span class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-500 text-white font-bold">DO</span>
                         </div>
                         <ul class="space-y-2 text-slate-800 text-sm">
-                            <li class="flex items-start gap-2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Venta en tienda con cobro y saldos.</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Inventario en tiempo real por pieza.</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Garantías trazables y reposición.</span></li>
-                            <li class="flex items-start gap-2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Reportes de caja y gastos diarios.</span></li>
+                            <li class="flex items-start gap-2 i18n-pf-card-b1" data-i18n="pf-card-b1"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Venta en tienda con cobro y saldos.</span></li>
+                            <li class="flex items-start gap-2 i18n-pf-card-b2" data-i18n="pf-card-b2"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Inventario en tiempo real por pieza.</span></li>
+                            <li class="flex items-start gap-2 i18n-pf-card-b3" data-i18n="pf-card-b3"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Garantías trazables y reposición.</span></li>
+                            <li class="flex items-start gap-2 i18n-pf-card-b4" data-i18n="pf-card-b4"><i class="fas fa-circle-check text-amber-600 mt-0.5"></i><span>Reportes de caja y gastos diarios.</span></li>
                         </ul>
                         <a href="<?php echo app_url('destello-oro.php'); ?>" class="inline-flex items-center justify-center w-full mt-2 px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold shadow hover:bg-amber-600 transition">
-                            Ver pantallas
+                            <span class="i18n-pf-card-btn" data-i18n="pf-card-btn">Ver pantallas</span>
                         </a>
                     </div>
                 </div>
@@ -227,7 +227,7 @@ $featuredProject = $projects[0] ?? null;
             </div>
             <div class="md:w-1/2 p-8 space-y-4">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-blue-700">Proyecto destacado</span>
+                    <span class="text-xs font-semibold uppercase tracking-wide text-blue-700 i18n-pf-featured-badge" data-i18n="pf-featured-badge">Proyecto destacado</span>
                     <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold"><?php echo htmlspecialchars($featuredProject['categoria'], ENT_QUOTES, 'UTF-8'); ?></span>
                 </div>
                 <h3 class="text-2xl font-bold text-slate-900"><?php echo htmlspecialchars($featuredProject['titulo'], ENT_QUOTES, 'UTF-8'); ?></h3>
@@ -250,7 +250,7 @@ $featuredProject = $projects[0] ?? null;
                     <?php endif; ?>
                     <div class="flex items-center gap-2">
                         <i class="fas fa-star text-blue-600"></i>
-                        <span>Seleccionado por el equipo MCE</span>
+                        <span class="i18n-pf-featured-selected" data-i18n="pf-featured-selected">Seleccionado por el equipo MCE</span>
                     </div>
                 </div>
 
@@ -261,7 +261,7 @@ $featuredProject = $projects[0] ?? null;
                             <?php echo $featuredIsExternal ? 'target="_blank" rel="noopener"' : ''; ?>
                             class="bg-slate-900 text-white px-6 py-3 rounded-lg hover:bg-slate-800 transition"
                         >
-                            Ver proyecto
+                            <span class="i18n-pf-featured-view" data-i18n="pf-featured-view">Ver proyecto</span>
                         </a>
                     <?php endif; ?>
 
@@ -272,12 +272,12 @@ $featuredProject = $projects[0] ?? null;
                             rel="noopener"
                             class="border border-slate-300 text-slate-700 px-6 py-3 rounded-lg hover:bg-slate-50 transition"
                         >
-                            Ver repositorio
+                            <span class="i18n-pf-featured-repo" data-i18n="pf-featured-repo">Ver repositorio</span>
                         </a>
                     <?php endif; ?>
 
                     <a href="#proyectos-grid" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition">
-                        Ver más proyectos
+                        <span class="i18n-pf-featured-more" data-i18n="pf-featured-more">Ver más proyectos</span>
                     </a>
                 </div>
             </div>
@@ -290,11 +290,11 @@ $featuredProject = $projects[0] ?? null;
 <section class="max-w-7xl mx-auto px-4 py-6">
     <div class="bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide">Filtrar proyectos</p>
-            <p class="text-gray-700">Explora por categoría o mira todo el portafolio.</p>
+            <p class="text-sm font-semibold text-blue-700 uppercase tracking-wide i18n-pf-filter-label" data-i18n="pf-filter-label">Filtrar proyectos</p>
+            <p class="text-gray-700 i18n-pf-filter-desc" data-i18n="pf-filter-desc">Explora por categoría o mira todo el portafolio.</p>
         </div>
         <div class="flex flex-wrap gap-2">
-            <button class="filter-btn active px-4 py-2 rounded-full bg-blue-600 text-white" data-filter="all">Todos</button>
+            <button class="filter-btn active px-4 py-2 rounded-full bg-blue-600 text-white i18n-pf-filter-all" data-i18n="pf-filter-all" data-filter="all">Todos</button>
             <?php foreach ($categories as $category): ?>
                 <button class="filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300" data-filter="<?php echo htmlspecialchars($category, ENT_QUOTES, 'UTF-8'); ?>">
                     <?php echo htmlspecialchars($category, ENT_QUOTES, 'UTF-8'); ?>
@@ -308,7 +308,7 @@ $featuredProject = $projects[0] ?? null;
 <section class="max-w-7xl mx-auto px-4 py-12" id="proyectos-grid">
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php if (!$projects): ?>
-            <div class="md:col-span-2 lg:col-span-3 rounded-2xl border border-dashed border-gray-300 bg-white p-10 text-center text-gray-600">
+            <div class="md:col-span-2 lg:col-span-3 rounded-2xl border border-dashed border-gray-300 bg-white p-10 text-center text-gray-600 i18n-pf-no-projects" data-i18n="pf-no-projects">
                 Aún no hay proyectos publicados en el portafolio.
             </div>
         <?php endif; ?>
@@ -345,7 +345,7 @@ $featuredProject = $projects[0] ?? null;
                 <div class="p-6 space-y-3">
                     <div class="flex items-center justify-between">
                         <span class="text-sm text-blue-600 font-semibold"><?php echo htmlspecialchars($project['categoria'], ENT_QUOTES, 'UTF-8'); ?></span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold">Caso real</span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold i18n-pf-real-case" data-i18n="pf-real-case">Caso real</span>
                     </div>
                     <h3 class="text-xl font-bold">
                         <a
@@ -365,10 +365,10 @@ $featuredProject = $projects[0] ?? null;
                                 <?php echo $isExternal ? 'target="_blank" rel="noopener"' : ''; ?>
                                 class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold"
                             >
-                                Ver más <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                                <span class="i18n-pf-see-more" data-i18n="pf-see-more">Ver más</span> <i class="fas fa-arrow-right ml-2 text-sm"></i>
                             </a>
                         <?php else: ?>
-                            <span class="text-sm text-gray-400">Sin enlace disponible</span>
+                            <span class="text-sm text-gray-400 i18n-pf-no-link" data-i18n="pf-no-link">Sin enlace disponible</span>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -381,9 +381,9 @@ $featuredProject = $projects[0] ?? null;
 <section class="max-w-7xl mx-auto px-4 pb-16">
     <div class="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-800 text-white rounded-2xl mce-rounded-panel p-10 shadow-2xl flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
-            <p class="text-sm font-semibold text-blue-100 uppercase tracking-wide">¿Listo para tu caso?</p>
-            <h3 class="text-2xl font-bold">Te mostramos un demo similar a tu industria</h3>
-            <p class="text-blue-100 mt-2">Agenda una llamada y en 24 horas preparamos un recorrido de referencia.</p>
+            <p class="text-sm font-semibold text-blue-100 uppercase tracking-wide i18n-pf-cta2-label" data-i18n="pf-cta2-label">¿Listo para tu caso?</p>
+            <h3 class="text-2xl font-bold i18n-pf-cta2-title" data-i18n="pf-cta2-title">Te mostramos un demo similar a tu industria</h3>
+            <p class="text-blue-100 mt-2 i18n-pf-cta2-desc" data-i18n="pf-cta2-desc">Agenda una llamada y en 24 horas preparamos un recorrido de referencia.</p>
         </div>
         <div class="flex flex-wrap gap-3">
             <a href="<?php echo app_url('contacto.php'); ?>#agenda-llamada" class="inline-flex items-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold shadow-lg hover:bg-blue-50 transition mce-call-ringing">
@@ -393,13 +393,13 @@ $featuredProject = $projects[0] ?? null;
                     <span class="call-ring call-ring--2"></span>
                     <span class="call-ring call-ring--3"></span>
                 </span>
-                Agendar llamada
+                <span class="i18n-pf-cta2-call" data-i18n="pf-cta2-call">Agendar llamada</span>
             </a>
             <a href="#proyectos-grid" class="inline-flex items-center px-5 py-3 rounded-xl border border-white/60 text-white font-semibold hover:bg-white/10 transition">
-                <i class="fas fa-eye mr-2"></i> Ver proyectos
+                <i class="fas fa-eye mr-2"></i> <span class="i18n-pf-cta2-see" data-i18n="pf-cta2-see">Ver proyectos</span>
             </a>
             <a href="#casos-exito-portafolio" class="inline-flex items-center px-5 py-3 rounded-xl border border-amber-300 text-amber-100 font-semibold hover:bg-amber-200 hover:text-slate-900 transition">
-                <i class="fas fa-trophy mr-2"></i> Casos de éxito
+                <i class="fas fa-trophy mr-2"></i> <span class="i18n-pf-cta2-cases" data-i18n="pf-cta2-cases">Casos de éxito</span>
             </a>
         </div>
     </div>
