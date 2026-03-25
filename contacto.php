@@ -481,6 +481,35 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
             }
         });
     });
+
+    // Mensajes de validación en el idioma seleccionado
+    const attachValidationMessages = () => {
+        forms.forEach((form) => {
+            form?.querySelectorAll('input, textarea, select').forEach((el) => {
+                if (el.dataset.mceValidationAttached) return;
+                el.dataset.mceValidationAttached = '1';
+                el.addEventListener('invalid', () => {
+                    const t = window.mceTranslations || {};
+                    const req = t['ct-field-required'] || 'Completa este campo.';
+                    const email = t['ct-field-email'] || req;
+                    const minTpl = t['ct-field-minlength'] || req;
+                    if (el.validity.valueMissing) {
+                        el.setCustomValidity(req);
+                    } else if (el.validity.typeMismatch && el.type === 'email') {
+                        el.setCustomValidity(email);
+                    } else if (el.validity.tooShort) {
+                        const min = el.getAttribute('minlength') || '';
+                        el.setCustomValidity(minTpl.replace('{min}', min));
+                    } else {
+                        el.setCustomValidity('');
+                    }
+                });
+                el.addEventListener('input', () => el.setCustomValidity(''));
+            });
+        });
+    };
+    attachValidationMessages();
+    window.addEventListener('mce-lang-changed', attachValidationMessages);
 })();
 </script>
 <?php endif; ?>
