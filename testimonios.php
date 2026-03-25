@@ -220,14 +220,21 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         <?php else: ?>
             <?php while ($t = $testimonios->fetch_assoc()):
                 $initial = strtoupper(mb_substr($t['nombre'] ?? 'U', 0, 1, 'UTF-8'));
+                $projName = $t['proyecto'] ?? 'su proyecto';
+                $textoFinal = "Yo, {$t['nombre']} dueño de {$projName}, {$t['testimonio']}";
             ?>
-            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 p-6 border border-gray-100">
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 p-6 border border-gray-100 testimonial-card"
+                 data-testimonial-id="<?php echo (int) $t['id']; ?>"
+                 data-rating="<?php echo (int) $t['valoracion']; ?>"
+                 data-name-es="<?php echo htmlspecialchars($t['nombre'], ENT_QUOTES, 'UTF-8'); ?>"
+                 data-project-es="<?php echo htmlspecialchars($projName, ENT_QUOTES, 'UTF-8'); ?>"
+                 data-body-es="<?php echo htmlspecialchars($textoFinal, ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center gap-3">
                         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-700 font-semibold"><?php echo $initial; ?></span>
                         <div>
-                            <p class="font-semibold text-gray-900"><?php echo htmlspecialchars($t['nombre'], ENT_QUOTES, 'UTF-8'); ?></p>
-                            <p class="text-sm text-blue-600"><?php echo htmlspecialchars($t['proyecto'] ?? 'Proyecto MCE', ENT_QUOTES, 'UTF-8'); ?></p>
+                            <p class="font-semibold text-gray-900 ts-name"><?php echo htmlspecialchars($t['nombre'], ENT_QUOTES, 'UTF-8'); ?></p>
+                            <p class="text-sm text-blue-600 ts-project"><?php echo htmlspecialchars($t['proyecto'] ?? 'Proyecto MCE', ENT_QUOTES, 'UTF-8'); ?></p>
                         </div>
                     </div>
                     <div class="text-right">
@@ -247,11 +254,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                         <p class="text-xs font-semibold <?php echo $cls; ?> mt-1 ts-rating-card" data-rating="<?php echo $v; ?>"><?php echo $v; ?> / 5 · <?php echo $lbl; ?></p>
                     </div>
                 </div>
-                <?php
-                    $projName = $t['proyecto'] ?? 'su proyecto';
-                    $textoFinal = "Yo, {$t['nombre']} dueño de {$projName}, {$t['testimonio']}";
-                ?>
-                <p class="text-gray-700 leading-relaxed text-sm mb-4">"<?php echo nl2br(htmlspecialchars($textoFinal, ENT_QUOTES, 'UTF-8')); ?>"</p>
+                <p class="text-gray-700 leading-relaxed text-sm mb-4 ts-body">"<?php echo nl2br(htmlspecialchars($textoFinal, ENT_QUOTES, 'UTF-8')); ?>"</p>
                 <div class="flex items-center justify-between">
                     <span class="text-xs text-gray-500 flex items-center gap-2">
                         <i class="fas fa-shield-alt text-blue-500"></i> <span class="i18n-ts-verified" data-i18n="ts-verified">Testimonio verificado</span>
@@ -421,6 +424,94 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
 })();
 </script>
 <?php endif; ?>
+
+<script>
+// Traducción dinámica de testimonios (contenido) por idioma
+(function() {
+    const cards = Array.from(document.querySelectorAll('.testimonial-card'));
+    if (!cards.length) return;
+
+    // Traducciones específicas por ID (agrega aquí nuevos IDs si los traduces)
+    const testimonialTranslations = {
+        // Ejemplo: ID 1 (Jose Delgado)
+        '1': {
+            es: {
+                name: 'Jose Delgado',
+                project: 'Destello de Oro 18K',
+                body: 'Yo, Jose Delgado dueño de Destello de Oro 18K, Durante este tiempo estuvimos desarrollando un sistema para el control de inventario, y debo decir que el resultado fue excelente. El proceso fue muy profesional: siempre estuvo dispuesto a escuchar mis necesidades, hacer ajustes cuando era necesario y proponer soluciones que realmente optimizaron la forma en que manejo mi negocio.\n\nHoy cuento con un sistema mucho más organizado, práctico y hecho a la medida de lo que necesitaba. Esto me ha permitido tener mayor control y ahorrar tiempo en la gestión diaria.\n\nSi estás pensando en desarrollar software, sistemas a medida o una página web, definitivamente lo recomiendo. Es una persona responsable, comprometida con su trabajo y que realmente busca que el cliente quede satisfecho con el resultado final.\n\nSuperó mis expectativas, lo recomiendo 100 % ¡MUCHAS GRACIAS !'
+            },
+            en: {
+                name: 'Jose Delgado',
+                project: 'Destello de Oro 18K',
+                body: 'I, Jose Delgado, owner of Destello de Oro 18K, we developed an inventory control system and the result was excellent. The process was very professional: always willing to listen to my needs, make adjustments when needed, and propose solutions that truly optimized how I run my business.\n\nToday I have a much more organized, practical system tailored to what I needed. This has given me greater control and saved time in daily operations.\n\nIf you are thinking of building software, custom systems or a website, I definitely recommend him. He is responsible, committed to his work and truly seeks the client to be satisfied with the final result.\n\nHe exceeded my expectations, I recommend him 100%. THANK YOU VERY MUCH!'
+            },
+            fr: {
+                name: 'Jose Delgado',
+                project: 'Destello de Oro 18K',
+                body: 'Moi, Jose Delgado, propriétaire de Destello de Oro 18K, nous avons développé un système de gestion d’inventaire et le résultat a été excellent. Le processus a été très professionnel : toujours à l’écoute de mes besoins, prêt à ajuster si nécessaire et à proposer des solutions qui ont vraiment optimisé ma façon de gérer l’entreprise.\n\nAujourd’hui, je dispose d’un système beaucoup plus organisé, pratique et sur mesure. Cela m’a permis d’avoir plus de contrôle et de gagner du temps au quotidien.\n\nSi vous envisagez de développer un logiciel, un système sur mesure ou un site web, je le recommande sans hésiter. Responsable, engagé et vraiment soucieux que le client soit satisfait du résultat final.\n\nIl a dépassé mes attentes, je le recommande à 100 %. MERCI !'
+            },
+            de: {
+                name: 'Jose Delgado',
+                project: 'Destello de Oro 18K',
+                body: 'Ich, Jose Delgado, Inhaber von Destello de Oro 18K, wir haben ein Inventurkontrollsystem entwickelt und das Ergebnis war hervorragend. Der Prozess war sehr professionell: stets offen für meine Bedürfnisse, bereit für Anpassungen und mit Lösungen, die meine Geschäftsabläufe wirklich optimiert haben.\n\nHeute habe ich ein viel besser organisiertes, praktisches und maßgeschneidertes System. So habe ich mehr Kontrolle und spare Zeit im Tagesgeschäft.\n\nWenn du Software, ein maßgeschneidertes System oder eine Website entwickeln willst, kann ich ihn auf jeden Fall empfehlen. Verantwortungsbewusst, engagiert und wirklich darauf bedacht, dass der Kunde mit dem Endergebnis zufrieden ist.\n\nEr hat meine Erwartungen übertroffen, ich empfehle ihn zu 100 %. VIELEN DANK!'
+            },
+            pt: {
+                name: 'Jose Delgado',
+                project: 'Destello de Oro 18K',
+                body: 'Eu, Jose Delgado, dono da Destello de Oro 18K, desenvolvemos um sistema de controle de estoque e o resultado foi excelente. O processo foi muito profissional: sempre disposto a ouvir minhas necessidades, fazer ajustes quando necessário e propor soluções que realmente otimizaram a forma como gerencio o negócio.\n\nHoje tenho um sistema muito mais organizado, prático e sob medida. Isso me deu mais controle e economizou tempo na operação diária.\n\nSe você pensa em desenvolver software, sistemas sob medida ou um site, eu recomendo. Ele é responsável, comprometido com o trabalho e realmente busca a satisfação do cliente com o resultado final.\n\nSuperou minhas expectativas, recomendo 100%. MUITO OBRIGADO!'
+            },
+            it: {
+                name: 'Jose Delgado',
+                project: 'Destello de Oro 18K',
+                body: 'Io, Jose Delgado, proprietario di Destello de Oro 18K, abbiamo sviluppato un sistema di controllo inventario e il risultato è stato eccellente. Il processo è stato molto professionale: sempre pronto ad ascoltare le mie esigenze, a fare aggiustamenti quando serviva e a proporre soluzioni che hanno davvero ottimizzato il modo in cui gestisco il business.\n\nOggi ho un sistema molto più organizzato, pratico e su misura per ciò di cui avevo bisogno. Questo mi ha dato più controllo e mi fa risparmiare tempo nella gestione quotidiana.\n\nSe pensi di sviluppare software, sistemi su misura o un sito web, lo raccomando. È responsabile, impegnato nel lavoro e punta davvero a lasciare il cliente soddisfatto del risultato finale.\n\nHa superato le mie aspettative, lo raccomando al 100%. GRAZIE MILLE!'
+            }
+        }
+    };
+
+    // Guarda textos originales como fallback
+    cards.forEach(card => {
+        card.dataset.nameDefault = card.dataset.nameEs || card.querySelector('.ts-name')?.textContent?.trim() || '';
+        card.dataset.projectDefault = card.dataset.projectEs || card.querySelector('.ts-project')?.textContent?.trim() || '';
+        const bodyText = card.dataset.bodyEs || card.querySelector('.ts-body')?.textContent?.replace(/^\"|\"$/g,'') || '';
+        card.dataset.bodyDefault = bodyText;
+    });
+
+    const ratingTextByLang = (rating, lang) => {
+        const key = `ts-rating-${rating}`;
+        if (window.mceTranslations && window.mceTranslations[lang] && window.mceTranslations[lang][key]) {
+            return window.mceTranslations[lang][key];
+        }
+        if (window.mceTranslations && window.mceTranslations['es'] && window.mceTranslations['es'][key]) {
+            return window.mceTranslations['es'][key];
+        }
+        return `${rating} / 5`;
+    };
+
+    const apply = (lang) => {
+        cards.forEach(card => {
+            const id = card.dataset.testimonialId;
+            const tmap = testimonialTranslations[id]?.[lang];
+            const nameEl = card.querySelector('.ts-name');
+            const projectEl = card.querySelector('.ts-project');
+            const bodyEl = card.querySelector('.ts-body');
+            const ratingEl = card.querySelector('.ts-rating-card');
+            if (nameEl) nameEl.textContent = tmap?.name || card.dataset[`name${lang.toUpperCase()}`] || card.dataset.nameDefault || '';
+            if (projectEl) projectEl.textContent = tmap?.project || card.dataset[`project${lang.toUpperCase()}`] || card.dataset.projectDefault || '';
+            if (bodyEl) bodyEl.textContent = (tmap?.body || card.dataset[`body${lang.toUpperCase()}`] || card.dataset.bodyDefault || '').trim();
+            if (ratingEl) {
+                const rating = parseInt(card.dataset.rating || '5', 10);
+                ratingEl.textContent = ratingTextByLang(rating, lang);
+            }
+        });
+    };
+
+    const lang = window.mceCurrentLang || localStorage.getItem('siteLang') || 'es';
+    apply(lang);
+    window.addEventListener('mce-lang-changed', e => {
+        apply(e.detail?.lang || 'es');
+    });
+})();
+</script>
 
 <script>
 (() => {
