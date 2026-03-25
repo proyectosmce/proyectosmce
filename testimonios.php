@@ -572,14 +572,14 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     // Validación con mensajes traducidos
     const attachValidationMessages = () => {
         if (!form) return;
-        const dict = window.mceTranslations || {};
-        const requiredMsg = dict['ts-field-required'] || 'Completa este campo.';
-        const selectMsg = dict['ts-field-select'] || requiredMsg;
-        const minTpl = dict['ts-field-minlength'] || requiredMsg;
         form.querySelectorAll('input, textarea, select').forEach((el) => {
             if (el.dataset.mceValidationAttached) return;
             el.dataset.mceValidationAttached = '1';
             el.addEventListener('invalid', () => {
+                const t = window.mceTranslations || {};
+                const requiredMsg = t['ts-field-required'] || 'Completa este campo.';
+                const selectMsg = t['ts-field-select'] || requiredMsg;
+                const minTpl = t['ts-field-minlength'] || requiredMsg;
                 if (el.validity.valueMissing) {
                     el.setCustomValidity(el.tagName === 'SELECT' ? selectMsg : requiredMsg);
                 } else if (el.validity.tooShort) {
