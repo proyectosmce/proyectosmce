@@ -546,6 +546,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         updateStars();
         updatePreview();
         updateCardRatings();
+        attachValidationMessages();
     });
 
     // Búsqueda rápida en el select de proyectos
@@ -568,6 +569,30 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         });
     }
 
+    // Validación con mensajes traducidos
+    const attachValidationMessages = () => {
+        if (!form) return;
+        const dict = window.mceTranslations || {};
+        const requiredMsg = dict['ts-field-required'] || 'Completa este campo.';
+        const selectMsg = dict['ts-field-select'] || requiredMsg;
+        const minTpl = dict['ts-field-minlength'] || requiredMsg;
+        form.querySelectorAll('input, textarea, select').forEach((el) => {
+            if (el.dataset.mceValidationAttached) return;
+            el.dataset.mceValidationAttached = '1';
+            el.addEventListener('invalid', () => {
+                if (el.validity.valueMissing) {
+                    el.setCustomValidity(el.tagName === 'SELECT' ? selectMsg : requiredMsg);
+                } else if (el.validity.tooShort) {
+                    const min = el.getAttribute('minlength') || '';
+                    el.setCustomValidity(minTpl.replace('{min}', min));
+                } else {
+                    el.setCustomValidity('');
+                }
+            });
+            el.addEventListener('input', () => el.setCustomValidity(''));
+        });
+    };
+
     // Ocultar aviso y limpiar querystring
     const alertTestimonio = document.getElementById('alert-testimonio');
     const alertTestimonioError = document.getElementById('alert-testimonio-error');
@@ -584,6 +609,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         if (submitting) return;
         e.preventDefault();
         updatePreview();
+        attachValidationMessages();
 
         if (typeof window.grecaptcha === 'undefined') {
             alert('reCAPTCHA aun no termina de cargar. Intenta nuevamente en unos segundos.');
@@ -603,5 +629,6 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     });
 
     updatePreview();
+    attachValidationMessages();
 })();
 </script>
