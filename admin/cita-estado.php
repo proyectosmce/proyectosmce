@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 // admin/cita-estado.php
 require_once '../includes/config.php';
 require_once '../includes/admin-helpers.php';
@@ -109,7 +109,7 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
             'estado' => $estadoNuevo,
             'email' => '',
             'id' => $cita['id'] ?? null,
-            'error' => 'Email del cliente vacío.',
+            'error' => 'Email del cliente vacÃ­o.',
         ];
         return;
     }
@@ -152,25 +152,25 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
         $hora = $cita['hora'] ?? '';
         $servicio = $cita['servicio'] ?? 'Llamada';
         $nombre = $cita['nombre'] ?? 'Cliente';
-        $tipo = strtolower(trim((string) ($cita['tipo_llamada'] ?? 'telefono'))) === 'video' ? 'Videollamada' : 'Teléfono';
+        $tipo = strtolower(trim((string) ($cita['tipo_llamada'] ?? 'telefono'))) === 'video' ? 'Videollamada' : 'TelÃ©fono';
         $enlace = trim((string) ($cita['enlace_reunion'] ?? ''));
 
         $fechaLabel = $fecha !== '' ? date('d/m/Y', strtotime($fecha)) : 'por definir';
         $horaLabel = $hora !== '' ? date('H:i', strtotime($hora)) : 'por definir';
 
         if ($estadoNuevo === 'confirmada') {
-            $subject = 'Tu cita fue confirmada · Proyectos MCE';
-            $hero = 'Tu llamada está confirmada';
+            $subject = 'Tu cita fue confirmada Â· Proyectos MCE';
+            $hero = 'Tu llamada estÃ¡ confirmada';
             $lead = 'Gracias por agendar. Te esperamos en el horario elegido.';
             $ctaText = $enlace !== '' ? 'Entrar a la videollamada' : 'Agregar al calendario';
             $ctaUrl = $enlace !== '' ? $enlace : '#';
             $statusColor = '#16a34a';
         } else {
-            $subject = 'Tu cita fue cancelada · Proyectos MCE';
+            $subject = 'Tu cita fue cancelada Â· Proyectos MCE';
             $hero = 'Hemos cancelado la cita';
             $lead = 'Podemos reprogramar cuando te convenga. Reagenda en el enlace siguiente.';
             $ctaText = 'Reagendar ahora';
-            $ctaUrl = app_absolute_url('contacto.php#agenda-llamada');
+            $ctaUrl = app_absolute_url('contacto.php?cta=agenda#agenda-llamada');
             $statusColor = '#dc2626';
         }
 
@@ -184,7 +184,7 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
         $servicioEsc = htmlspecialchars($servicio, ENT_QUOTES, 'UTF-8');
         $tipoEsc = htmlspecialchars($tipo, ENT_QUOTES, 'UTF-8');
         $enlaceEsc = htmlspecialchars($enlace, ENT_QUOTES, 'UTF-8');
-        $enlaceHtml = $enlaceEsc !== '' ? '<a href="' . $enlaceEsc . '" style="color:#2563eb;">' . $enlaceEsc . '</a>' : 'No aplica / se compartirá si es necesario';
+        $enlaceHtml = $enlaceEsc !== '' ? '<a href="' . $enlaceEsc . '" style="color:#2563eb;">' . $enlaceEsc . '</a>' : 'No aplica / se compartirÃ¡ si es necesario';
         $ctaEsc = htmlspecialchars($ctaUrl, ENT_QUOTES, 'UTF-8');
         $ctaTextEsc = htmlspecialchars($ctaText, ENT_QUOTES, 'UTF-8');
         $statusColorEsc = htmlspecialchars($statusColor, ENT_QUOTES, 'UTF-8');
@@ -225,7 +225,7 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
               <div style="margin:14px 0;">
                 <a href="{$ctaEsc}" style="display:inline-block;padding:12px 18px;border-radius:12px;background:{$statusColorEsc};color:#ffffff;text-decoration:none;font-weight:700;">{$ctaTextEsc}</a>
               </div>
-              <p style="color:#94a3b8;font-size:12px;margin:14px 0 4px;">Si no solicitaste esta actualización, responde a este correo.</p>
+              <p style="color:#94a3b8;font-size:12px;margin:14px 0 4px;">Si no solicitaste esta actualizaciÃ³n, responde a este correo.</p>
             </td>
           </tr>
         </table>
@@ -236,7 +236,7 @@ function admin_send_cita_email(array $cita, string $estadoNuevo, array $smtp): v
 </html>
 HTML;
 
-        $mail->AltBody = "Estado de tu cita: {$estadoNuevo}\nFecha: {$fechaLabel}\nHora: {$horaLabel}\nServicio: {$servicio}\nModalidad: {$tipo}\nEnlace: " . ($enlace !== '' ? $enlace : 'No aplica / se enviará si es necesario') . "\nCTA: {$ctaUrl}\n\nSi no solicitaste esta actualización, responde este correo.";
+        $mail->AltBody = "Estado de tu cita: {$estadoNuevo}\nFecha: {$fechaLabel}\nHora: {$horaLabel}\nServicio: {$servicio}\nModalidad: {$tipo}\nEnlace: " . ($enlace !== '' ? $enlace : 'No aplica / se enviarÃ¡ si es necesario') . "\nCTA: {$ctaUrl}\n\nSi no solicitaste esta actualizaciÃ³n, responde este correo.";
 
         $mail->send();
         $_SESSION['agenda_flash'] = [
@@ -274,3 +274,4 @@ admin_log_action($conn, 'Actualizar cita', 'cita', $id, 'Estado: ' . $estado);
 header('Location: ' . $redirect);
 exit;
 ?>
+
