@@ -534,6 +534,82 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
 </script>
 <?php endif; ?>
 
+<script>
+// Prefill mensaje según servicio elegido en el idioma activo
+(() => {
+    const qs = new URLSearchParams(window.location.search);
+    const rawService = qs.get('servicio');
+    if (!rawService) return;
+
+    const normalize = (str) => (str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+    const lang = (window.mceCurrentLang || localStorage.getItem('siteLang') || 'es');
+    const slug = normalize(rawService);
+
+    /**
+     * Plantillas por idioma → servicio normalizado
+     * Se usa un fallback a español si falta alguna traducción puntual.
+     */
+    const tpl = {
+        es: {
+            'desarrollo web a medida': 'Hola, quiero un desarrollo web a medida.\n\nObjetivo principal:\nPúblico objetivo:\nFunciones clave:\nIntegraciones (APIs/pagos):\nPlazo ideal y presupuesto aproximado:',
+            'sistemas de inventario': 'Hola, necesito un sistema de inventario.\n\nNúmero de productos/SKUs:\nPuntos de venta o canales:\nAlertas y reportes deseados:\nIntegraciones con contabilidad/tiendas:\nPlazo ideal y presupuesto aproximado:',
+            'landing pages': 'Hola, necesito una landing page.\n\nObjetivo de la campaña (leads/ventas):\nPúblico y propuesta de valor:\nSecciones requeridas:\nIntegraciones (formularios/CRM/pagos):\nFecha de lanzamiento y presupuesto:',
+            'mantenimiento web': 'Hola, busco mantenimiento web.\n\nTipo de sitio y tecnología:\nAlcance (monitoreo, soporte, mejoras):\nFrecuencia de actualizaciones:\nAccesos disponibles (hosting/Git):\nPresupuesto mensual o por horas:'
+        },
+        en: {
+            'desarrollo web a medida': 'Hi, I need a custom web development project.\n\nMain goal:\nTarget audience:\nKey features:\nIntegrations (APIs/payments):\nIdeal timeline and budget:',
+            'sistemas de inventario': 'Hi, I need an inventory system.\n\nNumber of products/SKUs:\nSales channels or POS:\nAlerts and reports needed:\nIntegrations with accounting/stores:\nIdeal timeline and budget:',
+            'landing pages': 'Hi, I need a landing page.\n\nCampaign goal (leads/sales):\nAudience and value proposition:\nRequired sections:\nIntegrations (forms/CRM/payments):\nLaunch date and budget:',
+            'mantenimiento web': 'Hi, I need website maintenance.\n\nSite type and tech stack:\nScope (monitoring, support, improvements):\nUpdate frequency:\nAccess available (hosting/Git):\nMonthly or hourly budget:'
+        },
+        de: {
+            'desarrollo web a medida': 'Hallo, ich brauche eine maßgeschneiderte Webentwicklung.\n\nHauptziel:\nZielgruppe:\nSchlüsselfunktionen:\nIntegrationen (APIs/Zahlungen):\nGewünschter Zeitplan und Budget:',
+            'sistemas de inventario': 'Hallo, ich benötige ein Warenwirtschaftssystem.\n\nAnzahl Produkte/SKUs:\nVertriebskanäle oder POS:\nGewünschte Alarme und Berichte:\nIntegrationen mit Buchhaltung/Shops:\nGewünschter Zeitplan und Budget:',
+            'landing pages': 'Hallo, ich brauche eine Landing Page.\n\nKampagnenziel (Leads/Verkäufe):\nZielgruppe und Value Proposition:\nBenötigte Abschnitte:\nIntegrationen (Formulare/CRM/Zahlungen):\nLaunch-Datum und Budget:',
+            'mantenimiento web': 'Hallo, ich suche Website-Wartung.\n\nSeitentyp und Tech-Stack:\nUmfang (Monitoring, Support, Verbesserungen):\nUpdate-Häufigkeit:\nZugänge vorhanden (Hosting/Git):\nMonats- oder Stundensatz:'
+        },
+        fr: {
+            'desarrollo web a medida': 'Bonjour, je souhaite un développement web sur mesure.\n\nObjectif principal :\nAudience cible :\nFonctionnalités clés :\nIntégrations (APIs/paiements) :\nDélai idéal et budget :',
+            'sistemas de inventario': 'Bonjour, j’ai besoin d’un système d’inventaire.\n\nNombre de produits/SKU :\nCanaux de vente ou PDV :\nAlertes et rapports souhaités :\nIntégrations avec comptabilité/boutiques :\nDélai idéal et budget :',
+            'landing pages': 'Bonjour, j’ai besoin d’une landing page.\n\nObjectif de la campagne (leads/ventes) :\nAudience et proposition de valeur :\nSections requises :\nIntégrations (formulaires/CRM/paiements) :\nDate de lancement et budget :',
+            'mantenimiento web': 'Bonjour, je cherche de la maintenance web.\n\nType de site et techno :\nPortée (monitoring, support, améliorations) :\nFréquence des mises à jour :\nAccès disponibles (hébergement/Git) :\nBudget mensuel ou horaire :'
+        },
+        pt: {
+            'desarrollo web a medida': 'Olá, preciso de um desenvolvimento web sob medida.\n\nObjetivo principal:\nPúblico-alvo:\nFuncionalidades-chave:\nIntegrações (APIs/pagamentos):\nPrazo ideal e orçamento:',
+            'sistemas de inventario': 'Olá, preciso de um sistema de inventário.\n\nQuantidade de produtos/SKUs:\nCanais de venda ou PDV:\nAlertas e relatórios desejados:\nIntegrações com contabilidade/lojas:\nPrazo ideal e orçamento:',
+            'landing pages': 'Olá, preciso de uma landing page.\n\nObjetivo da campanha (leads/vendas):\nPúblico e proposta de valor:\nSeções necessárias:\nIntegrações (formulários/CRM/pagamentos):\nData de lançamento e orçamento:',
+            'mantenimiento web': 'Olá, preciso de manutenção web.\n\nTipo de site e stack:\nEscopo (monitoramento, suporte, melhorias):\nFrequência de atualizações:\nAcessos disponíveis (hosting/Git):\nOrçamento mensal ou por hora:'
+        },
+        it: {
+            'desarrollo web a medida': 'Ciao, ho bisogno di uno sviluppo web su misura.\n\nObiettivo principale:\nPubblico di riferimento:\nFunzionalità chiave:\nIntegrazioni (API/pagamenti):\nTempistica ideale e budget:',
+            'sistemas de inventario': 'Ciao, mi serve un sistema di inventario.\n\nNumero di prodotti/SKU:\nCanali di vendita o POS:\nAvvisi e report desiderati:\nIntegrazioni con contabilità/negozi:\nTempistica ideale e budget:',
+            'landing pages': 'Ciao, mi serve una landing page.\n\nObiettivo della campagna (lead/vendite):\nPubblico e proposta di valore:\nSezioni richieste:\nIntegrazioni (moduli/CRM/pagamenti):\nData di lancio e budget:',
+            'mantenimiento web': 'Ciao, cerco manutenzione web.\n\nTipo di sito e stack:\nAmbito (monitoraggio, supporto, miglioramenti):\nFrequenza degli aggiornamenti:\nAccessi disponibili (hosting/Git):\nBudget mensile o a ore:'
+        }
+    };
+
+    const messageTemplate = tpl[lang]?.[slug] || tpl.es?.[slug];
+    if (!messageTemplate) return;
+
+    const fillField = (formId) => {
+        const form = document.getElementById(formId);
+        if (!form) return;
+        const msg = form.querySelector('textarea[name="mensaje"]');
+        if (msg && !msg.value.trim()) {
+            msg.value = messageTemplate;
+        }
+        const select = form.querySelector('select[name="servicio"]');
+        if (select) {
+            const target = Array.from(select.options).find(opt => normalize(opt.textContent) === slug || normalize(opt.value) === slug);
+            if (target) select.value = target.value;
+        }
+    };
+
+    fillField('contact-form');
+    fillField('agenda-form');
+})();
+</script>
+
 <?php include 'includes/footer.php'; ?>
 
 
