@@ -276,12 +276,13 @@ function render_html(array $payment): void
         :root { --dark:#0f172a; --accent:#f59e0b; --muted:#475569; --bg:#f8fafc; }
         body { font-family:'Segoe UI', Arial, sans-serif; margin:0; padding:24px; background:var(--bg); color:#0f172a; }
         .card { background:#fff; border:1px solid #e2e8f0; border-radius:16px; padding:24px; max-width:900px; margin:0 auto; box-shadow:0 10px 30px rgba(15,23,42,0.08); }
-        .header { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
-        .brand { color:#fff; background:linear-gradient(135deg, var(--dark), #111827); padding:16px 18px; border-radius:12px; }
-        .brand h1 { margin:0; font-size:20px; letter-spacing:0.3px; }
-        .brand p { margin:4px 0 0; font-size:12px; color:#cbd5e1; }
-        .invoice-meta { text-align:right; }
-        .pill { display:inline-flex; align-items:center; gap:8px; background:rgba(245,158,11,0.12); color:var(--dark); border:1px solid rgba(245,158,11,0.35); border-radius:999px; padding:6px 12px; font-weight:600; }
+        .header { background:#0f172a; color:#fff; padding:20px 22px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+        .brand { display:flex; align-items:center; gap:12px; }
+        .brand img { width:56px; height:56px; border-radius:12px; object-fit:cover; box-shadow:0 8px 18px rgba(0,0,0,0.25); }
+        .brand h1 { margin:0; font-size:20px; letter-spacing:0.2px; }
+        .brand p { margin:4px 0 0; font-size:12px; color:#bfdbfe; letter-spacing:0.16em; text-transform:uppercase; }
+        .invoice-meta { text-align:right; color:#fff; }
+        .pill { display:inline-flex; align-items:center; gap:8px; background:#eef2ff; color:#2563eb; border:none; border-radius:12px; padding:8px 12px; font-weight:700; font-size:12px; letter-spacing:0.04em; }
         table { width:100%; border-collapse:collapse; margin-top:18px; }
         th { text-align:left; padding:10px; background:#f1f5f9; color:var(--muted); font-size:13px; }
         td { padding:10px; border-bottom:1px solid #e2e8f0; font-size:14px; color:#1f2937; }
@@ -296,16 +297,16 @@ function render_html(array $payment): void
 <body>
     <div class="card">
         <div class="header">
-            <div class="brand" style="display:flex;align-items:center;gap:10px;">
-                <img src="<?php echo htmlspecialchars($logoUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="MCE" style="width:52px;height:52px;border-radius:12px;object-fit:cover;box-shadow:0 6px 14px rgba(0,0,0,0.18);">
+            <div class="brand">
+                <img src="<?php echo htmlspecialchars($logoUrl, ENT_QUOTES, 'UTF-8'); ?>" alt="MCE">
                 <div>
-                    <h1 style="margin:0;font-size:20px;letter-spacing:0.3px;">Proyectos MCE</h1>
-                    <p style="margin:4px 0 0;font-size:12px;color:#cbd5e1;">Software a medida · proyectosmceaa@gmail.com · +57 311 412 59 71</p>
+                    <h1>PROYECTOS MCE</h1>
+                    <p>Desarrollo Web & MAS</p>
                 </div>
             </div>
             <div class="invoice-meta">
-                <div class="pill">Factura <?php echo htmlspecialchars($invoice, ENT_QUOTES, 'UTF-8'); ?></div>
-                <p class="muted" style="margin:8px 0 0;">Fecha: <?php echo htmlspecialchars($fecha, ENT_QUOTES, 'UTF-8'); ?></p>
+                <div class="pill">Factura #<?php echo htmlspecialchars($invoice, ENT_QUOTES, 'UTF-8'); ?></div>
+                <p style="margin:8px 0 0;color:#bfdbfe;font-size:12px;">Fecha: <?php echo htmlspecialchars($fecha, ENT_QUOTES, 'UTF-8'); ?></p>
             </div>
         </div>
 
@@ -371,14 +372,20 @@ function render_html(array $payment): void
             </table>
         </div>
 
-        <?php if (!empty(trim((string) $payment['notas']))): ?>
-            <div style="margin-top:12px;">
-                <p class="muted" style="margin:0 0 6px;">Notas</p>
-                <p style="margin:0;"><?php echo $notas; ?></p>
-            </div>
-        <?php endif; ?>
-
-        <p class="muted" style="margin-top:18px;">Gracias por confiar en Proyectos MCE. Si tienes dudas sobre este comprobante o requieres soporte, contáctanos en proyectosmceaa@gmail.com.</p>
+        <div style="border:1px solid #e2e8f0; border-radius:12px; padding:14px 16px; background:#f8fafc; color:#0f172a; font-size:14px; line-height:1.6; margin-top:14px;">
+          Transferencia a Bancolombia · Cuenta corriente 123-456789 · Pago neto 15 días.
+        </div>
+        <div style="margin-top:12px; padding:12px 14px; border-radius:12px; border:1px solid #e2e8f0; background:#fff7ed; color:#92400e; font-size:13px;">
+          Gracias por tu pago. Si necesitas soporte o un ajuste en la factura, escríbenos a <strong>proyectosmceaa@gmail.com</strong> o <strong>+57 311 412 59 71</strong>.
+        </div>
+        <div style="display:flex; gap:16px; align-items:center; margin-top:12px; flex-wrap:wrap;">
+          <div style="width:120px; height:120px; border:1px dashed #e2e8f0; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-size:12px; background:#fff;">QR / Link de pago</div>
+          <div style="font-size:13px; color:#475569; line-height:1.5;">
+            - Términos: pago neto 15 días, soporte operativo incluido en el primer mes.<br>
+            - Si requieres NDA o nota de crédito, solicita al equipo de soporte.<br>
+            - Pago preferido: transferencia Bancolombia. Alternativa: tarjeta vía pasarela.
+          </div>
+        </div>
 
         <div class="actions">
             <a class="btn" href="pagos.php">Volver</a>
