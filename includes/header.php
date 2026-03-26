@@ -85,8 +85,9 @@ $titleKey = "meta-title-" . $pageSlug;
             position: relative;
             overflow: hidden;
             border-radius: 9999px;
-            box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.18);
-            animation: mceHalo 4s ease-in-out infinite;
+            box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.16);
+            animation: mceHalo 6s ease-in-out infinite;
+            animation-delay: 1s;
             isolation: isolate;
         }
         .mce-photo-badge::before {
@@ -95,6 +96,7 @@ $titleKey = "meta-title-" . $pageSlug;
             inset: -3px;
             background: conic-gradient(from 45deg, #0ea5e9 0%, #22d3ee 50%, #0ea5e9 100%);
             animation: mceSpin 18s linear infinite;
+            animation-delay: 3s; /* empieza tras el primer halo */
             z-index: -1;
             mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 1px));
             -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 1px));
@@ -106,11 +108,12 @@ $titleKey = "meta-title-" . $pageSlug;
             left: -80%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.32) 50%, transparent 100%);
             transform: rotate(15deg) translateX(-50%);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.25s ease;
+            animation: mceShineAuto 12s ease-in-out infinite;
+            animation-delay: 6s; /* se dispara después del halo y del giro */
         }
         .mce-photo-badge:hover::after {
             opacity: 1;
@@ -120,12 +123,18 @@ $titleKey = "meta-title-" . $pageSlug;
             to { transform: rotate(360deg); }
         }
         @keyframes mceHalo {
-            0%,100% { box-shadow: 0 0 0 0 rgba(14,165,233,0.18), 0 8px 18px rgba(15,23,42,0.18); }
+            0%,100% { box-shadow: 0 0 0 0 rgba(14,165,233,0.16), 0 8px 18px rgba(15,23,42,0.18); }
             50%     { box-shadow: 0 0 0 4px rgba(14,165,233,0.10), 0 10px 22px rgba(15,23,42,0.22); }
         }
         @keyframes mceShine {
-            from { transform: rotate(15deg) translateX(-60%); opacity: 0.15; }
+            from { transform: rotate(15deg) translateX(-60%); opacity: 0.18; }
             to   { transform: rotate(15deg) translateX(80%);  opacity: 0; }
+        }
+        @keyframes mceShineAuto {
+            0%,84% { opacity: 0; transform: rotate(15deg) translateX(-60%); }
+            88%    { opacity: 0.14; }
+            96%    { opacity: 0; transform: rotate(15deg) translateX(80%); }
+            100%   { opacity: 0; transform: rotate(15deg) translateX(80%); }
         }
         @media (prefers-reduced-motion: reduce) {
             .mce-photo-badge { animation: none; }
