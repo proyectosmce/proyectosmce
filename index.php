@@ -227,17 +227,17 @@
                     </span>
                 </div>
 
-                <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
-                    <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-white text-slate-900 px-8 py-4 rounded-xl font-semibold shadow-lg shadow-slate-900/20 hover:bg-gray-100 transition i18n-btn-plan" data-i18n="btn-plan">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
+                    <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-xl font-semibold text-sm md:text-base hover:bg-white hover:text-slate-900 transition i18n-btn-plan whitespace-nowrap" data-i18n="btn-plan">
                         <i class="fas fa-rocket mr-2"></i> Armar mi plan
                     </a>
-                    <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition i18n-btn-portfolio" data-i18n="btn-portfolio">
+                    <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-xl font-semibold text-sm md:text-base hover:bg-white hover:text-slate-900 transition i18n-btn-portfolio whitespace-nowrap" data-i18n="btn-portfolio">
                         <i class="fas fa-eye mr-2"></i> Ver casos en vivo
                     </a>
-                    <a href="<?php echo app_url('portafolio.php#casos-exito-portafolio'); ?>" class="inline-flex items-center justify-center border-2 border-yellow-300 text-yellow-300 px-8 py-4 rounded-xl font-semibold hover:bg-yellow-300 hover:text-slate-900 transition i18n-btn-cases" data-i18n="btn-cases">
+                    <a href="<?php echo app_url('portafolio.php#casos-exito-portafolio'); ?>" class="inline-flex items-center justify-center border-2 border-yellow-300 text-yellow-300 px-6 py-3 rounded-xl font-semibold text-sm md:text-base hover:bg-yellow-300 hover:text-slate-900 transition i18n-btn-cases whitespace-nowrap" data-i18n="btn-cases">
                         <i class="fas fa-trophy mr-2"></i> Casos de éxito
                     </a>
-                    <a href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition i18n-link-services" data-i18n="link-services">
+                    <a href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-6 py-3 rounded-xl font-semibold text-sm md:text-base hover:bg-white hover:text-slate-900 transition i18n-link-services whitespace-nowrap" data-i18n="link-services">
                         <span>Servicios</span>
                         <i class="fas fa-arrow-down ml-2"></i>
                     </a>
