@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plantillas de Factura · MCE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root {
+      --slate:#0f172a;
+      --blue:#2563eb;
+      --green:#16a34a;
+      --amber:#f59e0b;
+      --border:#e5e7eb;
+      --muted:#6b7280;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f8fafc;
+      color: #111827;
+      margin: 0;
+      padding: 32px;
+      line-height: 1.45;
+    }
+    h1 { margin: 0 0 8px; }
+    p.sub { margin: 0 0 24px; color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .brand img {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    }
+    .brand .name { font-weight: 700; font-size: 18px; }
+    .brand .sub  { color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .badge {
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 12px;
+      background: #eef2ff;
+      color: var(--blue);
+    }
+    .section-title {
+      font-size: 12px;
+      letter-spacing: .12em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin: 16px 0 8px;
+    }
+    .row { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+    .muted { color: var(--muted); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+    th, td { padding: 10px; text-align: left; }
+    th { background: #f1f5f9; font-weight: 700; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    .right { text-align: right; }
+    .total {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--slate);
+    }
+    /* Variantes */
+    .primary   { border-top: 5px solid var(--blue); }
+    .emerald   { border-top: 5px solid var(--green); }
+    .sunset    { border-top: 5px solid var(--amber); }
+    .emerald .badge { background: #ecfdf3; color: var(--green); }
+    .sunset  .badge { background: #fff7ed; color: #d97706; }
+    .watermark {
+      position: absolute;
+      inset: 16px;
+      background: radial-gradient(circle at 20% 20%, rgba(37,99,235,0.08), transparent 45%),
+                  radial-gradient(circle at 80% 10%, rgba(14,165,233,0.06), transparent 40%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .card > * { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+  <h1>Plantillas de factura</h1>
+  <p class="sub">Tres variantes listas para adaptar. Todas usan el logo de MCE en el encabezado.</p>
+
+  <div class="grid">
+    <!-- Variante 1: Primary -->
+    <section class="card primary">
+      <div class="watermark"></div>
+      <div class="header">
+        <div class="brand">
+          <img src="MCE.jpg" alt="MCE">
+          <div>
+            <div class="name">Proyectos MCE</div>
+            <div class="sub">Factura · Software a medida</div>
+          </div>
+        </div>
+        <span class="badge">Factura #INV-1024</span>
+      </div>
+
+      <div class="section-title">Emisor</div>
+      <div class="row">
+        <div>
+          <div><strong>Proyectos MCE</strong></div>
+          <div class="muted">Calle 123 · Bogotá</div>
+          <div class="muted">contacto@proyectosmce.com</div>
+        </div>
+        <div class="right">
+          <div class="muted">Fecha</div>
+          <div><strong>2026-03-26</strong></div>
+          <div class="muted">Vence</div>
+          <div><strong>2026-04-10</strong></div>
+        </div>
+      </div>
+
+      <div class="section-title">Cliente</div>
+      <div class="row">
+        <div>
+          <div><strong>Cliente Demo S.A.S.</strong></div>
+          <div class="muted">NIT 900.123.456-7</div>
+          <div class="muted">cliente@demo.com</div>
+        </div>
+        <div class="right muted">
+          <div>PO/Referencia</div>
+          <div><strong>PO-7781</strong></div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Concepto</th><th class="right">Cantidad</th><th class="right">Valor</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Discovery + Arquitectura</td><td class="right">1</td><td class="right">$1,200</td></tr>
+          <tr><td>Desarrollo módulo inventarios</td><td class="right">1</td><td class="right">$4,800</td></tr>
+          <tr><td>Soporte y monitoreo (mes)</td><td class="right">1</td><td class="right">$600</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="2" class="right muted">Subtotal</td><td class="right">$6,600</td></tr>
+          <tr><td colspan="2" class="right muted">Impuestos (19%)</td><td class="right">$1,254</td></tr>
+          <tr><td colspan="2" class="right total">Total</td><td class="right total">$7,854</td></tr>
+        </tfoot>
+      </table>
+
+      <div class="section-title">Notas</div>
+      <div class="muted">Transferencia a Bancolombia · Cuenta corriente 123-456789 · Pago neto 15 días.</div>
+    </section>
+
+    <!-- Variante 2: Emerald -->
+    <section class="card emerald">
+      <div class="watermark"></div>
+      <div class="header">
+        <div class="brand">
+          <img src="MCE.jpg" alt="MCE">
+          <div>
+            <div class="name">Proyectos MCE</div>
+            <div class="sub">Factura · Servicios recurrentes</div>
+          </div>
+        </div>
+        <span class="badge">Factura #SUS-045</span>
+      </div>
+
+      <div class="section-title">Cliente</div>
+      <div class="row">
+        <div>
+          <div><strong>Retail Andina</strong></div>
+          <div class="muted">NIT 800.555.111-0</div>
+          <div class="muted">ops@retailandina.com</div>
+        </div>
+        <div class="right muted">
+          <div>Periodo</div>
+          <div><strong>Mar 2026</strong></div>
+        </div>
+      </div>
+
+      <table>
+        <thead><tr><th>Concepto</th><th class="right">Valor</th></tr></thead>
+        <tbody>
+          <tr><td>Soporte 24/7 & Monitoreo</td><td class="right">$900</td></tr>
+          <tr><td>Backups y roles (SLA oro)</td><td class="right">$350</td></tr>
+          <tr><td>Mantenimiento correctivo</td><td class="right">$280</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td class="right muted">Subtotal</td><td class="right">$1,530</td></tr>
+          <tr><td class="right muted">IVA (19%)</td><td class="right">$290.70</td></tr>
+          <tr><td class="right total">Total</td><td class="right total">$1,820.70</td></tr>
+        </tfoot>
+      </table>
+
+      <div class="section-title">Notas</div>
+      <div class="muted">Pago mensual adelantado. Renovación automática. Cancelación con 15 días de aviso.</div>
+    </section>
+
+    <!-- Variante 3: Sunset -->
+    <section class="card sunset">
+      <div class="watermark"></div>
+      <div class="header">
+        <div class="brand">
+          <img src="MCE.jpg" alt="MCE">
+          <div>
+            <div class="name">Proyectos MCE</div>
+            <div class="sub">Factura · Proyecto fijo</div>
+          </div>
+        </div>
+        <span class="badge">Factura #FX-301</span>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="section-title">Para</div>
+          <div><strong>Comercial El Faro</strong></div>
+          <div class="muted">contacto@elfaro.com</div>
+        </div>
+        <div class="right">
+          <div class="muted">Fecha</div>
+          <div><strong>2026-03-26</strong></div>
+          <div class="muted">Entrega</div>
+          <div><strong>2026-04-30</strong></div>
+        </div>
+      </div>
+
+      <table>
+        <thead><tr><th>Concepto</th><th class="right">Horas</th><th class="right">Tarifa</th><th class="right">Total</th></tr></thead>
+        <tbody>
+          <tr><td>UX/UI pantallas cliente</td><td class="right">32</td><td class="right">$45</td><td class="right">$1,440</td></tr>
+          <tr><td>API pasarela de pagos</td><td class="right">24</td><td class="right">$55</td><td class="right">$1,320</td></tr>
+          <tr><td>QA + UAT</td><td class="right">16</td><td class="right">$35</td><td class="right">$560</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="3" class="right muted">Subtotal</td><td class="right">$3,320</td></tr>
+          <tr><td colspan="3" class="right muted">Retención (2%)</td><td class="right">-$66.40</td></tr>
+          <tr><td colspan="3" class="right total">Total</td><td class="right total">$3,253.60</td></tr>
+        </tfoot>
+      </table>
+
+      <div class="section-title">Notas</div>
+      <div class="muted">Incluye handoff en Figma y manual de APIs. Soporte post-entrega: 15 días.</div>
+    </section>
+  </div>
+</body>
+</html>

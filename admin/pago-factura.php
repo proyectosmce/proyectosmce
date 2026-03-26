@@ -465,95 +465,90 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Factura {$invoice}</title>
 </head>
-<body style="margin:0;padding:0;background:linear-gradient(180deg,#eff6ff 0%,#f8fafc 100%);font-family:'Segoe UI',Arial,sans-serif;color:#0f172a;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="padding:28px 0;">
+<body style="margin:0;padding:24px;background:#f8fafc;font-family:'Segoe UI',Arial,sans-serif;color:#0f172a;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:760px;margin:0 auto;background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 10px 30px rgba(15,23,42,0.08);overflow:hidden;">
     <tr>
-      <td align="center">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;background:#ffffff;border-radius:24px;overflow:hidden;box-shadow:0 18px 44px rgba(37,99,235,0.14);">
+      <td style="padding:0;">
+        <div style="background:#0f172a;padding:20px 22px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <img src="{$logoUrl}" alt="MCE" style="width:56px;height:56px;border-radius:12px;object-fit:cover;box-shadow:0 8px 18px rgba(0,0,0,0.25);">
+            <div>
+              <div style="font-size:18px;font-weight:700;letter-spacing:0.2px;">Proyectos MCE</div>
+              <div style="font-size:12px;color:#bfdbfe;letter-spacing:0.16em;text-transform:uppercase;">Factura electrónica</div>
+            </div>
+          </div>
+          <span style="padding:8px 12px;border-radius:12px;background:#eef2ff;color:#2563eb;font-weight:700;font-size:12px;letter-spacing:0.04em;">{$invoice}</span>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:22px 22px 10px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
           <tr>
-            <td style="background:linear-gradient(135deg,#0f172a 0%,#1d4ed8 50%,#06b6d4 100%);padding:32px 32px 26px;">
-              <div style="font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#bfdbfe;margin-bottom:10px;">Proyectos MCE</div>
-              <div style="font-size:28px;line-height:1.2;font-weight:700;color:#ffffff;">Factura {$invoice}</div>
-              <div style="margin-top:10px;font-size:14px;line-height:1.7;color:#dbeafe;">Hola {$cliente}, confirmamos tu pago con los detalles a continuación.</div>
+            <td style="padding:12px 14px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;">
+              <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#475569;margin-bottom:6px;">Cliente</div>
+              <div style="font-size:16px;font-weight:700;">{$cliente}</div>
+              <div style="color:#64748b;font-size:13px;margin-top:2px;">Proyecto: {$project}</div>
             </td>
-          </tr>
-          <tr>
-            <td style="padding:28px 32px 8px;">
-              <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;">
-                <div style="flex:1 1 260px;background:#f8fafc;border:1px solid #dbeafe;border-radius:18px;padding:16px 18px;">
-                  <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#2563eb;margin-bottom:6px;">Cliente</div>
-                  <div style="font-size:17px;font-weight:700;color:#0f172a;">{$cliente}</div>
-                </div>
-                <div style="flex:1 1 200px;background:#f8fafc;border:1px solid #dbeafe;border-radius:18px;padding:16px 18px;">
-                  <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#2563eb;margin-bottom:6px;">Fecha</div>
-                  <div style="font-size:16px;font-weight:700;color:#0f172a;">{$fecha}</div>
-                </div>
-              </div>
-
-              <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;margin-bottom:18px;">
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                  <tr style="background:#f8fafc;">
-                    <td style="padding:14px;font-size:13px;color:#475569;width:35%;">Concepto</td>
-                    <td style="padding:14px;font-size:15px;font-weight:700;color:#0f172a;">{$concepto}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:14px;font-size:13px;color:#475569;">Forma de pago</td>
-                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$forma}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:14px;font-size:13px;color:#475569;">Monto</td>
-                    <td style="padding:14px;font-size:17px;font-weight:800;color:#0f172a;">{$monto}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:14px;font-size:13px;color:#475569;">Recargo cuotas (18%)</td>
-                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$recargoFmt}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:14px;font-size:13px;color:#475569;">Total con recargo</td>
-                    <td style="padding:14px;font-size:16px;font-weight:800;color:#0f172a;">{$totalRecargoFmt}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:14px;font-size:13px;color:#475569;">Diferido</td>
-                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$totalCuotas} cuotas de {$valorCuotaFmt}</td>
-                  </tr>
-                  <tr style="background:#f8fafc;">
-                    <td style="padding:14px;font-size:13px;color:#475569;">Estado de cuotas</td>
-                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$cuotasResumen}</td>
-                  </tr>
-                  <tr style="background:#f8fafc;">
-                    <td style="padding:14px;font-size:13px;color:#475569;">Método</td>
-                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$metodo}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:14px;font-size:13px;color:#475569;">Próxima cuota</td>
-                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$proxima}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:14px;font-size:13px;color:#475569;">Referencia</td>
-                    <td style="padding:14px;font-size:14px;font-weight:700;color:#0f172a;">{$ref}</td>
-                  </tr>
-                </table>
-              </div>
-
-              <div style="background:#f8fafc;border:1px solid #dbeafe;border-radius:18px;padding:16px 18px;margin-bottom:16px;">
-                <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#2563eb;margin-bottom:8px;">Notas</div>
-                <div style="font-size:14px;line-height:1.7;color:#1e293b;">{$notasHtml}</div>
-              </div>
-
-              <div style="margin-top:10px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,#f59e0b1a,#fbbf24);color:#92400e;font-size:13px;border:1px solid #fcd34d;">
-                Esta confirmación es válida como comprobante. Si necesitas algo más, respóndenos a <strong>proyectosmceaa@gmail.com</strong> o escríbenos al <strong>+57 311 412 59 71</strong> y te ayudamos.
-              </div>
-
-              <p style="margin:18px 0 0;font-size:13px;color:#475569;">Gracias por tu confianza.</p>
-              <p style="margin:6px 0 0;font-size:14px;font-weight:700;color:#0f172a;">Equipo Proyectos MCE</p>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:16px 24px 20px;color:#94a3b8;font-size:11px;text-align:center;border-top:1px solid #e2e8f0;">
-              Este mensaje se generó automáticamente. Si no solicitaste esta factura, contáctanos.
+            <td style="width:10px;"></td>
+            <td style="padding:12px 14px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;">
+              <div style="font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#475569;margin-bottom:6px;">Fechas</div>
+              <div style="font-size:14px;"><strong>Pago:</strong> {$fecha}</div>
+              <div style="font-size:14px;"><strong>Próxima cuota:</strong> {$proxima}</div>
             </td>
           </tr>
         </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:10px 22px 8px;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+          <tr style="background:#f1f5f9;">
+            <td style="padding:12px;font-weight:700;font-size:13px;color:#0f172a;">Concepto</td>
+            <td style="padding:12px;font-weight:700;font-size:13px;color:#0f172a;">Detalle</td>
+            <td style="padding:12px;text-align:right;font-weight:700;font-size:13px;color:#0f172a;">Monto</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;color:#334155;">Servicio</td>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;color:#0f172a;font-weight:700;">{$concepto}</td>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;font-weight:700;color:#0f172a;">{$monto}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;color:#334155;">Forma de pago</td>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;color:#0f172a;">{$forma} · {$metodo}</td>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;color:#0f172a;">—</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;color:#334155;">Recargo cuotas (18%)</td>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;color:#0f172a;">Aplicado por financiamiento</td>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;font-weight:700;color:#0f172a;">{$recargoFmt}</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;color:#334155;">Diferido</td>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;color:#0f172a;">{$totalCuotas} cuotas de {$valorCuotaFmt}</td>
+            <td style="padding:12px;border-bottom:1px solid #e2e8f0;text-align:right;color:#0f172a;">—</td>
+          </tr>
+          <tr style="background:#0f172a;color:#fff;">
+            <td style="padding:12px;font-weight:700;">Total con recargo</td>
+            <td style="padding:12px;font-weight:700;">Referencia: {$ref}</td>
+            <td style="padding:12px;text-align:right;font-size:18px;font-weight:800;">{$totalRecargoFmt}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr>
+      <td style="padding:8px 22px 18px;">
+        <div style="border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px;background:#f8fafc;color:#0f172a;font-size:14px;line-height:1.6;">
+          <div style="font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:#475569;margin-bottom:6px;">Notas</div>
+          {$notasHtml}
+        </div>
+        <div style="margin-top:14px;padding:12px 14px;border-radius:12px;border:1px solid #e2e8f0;background:#fff7ed;color:#92400e;font-size:13px;">
+          Gracias por tu pago. Si necesitas soporte o un ajuste en la factura, escríbenos a <strong>proyectosmceaa@gmail.com</strong> o <strong>+57 311 412 59 71</strong>.
+        </div>
+        <p style="margin:14px 0 0;font-size:12px;color:#94a3b8;text-align:center;">Este mensaje se generó automáticamente. Si no solicitaste esta factura, contáctanos.</p>
       </td>
     </tr>
   </table>
@@ -693,6 +688,7 @@ if ($modo === 'html') {
     </div>
 </body>
 </html>
+
 
 
 
