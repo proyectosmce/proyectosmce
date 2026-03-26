@@ -237,7 +237,7 @@
                     <a href="<?php echo app_url('portafolio.php#casos-exito-portafolio'); ?>" class="inline-flex items-center justify-center border-2 border-yellow-300 text-yellow-300 px-8 py-4 rounded-xl font-semibold hover:bg-yellow-300 hover:text-slate-900 transition i18n-btn-cases" data-i18n="btn-cases">
                         <i class="fas fa-trophy mr-2"></i> Casos de éxito
                     </a>
-                    <a href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center text-blue-100 hover:text-white font-semibold i18n-link-services" data-i18n="link-services">
+                    <a href="<?php echo app_url('servicios.php'); ?>" class="inline-flex items-center justify-center border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-slate-900 transition i18n-link-services" data-i18n="link-services">
                         <span>Servicios</span>
                         <i class="fas fa-arrow-down ml-2"></i>
                     </a>
