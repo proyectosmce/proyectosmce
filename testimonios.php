@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'nuevo
     redirect('testimonios.php?error=validation#form-testimonio');
 }
 
-$testimonios     = $conn->query("SELECT t.id, t.nombre, t.testimonio, t.valoracion, t.likes, COALESCE(p.titulo, t.empresa, 'Proyecto MCE') AS proyecto FROM testimonios t LEFT JOIN proyectos p ON t.proyecto_id = p.id WHERE t.aprobado = 1 ORDER BY t.destacado DESC, t.created_at DESC LIMIT 9");
+$testimonios     = $conn->query("SELECT t.id, t.nombre, t.testimonio, t.valoracion, t.likes, COALESCE(p.titulo, t.empresa, 'Proyecto MCE') AS proyecto, COALESCE(p.public_url, '#') AS project_url FROM testimonios t LEFT JOIN proyectos p ON t.proyecto_id = p.id WHERE t.aprobado = 1 ORDER BY t.destacado DESC, t.created_at DESC LIMIT 9");
 $projectOptions  = fetchProjectDropdownOptions($conn);
 $testimonioOk    = isset($_GET['testimonio']) && $_GET['testimonio'] === 'ok';
 $testimonioError = $_GET['error'] ?? '';
@@ -224,6 +224,10 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                 $initial = strtoupper(mb_substr($t['nombre'] ?? 'U', 0, 1, 'UTF-8'));
                 $projName = $t['proyecto'] ?? 'su proyecto';
                 $textoFinal = "Yo, {$t['nombre']} dueño de {$projName}, {$t['testimonio']}";
+                $projectUrl = trim((string) ($t['project_url'] ?? ''));
+                if ($projectUrl === '' || $projectUrl === '#') {
+                    $projectUrl = app_url('portafolio.php');
+                }
             ?>
             <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 p-6 border border-gray-100 testimonial-card"
                  data-testimonial-id="<?php echo (int) $t['id']; ?>"
@@ -261,10 +265,13 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                     <span class="text-xs text-gray-500 flex items-center gap-2">
                         <i class="fas fa-shield-alt text-white/800"></i> <span class="i18n-ts-verified" data-i18n="ts-verified">Testimonio verificado</span>
                     </span>
-                    <button type="button" class="flex items-center gap-2 rounded-full border border-red-100 bg-red-50 px-3 py-1 text-sm font-semibold text-red-600 hover:bg-red-100 transition like-btn" data-like-id="<?php echo (int) $t['id']; ?>">
-                        <i class="fas fa-heart"></i>
-                        <span class="like-count"><?php echo (int) ($t['likes'] ?? 0); ?></span>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <a href="<?php echo htmlspecialchars($projectUrl, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-3 py-1 text-sm font-semibold text-blue-700 hover:bg-blue-50 transition i18n-ts-view-project" data-i18n="ts-view-project">Ver proyecto</a>
+                        <button type="button" class="flex items-center gap-2 rounded-full border border-red-100 bg-red-50 px-3 py-1 text-sm font-semibold text-red-600 hover:bg-red-100 transition like-btn" data-like-id="<?php echo (int) $t['id']; ?>">
+                            <i class="fas fa-heart"></i>
+                            <span class="like-count"><?php echo (int) ($t['likes'] ?? 0); ?></span>
+                        </button>
+                    </div>
                 </div>
             </div>
             <?php endwhile; ?>
