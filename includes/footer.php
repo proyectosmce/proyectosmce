@@ -80,7 +80,7 @@
                             </a>
                         </li>
                         <li class="inline-flex items-center text-gray-300">
-                            <i class="fas fa-clock mr-2"></i><span><span class="i18n-ft-hours" data-i18n="ft-hours">Lunes a sábado · 8:00 - 18:00 (GMT-5)</span></span>
+                            <i class="fas fa-clock mr-2"></i><span><span class="i18n-ft-hours" data-i18n="ft-hours">Lunes a sábado · 8:00 - 18:00 </span></span>
                         </li>
                         <li class="flex flex-wrap items-center gap-4 pt-2">
                             <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto" target="_blank" rel="noopener" class="inline-flex text-gray-300 hover:text-white text-xl" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
@@ -927,7 +927,7 @@
                 'ft-srv1': 'Desarrollo a Medida',
                 'ft-srv2': 'Sistemas de Inventario',
                 'ft-srv3': 'Mantenimiento Web',
-                'ft-hours': 'Lunes a sábado · 8:00 - 18:00 (GMT-5)',
+                'ft-hours': 'Lunes a sábado · 8:00 - 18:00 ',
                 'ft-copy': 'Proyectos MCE. Todos los derechos reservados.',
                 'ct-field-required': 'Este campo es obligatorio.',
                 'ct-field-email': 'Ingresa un correo válido.',
@@ -1262,7 +1262,7 @@
                 'ft-srv1': 'Custom Development',
                 'ft-srv2': 'Inventory Systems',
                 'ft-srv3': 'Web Maintenance',
-                'ft-hours': 'Mon to Sat · 8:00 - 18:00 (GMT-5)',
+                'ft-hours': 'Mon to Sat · 8:00 - 18:00 ',
                 'ft-copy': 'MCE Projects. All rights reserved.',
                 'ct-field-required': 'This field is required.',
                 'ct-field-email': 'Enter a valid email.',
@@ -1597,7 +1597,7 @@
                 'ft-srv1': 'Développement sur mesure',
                 'ft-srv2': "Systèmes d'inventaire",
                 'ft-srv3': 'Maintenance web',
-                'ft-hours': 'Lun au Sam · 8:00 - 18:00 (GMT-5)',
+                'ft-hours': 'Lun au Sam · 8:00 - 18:00',
                 'ft-copy': 'Projets MCE. Tous droits réservés.',
                 'ct-field-required': 'Ce champ est obligatoire.',
                 'ct-field-email': 'Saisis un email valide.',
@@ -1932,7 +1932,7 @@
                 'ft-srv1': 'Individuelle Entwicklung',
                 'ft-srv2': 'Warenwirtschaftssysteme',
                 'ft-srv3': 'Web-Wartung',
-                'ft-hours': 'Mo bis Sa · 8:00 - 18:00 (GMT-5)',
+                'ft-hours': 'Mo bis Sa · 8:00 - 18:00',
                 'ft-copy': 'MCE Projekte. Alle Rechte vorbehalten.',
                 'ct-field-required': 'Dieses Feld ist erforderlich.',
                 'ct-field-email': 'Bitte eine gültige E-Mail eingeben.',
@@ -2267,7 +2267,7 @@
                 'ft-srv1': 'Desenvolvimento sob medida',
                 'ft-srv2': 'Sistemas de Inventário',
                 'ft-srv3': 'Manutenção Web',
-                'ft-hours': 'Seg a Sáb · 8:00 - 18:00 (GMT-5)',
+                'ft-hours': 'Seg a Sáb · 8:00 - 18:00',
                 'ft-copy': 'Projetos MCE. Todos os direitos reservados.',
                 'ct-field-required': 'Este campo é obrigatório.',
                 'ct-field-email': 'Insira um email válido.',
@@ -2602,7 +2602,7 @@
                 'ft-srv1': 'Sviluppo su misura',
                 'ft-srv2': 'Sistemi di inventario',
                 'ft-srv3': 'Manutenzione Web',
-                'ft-hours': 'Lun a Sab · 8:00 - 18:00 (GMT-5)',
+                'ft-hours': 'Lun a Sab · 8:00 - 18:00',
                 'ft-copy': 'Progetti MCE. Tutti i diritti riservati.',
                 'ct-field-required': 'Questo campo è obbligatorio.',
                 'ct-field-email': "Inserisci un'email valida.",
