@@ -472,6 +472,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     };
 
     const apply = (lang) => {
+        const camel = lang ? (lang.slice(0,1).toUpperCase() + lang.slice(1).toLowerCase()) : 'Es';
         cards.forEach(card => {
             const id = card.dataset.testimonialId;
             const tmap = testimonialTranslations[id]?.[lang];
@@ -479,9 +480,9 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
             const projectEl = card.querySelector('.ts-project');
             const bodyEl = card.querySelector('.ts-body');
             const ratingEl = card.querySelector('.ts-rating-card');
-            if (nameEl) nameEl.textContent = tmap?.name || card.dataset[`name${lang.toUpperCase()}`] || card.dataset.nameDefault || '';
-            if (projectEl) projectEl.textContent = tmap?.project || card.dataset[`project${lang.toUpperCase()}`] || card.dataset.projectDefault || '';
-            if (bodyEl) bodyEl.textContent = (tmap?.body || card.dataset[`body${lang.toUpperCase()}`] || card.dataset.bodyDefault || '').trim();
+            if (nameEl) nameEl.textContent = tmap?.name || card.dataset[`name${camel}`] || card.dataset.nameEs || card.dataset.nameDefault || '';
+            if (projectEl) projectEl.textContent = tmap?.project || card.dataset[`project${camel}`] || card.dataset.projectEs || card.dataset.projectDefault || '';
+            if (bodyEl) bodyEl.textContent = (tmap?.body || card.dataset[`body${camel}`] || card.dataset.bodyEs || card.dataset.bodyDefault || '').trim();
             if (ratingEl) {
                 const rating = parseInt(card.dataset.rating || '5', 10);
                 ratingEl.textContent = ratingTextByLang(rating, lang);
