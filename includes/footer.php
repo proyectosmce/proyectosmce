@@ -95,8 +95,13 @@
             </div>
             
             <!-- Copyright -->
-            <div class="border-t border-white/10 mt-10 pt-6 text-center text-gray-400 text-sm">
+            <div class="border-t border-white/10 mt-10 pt-6 text-center text-gray-400 text-sm space-y-2">
                 <p>&copy; <?php echo date('Y'); ?> <span class="i18n-ft-copy" data-i18n="ft-copy">Proyectos MCE. Todos los derechos reservados.</span></p>
+                <p class="flex flex-wrap justify-center gap-4 text-gray-300">
+                    <a class="hover:text-white transition i18n-nav-legal" data-i18n="nav-legal" href="<?php echo app_url('aviso-legal.php'); ?>">Aviso legal</a>
+                    <span>|</span>
+                    <a class="hover:text-white transition i18n-nav-privacy" data-i18n="nav-privacy" href="<?php echo app_url('politica-privacidad.php'); ?>">Política de privacidad</a>
+                </p>
             </div>
         </div>
     </footer>
