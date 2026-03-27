@@ -75,4 +75,6 @@
   </section>
 </main>
 
-<?php require_once 'includes/footer.php'; ?>
+<!-- Página legal sin footer para foco en el contenido -->
+</body>
+</html>

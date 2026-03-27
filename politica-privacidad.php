@@ -90,4 +90,6 @@
   </section>
 </main>
 
-<?php require_once 'includes/footer.php'; ?>
+<!-- Página de privacidad sin footer para foco en el contenido -->
+</body>
+</html>
