@@ -50,8 +50,6 @@
                         <li><a href="<?php echo app_url('portafolio.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-briefcase text-blue-300"></i><span><span data-i18n="nav-portfolio">Portafolio</span></span></a></li>
                         <li><a href="<?php echo app_url('testimonios.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-comments text-blue-300"></i><span><span data-i18n="nav-testimonials">Testimonios</span></span></a></li>
                         <li><a href="<?php echo app_url('contacto.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-envelope-open-text text-blue-300"></i><span><span data-i18n="nav-contact">Contacto</span></span></a></li>
-                        <li><a href="<?php echo app_url('aviso-legal.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-gavel text-blue-300"></i><span><span data-i18n="nav-legal">Aviso legal</span></span></a></li>
-                        <li><a href="<?php echo app_url('politica-privacidad.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-user-shield text-blue-300"></i><span><span data-i18n="nav-privacy">Política de privacidad</span></span></a></li>
                     </ul>
                 </div>
                 
@@ -98,9 +96,9 @@
             <div class="border-t border-white/10 mt-10 pt-6 text-center text-gray-400 text-sm space-y-2">
                 <p>&copy; <?php echo date('Y'); ?> <span class="i18n-ft-copy" data-i18n="ft-copy">Proyectos MCE. Todos los derechos reservados.</span></p>
                 <p class="flex flex-wrap justify-center gap-4 text-gray-300">
-                    <a class="hover:text-white transition i18n-nav-legal" data-i18n="nav-legal" href="<?php echo app_url('aviso-legal.php'); ?>" target="_blank" rel="noopener">Aviso legal</a>
+                    <a class="hover:text-white transition i18n-nav-legal" data-i18n="nav-legal" data-legal-link="aviso-legal.php" target="_blank" rel="noopener">Aviso legal</a>
                     <span>|</span>
-                    <a class="hover:text-white transition i18n-nav-privacy" data-i18n="nav-privacy" href="<?php echo app_url('politica-privacidad.php'); ?>" target="_blank" rel="noopener">Política de privacidad</a>
+                    <a class="hover:text-white transition i18n-nav-privacy" data-i18n="nav-privacy" data-legal-link="politica-privacidad.php" target="_blank" rel="noopener">Política de privacidad</a>
                 </p>
             </div>
         </div>
@@ -578,6 +576,26 @@
             const lang = e.detail?.lang || 'es';
             const greet = greeting[lang] || greeting.es;
             answerBox.innerHTML = linkify(greet);
+        });
+    })();
+    </script>
+    <script>
+    // Ajusta enlaces legales para abrir con el idioma seleccionado
+    (() => {
+        const base = '<?php echo rtrim(app_url(), '/'); ?>';
+        const setLegalLinks = (lang) => {
+            document.querySelectorAll('[data-legal-link]').forEach(a => {
+                const page = a.dataset.legalLink;
+                a.href = `${base}/${page}?lang=${lang}`;
+                a.target = '_blank';
+                a.rel = 'noopener';
+            });
+        };
+        const current = window.mceCurrentLang || localStorage.getItem('siteLang') || 'es';
+        setLegalLinks(current);
+        window.addEventListener('mce-lang-changed', e => {
+            const lang = e.detail?.lang || 'es';
+            setLegalLinks(lang);
         });
     })();
     </script>

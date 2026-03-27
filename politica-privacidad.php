@@ -1,5 +1,21 @@
 <?php require_once 'includes/config.php'; ?>
+<?php
+$lang = $_GET['lang'] ?? '';
+$allowed = ['es','en','fr','de','pt','it'];
+if (!in_array($lang, $allowed, true)) { $lang = 'es'; }
+?>
 <?php require_once 'includes/header.php'; ?>
+<script>
+  window.mceCurrentLang = '<?php echo $lang; ?>';
+  localStorage.setItem('siteLang','<?php echo $lang; ?>');
+</script>
+
+<style>
+/* Ocultar navegación principal y menú móvil en páginas legales */
+.hidden.md\:flex { display: none !important; }
+.md\:hidden.flex.items-center.gap-3 { display: none !important; }
+#mobile-menu { display: none !important; }
+</style>
 
 <main class="bg-slate-100">
   <section class="max-w-5xl mx-auto px-4 py-12">
