@@ -45,7 +45,7 @@
                 
                 <!-- Col 2: Enlaces rápidos -->
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 i18n-ft-links-title" data-i18n="ft-links-title">Enlaces</h4>
+                    <h4 class="text-xl font-semibold mb-4 i18n-ft-links-title transition-colors duration-300 hover:bg-gradient-to-r hover:from-emerald-300 hover:to-purple-300 hover:text-transparent hover:bg-clip-text" data-i18n="ft-links-title">Enlaces</h4>
                     <ul class="space-y-2 text-gray-300">
                         <li><a href="<?php echo app_url(); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-home text-blue-300"></i><span><span data-i18n="nav-home">Inicio</span></span></a></li>
                         <li><a href="<?php echo app_url('servicios.php'); ?>" class="hover:text-white transition inline-flex items-center gap-2"><i class="fas fa-layer-group text-blue-300"></i><span><span data-i18n="nav-services">Servicios</span></span></a></li>
@@ -57,7 +57,7 @@
                 
                 <!-- Col 3: Servicios -->
                 <div>
-                    <h4 class="text-lg font-semibold mb-4"><span data-i18n="nav-services">Servicios</span></h4>
+                    <h4 class="text-xl font-semibold mb-4 transition-colors duration-300 hover:bg-gradient-to-r hover:from-emerald-300 hover:to-purple-300 hover:text-transparent hover:bg-clip-text"><span data-i18n="nav-services">Servicios</span></h4>
                     <ul class="space-y-2 text-gray-300">
                         <li class="inline-flex items-center gap-2"><i class="fas fa-code text-blue-300"></i><span class="i18n-ft-srv1" data-i18n="ft-srv1">Desarrollo a Medida</span></li>
                         <li class="inline-flex items-center gap-2"><i class="fas fa-boxes text-blue-300"></i><span class="i18n-ft-srv2" data-i18n="ft-srv2">Sistemas de Inventario</span></li>
@@ -67,7 +67,7 @@
                 
                 <!-- Col 4: Contacto y redes -->
                 <div class="space-y-4">
-                    <h4 class="text-lg font-semibold"><span data-i18n="nav-contact">Contacto</span></h4>
+                    <h4 class="text-xl font-semibold transition-colors duration-300 hover:bg-gradient-to-r hover:from-emerald-300 hover:to-purple-300 hover:text-transparent hover:bg-clip-text"><span data-i18n="nav-contact">Contacto</span></h4>
                     <ul class="space-y-3 text-gray-300">
                         <li>
                             <a href="mailto:proyectosmceaa@gmail.com" class="inline-flex items-center hover:text-white transition">
