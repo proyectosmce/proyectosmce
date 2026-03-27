@@ -463,6 +463,11 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
             es: { name: 'Jose Delgado', project: 'Destello de Oro 18K', body: joseBodyEs }
         }
     };
+    // Versión normalizada (sin acentos) para coincidencias más flexibles
+    const normalize = (txt) => (txt || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+    const translationsByBodyNorm = {
+        [normalize(joseBodyEs)]: translationsByBody[joseBodyEs]
+    };
 
     // Guarda textos originales como fallback
     cards.forEach(card => {
@@ -488,7 +493,10 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         cards.forEach(card => {
             const id = card.dataset.testimonialId;
             const bodyKey = card.dataset.bodyDefault || '';
-            const tmap = testimonialTranslations[id]?.[lang] || translationsByBody[bodyKey]?.[lang];
+            const tmap =
+                testimonialTranslations[id]?.[lang] ||
+                translationsByBody[bodyKey]?.[lang] ||
+                translationsByBodyNorm[normalize(bodyKey)]?.[lang];
             const nameEl = card.querySelector('.ts-name');
             const projectEl = card.querySelector('.ts-project');
             const bodyEl = card.querySelector('.ts-body');
