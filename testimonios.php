@@ -452,6 +452,18 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         }
     };
 
+    // Traducción por coincidencia de cuerpo (fallback si no hay ID)
+    const translationsByBody = {
+        [joseBodyEs]: {
+            en: { name: 'Jose Delgado', project: 'Destello de Oro 18K', body: joseBodyEn },
+            de: { name: 'Jose Delgado', project: 'Destello de Oro 18K', body: joseBodyDe },
+            pt: { name: 'Jose Delgado', project: 'Destello de Oro 18K', body: joseBodyPt },
+            it: { name: 'Jose Delgado', project: 'Destello de Oro 18K', body: joseBodyIt },
+            fr: { name: 'Jose Delgado', project: 'Destello de Oro 18K', body: joseBodyFr },
+            es: { name: 'Jose Delgado', project: 'Destello de Oro 18K', body: joseBodyEs }
+        }
+    };
+
     // Guarda textos originales como fallback
     cards.forEach(card => {
         card.dataset.nameDefault = card.dataset.nameEs || card.querySelector('.ts-name')?.textContent?.trim() || '';
@@ -475,7 +487,8 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
         const camel = lang ? (lang.slice(0,1).toUpperCase() + lang.slice(1).toLowerCase()) : 'Es';
         cards.forEach(card => {
             const id = card.dataset.testimonialId;
-            const tmap = testimonialTranslations[id]?.[lang];
+            const bodyKey = card.dataset.bodyDefault || '';
+            const tmap = testimonialTranslations[id]?.[lang] || translationsByBody[bodyKey]?.[lang];
             const nameEl = card.querySelector('.ts-name');
             const projectEl = card.querySelector('.ts-project');
             const bodyEl = card.querySelector('.ts-body');
