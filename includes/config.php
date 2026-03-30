@@ -1,7 +1,7 @@
 <?php
-// MODO MANTENIMIENTO: Cambia a 'true' para poner el sitio publico en mantenimiento
+// MODO MANTENIMIENTO: Activo si existe el archivo .maintenance
 // Solo los administradores desde "/admin" podran ver el sitio.
-define('MAINTENANCE_MODE', false);
+define('MAINTENANCE_MODE', file_exists(__DIR__ . '/.maintenance'));
 
 if (MAINTENANCE_MODE && strpos($_SERVER['SCRIPT_NAME'], '/admin/') === false) {
     http_response_code(503);

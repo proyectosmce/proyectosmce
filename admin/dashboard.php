@@ -177,7 +177,21 @@ $lastPayments = $conn->query("
                     </div>
                 <?php endif; ?>
 
-                <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
+                <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <h1 class="text-3xl font-bold">Dashboard</h1>
+                    <form method="POST" action="toggle-mantenimiento.php" class="bg-white px-4 py-3 rounded-xl border <?php echo MAINTENANCE_MODE ? 'border-amber-400 bg-amber-50' : 'border-gray-200'; ?> shadow-sm flex items-center gap-4 transition-colors">
+                        <input type="hidden" name="csrf_token" value="<?php echo admin_escape(admin_get_csrf_token()); ?>">
+                        <div>
+                            <p class="text-sm font-bold text-slate-800">Modo Mantenimiento</p>
+                            <p class="text-xs <?php echo MAINTENANCE_MODE ? 'text-amber-700 font-semibold' : 'text-gray-500'; ?>">
+                                <?php echo MAINTENANCE_MODE ? '<i class="fas fa-lock mr-1"></i> Público bloqueado' : '<i class="fas fa-globe mr-1"></i> Público en línea'; ?>
+                            </p>
+                        </div>
+                        <button type="submit" class="relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 <?php echo MAINTENANCE_MODE ? 'bg-amber-500' : 'bg-gray-300'; ?>" role="switch">
+                            <span class="pointer-events-none translate-x-0 inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out <?php echo MAINTENANCE_MODE ? 'translate-x-5' : 'translate-x-0'; ?>"></span>
+                        </button>
+                    </form>
+                </div>
 
                 <?php if ($testimonios_pendientes > 0): ?>
                     <a href="testimonios.php" class="mb-8 flex items-center justify-between gap-4 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 px-6 py-5 shadow-sm transition hover:shadow-md">
