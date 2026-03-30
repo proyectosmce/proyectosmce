@@ -16,12 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $maintenanceFile = __DIR__ . '/../includes/.maintenance';
     
     // Toggle state
-    if (file_exists($maintenanceFile)) {
+    if (file_exists($maintenanceFile) && !isset($_POST['update_time'])) {
         unlink($maintenanceFile);
         admin_log_action($conn, 'desactivar', 'mantenimiento', 0, 'Modo mantenimiento desactivado');
     } else {
-        file_put_contents($maintenanceFile, 'En mantenimiento');
-        admin_log_action($conn, 'activar', 'mantenimiento', 0, 'Modo mantenimiento activado');
+        $minutes = (int)($_POST['minutes'] ?? 0);
+        $backAt = $minutes > 0 ? (time() + ($minutes * 60)) : 0;
+        
+        file_put_contents($maintenanceFile, $backAt);
+        $msg = $minutes > 0 ? "Activado con estimación de $minutes min" : "Activado sin tiempo definido";
+        admin_log_action($conn, 'activar', 'mantenimiento', 0, $msg);
     }
 }
 

@@ -1,7 +1,9 @@
 <?php
 // MODO MANTENIMIENTO: Activo si existe el archivo .maintenance
 // Solo los administradores desde "/admin" podran ver el sitio.
-define('MAINTENANCE_MODE', file_exists(__DIR__ . '/.maintenance'));
+define('MAINTENANCE_PATH', __DIR__ . '/.maintenance');
+define('MAINTENANCE_MODE', file_exists(MAINTENANCE_PATH));
+$maintenance_back_at = MAINTENANCE_MODE ? (int)file_get_contents(MAINTENANCE_PATH) : 0;
 
 // Carga secretos locales o generados en el deploy si existen.
 $secretPath = __DIR__ . '/secrets.php';
@@ -160,10 +162,10 @@ if (MAINTENANCE_MODE && strpos($_SERVER['SCRIPT_NAME'], '/admin/') === false) {
         
         .maint-mosaic-bg {
             background-image: url(\'' . app_url('imag/MCE.jpg') . '\');
-            background-size: 20% 25%; /* Escritorio */
+            background-size: 20% 25%;
             background-repeat: repeat;
-            height: calc(100dvh - 64px); /* dvh para móviles modernos */
-            min-height: calc(100vh - 64px); /* fallback */
+            height: calc(100dvh - 64px);
+            min-height: calc(100vh - 64px);
             position: relative;
             display: flex;
             align-items: center;
@@ -172,10 +174,9 @@ if (MAINTENANCE_MODE && strpos($_SERVER['SCRIPT_NAME'], '/admin/') === false) {
             width: 100%;
         }
 
-        /* Ajuste para pantallas verticales (móviles) */
         @media (max-width: 640px) {
             .maint-mosaic-bg {
-                background-size: 33.33% 25%; /* Menos columnas en móvil para que luzca mejor */
+                background-size: 33.33% 25%;
                 height: calc(100dvh - 64px);
             }
         }
@@ -187,34 +188,105 @@ if (MAINTENANCE_MODE && strpos($_SERVER['SCRIPT_NAME'], '/admin/') === false) {
         .spin-gear-rev {
             display: inline-block;
             animation: gearSpinRev 4s linear infinite;
-            margin-left: -8px; /* Engrane visual */
+            margin-left: -8px;
         }
         @keyframes gearSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes gearSpinRev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+
+        .social-link {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        .social-link:hover {
+            color: #fff;
+            transform: translateY(-3px);
+        }
+        
+        #countdown-wrap {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 0.8rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            display: inline-block;
+            min-width: 200px;
+        }
     </style>';
     
-    // Inyectar tarjeta central con fondo corporativo en mosaico
+    // Inyectar tarjeta central
     echo '<div class="maint-mosaic-bg">
-    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.7);z-index:1;"></div>
-    <div style="position:relative;z-index:2;background:rgba(255,255,255,0.05);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.1);padding:2.5rem 1.5rem;border-radius:20px;text-align:center;color:#fff;max-width:90%;width:380px;margin:1rem;">
-        <div style="font-size: 2.2rem; margin-bottom: 0.8rem; color: #7C3AED;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.73);z-index:1;"></div>
+    <div style="position:relative;z-index:2;background:rgba(255,255,255,0.03);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);padding:3rem 2rem;border-radius:24px;text-align:center;color:#fff;max-width:90%;width:420px;margin:1rem;box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+        
+        <div style="font-size: 2.8rem; margin-bottom: 1.2rem; color: #a78bfa;">
             <i class="fas fa-cog spin-gear"></i>
-            <i class="fas fa-cog spin-gear-rev" style="font-size: 1.6rem; vertical-align: bottom;"></i>
+            <i class="fas fa-cog spin-gear-rev" style="font-size: 1.8rem; vertical-align: bottom;"></i>
         </div>
-        <h1 data-i18n="maint-title" style="margin:0 0 1rem;font-size:1.8rem;line-height:1.2;font-weight:bold;">EN MANTENIMIENTO</h1>
-        <p data-i18n="maint-desc" style="font-size:1rem;opacity:0.8;line-height:1.4;margin:0;">Estamos trabajando en mejoras y nuevas funciones. Regresamos en breve.</p>
+
+        <h1 data-i18n="maint-title" style="margin:0 0 0.5rem;font-size:1.8rem;line-height:1.2;font-weight:900;letter-spacing:1px;">EN MANTENIMIENTO</h1>
+        <p data-i18n="maint-desc" style="font-size:1rem;opacity:0.7;line-height:1.5;margin:0;">Estamos mejorando nuestra plataforma para brindarte una mejor experiencia.</p>
+        
+        <?php if ($maintenance_back_at > time()): ?>
+            <div id="countdown-wrap">
+                <div id="timer" style="font-family:monospace; font-size: 1.6rem; font-weight: bold; color: #fff;">00:00:00</div>
+                <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.5; margin-top: 4px;">Tiempo Estimado</div>
+            </div>
+        <?php else: ?>
+            <div style="height: 20px;"></div>
+        <?php endif; ?>
+
+        <!-- Redes Sociales -->
+        <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <a href="https://www.instagram.com/proyectosmce/" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/proyectosmce/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/proyectosmce" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.tiktok.com/@proyectosmce" target="_blank" class="social-link"><i class="fab fa-tiktok"></i></a>
+            <a href="https://t.me/proyectosmce" target="_blank" class="social-link"><i class="fab fa-telegram-plane"></i></a>
+        </div>
     </div>
 </div>';
 
-    // Script para cambiar el enlace de WhatsApp solo en mantenimiento
+    // Script para la cuenta regresiva y WhatsApp
+    $backAtJs = $maintenance_back_at * 1000; // Milisegundos para JS
     echo '<script>
-        window.addEventListener("DOMContentLoaded", () => {
-            const waBtn = document.querySelector(".mce-whatsapp-float");
+        // Cuenta regresiva
+        const backAt = ' . $backAtJs . ';
+        if (backAt > Date.now()) {
+            const timerEl = document.getElementById("timer");
+            const interval = setInterval(() => {
+                const now = Date.now();
+                const diff = backAt - now;
+                
+                if (diff <= 0) {
+                    clearInterval(interval);
+                    if (timerEl) timerEl.innerHTML = "¡Casi listos!";
+                    return;
+                }
+                
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                if (timerEl) {
+                    timerEl.innerHTML = 
+                        String(hours).padStart(2, "0") + ":" + 
+                        String(mins).padStart(2, "0") + ":" + 
+                        String(secs).padStart(2, "0");
+                }
+            }, 1000);
+        }
+
+        // WhatsApp Personalizado
+        const checkWa = setInterval(() => {
+            const waBtn = document.querySelector(\'a[href*="wa.me"]\');
             if (waBtn) {
-                const newMsg = encodeURIComponent("Hola! Quisiera averiguar sobre un proyecto, pero veo que la página está en mantenimiento.");
-                waBtn.href = `https://wa.me/573114125971?text=${newMsg}`;
+                const url = new URL(waBtn.href);
+                url.searchParams.set(\'text\', \'Hola! Quisiera averiguar sobre un proyecto, pero veo que la página está en mantenimiento.\');
+                waBtn.href = url.toString();
+                clearInterval(checkWa);
             }
-        });
+        }, 100);
     </script>';
 
     // Incluir footer.php para cargar los scripts de traduccion, pero el CSS arriba oculta la caja visual del footer.
