@@ -187,49 +187,80 @@ $lastPayments = $conn->query("
 
                 <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <h1 class="text-3xl font-bold">Dashboard</h1>
-                    <form method="POST" action="toggle-mantenimiento.php" class="bg-white px-5 py-4 rounded-2xl border <?php echo MAINTENANCE_MODE ? 'border-amber-400 bg-amber-50 shadow-amber-100' : 'border-gray-200'; ?> shadow-sm flex flex-col sm:flex-row items-center gap-4 transition-all">
-                        <input type="hidden" name="csrf_token" value="<?php echo admin_escape(admin_get_csrf_token()); ?>">
-                        <div class="flex-1">
-                            <p class="text-sm font-bold text-slate-800">Modo Mantenimiento</p>
-                            <div class="flex items-center gap-2 mt-1">
-                                <span class="h-2 w-2 rounded-full <?php echo MAINTENANCE_MODE ? 'bg-amber-500 animate-pulse' : 'bg-green-500'; ?>"></span>
-                                <p class="text-xs <?php echo MAINTENANCE_MODE ? 'text-amber-700 font-semibold' : 'text-gray-500'; ?>">
-                                    <?php echo MAINTENANCE_MODE ? 'BLOQUEADO' : 'EN LÍNEA'; ?>
-                                </p>
-                            </div>
-                        </div>
-
-                        <?php if (MAINTENANCE_MODE): ?>
-                            <div class="flex items-center gap-2">
-                                <div class="flex items-center bg-amber-100 rounded-lg border border-amber-200 px-2 py-1">
-                                    <input type="number" name="hours" placeholder="H" class="w-10 bg-transparent border-none text-right text-sm focus:ring-0" min="0" value="0">
-                                    <span class="text-xs font-bold text-amber-600">:</span>
-                                    <input type="number" name="minutes" placeholder="M" class="w-10 bg-transparent border-none text-sm focus:ring-0" min="0" max="59" value="0">
+                    
+                    <?php 
+                    $time_expired = (MAINTENANCE_MODE && $maintenance_back_at > 0 && time() >= $maintenance_back_at);
+                    if ($time_expired): 
+                    ?>
+                        <!-- Alerta Estilo Rayos para el Admin -->
+                        <div class="relative overflow-hidden bg-red-600 rounded-2xl p-4 shadow-xl shadow-red-200 border-2 border-red-400 flex flex-col sm:flex-row items-center gap-4 transition-all animate-pulse">
+                            <style>
+                                .admin-bolt { position: absolute; color: #fee2e2; opacity: 0.4; font-size: 1.5rem; animation: admin-lightning 0.2s infinite; }
+                                @keyframes admin-lightning { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+                            </style>
+                            <i class="fas fa-bolt admin-bolt" style="top:10%; left:20%;"></i>
+                            <i class="fas fa-bolt admin-bolt" style="bottom:10%; right:20%; animation-delay: 0.1s;"></i>
+                            <div class="flex items-center gap-3 relative z-10">
+                                <div class="bg-white/20 p-2 rounded-lg">
+                                    <i class="fas fa-exclamation-triangle text-white text-xl"></i>
                                 </div>
-                                <button type="submit" name="update_time" class="rounded-lg bg-amber-200 px-3 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-300 transition-colors">
-                                    Actualizar
-                                </button>
+                                <div>
+                                    <p class="text-white font-black text-sm tracking-tight uppercase">PÁGINA PÚBLICA BLOQUEADA</p>
+                                    <p class="text-red-100 text-[10px] font-bold">EL TIEMPO EXPIRÓ. DESBLOQUEA AHORA.</p>
+                                </div>
                             </div>
-                        <?php else: ?>
-                             <div class="flex items-center gap-3">
-                                <div class="flex flex-col">
-                                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Duración esperada:</span>
-                                    <div class="flex items-center gap-1 mt-0.5">
-                                        <div class="flex items-center bg-gray-50 rounded-lg border border-gray-200 px-2 py-1 focus-within:border-blue-400 transition-all">
-                                            <input type="number" name="hours" placeholder="H" class="w-10 bg-transparent border-none text-right text-sm focus:ring-0" min="0" value="0">
-                                            <span class="text-xs font-bold text-gray-400">:</span>
-                                            <input type="number" name="minutes" placeholder="M" class="w-10 bg-transparent border-none text-sm focus:ring-0" min="0" max="59" value="30">
+                            <form method="POST" action="toggle-mantenimiento.php" class="relative z-10">
+                                <input type="hidden" name="csrf_token" value="<?php echo admin_escape(admin_get_csrf_token()); ?>">
+                                <button type="submit" class="bg-white text-red-600 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-50 transition-colors shadow-lg">
+                                    DESBLOQUEAR YA
+                                </button>
+                            </form>
+                        </div>
+                    <?php else: ?>
+                        <form method="POST" action="toggle-mantenimiento.php" class="bg-white px-5 py-4 rounded-2xl border <?php echo MAINTENANCE_MODE ? 'border-amber-400 bg-amber-50 shadow-amber-100' : 'border-gray-200'; ?> shadow-sm flex flex-col sm:flex-row items-center gap-4 transition-all">
+                            <input type="hidden" name="csrf_token" value="<?php echo admin_escape(admin_get_csrf_token()); ?>">
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-slate-800">Modo Mantenimiento</p>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="h-2 w-2 rounded-full <?php echo MAINTENANCE_MODE ? 'bg-amber-500 animate-pulse' : 'bg-green-500'; ?>"></span>
+                                    <p class="text-xs <?php echo MAINTENANCE_MODE ? 'text-amber-700 font-semibold' : 'text-gray-500'; ?>">
+                                        <?php echo MAINTENANCE_MODE ? 'BLOQUEADO' : 'EN LÍNEA'; ?>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <?php if (MAINTENANCE_MODE): ?>
+                                <div class="flex items-center gap-2">
+                                    <div class="flex items-center bg-amber-100 rounded-lg border border-amber-200 px-2 py-1">
+                                        <input type="number" name="hours" placeholder="H" class="w-10 bg-transparent border-none text-right text-sm focus:ring-0" min="0" value="0">
+                                        <span class="text-xs font-bold text-amber-600">:</span>
+                                        <input type="number" name="minutes" placeholder="M" class="w-10 bg-transparent border-none text-sm focus:ring-0" min="0" max="59" value="0">
+                                    </div>
+                                    <button type="submit" name="update_time" class="rounded-lg bg-amber-200 px-3 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-300 transition-colors">
+                                        Actualizar
+                                    </button>
+                                </div>
+                            <?php else: ?>
+                                <div class="flex items-center gap-3">
+                                    <div class="flex flex-col">
+                                        <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Duración esperada:</span>
+                                        <div class="flex items-center gap-1 mt-0.5">
+                                            <div class="flex items-center bg-gray-50 rounded-lg border border-gray-200 px-2 py-1 focus-within:border-blue-400 transition-all">
+                                                <input type="number" name="hours" placeholder="H" class="w-10 bg-transparent border-none text-right text-sm focus:ring-0" min="0" value="0">
+                                                <span class="text-xs font-bold text-gray-400">:</span>
+                                                <input type="number" name="minutes" placeholder="M" class="w-10 bg-transparent border-none text-sm focus:ring-0" min="0" max="59" value="30">
+                                            </div>
+                                            <span class="text-[11px] text-gray-400 font-medium ml-1">h:m</span>
                                         </div>
-                                        <span class="text-[11px] text-gray-400 font-medium ml-1">h:m</span>
                                     </div>
                                 </div>
-                            </div>
-                        <?php endif; ?>
+                            <?php endif; ?>
 
-                        <button type="submit" class="relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 <?php echo MAINTENANCE_MODE ? 'bg-amber-500' : 'bg-gray-300'; ?>" role="switch">
-                            <span class="pointer-events-none translate-x-0 inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out <?php echo MAINTENANCE_MODE ? 'translate-x-5' : 'translate-x-0'; ?>"></span>
-                        </button>
-                    </form>
+                            <button type="submit" class="relative inline-flex h-7 w-12 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 <?php echo MAINTENANCE_MODE ? 'bg-amber-500' : 'bg-gray-300'; ?>" role="switch">
+                                <span class="pointer-events-none translate-x-0 inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out <?php echo MAINTENANCE_MODE ? 'translate-x-5' : 'translate-x-0'; ?>"></span>
+                            </button>
+                        </form>
+                    <?php endif; ?>
                 </div>
 
                 <?php if ($testimonios_pendientes > 0): ?>
