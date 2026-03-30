@@ -8,6 +8,12 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     exit;
 }
 
+// Migración Soft Delete
+$chk = $conn->query("SHOW COLUMNS FROM mensajes LIKE 'deleted_at'");
+if (!$chk || $chk->num_rows === 0) {
+    $conn->query("ALTER TABLE mensajes ADD COLUMN deleted_at TIMESTAMP NULL DEFAULT NULL AFTER leido");
+}
+
 function buildMessagePreview(string $message): string
 {
     $message = trim($message);
@@ -52,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
 
     if ($action === 'export_csv') {
-        $conditions = [];
+        $conditions = ['deleted_at IS NULL'];
         if ($requestFilter === 'nuevo') {
             $conditions[] = 'leido = 0';
         }
@@ -104,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($action === 'delete') {
-            if ($stmt = $conn->prepare('DELETE FROM mensajes WHERE id = ?')) {
+            if ($stmt = $conn->prepare('UPDATE mensajes SET deleted_at = NOW() WHERE id = ?')) {
                 $stmt->bind_param('i', $id);
                 $stmt->execute();
                 $stmt->close();
@@ -120,19 +126,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $totalMessages = 0;
 $unreadMessages = 0;
 
-$totalResult = $conn->query('SELECT COUNT(*) AS total FROM mensajes');
+$totalResult = $conn->query('SELECT COUNT(*) AS total FROM mensajes WHERE deleted_at IS NULL');
 if ($totalResult instanceof mysqli_result) {
     $totalMessages = (int) ($totalResult->fetch_assoc()['total'] ?? 0);
     $totalResult->free();
 }
 
-$unreadResult = $conn->query('SELECT COUNT(*) AS total FROM mensajes WHERE leido = 0');
+$unreadResult = $conn->query('SELECT COUNT(*) AS total FROM mensajes WHERE leido = 0 AND deleted_at IS NULL');
 if ($unreadResult instanceof mysqli_result) {
     $unreadMessages = (int) ($unreadResult->fetch_assoc()['total'] ?? 0);
     $unreadResult->free();
 }
 
-$conditions = [];
+$conditions = ['deleted_at IS NULL'];
 if ($messageFilter === 'nuevo') {
     $conditions[] = 'leido = 0';
 }

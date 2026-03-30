@@ -103,6 +103,9 @@ function app_base_path()
 function app_url($path = '')
 {
     $path = ltrim((string) $path, '/');
+    // URLs amigables: quita el .php para páginas del front
+    $path = preg_replace('/\.php(\?|#|$)/', '$1', $path);
+    
     $basePath = app_base_path();
 
     if ($path === '') {

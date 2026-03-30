@@ -72,9 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 }
 
-                $error = 'Contrasena incorrecta';
+                $error = 'Credenciales incorrectas';
             } else {
-                $error = 'Usuario no encontrado';
+                $error = 'Credenciales incorrectas';
             }
 
             $stmt->close();
