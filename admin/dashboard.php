@@ -75,14 +75,14 @@ if ($citasCanceladasStmt) {
     $citasCanceladasStmt->close();
 }
 
-$total_proyectos = $conn->query("SELECT COUNT(*) as total FROM proyectos")->fetch_assoc()['total'];
+$total_proyectos = $conn->query("SELECT COUNT(*) as total FROM proyectos WHERE deleted_at IS NULL")->fetch_assoc()['total'];
 $total_servicios = $conn->query("SELECT COUNT(*) as total FROM servicios WHERE LOWER(titulo) <> 'tiendas online'")->fetch_assoc()['total'];
-$mensajes_no_leidos = $conn->query("SELECT COUNT(*) as total FROM mensajes WHERE leido = 0")->fetch_assoc()['total'];
-$total_mensajes = $conn->query("SELECT COUNT(*) as total FROM mensajes")->fetch_assoc()['total'];
+$mensajes_no_leidos = $conn->query("SELECT COUNT(*) as total FROM mensajes WHERE leido = 0 AND deleted_at IS NULL")->fetch_assoc()['total'];
+$total_mensajes = $conn->query("SELECT COUNT(*) as total FROM mensajes WHERE deleted_at IS NULL")->fetch_assoc()['total'];
 $testimonios_pendientes = getPendingTestimonialsCount($conn);
 $pagosMesActual = [];
 $pagosMesTotalCount = 0;
-$pagosMesResult = $conn->query("SELECT moneda, COUNT(*) AS total, COALESCE(SUM(monto), 0) AS monto FROM proyecto_pagos WHERE DATE_FORMAT(fecha_pago, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m') GROUP BY moneda");
+$pagosMesResult = $conn->query("SELECT moneda, COUNT(*) AS total, COALESCE(SUM(monto), 0) AS monto FROM proyecto_pagos WHERE DATE_FORMAT(fecha_pago, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m') AND deleted_at IS NULL GROUP BY moneda");
 if ($pagosMesResult instanceof mysqli_result) {
     while ($row = $pagosMesResult->fetch_assoc()) {
         $currency = strtoupper(trim((string) ($row['moneda'] ?? 'COP')));
@@ -100,7 +100,7 @@ foreach ($pagosMesActual as $currency => $data) {
 }
 
 // Datos para gráficos
-$categorias_result = $conn->query("SELECT categoria, COUNT(*) AS total FROM proyectos GROUP BY categoria");
+$categorias_result = $conn->query("SELECT categoria, COUNT(*) AS total FROM proyectos WHERE deleted_at IS NULL GROUP BY categoria");
 $categorias_labels = [];
 $categorias_counts = [];
 while ($row = $categorias_result->fetch_assoc()) {
@@ -108,7 +108,7 @@ while ($row = $categorias_result->fetch_assoc()) {
     $categorias_counts[] = (int)$row['total'];
 }
 
-$mensajes_result = $conn->query("SELECT DATE_FORMAT(created_at, '%Y-%m') AS mes, COUNT(*) AS total FROM mensajes GROUP BY mes ORDER BY mes DESC LIMIT 6");
+$mensajes_result = $conn->query("SELECT DATE_FORMAT(created_at, '%Y-%m') AS mes, COUNT(*) AS total FROM mensajes WHERE deleted_at IS NULL GROUP BY mes ORDER BY mes DESC LIMIT 6");
 $mensajes_labels = [];
 $mensajes_counts = [];
 while ($row = $mensajes_result->fetch_assoc()) {
@@ -118,7 +118,7 @@ while ($row = $mensajes_result->fetch_assoc()) {
 $mensajes_labels = array_reverse($mensajes_labels);
 $mensajes_counts = array_reverse($mensajes_counts);
 
-$unreadPreview = $conn->query("SELECT id, nombre, email, created_at FROM mensajes WHERE leido = 0 ORDER BY created_at DESC LIMIT 5");
+$unreadPreview = $conn->query("SELECT id, nombre, email, created_at FROM mensajes WHERE leido = 0 AND deleted_at IS NULL ORDER BY created_at DESC LIMIT 5");
 $pendingPreview = $conn->query("
     SELECT t.id, t.nombre, COALESCE(p.titulo, t.empresa, 'Sin proyecto') AS referencia
     FROM testimonios t
@@ -132,6 +132,7 @@ $lastPayments = $conn->query("
     SELECT pp.id, pp.concepto, pp.monto, pp.moneda, pp.fecha_pago, pr.titulo AS proyecto
     FROM proyecto_pagos pp
     LEFT JOIN proyectos pr ON pr.id = pp.proyecto_id
+    WHERE pp.deleted_at IS NULL
     ORDER BY pp.fecha_pago DESC, pp.id DESC
     LIMIT 5
 ");
