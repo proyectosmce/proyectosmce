@@ -565,25 +565,19 @@ $availableHours = ['08:00','09:00','10:00','11:00','12:00','14:00','15:00','16:0
             targetForms = ctaKey === 'plan' ? ['contact-form'] : ['agenda-form'];
         }
 
+        // Si no hay CTA relevante, no hacemos nada
         if (!messageTemplate) return;
-
-        templatesAllLangs.length = 0;
-        if (ctaKey && tplCta[ctaKey]) {
-            Object.values(tplCta[ctaKey]).forEach(t => templatesAllLangs.push(t));
-        }
 
         const fillField = (formId) => {
             const form = document.getElementById(formId);
             if (!form) return;
             const msg = form.querySelector('textarea[name="mensaje"]');
-            if (msg) {
+            if (msg && ctaKey === 'agenda') {
+                // Siempre forzamos el texto de agenda según el idioma activo
+                msg.value = messageTemplate;
+            } else if (msg) {
                 const current = msg.value.trim();
-                const isEmpty = current.length === 0;
-                const isPreviousTemplate = templatesAllLangs.includes(current);
-                const forceAgenda = ctaKey === 'agenda'; // siempre precargar en agenda
-                if (forceAgenda || isEmpty || isPreviousTemplate) {
-                    msg.value = messageTemplate;
-                }
+                if (current.length === 0) msg.value = messageTemplate;
             }
             if (selectedServiceSlug) {
                 const select = form.querySelector('select[name="servicio"]');
