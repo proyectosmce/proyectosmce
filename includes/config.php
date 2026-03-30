@@ -227,14 +227,12 @@ if (MAINTENANCE_MODE && strpos($_SERVER['SCRIPT_NAME'], '/admin/') === false) {
         <h1 data-i18n="maint-title" style="margin:0 0 0.5rem;font-size:1.8rem;line-height:1.2;font-weight:900;letter-spacing:1px;">EN MANTENIMIENTO</h1>
         <p data-i18n="maint-desc" style="font-size:1rem;opacity:0.7;line-height:1.5;margin:0;">Estamos mejorando nuestra plataforma para brindarte una mejor experiencia.</p>
         
-        <?php if ($maintenance_back_at > time()): ?>
+        ' . (($maintenance_back_at > time()) ? '
             <div id="countdown-wrap">
                 <div id="timer" style="font-family:monospace; font-size: 1.6rem; font-weight: bold; color: #fff;">00:00:00</div>
                 <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.5; margin-top: 4px;">Tiempo Estimado</div>
             </div>
-        <?php else: ?>
-            <div style="height: 20px;"></div>
-        <?php endif; ?>
+        ' : '<div style="height: 20px;"></div>') . '
 
         <!-- Redes Sociales -->
         <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">

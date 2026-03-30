@@ -201,15 +201,28 @@ $lastPayments = $conn->query("
 
                         <?php if (MAINTENANCE_MODE): ?>
                             <div class="flex items-center gap-2">
-                                <input type="number" name="minutes" placeholder="Minutos" class="w-20 rounded-lg border border-amber-300 px-2 py-1 text-sm focus:border-amber-500 focus:outline-none" min="0" value="0">
-                                <button type="submit" name="update_time" class="rounded-lg bg-amber-200 px-3 py-1 text-xs font-bold text-amber-800 hover:bg-amber-300">
-                                    Actualizar Tiempo
+                                <div class="flex items-center bg-amber-100 rounded-lg border border-amber-200 px-2 py-1">
+                                    <input type="number" name="hours" placeholder="H" class="w-10 bg-transparent border-none text-right text-sm focus:ring-0" min="0" value="0">
+                                    <span class="text-xs font-bold text-amber-600">:</span>
+                                    <input type="number" name="minutes" placeholder="M" class="w-10 bg-transparent border-none text-sm focus:ring-0" min="0" max="59" value="0">
+                                </div>
+                                <button type="submit" name="update_time" class="rounded-lg bg-amber-200 px-3 py-1.5 text-xs font-bold text-amber-800 hover:bg-amber-300 transition-colors">
+                                    Actualizar
                                 </button>
                             </div>
                         <?php else: ?>
-                             <div class="flex items-center gap-2">
-                                <span class="text-[11px] text-gray-400 font-medium">Estimar (min):</span>
-                                <input type="number" name="minutes" class="w-16 rounded-lg border border-gray-200 px-2 py-1 text-sm focus:border-blue-500 focus:outline-none" min="0" value="30">
+                             <div class="flex items-center gap-3">
+                                <div class="flex flex-col">
+                                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Duración esperada:</span>
+                                    <div class="flex items-center gap-1 mt-0.5">
+                                        <div class="flex items-center bg-gray-50 rounded-lg border border-gray-200 px-2 py-1 focus-within:border-blue-400 transition-all">
+                                            <input type="number" name="hours" placeholder="H" class="w-10 bg-transparent border-none text-right text-sm focus:ring-0" min="0" value="0">
+                                            <span class="text-xs font-bold text-gray-400">:</span>
+                                            <input type="number" name="minutes" placeholder="M" class="w-10 bg-transparent border-none text-sm focus:ring-0" min="0" max="59" value="30">
+                                        </div>
+                                        <span class="text-[11px] text-gray-400 font-medium ml-1">h:m</span>
+                                    </div>
+                                </div>
                             </div>
                         <?php endif; ?>
 

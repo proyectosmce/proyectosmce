@@ -20,11 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         unlink($maintenanceFile);
         admin_log_action($conn, 'desactivar', 'mantenimiento', 0, 'Modo mantenimiento desactivado');
     } else {
+        $hours = (int)($_POST['hours'] ?? 0);
         $minutes = (int)($_POST['minutes'] ?? 0);
-        $backAt = $minutes > 0 ? (time() + ($minutes * 60)) : 0;
+        $totalMinutes = ($hours * 60) + $minutes;
+        $backAt = $totalMinutes > 0 ? (time() + ($totalMinutes * 60)) : 0;
         
         file_put_contents($maintenanceFile, $backAt);
-        $msg = $minutes > 0 ? "Activado con estimación de $minutes min" : "Activado sin tiempo definido";
+        $msg = $totalMinutes > 0 ? "Activado con estimación de $hours h $minutes min" : "Activado sin tiempo definido";
         admin_log_action($conn, 'activar', 'mantenimiento', 0, $msg);
     }
 }
