@@ -1,4 +1,6 @@
 ﻿<?php
+
+if (!headers_sent()) { header('Content-Type: text/html; charset=UTF-8'); }
 $pageSlug = basename($_SERVER["PHP_SELF"], ".php");
 $titleKey = "meta-title-" . $pageSlug;
 ?>
@@ -422,6 +424,8 @@ $titleKey = "meta-title-" . $pageSlug;
     </nav>
     
     <main class="min-h-screen">
+
+
 
 
 
