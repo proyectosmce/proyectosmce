@@ -223,6 +223,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Enviar email con PHPMailer
         $mail = new PHPMailer(true);
+        $mail->CharSet = 'UTF-8';
+        $mail->Encoding = 'quoted-printable';
         try {
             if (empty($smtpUser) || empty($smtpPass)) {
                 throw new Exception('Falta SMTP_USER o SMTP_PASS');
