@@ -384,6 +384,47 @@ h1, h2, h3, h4, h5, h6,
     animation-duration: 2.2s, 1.8s;
 }
 
+/* --------- Ajustes móviles --------- */
+@media (max-width: 640px) {
+    /* Botones flotantes: misma estética, sin barra blanca y sin solaparse */
+    .mce-whatsapp-float {
+        right: 12px;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    }
+    .mce-call-float {
+        right: 12px;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 64px); /* encima del WhatsApp */
+        width: 56px;
+        height: 56px;
+        padding: 0;
+        border-radius: 9999px;
+        justify-content: center;
+        gap: 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+    }
+    .mce-call-float .call-ico-wrap {
+        margin-right: 0;
+        width: 48px;
+        height: 48px;
+        border: 1px solid #e2e8f0;
+        background: #ffffff;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.25);
+    }
+    .mce-call-float span:not(.call-ico-wrap) { display: none; }
+
+    /* Panel del asistente más angosto y con margen al borde */
+    .assistant-panel {
+        width: min(92vw, 360px);
+        right: 4vw;
+        max-height: 70vh;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 84px);
+    }
+
+    /* Ocultar botón asistente si se prioriza espacio en móvil */
+    .floating-buttons { display: none; }
+}
 
 
 
