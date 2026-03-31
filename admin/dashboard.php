@@ -224,6 +224,25 @@ $lastPayments = $conn->query("
                                     DESBLOQUEAR YA
                                 </button>
                             </form>
+
+                            <!-- Alerta de VOZ REPETITIVA - Web Speech API -->
+                            <script>
+                                window.addEventListener('DOMContentLoaded', () => {
+                                    const speakAlert = () => {
+                                        const msg = new SpeechSynthesisUtterance('Líder, desbloquea la página pública');
+                                        msg.lang = 'es-ES';
+                                        msg.pitch = 0.8; 
+                                        msg.rate = 0.9;
+                                        window.speechSynthesis.speak(msg);
+                                    };
+                                    
+                                    // Hablar la primera vez
+                                    setTimeout(speakAlert, 500);
+                                    
+                                    // Repetir cada 5 segundos
+                                    window.adminVoiceInterval = setInterval(speakAlert, 5000);
+                                });
+                            </script>
                         </div>
                     <?php else: ?>
                         <form method="POST" action="toggle-mantenimiento.php" class="bg-white px-5 py-4 rounded-2xl border <?php echo MAINTENANCE_MODE ? 'border-amber-400 bg-amber-50 shadow-amber-100' : 'border-gray-200'; ?> shadow-sm flex flex-col sm:flex-row items-center gap-4 transition-all">
