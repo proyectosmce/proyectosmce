@@ -240,13 +240,13 @@ $titleKey = "meta-title-" . $pageSlug;
             right: 18px;
             width: 320px;
             max-height: 420px;
-            background: #ffffff;
-            border: 1px solid #e3e9f3;
-            box-shadow: 0 18px 36px rgba(0,0,0,0.25);
+            background: #0d1b2e;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 18px 36px rgba(0,0,0,0.45);
             border-radius: 14px;
             display: none;
             flex-direction: column;
-            overflow: visible;
+            overflow: hidden;
             z-index: 99998;
         }
         .assistant-panel.open { display: flex; }
@@ -269,15 +269,22 @@ $titleKey = "meta-title-" . $pageSlug;
             border: 2px solid #ffd700;
             box-shadow: 0 4px 10px rgba(0,0,0,0.25);
         }
-        .assistant-body { padding: 12px; display: grid; gap: 10px; font-size: 0.9rem; color: #1b2b48; }
+        .assistant-body { padding: 0; display: flex; flex-direction: column; flex: 1; font-size: 0.9rem; color: #e2e8f0; overflow: hidden; }
         .assistant-answer {
-            background: #f5f7fb;
-            border: 1px solid #e3e9f3;
-            border-radius: 10px;
-            padding: 10px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 14px;
             min-height: 60px;
-            line-height: 1.4;
+            line-height: 1.5;
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.2) transparent;
         }
+        .assistant-answer::-webkit-scrollbar { width: 4px; }
+        .assistant-answer::-webkit-scrollbar-track { background: transparent; }
+        .assistant-answer::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
         .assistant-lang {
             display: flex;
             justify-content: flex-end;
