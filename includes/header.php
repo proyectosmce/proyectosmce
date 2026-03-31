@@ -89,7 +89,7 @@ $titleKey = "meta-title-" . $pageSlug;
     
     <!-- Tu CSS personalizado (pequenas modificaciones) -->
     <link rel="stylesheet" href="<?php echo $styleUrl; ?>">
-    <!-- Estilos asistente flotante -->
+    <style>
         /* --- OPTIMIZACIÓN MÓVIL Y ACCESIBILIDAD --- */
         @media (max-width: 640px) {
             html { font-size: 16px; }
