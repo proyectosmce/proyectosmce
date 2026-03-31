@@ -2996,22 +2996,28 @@
             if (btn) btn.addEventListener('click', toggleTheme);
         });
 
-        // --- LEAD TRACKING (WHATSAPP) ---
+        // --- LEAD TRACKING (WHATSAPP & SERVICIOS) ---
         document.addEventListener('click', (e) => {
             const waLink = e.target.closest('a[href*="wa.me"], a[href*="whatsapp.com"]');
-            if (waLink) {
-                // Intentar encontrar el nombre del proyecto más cercano (si estamos en detalles o portafolio)
-                let projectName = "General";
+            const serviceLink = e.target.closest('[data-track-lead]');
+            
+            if (waLink || serviceLink) {
+                let leadName = "General";
                 
-                // Si la página tiene un título de proyecto específico
-                const pageTitle = document.querySelector('h1')?.innerText || "General";
-                projectName = pageTitle;
+                if (serviceLink) {
+                    // Click directo en un servicio especializado
+                    leadName = "Servicio: " + serviceLink.getAttribute('data-track-lead');
+                } else if (waLink) {
+                    // Click en WhatsApp, buscamos contexto
+                    const pageTitle = document.querySelector('h1')?.innerText || "General";
+                    leadName = "WhatsApp desde: " + pageTitle;
+                }
 
                 // Enviar vía AJAX al servidor
                 fetch('<?php echo app_url("ajax/log-lead.php"); ?>', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `project=${encodeURIComponent(projectName)}&url=${encodeURIComponent(window.location.href)}`
+                    body: `project=${encodeURIComponent(leadName)}&url=${encodeURIComponent(window.location.href)}`
                 }).catch(err => console.error("Lead tracking error:", err));
             }
         });

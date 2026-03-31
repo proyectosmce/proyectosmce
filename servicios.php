@@ -1,4 +1,4 @@
-﻿<?php require_once 'includes/config.php'; ?>
+<?php require_once 'includes/config.php'; ?>
 <?php include 'includes/header.php'; ?>
 
 <!-- Hero Servicios -->
@@ -166,6 +166,7 @@
             
             <!-- Botón con efecto -->
             <a href="<?php echo app_url('contacto.php'); ?>?servicio=<?php echo urlencode($row['titulo']); ?>" 
+               data-track-lead="<?php echo htmlspecialchars($row['titulo']); ?>"
                class="mt-4 inline-flex items-center text-brand-accent group-hover:text-white font-semibold">
                 <span class="i18n-srv-ask-quote" data-i18n="srv-ask-quote">Solicitar presupuesto</span>
                 <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition"></i>
