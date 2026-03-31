@@ -284,7 +284,7 @@ $featuredProject = $projects[0] ?? null;
                     </a>
 
                     <?php 
-                    $featuredShareUrl = $featuredHasLink ? ($featuredIsExternal ? $featuredUrl : app_url($featuredUrl)) : app_url('portafolio.php');
+                    $featuredShareUrl = $featuredHasLink ? ($featuredIsExternal ? $featuredUrl : app_absolute_url($featuredUrl)) : app_absolute_url('portafolio.php');
                     ?>
                     <button 
                         onclick="mceShare('<?php echo addslashes($featuredProject['titulo']); ?>', '<?php echo addslashes($featuredShareUrl); ?>')"
@@ -382,7 +382,7 @@ $featuredProject = $projects[0] ?? null;
                         <div class="flex items-center gap-3">
                             <?php 
                             // Aseguramos que la URL sea absoluta para compartir
-                            $shareUrl = $hasLink ? (isExternalProjectUrl($projectUrl) ? $projectUrl : app_url($projectUrl)) : app_url('portafolio.php');
+                            $shareUrl = $hasLink ? (isExternalProjectUrl($projectUrl) ? $projectUrl : app_absolute_url($projectUrl)) : app_absolute_url('portafolio.php');
                             ?>
                             <?php if ($hasLink): ?>
                                 <a
