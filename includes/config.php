@@ -139,7 +139,7 @@ function current_absolute_url()
 }
 
 // Ejecución de MODO MANTENIMIENTO al final (cuando ya existen funciones como app_url)
-if (MAINTENANCE_MODE && strpos($_SERVER['SCRIPT_NAME'], '/admin/') === false) {
+if (MAINTENANCE_MODE && strpos($_SERVER['SCRIPT_NAME'], '/admin/') === false && empty($_SESSION['admin_logged_in'])) {
     http_response_code(503);
     $_SERVER["PHP_SELF"] = '/mantenimiento.php';
     require_once __DIR__ . '/header.php';

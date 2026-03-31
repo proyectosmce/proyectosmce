@@ -342,6 +342,15 @@ if ($stmt_pop) {
                     <?php endif; ?>
                 </div>
 
+                <?php if (MAINTENANCE_MODE): ?>
+                    <div class="mb-4 flex justify-end">
+                        <a href="../index.php" target="_blank" class="inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-bold text-blue-700 shadow-sm hover:bg-blue-100 transition-all">
+                            <i class="fas fa-eye"></i>
+                            VISTA PREVIA (PÁGINA PÚBLICA)
+                        </a>
+                    </div>
+                <?php endif; ?>
+
                 <!-- Script para monitoreo de tiempo en Admin y auto-recarga -->
                 <?php if (MAINTENANCE_MODE && $maintenance_back_at > time()): ?>
                     <script>
