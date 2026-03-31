@@ -158,22 +158,71 @@
                 <?php echo $row['descripcion']; ?>
             </p>
             
-            <!-- Precio y CTA en USD -->
-            <div class="flex flex-col mb-6 bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm">
+            <!-- Precios por nivel -->
+            <div class="flex flex-col mb-6 bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm space-y-2">
                 <?php
-                $usdPrice = "Consultar";
                 $titLow = strtolower($row['titulo']);
-                if (strpos($titLow, 'landing') !== false) $usdPrice = "100";
-                elseif (strpos($titLow, 'desarrollo') !== false) $usdPrice = "450";
-                elseif (strpos($titLow, 'inventario') !== false) $usdPrice = "800";
+                if (strpos($titLow, 'landing') !== false):
                 ?>
-                <div class="flex flex-col">
-                    <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mb-1 i18n-srv-from" data-i18n="srv-from">Desde</span>
                     <div class="flex items-baseline gap-2">
-                        <span class="text-4xl font-black text-[#7C3AED] tracking-tighter">$<?php echo $usdPrice; ?></span>
+                        <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1">Desde</span>
+                        <span class="text-4xl font-black text-[#7C3AED] tracking-tighter">$100</span>
                         <span class="text-2xl font-bold text-[#7C3AED]">USD</span>
                     </div>
-                </div>
+                    <p class="text-xs text-white/60">Página profesional para campañas o presentación de servicios.</p>
+
+                <?php elseif (strpos($titLow, 'desarrollo') !== false): ?>
+                    <div class="flex items-center justify-between py-1 border-b border-white/10">
+                        <div>
+                            <span class="text-xs font-bold text-white/50 uppercase tracking-wider">Básico</span>
+                            <p class="text-[11px] text-white/40 leading-tight">Landing page / sitio (hasta 5 secciones, responsive)</p>
+                        </div>
+                        <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$100 <span class="text-xs font-semibold">USD</span></span>
+                    </div>
+                    <div class="flex items-center justify-between py-1 border-b border-white/10">
+                        <div>
+                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider">Medio</span>
+                            <p class="text-[11px] text-white/40 leading-tight">Panel admin, gestión de contenido, roles básicos</p>
+                        </div>
+                        <span class="text-lg font-black text-brand-accent whitespace-nowrap ml-2">$450 <span class="text-xs font-semibold">USD</span></span>
+                    </div>
+                    <div class="flex items-center justify-between py-1">
+                        <div>
+                            <span class="text-xs font-bold text-green-400 uppercase tracking-wider">Avanzado</span>
+                            <p class="text-[11px] text-white/40 leading-tight">Módulos personalizados, APIs, reportes avanzados</p>
+                        </div>
+                        <span class="text-lg font-black text-green-400 whitespace-nowrap ml-2">$800 <span class="text-xs font-semibold">USD</span></span>
+                    </div>
+
+                <?php elseif (strpos($titLow, 'inventario') !== false): ?>
+                    <div class="flex items-center justify-between py-1 border-b border-white/10">
+                        <div>
+                            <span class="text-xs font-bold text-white/50 uppercase tracking-wider">Básico</span>
+                            <p class="text-[11px] text-white/40 leading-tight">Control de stock, productos, alertas</p>
+                        </div>
+                        <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$350 <span class="text-xs font-semibold">USD</span></span>
+                    </div>
+                    <div class="flex items-center justify-between py-1 border-b border-white/10">
+                        <div>
+                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider">Medio</span>
+                            <p class="text-[11px] text-white/40 leading-tight">+ Ventas, clientes, facturación básica</p>
+                        </div>
+                        <span class="text-lg font-black text-brand-accent whitespace-nowrap ml-2">$600 <span class="text-xs font-semibold">USD</span></span>
+                    </div>
+                    <div class="flex items-center justify-between py-1">
+                        <div>
+                            <span class="text-xs font-bold text-green-400 uppercase tracking-wider">Avanzado</span>
+                            <p class="text-[11px] text-white/40 leading-tight">+ Garantías, compras, precios mayorista, cierres</p>
+                        </div>
+                        <span class="text-lg font-black text-green-400 whitespace-nowrap ml-2">$900 <span class="text-xs font-semibold">USD</span></span>
+                    </div>
+
+                <?php else: ?>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1">Desde</span>
+                        <span class="text-3xl font-black text-[#7C3AED]">Consultar</span>
+                    </div>
+                <?php endif; ?>
             </div>
             
             <!-- Botón con efecto directo a WhatsApp (Color conservado en hover) -->
