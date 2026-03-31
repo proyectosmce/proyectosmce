@@ -3081,11 +3081,21 @@
         // apply nav data-i18n spans
         document.querySelectorAll('[data-i18n]').forEach(el => {
             if (!el.querySelector('.mce-i18n-target')) {
-                const span = document.createElement('span');
-                span.className = 'mce-i18n-target';
-                span.textContent = el.textContent.trim();
-                el.innerHTML = '';
-                el.appendChild(span);
+                const existingSpan = el.querySelector('span');
+                if (existingSpan) {
+                    // Caso normal: ya tiene un <span> de texto → solo marcarlo, los íconos quedan intactos
+                    existingSpan.classList.add('mce-i18n-target');
+                } else {
+                    // No tiene <span>: preservar íconos <i>/<svg>, crear span solo con el texto
+                    const icons = Array.from(el.querySelectorAll('i, svg'));
+                    const text = el.textContent.trim();
+                    const span = document.createElement('span');
+                    span.className = 'mce-i18n-target';
+                    span.textContent = text;
+                    el.innerHTML = '';
+                    icons.forEach(icon => el.appendChild(icon));
+                    el.appendChild(span);
+                }
             }
         });
 
