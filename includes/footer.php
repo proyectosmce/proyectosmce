@@ -715,6 +715,10 @@
                 'srv-next-portfolio': 'Ver portafolio',
                 'srv-next-cases': 'Casos de éxito',
                 'srv-from': 'Desde',
+                'share-title': 'Compartir proyecto',
+                'share-copy': 'Copiar enlace',
+                'share-copied': '¡Copiado!',
+                'share-message': 'Mira este proyecto de Proyectos MCE: {title} - {url}',
                 'pf-hero-title': 'Productos digitales y sistemas en producción',
                 'pf-hero-sub': 'Proyectos reales con usuarios y datos en vivo: paneles internos, portales, automatizaciones y sitios de marca conectados a pasarelas y APIs.',
                 'pf-chip1': 'Retail · Logística · Servicios',
@@ -1053,6 +1057,10 @@
                 'srv-next-portfolio': 'See portfolio',
                 'srv-next-cases': 'Success stories',
                 'srv-from': 'Starting from',
+                'share-title': 'Share project',
+                'share-copy': 'Copy link',
+                'share-copied': 'Copied!',
+                'share-message': 'Check out this MCE Projects project: {title} - {url}',
                 'pf-hero-title': 'Digital products and systems in production',
                 'pf-hero-sub': 'Real projects with live users and data: internal dashboards, portals, automations, and branded sites linked to gateways and APIs.',
                 'pf-chip1': 'Retail · Logistics · Services',
@@ -1391,6 +1399,10 @@
                 'srv-next-portfolio': 'Voir le portfolio',
                 'srv-next-cases': 'Succès clients',
                 'srv-from': 'À partir de',
+                'share-title': 'Partager le projet',
+                'share-copy': 'Copier le lien',
+                'share-copied': 'Copié !',
+                'share-message': 'Découvrez ce projet de Proyectos MCE : {title} - {url}',
                 'pf-hero-title': 'Produits digitaux et systèmes en production',
                 'pf-hero-sub': 'Projets réels avec utilisateurs et données en direct : tableaux internes, portails, automatisations et sites de marque connectés à passerelles et APIs.',
                 'pf-chip1': 'Retail · Logistique · Services',
@@ -1729,6 +1741,10 @@
                 'srv-next-portfolio': 'Portfolio ansehen',
                 'srv-next-cases': 'Erfolgsgeschichten',
                 'srv-from': 'Ab',
+                'share-title': 'Projekt teilen',
+                'share-copy': 'Link kopieren',
+                'share-copied': 'Kopiert!',
+                'share-message': 'Sieh dir dieses MCE Projects Projekt an: {title} - {url}',
                 'pf-hero-title': 'Digitale Produkte und Systeme in Produktion',
                 'pf-hero-sub': 'Echte Projekte mit Live-Usern und Daten: interne Dashboards, Portale, Automatisierungen und Marken-Sites mit Payment/API-Anbindung.',
                 'pf-chip1': 'Retail · Logistik · Services',
@@ -2148,6 +2164,11 @@
                 'pf-cta2-call': 'Agendar chamada',
                 'pf-cta2-see': 'Ver projetos',
                 'pf-cta2-cases': 'Cases de sucesso',
+                'srv-from': 'A partir de',
+                'share-title': 'Compartilhar projeto',
+                'share-copy': 'Copiar link',
+                'share-copied': 'Copiado!',
+                'share-message': 'Veja este projeto da Proyectos MCE: {title} - {url}',
                 'wa-tooltip': 'Fale com a gente!',
                 'ts-badge': 'Depoimentos · Projetos MCE',
                 'ts-hero-title': 'O que dizem quem opera com nosso software',
@@ -2405,6 +2426,10 @@
                 'srv-next-portfolio': 'Vedi portfolio',
                 'srv-next-cases': 'Casi di successo',
                 'srv-from': 'Da',
+                'share-title': 'Condividi progetto',
+                'share-copy': 'Copia link',
+                'share-copied': 'Copiato!',
+                'share-message': 'Guarda questo progetto di Progetti MCE: {title} - {url}',
                 'pf-hero-title': 'Prodotti digitali e sistemi in produzione',
                 'pf-hero-sub': 'Progetti reali con utenti e dati live: dashboard interni, portali, automazioni e siti brand con gateway e API.',
                 'pf-chip1': 'Retail · Logistica · Servizi',
@@ -2638,6 +2663,12 @@
         };
 
         const elems = (cls, key) => document.querySelectorAll('.i18n-' + key) || [];
+
+        // Helper para obtener traducciones dinámicamente
+        function getI18n(key) {
+            const lang = window.mceCurrentLang || 'es';
+            return (t[lang] && t[lang][key]) ? t[lang][key] : (t['es'][key] || key);
+        }
 
         // Map keys to elements
         const mapClass = {
@@ -3012,7 +3043,7 @@
                 let leadName = "General";
                 
                 if (serviceLink) {
-                    // Click directo en un servicio especializado
+                    // Click directo en un serviço especializado
                     leadName = "Servicio: " + serviceLink.getAttribute('data-track-lead');
                 } else if (waLink) {
                     // Click en WhatsApp, buscamos contexto
@@ -3036,7 +3067,7 @@
         <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-sm:w-full max-w-sm overflow-hidden shadow-2xl transform transition-all border border-white/10">
             <div class="px-6 py-5 border-b border-gray-100 dark:border-white/10 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
                 <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <i class="fas fa-share-alt text-blue-600"></i> Compartir proyecto
+                    <i class="fas fa-share-alt text-blue-600"></i> <span class="i18n-share-title" data-i18n="share-title">Compartir proyecto</span>
                 </h3>
                 <button onclick="document.getElementById('mce-share-modal').classList.add('hidden')" class="text-gray-400 hover:text-red-500 transition-colors">
                     <i class="fas fa-times text-xl"></i>
@@ -3062,7 +3093,7 @@
             </div>
             <div class="px-6 pb-6 pt-2">
                 <button onclick="mceCopyLink()" class="w-full py-3 rounded-xl border border-dashed border-blue-200 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 text-sm font-semibold hover:bg-blue-50 dark:hover:bg-blue-500/10 transition flex items-center justify-center gap-2">
-                    <i class="fas fa-copy"></i> <span id="copy-text">Copiar enlace</span>
+                    <i class="fas fa-copy"></i> <span id="copy-text" class="i18n-share-copy" data-i18n="share-copy">Copiar enlace</span>
                 </button>
             </div>
         </div>
@@ -3113,21 +3144,29 @@
             currentShareUrl = url;
             const modal = document.getElementById('mce-share-modal');
             
-            // Configurar enlaces
-            const shareMsg = `Mira este proyecto de Proyectos MCE: ${title} - ${url}`;
+            // Mensaje traducido dinámicamente
+            let shareMsg = getI18n('share-message') || `Mira este proyecto de Proyectos MCE: {title} - {url}`;
+            shareMsg = shareMsg.replace('{title}', title).replace('{url}', url);
+            
+            // Configurar enlaces de redes sociales
             document.getElementById('share-wa').href = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
             document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
             document.getElementById('share-li').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
             document.getElementById('share-tw').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMsg)}`;
             
-            document.getElementById('copy-text').innerText = "Copiar enlace";
+            // Botón de copiar traducido
+            document.getElementById('copy-text').innerText = getI18n('share-copy');
             modal.classList.remove('hidden');
         };
 
         window.mceCopyLink = () => {
             navigator.clipboard.writeText(currentShareUrl).then(() => {
-                document.getElementById('copy-text').innerText = "¡Copiado!";
-                setTimeout(() => { document.getElementById('copy-text').innerText = "Copiar enlace"; }, 2000);
+                const btnText = document.getElementById('copy-text');
+                const successText = getI18n('share-copied');
+                const originalText = getI18n('share-copy');
+                
+                btnText.innerText = successText;
+                setTimeout(() => { btnText.innerText = originalText; }, 2000);
             });
         };
     })();
