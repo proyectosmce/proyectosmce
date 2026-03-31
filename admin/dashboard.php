@@ -229,32 +229,41 @@ $lastPayments = $conn->query("
                             <script>
                                 window.addEventListener('DOMContentLoaded', () => {
                                     const speakAlert = () => {
+                                        const voices = window.speechSynthesis.getVoices();
                                         const msg = new SpeechSynthesisUtterance('Líder, desbloquea la página pública');
                                         msg.lang = 'es-ES';
-                                        msg.pitch = 0.5; // Muy grave para que suene masculino y robótico
-                                        msg.rate = 1.1;  // Un toque más rápido
+                                        msg.pitch = 0.1; // Al mínimo para forzar un tono muy grave (masculino)
+                                        msg.rate = 1.0;
                                         
-                                        // Intentar buscar una voz masculina instalada en el navegador
-                                        const voices = window.speechSynthesis.getVoices();
-                                        const maleVoice = voices.find(v => (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('google español')) && v.lang.startsWith('es'));
-                                        if (maleVoice) msg.voice = maleVoice;
-                                        
+                                        // Filtro agresivo para buscar voz de hombre
+                                        const maleVociesNames = ['male', 'man', 'men', 'guy', 'raul', 'pablo', 'esp', 'google español', 'microsoft david', 'microsoft sabina'];
+                                        let selectedVoice = voices.find(v => {
+                                            const name = v.name.toLowerCase();
+                                            return maleVociesNames.some(m => name.includes(m)) && v.lang.startsWith('es');
+                                        });
+
+                                        // Fallback a cualquier voz española si no encuentra una específica masculina
+                                        if (!selectedVoice) {
+                                            selectedVoice = voices.find(v => v.lang.startsWith('es'));
+                                        }
+
+                                        if (selectedVoice) msg.voice = selectedVoice;
                                         window.speechSynthesis.speak(msg);
                                     };
                                     
-                                    // Esperar a que las voces carguen antes de hablar la primera vez
+                                    // Sincronizar voces
                                     window.speechSynthesis.onvoiceschanged = () => {
-                                        if (!window.alreadySpelling) {
-                                            window.alreadySpelling = true;
+                                        if (!window.alreadySpoken) {
+                                            window.alreadySpoken = true;
                                             setTimeout(speakAlert, 500);
                                             window.adminVoiceInterval = setInterval(speakAlert, 5000);
                                         }
                                     };
                                     
-                                    // Lanzar de respaldo por si onvoiceschanged ya pasó
+                                    // Si las voces ya están cargadas
                                     setTimeout(() => {
-                                        if(!window.alreadySpelling) {
-                                            window.alreadySpelling = true;
+                                        if(!window.alreadySpoken) {
+                                            window.alreadySpoken = true;
                                             speakAlert();
                                             window.adminVoiceInterval = setInterval(speakAlert, 5000);
                                         }
