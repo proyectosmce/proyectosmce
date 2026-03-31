@@ -379,7 +379,15 @@ $featuredProject = $projects[0] ?? null;
                         <span class="text-sm text-blue-600 font-semibold <?php echo $pCatKey ? 'i18n-'.$pCatKey : ''; ?>" <?php echo $pCatKey ? 'data-i18n="'.$pCatKey.'"' : ''; ?>>
                             <?php echo htmlspecialchars($project['categoria'], ENT_QUOTES, 'UTF-8'); ?>
                         </span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold i18n-pf-real-case" data-i18n="pf-real-case">Caso real</span>
+                        <?php 
+                        $titStr = strtolower(trim($project['titulo']));
+                        $isDemo = (strpos($titStr, 'tienda online ropa') !== false || strpos($titStr, 'landing page inmobiliaria') !== false);
+                        ?>
+                        <?php if ($isDemo): ?>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold i18n-pf-demo-case" data-i18n="pf-demo-case">Ejemplo representativo</span>
+                        <?php else: ?>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold i18n-pf-real-case" data-i18n="pf-real-case">Caso real</span>
+                        <?php endif; ?>
                     </div>
                     <h3 class="text-xl font-bold">
                         <a
