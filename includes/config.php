@@ -242,11 +242,14 @@ if (MAINTENANCE_MODE && strpos($_SERVER['SCRIPT_NAME'], '/admin/') === false) {
 </div>';
 
     // Script para la cuenta regresiva y WhatsApp
-    $backAtJs = $maintenance_back_at * 1000;
     echo '<script>
-        let backAt = ' . $backAtJs . ';
+        // Si el tiempo ya pasó, forzamos un backAt de 10 segundos adicionales para el contador visual
+        let backAt = ' . ($maintenance_back_at * 1000) . ';
+        if (backAt > 0 && backAt <= Date.now()) {
+            backAt = Date.now() + 10000;
+        }
+
         const timerEl = document.getElementById("timer");
-        const wrapEl = document.getElementById("countdown-wrap");
 
         function updateTimer() {
             if (backAt === 0) return;
@@ -254,9 +257,9 @@ if (MAINTENANCE_MODE && strpos($_SERVER['SCRIPT_NAME'], '/admin/') === false) {
             let diff = backAt - now;
             
             if (diff <= 0) {
-                // Si el tiempo caduca, reiniciar 30 seg repetidamente hasta que el admin desbloquee
-                backAt = Date.now() + 30000;
-                diff = 30000;
+                // Al llegar a 0, recarga la página para verificar si ya desbloqueaste
+                location.reload();
+                return;
             }
             
             const hours = Math.floor(diff / (1000 * 60 * 60));
