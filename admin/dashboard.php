@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // admin/dashboard.php
 require_once '../includes/config.php';
 require_once '../includes/testimonial-helpers.php';
@@ -189,29 +189,38 @@ $lastPayments = $conn->query("
                     <h1 class="text-3xl font-bold">Dashboard</h1>
                     
                     <?php 
-                    $time_expired = (MAINTENANCE_MODE && $maintenance_back_at > 0 && time() >= $maintenance_back_at);
-                    if ($time_expired): 
+                    // Verificación robusta del estado de mantenimiento
+                    $maint_file_path = __DIR__ . '/../includes/.maintenance';
+                    $is_currently_maint = file_exists($maint_file_path);
+                    $back_timestamp = $is_currently_maint ? (int)@file_get_contents($maint_file_path) : 0;
+                    $is_expired_alert = ($is_currently_maint && $back_timestamp > 0 && time() >= $back_timestamp);
+
+                    if ($is_expired_alert): 
                     ?>
-                        <!-- Alerta Estilo Rayos para el Admin -->
-                        <div class="relative overflow-hidden bg-red-600 rounded-2xl p-4 shadow-xl shadow-red-200 border-2 border-red-400 flex flex-col sm:flex-row items-center gap-4 transition-all animate-pulse">
+                        <!-- Alerta Extrema de Rayos Rojos para el Admin -->
+                        <div class="relative overflow-hidden bg-red-700 rounded-2xl p-5 shadow-2xl shadow-red-300 border-2 border-red-500 flex flex-col sm:flex-row items-center gap-5 transition-all animate-pulse">
                             <style>
-                                .admin-bolt { position: absolute; color: #fee2e2; opacity: 0.4; font-size: 1.5rem; animation: admin-lightning 0.2s infinite; }
-                                @keyframes admin-lightning { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+                                .admin-bolt-v2 { position: absolute; color: #fff; opacity: 0.6; font-size: 1.8rem; animation: admin-lightning-v2 0.15s infinite; pointer-events: none; }
+                                @keyframes admin-lightning-v2 { 0% { opacity: 0; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } 100% { opacity: 0; transform: scale(1); } }
                             </style>
-                            <i class="fas fa-bolt admin-bolt" style="top:10%; left:20%;"></i>
-                            <i class="fas fa-bolt admin-bolt" style="bottom:10%; right:20%; animation-delay: 0.1s;"></i>
-                            <div class="flex items-center gap-3 relative z-10">
-                                <div class="bg-white/20 p-2 rounded-lg">
-                                    <i class="fas fa-exclamation-triangle text-white text-xl"></i>
+                            <!-- Rayos dispersos por la alerta -->
+                            <i class="fas fa-bolt admin-bolt-v2" style="top:5%; left:10%;"></i>
+                            <i class="fas fa-bolt admin-bolt-v2" style="bottom:5%; right:15%; animation-delay: 0.05s;"></i>
+                            <i class="fas fa-bolt admin-bolt-v2" style="top:40%; left:5%; font-size: 1rem; animation-delay: 0.1s;"></i>
+                            <i class="fas fa-bolt admin-bolt-v2" style="top:10%; right:5%; font-size: 1.2rem; animation-delay: 0.08s;"></i>
+
+                            <div class="flex items-center gap-4 relative z-10">
+                                <div class="bg-white/30 p-3 rounded-full border border-white/50 shadow-inner">
+                                    <i class="fas fa-radiation-alt text-white text-2xl"></i>
                                 </div>
-                                <div>
-                                    <p class="text-white font-black text-sm tracking-tight uppercase">PÁGINA PÚBLICA BLOQUEADA</p>
-                                    <p class="text-red-100 text-[10px] font-bold">EL TIEMPO EXPIRÓ. DESBLOQUEA AHORA.</p>
+                                <div class="space-y-1">
+                                    <p class="text-white font-black text-lg tracking-tight uppercase leading-none">PÁGINA PÚBLICA BLOQUEADA</p>
+                                    <p class="text-red-100 text-xs font-bold bg-black/20 px-2 py-0.5 rounded-md inline-block">¡TIEMPO AGOTADO! DESACTIVA EL MANTENIMIENTO AHORA</p>
                                 </div>
                             </div>
-                            <form method="POST" action="toggle-mantenimiento.php" class="relative z-10">
+                            <form method="POST" action="toggle-mantenimiento.php" class="relative z-10 ml-auto">
                                 <input type="hidden" name="csrf_token" value="<?php echo admin_escape(admin_get_csrf_token()); ?>">
-                                <button type="submit" class="bg-white text-red-600 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-50 transition-colors shadow-lg">
+                                <button type="submit" class="bg-white text-red-700 px-6 py-3 rounded-xl font-black text-sm hover:bg-gray-100 active:scale-95 transition-all shadow-xl shadow-red-900/50 uppercase tracking-widest border-b-4 border-gray-300">
                                     DESBLOQUEAR YA
                                 </button>
                             </form>
