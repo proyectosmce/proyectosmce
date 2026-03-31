@@ -3022,6 +3022,42 @@
             }
         });
     })();
+    <!-- Lógica de Disponibilidad y Sharing -->
+    <script>
+    (() => {
+        // --- INDICADOR DE DISPONIBILIDAD (WHATSAPP) ---
+        const updateWaStatus = () => {
+            const waTooltip = document.querySelector('.i18n-wa-tooltip');
+            if (!waTooltip) return;
+            
+            const now = new Date();
+            const hour = now.getHours();
+            const day = now.getDay(); // 0 = Domingo, 1 = Lunes...
+            
+            // Horario: Lunes (1) a Sábado (6) de 8:00 a 18:00
+            const isWorkingHour = (day >= 1 && day <= 6) && (hour >= 8 && hour < 18);
+            
+            if (isWorkingHour) {
+                waTooltip.innerHTML = `<span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> Disponible ahora`;
+            } else {
+                waTooltip.innerHTML = `<span class="inline-block w-2 h-2 bg-gray-400 rounded-full mr-2"></span> Fuera de horario`;
+            }
+        };
+        updateWaStatus();
+        setInterval(updateWaStatus, 60000); // Actualizar cada minuto
+
+        // --- SISTEMA DE COMPARTIR (SOCIAL SHARE) ---
+        window.mceShare = (title, url) => {
+            if (navigator.share) {
+                navigator.share({ title, url }).catch(err => console.log('Error compartiendo:', err));
+            } else {
+                // Fallback: Abrir mini menú o alert (opcional: podrías crear un modal aquí)
+                const shareMsg = `¡Mira este proyecto de Proyectos MCE! \n${url}`;
+                const waUrl = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
+                window.open(waUrl, '_blank');
+            }
+        };
+    })();
     </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿<?php require_once 'includes/config.php'; ?>
+<?php require_once 'includes/config.php'; ?>
 <?php require_once 'includes/project-helpers.php'; ?>
 <?php
 $projects = fetchPortfolioProjects($conn);
@@ -282,6 +282,13 @@ $featuredProject = $projects[0] ?? null;
                     <a href="#proyectos-grid" class="border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition">
                         <span class="i18n-pf-featured-more" data-i18n="pf-featured-more">Ver más proyectos</span>
                     </a>
+
+                    <button 
+                        onclick="mceShare('<?php echo addslashes($featuredProject['titulo']); ?>', '<?php echo addslashes($featuredUrl !== '#' ? $featuredUrl : app_url('portafolio.php')); ?>')"
+                        class="border border-slate-300 text-slate-600 px-6 py-3 rounded-lg hover:bg-slate-50 transition flex items-center gap-2"
+                    >
+                        <i class="fas fa-share-alt"></i> <span class="i18n-pf-share" data-i18n="pf-share">Compartir</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -356,30 +363,44 @@ $featuredProject = $projects[0] ?? null;
                             <?php echo $isExternal ? 'target="_blank" rel="noopener"' : ''; ?>
                             class="hover:text-blue-600 transition <?php echo $hasLink ? '' : 'pointer-events-none'; ?>"
                         >
+                    </div>
+                    <h3 class="text-xl font-bold">
+                        <a
+                            href="<?php echo htmlspecialchars($projectUrl, ENT_QUOTES, 'UTF-8'); ?>"
+                            <?php echo $isExternal ? 'target="_blank" rel="noopener"' : ''; ?>
+                            class="hover:text-blue-600 transition <?php echo $hasLink ? '' : 'pointer-events-none'; ?>"
+                        >
                             <?php echo htmlspecialchars($project['titulo'], ENT_QUOTES, 'UTF-8'); ?>
                         </a>
                     </h3>
                     <p class="text-gray-600 line-clamp-2"><?php echo htmlspecialchars($descriptionPreview, ENT_QUOTES, 'UTF-8'); ?></p>
                     <div class="flex justify-between items-center gap-4 pt-1">
                         <span class="text-gray-500 text-sm"><?php echo htmlspecialchars($clientLabel, ENT_QUOTES, 'UTF-8'); ?></span>
-                        <?php if ($hasLink): ?>
-                            <a
-                                href="<?php echo htmlspecialchars($projectUrl, ENT_QUOTES, 'UTF-8'); ?>"
-                                <?php echo $isExternal ? 'target="_blank" rel="noopener"' : ''; ?>
-                                class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold"
+                        <div class="flex items-center gap-3">
+                            <?php if ($hasLink): ?>
+                                <a
+                                    href="<?php echo htmlspecialchars($projectUrl, ENT_QUOTES, 'UTF-8'); ?>"
+                                    <?php echo $isExternal ? 'target="_blank" rel="noopener"' : ''; ?>
+                                    class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold"
+                                >
+                                    <span class="i18n-pf-see-more" data-i18n="pf-see-more">Ver más</span> <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                                </a>
+                            <?php else: ?>
+                                <span class="text-sm text-gray-400 i18n-pf-no-link" data-i18n="pf-no-link">Sin enlace disponible</span>
+                            <?php endif; ?>
+                            
+                            <button 
+                                onclick="mceShare('<?php echo addslashes($project['titulo']); ?>', '<?php echo addslashes($hasLink ? $projectUrl : app_url('portafolio.php')); ?>')"
+                                class="inline-flex items-center text-slate-500 hover:text-blue-600 font-semibold transition"
+                                title="Compartir proyecto"
                             >
-                                <span class="i18n-pf-see-more" data-i18n="pf-see-more">Ver más</span> <i class="fas fa-arrow-right ml-2 text-sm"></i>
-                            </a>
-                        <?php else: ?>
-                            <span class="text-sm text-gray-400 i18n-pf-no-link" data-i18n="pf-no-link">Sin enlace disponible</span>
-                        <?php endif; ?>
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         <?php endforeach; ?>
-    </div>
-</section>
-
 <!-- CTA final -->
 <section class="max-w-7xl mx-auto px-4 pb-16">
     <div class="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-800 text-white rounded-2xl mce-rounded-panel p-10 shadow-2xl flex flex-col md:flex-row md:items-center md:justify-between gap-6">
