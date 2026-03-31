@@ -272,6 +272,21 @@ $lastPayments = $conn->query("
                     <?php endif; ?>
                 </div>
 
+                <!-- Script para monitoreo de tiempo en Admin y auto-recarga -->
+                <?php if (MAINTENANCE_MODE && $maintenance_back_at > time()): ?>
+                    <script>
+                        const adminBackAt = <?php echo $maintenance_back_at * 1000; ?>;
+                        if (adminBackAt > 0) {
+                            const adminCheck = setInterval(() => {
+                                if (Date.now() >= adminBackAt) {
+                                    clearInterval(adminCheck);
+                                    location.reload(); // Recarga automática para mostrar alerta roja
+                                }
+                            }, 1000);
+                        }
+                    </script>
+                <?php endif; ?>
+
                 <?php if ($testimonios_pendientes > 0): ?>
                     <a href="testimonios.php" class="mb-8 flex items-center justify-between gap-4 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 via-orange-50 to-red-50 px-6 py-5 shadow-sm transition hover:shadow-md">
                         <div class="flex items-center gap-4">
