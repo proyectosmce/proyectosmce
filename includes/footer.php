@@ -110,8 +110,9 @@
     <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20consultar%20por%20un%20proyecto"
        target="_blank"
        class="mce-whatsapp-float fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-300 z-50 group">
-        <span class="mce-whatsapp-float__icon">
+        <span class="relative flex items-center justify-center">
             <i class="fab fa-whatsapp text-3xl"></i>
+            <span class="wa-status-dot-main absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-green-500 bg-gray-400"></span>
         </span>
         <span class="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity i18n-wa-tooltip" data-i18n="wa-tooltip">
             ¡Chatea con nosotros!
@@ -3066,17 +3067,16 @@
     (() => {
         // --- INDICADOR DE DISPONIBILIDAD (WHATSAPP) ---
         const updateWaStatus = () => {
-            // El selector original tiene data-i18n, lo cual pisa el innerHTML.
-            // Para evitar conflicto, inyectamos el punto verde por CSS o buscamos un contenedor interno.
             const waTooltip = document.querySelector('.i18n-wa-tooltip');
-            if (!waTooltip) return;
+            const waDotMain = document.querySelector('.wa-status-dot-main');
+            if (!waTooltip || !waDotMain) return;
             
             const now = new Date();
             const hour = now.getHours();
             const day = now.getDay();
             const isWorkingHour = (day >= 1 && day <= 6) && (hour >= 8 && hour < 18);
             
-            // Creamos un span para el estatus si no existe
+            // Punto en el tooltip
             let statusDot = waTooltip.querySelector('.wa-status-dot');
             if (!statusDot) {
                 statusDot = document.createElement('span');
@@ -3085,9 +3085,13 @@
             }
             
             if (isWorkingHour) {
-                statusDot.className = 'wa-status-dot inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse';
+                const onClasses = 'bg-green-500 animate-pulse';
+                statusDot.className = 'wa-status-dot inline-block w-2 h-2 ' + onClasses + ' rounded-full mr-2';
+                waDotMain.className = 'wa-status-dot-main absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-green-500 ' + onClasses;
             } else {
-                statusDot.className = 'wa-status-dot inline-block w-2 h-2 bg-gray-400 rounded-full mr-2';
+                const offClasses = 'bg-gray-400';
+                statusDot.className = 'wa-status-dot inline-block w-2 h-2 ' + offClasses + ' rounded-full mr-2';
+                waDotMain.className = 'wa-status-dot-main absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-green-600 ' + offClasses;
             }
         };
 
