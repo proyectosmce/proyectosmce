@@ -3022,40 +3022,101 @@
             }
         });
     })();
+    <!-- Modal de Compartir Social -->
+    <div id="mce-share-modal" class="fixed inset-0 z-[60] hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl transform transition-all border border-white/10">
+            <div class="px-6 py-5 border-b border-gray-100 dark:border-white/10 flex justify-between items-center bg-slate-50 dark:bg-slate-800/50">
+                <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fas fa-share-alt text-blue-600"></i> Compartir proyecto
+                </h3>
+                <button onclick="document.getElementById('mce-share-modal').classList.add('hidden')" class="text-gray-400 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-6 grid grid-cols-2 gap-4">
+                <a href="#" id="share-wa" target="_blank" class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-green-50 dark:bg-green-500/10 hover:bg-green-100 transition shadow-sm group">
+                    <i class="fab fa-whatsapp text-3xl text-green-500 group-hover:scale-110 transition"></i>
+                    <span class="text-xs font-semibold text-green-700 dark:text-green-400">WhatsApp</span>
+                </a>
+                <a href="#" id="share-fb" target="_blank" class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-blue-50 dark:bg-blue-600/10 hover:bg-blue-100 transition shadow-sm group">
+                    <i class="fab fa-facebook text-3xl text-blue-600 group-hover:scale-110 transition"></i>
+                    <span class="text-xs font-semibold text-blue-700 dark:text-blue-400">Facebook</span>
+                </a>
+                <a href="#" id="share-li" target="_blank" class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-sky-50 dark:bg-sky-600/10 hover:bg-sky-100 transition shadow-sm group">
+                    <i class="fab fa-linkedin text-3xl text-sky-600 group-hover:scale-110 transition"></i>
+                    <span class="text-xs font-semibold text-sky-700 dark:text-sky-400">LinkedIn</span>
+                </a>
+                <a href="#" id="share-tw" target="_blank" class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-slate-50 dark:bg-white/10 hover:bg-slate-100 transition shadow-sm group">
+                    <i class="fab fa-x-twitter text-3xl text-slate-900 dark:text-white group-hover:scale-110 transition"></i>
+                    <span class="text-xs font-semibold text-slate-700 dark:text-gray-300">Twitter / X</span>
+                </a>
+            </div>
+            <div class="px-6 pb-6 pt-2">
+                <button onclick="mceCopyLink()" class="w-full py-3 rounded-xl border border-dashed border-blue-200 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 text-sm font-semibold hover:bg-blue-50 dark:hover:bg-blue-500/10 transition flex items-center justify-center gap-2">
+                    <i class="fas fa-copy"></i> <span id="copy-text">Copiar enlace</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Lógica de Disponibilidad y Sharing -->
     <script>
     (() => {
         // --- INDICADOR DE DISPONIBILIDAD (WHATSAPP) ---
         const updateWaStatus = () => {
+            // El selector original tiene data-i18n, lo cual pisa el innerHTML.
+            // Para evitar conflicto, inyectamos el punto verde por CSS o buscamos un contenedor interno.
             const waTooltip = document.querySelector('.i18n-wa-tooltip');
             if (!waTooltip) return;
             
             const now = new Date();
             const hour = now.getHours();
-            const day = now.getDay(); // 0 = Domingo, 1 = Lunes...
-            
-            // Horario: Lunes (1) a Sábado (6) de 8:00 a 18:00
+            const day = now.getDay();
             const isWorkingHour = (day >= 1 && day <= 6) && (hour >= 8 && hour < 18);
             
+            // Creamos un span para el estatus si no existe
+            let statusDot = waTooltip.querySelector('.wa-status-dot');
+            if (!statusDot) {
+                statusDot = document.createElement('span');
+                statusDot.className = 'wa-status-dot inline-block w-2 h-2 rounded-full mr-2';
+                waTooltip.prepend(statusDot);
+            }
+            
             if (isWorkingHour) {
-                waTooltip.innerHTML = `<span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> Disponible ahora`;
+                statusDot.className = 'wa-status-dot inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse';
             } else {
-                waTooltip.innerHTML = `<span class="inline-block w-2 h-2 bg-gray-400 rounded-full mr-2"></span> Fuera de horario`;
+                statusDot.className = 'wa-status-dot inline-block w-2 h-2 bg-gray-400 rounded-full mr-2';
             }
         };
-        updateWaStatus();
-        setInterval(updateWaStatus, 60000); // Actualizar cada minuto
+
+        // Escuchar cuando el idioma cambie para re-inyectar el punto
+        window.addEventListener('mce-lang-changed', updateWaStatus);
+        setTimeout(updateWaStatus, 1000); // Dar un segundo para que cargue la traducción inicial
+        setInterval(updateWaStatus, 60000);
 
         // --- SISTEMA DE COMPARTIR (SOCIAL SHARE) ---
+        let currentShareUrl = "";
+
         window.mceShare = (title, url) => {
-            if (navigator.share) {
-                navigator.share({ title, url }).catch(err => console.log('Error compartiendo:', err));
-            } else {
-                // Fallback: Abrir mini menú o alert (opcional: podrías crear un modal aquí)
-                const shareMsg = `¡Mira este proyecto de Proyectos MCE! \n${url}`;
-                const waUrl = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
-                window.open(waUrl, '_blank');
-            }
+            currentShareUrl = url;
+            const modal = document.getElementById('mce-share-modal');
+            
+            // Configurar enlaces
+            const shareMsg = `Mira este proyecto de Proyectos MCE: ${title} - ${url}`;
+            document.getElementById('share-wa').href = `https://wa.me/?text=${encodeURIComponent(shareMsg)}`;
+            document.getElementById('share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            document.getElementById('share-li').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+            document.getElementById('share-tw').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMsg)}`;
+            
+            document.getElementById('copy-text').innerText = "Copiar enlace";
+            modal.classList.remove('hidden');
+        };
+
+        window.mceCopyLink = () => {
+            navigator.clipboard.writeText(currentShareUrl).then(() => {
+                document.getElementById('copy-text').innerText = "¡Copiado!";
+                setTimeout(() => { document.getElementById('copy-text').innerText = "Copiar enlace"; }, 2000);
+            });
         };
     })();
     </script>
