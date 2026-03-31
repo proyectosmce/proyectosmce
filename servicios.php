@@ -159,19 +159,19 @@
             </p>
             
             <!-- Precio y CTA en USD -->
-            <div class="flex flex-col mb-4 bg-white/5 p-4 rounded-2xl border border-white/10">
+            <div class="flex flex-col mb-6 bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm">
                 <?php
                 $usdPrice = "Consultar";
                 if (stripos($row['titulo'], 'landing') !== false) $usdPrice = "100";
                 elseif (stripos($row['titulo'], 'desarrollo') !== false) $usdPrice = "450"; // Promedio junior
                 elseif (stripos($row['titulo'], 'inventario') !== false) $usdPrice = "800";
                 ?>
-                <div class="mb-1">
-                    <span class="bg-brand-accent text-slate-900 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest i18n-srv-from" data-i18n="srv-from">Desde</span>
-                </div>
-                <div class="flex items-baseline gap-1">
-                    <span class="text-lg text-white/90 font-bold">USD</span>
-                    <span class="text-4xl font-black text-brand-accent tracking-tighter">$<?php echo $usdPrice; ?></span>
+                <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 i18n-srv-from" data-i18n="srv-from">Desde</span>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-4xl font-black text-brand-accent tracking-tighter">$<?php echo $usdPrice; ?></span>
+                        <span class="text-xl font-bold text-white/50">USD</span>
+                    </div>
                 </div>
             </div>
             
