@@ -45,6 +45,7 @@ $titleKey = "meta-title-" . $pageSlug;
                         brand: {
                             primary: '#7C3AED',
                             accent: '#22C55E',
+                            cta: '#3B82F6', // Nuevo azul sólido llamativo para CTAs principales
                             dark: '#0D0A1A',
                             ink: '#0B0816',
                             light: '#F7F5FF',
@@ -89,17 +90,45 @@ $titleKey = "meta-title-" . $pageSlug;
     <!-- Tu CSS personalizado (pequenas modificaciones) -->
     <link rel="stylesheet" href="<?php echo $styleUrl; ?>">
     <!-- Estilos asistente flotante -->
-    <style>
+        /* --- OPTIMIZACIÓN MÓVIL Y ACCESIBILIDAD --- */
+        @media (max-width: 640px) {
+            html { font-size: 16px; }
+            .btn, button, a.inline-flex { 
+                padding-top: 12px !important; 
+                padding-bottom: 12px !important; 
+                font-size: 1.1rem !important; 
+                margin-bottom: 8px; /* Evitar clics accidentales */
+            }
+        }
+
+        /* Mejora de Contraste para textos grises */
+        .text-slate-500, .text-gray-500 { color: #475569 !important; } /* Gris más oscuro para WCAG AA */
+        .text-gray-600 { color: #334155 !important; }
+
+        /* Estilos de CTAs */
+        .cta-primary {
+            background-color: #3B82F6 !important;
+            color: white !important;
+            transition: all 0.3s ease;
+        }
+        .cta-primary:hover {
+            background-color: #2563EB !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
         .floating-buttons {
-            position: fixed;
-            bottom: 100px;
-            right: 18px;
-            display: grid;
+        position: fixed;
+        bottom: 6.5rem; /* Encima del botón de WhatsApp */
+        right: 1.5rem;
+        z-index: 100;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: grid;
             gap: 10px;
             justify-items: end;
             grid-auto-rows: min-content;
             grid-auto-flow: row;
-            z-index: 99999;
+            z-index: 100; /* Asegurar que esté sobre otros elementos pero no bloquee todo */
         }
         .float-btn {
             width: 64px;

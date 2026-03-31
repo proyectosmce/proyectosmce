@@ -134,18 +134,31 @@
     <!-- Panel de asistente global -->
     <div class="assistant-panel" id="assistant-panel">
         <div class="assistant-header">
-            <div class="left">
-                <img src="<?php echo app_url('asstv.webp'); ?>" alt="Asistente MCE" class="assistant-avatar">
-                <span>Asistente MCE</span>
+            <div class="left flex items-center gap-2">
+                <div class="relative">
+                    <img src="<?php echo app_url('asstv.webp'); ?>" alt="Asistente MCE" class="assistant-avatar w-10 h-10 rounded-full border-2 border-white/20">
+                    <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-slate-900 rounded-full"></span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-white text-sm">Asistente MCE</span>
+                    <span class="text-[10px] text-blue-200 uppercase tracking-wider i18n-bot-online" data-i18n="bot-online">En línea ahora</span>
+                </div>
             </div>
-            <button id="assistant-close" style="background:none;border:none;color:#ffd700;font-weight:800;font-size:1rem;cursor:pointer;">×</button>
+            <button id="assistant-close" class="text-white/60 hover:text-white transition-colors p-2" aria-label="Cerrar asistente">
+               <i class="fas fa-times text-lg"></i>
+            </button>
         </div>
-        <div class="assistant-body">
-            <div class="assistant-lang" style="height:0;visibility:hidden;"></div>
-            <div class="assistant-answer" id="assistant-answer"></div>
-            <div class="assistant-input">
-                <input id="assistant-question" type="text" placeholder="Escribe tu pregunta..." />
-                <button id="assistant-send">Enviar</button>
+        <div class="assistant-body flex flex-col">
+            <div class="assistant-answer p-4 space-y-4" id="assistant-answer">
+                <!-- El mensaje inicial se carga vía JS -->
+            </div>
+            <div class="assistant-input-container p-3 border-t border-white/10 bg-slate-900/50">
+                <div class="assistant-input-wrapper flex items-center gap-2 bg-white/10 rounded-xl p-1 border border-white/10 focus-within:border-brand-primary/50 transition-all">
+                    <input id="assistant-question" type="text" class="flex-1 bg-transparent border-none text-white text-sm px-3 py-2 outline-none placeholder:text-white/40" data-i18n-placeholder="bot-input-ph" placeholder="Escribe tu pregunta..." autocomplete="off" />
+                    <button id="assistant-send" class="w-10 h-10 flex items-center justify-center rounded-lg bg-brand-primary text-white hover:bg-brand-primary/80 transition-colors shadow-lg">
+                        <i class="fas fa-paper-plane text-sm"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -507,33 +520,60 @@
             it: "Posso rispondere solo sui contenuti e servizi di questo sito: sviluppo web su misura, e-commerce, inventari, UX/UI, API, supporto e sessioni Discovery."
         };
 
-        const greeting = {
-            es: "Hola, ¿cómo estás? ¿En qué puedo ayudarte hoy?",
-            en: "Hi! How are you? How can I help you today?",
-            fr: "Salut ! Comment ça va ? Comment puis-je t’aider aujourd’hui ?",
-            de: "Hallo! Wie geht’s? Wobei kann ich dir heute helfen?",
-            pt: "Oi! Tudo bem? Como posso ajudar você hoje?",
-            it: "Ciao! Come stai? Come posso aiutarti oggi?"
+        const greetings = {
+            es: "¡Hola! 👋 Soy tu asistente de Proyectos MCE. ¿Cómo puedo impulsarte hoy?",
+            en: "Hi there! 👋 I'm your MCE Projects assistant. How can I help you thrive today?",
+            fr: "Salut ! 👋 Je suis votre assistant Projets MCE. Comment puis-je vous aider aujourd'hui ?",
+            de: "Hallo! 👋 Ich bin dein MCE Projekte Assistent. Wie kann ich dir heute helfen?",
+            pt: "Olá! 👋 Sou seu assistente da Projetos MCE. Como posso te ajudar hoje?",
+            it: "Ciao! 👋 Sono il tuo assistente Progetti MCE. Come posso aiutarti oggi?"
         };
 
-        const detectLang = (q) => {
-            const lower = q;
-            if (/[àâçéèêëîïôûùüÿœ]/.test(lower) || lower.match(/\bbonjour|salut\b/)) return 'fr';
-            if (lower.match(/\bciao\b/)) return 'it';
-            if (lower.match(/\b(ola|olá)\b/)) return 'pt';
-            if (lower.match(/\bhallo\b/)) return 'de';
-            if (lower.match(/\bhello\b|\bhi\b|\bwhat\b|\bhow\b/)) return 'en';
-            return 'es';
+        const botOptions = {
+            es: [
+                { text: "🚀 Cotizar proyecto", action: "quote" },
+                { text: "📂 Ver portafolio", action: "portfolio" },
+                { text: "📱 Hablar con asesor", action: "whatsapp" }
+            ],
+            en: [
+                { text: "🚀 Get a quote", action: "quote" },
+                { text: "📂 View portfolio", action: "portfolio" },
+                { text: "📱 Talk to advisor", action: "whatsapp" }
+            ]
         };
 
-        const linkify = (str) => (str || '').replace(/https?:\/\/\S+/g, (url) => `<a href="${url}" target="_blank" rel="noopener">${url}</a>`);
+        function renderGreeting(lang) {
+            const greetText = greetings[lang] || greetings.es;
+            const options = botOptions[lang] || botOptions.es;
+            
+            let html = `<div class="bot-msg animate-in slide-in-from-bottom-2 duration-300">
+                <p class="text-white/90 text-sm leading-relaxed">${greetText}</p>
+            </div>`;
+            
+            html += `<div class="options-grid grid gap-2 mt-4">`;
+            options.forEach(opt => {
+                html += `<button class="bot-opt-btn text-left px-4 py-2 rounded-lg bg-white/10 border border-white/10 text-white text-xs hover:bg-brand-primary hover:border-brand-primary transition-all duration-200" data-action="${opt.action}">${opt.text}</button>`;
+            });
+            html += `</div>`;
+            
+            answerBox.innerHTML = html;
 
-        const isRelevant = (q) => faqs.some(f => f.keywords.some(k => q.includes(k)));
-        const findAnswer = (q, lang) => {
-            const match = faqs.find(f => f.keywords.some(k => q.includes(k)));
-            if (!match) return defaultMsg[lang] || defaultMsg.es;
-            return match.answers[lang] || match.answers.es || defaultMsg[lang] || defaultMsg.es;
-        };
+            // Attach listeners to new buttons
+            answerBox.querySelectorAll('.bot-opt-btn').forEach(btn => {
+                btn.onclick = () => handleAction(btn.dataset.action);
+            });
+        }
+
+        function handleAction(action) {
+            const lang = window.mceCurrentLang || 'es';
+            if (action === 'quote') {
+                window.location.href = 'contacto.php?cta=plan#contacto-form';
+            } else if (action === 'portfolio') {
+                window.location.href = 'portafolio.php';
+            } else if (action === 'whatsapp') {
+                window.open('https://wa.me/573114125971?text=Hola%21%20Vengo%20del%20asistente%20virtual', '_blank');
+            }
+        }
 
         const lockScroll = () => { document.body.dataset.scrollLock = '1'; document.body.style.overflow = 'hidden'; };
         const unlockScroll = () => { delete document.body.dataset.scrollLock; document.body.style.overflow = ''; };
@@ -542,8 +582,17 @@
             const q = (questionInput.value || '').trim().toLowerCase();
             if (!q) return;
             const lang = window.mceCurrentLang || 'es';
-            const raw = isRelevant(q) ? findAnswer(q, lang) : (defaultMsg[lang] || defaultMsg.es);
-            answerBox.innerHTML = linkify(raw);
+            const isRel = faqs.some(f => f.keywords.some(k => q.includes(k)));
+            const raw = isRel ? findAnswer(q, lang) : (defaultMsg[lang] || defaultMsg.es);
+            
+            const msgHtml = `<div class="bot-msg-answer animate-in slide-in-from-bottom-2 duration-300 space-y-3">
+                <p class="text-xs text-white/40 uppercase mb-1">MCE responde:</p>
+                <p class="text-white/90 text-sm leading-relaxed">${linkify(raw)}</p>
+                <button class="text-brand-accent text-[10px] uppercase font-bold hover:underline" onclick="this.parentElement.parentElement.innerHTML = ''">Limpiar historial</button>
+            </div>`;
+            
+            answerBox.innerHTML = msgHtml;
+            questionInput.value = '';
         }
 
         function openPanel() {
@@ -552,6 +601,11 @@
             toggle.style.display = 'none';
             setTimeout(() => questionInput.focus(), 50);
             lockScroll();
+            
+            const lang = window.mceCurrentLang || 'es';
+            if (!answerBox.innerHTML.trim()) {
+                renderGreeting(lang);
+            }
         }
 
         function closePanel() {
@@ -567,19 +621,33 @@
         questionInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') { e.preventDefault(); handleAsk(); }
         });
+        
+        // Auto-proactive: Abrir después de 8 segundos si es la primera vez en la sesión
+        setTimeout(() => {
+            if (!sessionStorage.getItem('mceBotShown') && !panel.classList.contains('open')) {
+                // Solo auto-abrir si no estamos en una página de contacto o formularios críticos para no interrumpir
+                if (!window.location.pathname.includes('contacto.php')) {
+                    openPanel();
+                    sessionStorage.setItem('mceBotShown', 'true');
+                }
+            }
+        }, 8000);
+
         document.addEventListener('click', (e) => {
             const clickInsidePanel = panel.contains(e.target);
             const clickToggle = toggle.contains(e.target);
-
             if (panel.classList.contains('open') && !clickInsidePanel && !clickToggle) {
                 closePanel();
             }
         });
+
         window.addEventListener('mce-lang-changed', (e) => {
             const lang = e.detail?.lang || 'es';
-            const greet = greeting[lang] || greeting.es;
-            answerBox.innerHTML = linkify(greet);
+            renderGreeting(lang);
         });
+        
+        // Carga inicial si ya estaba abierto o forzado
+        renderGreeting(window.mceCurrentLang || 'es');
     })();
     </script>
     <script>
@@ -622,6 +690,8 @@
                 'meta-title-testimonios': 'Testimonios · Proyectos MCE',
                 'meta-title-contacto': 'Contacto · Proyectos MCE',
                 'brand-name': 'Proyectos MCE',
+                'bot-online': 'En línea ahora',
+                'bot-input-ph': 'Escribe tu pregunta...',
                 'ts-view-project': 'Ver proyecto',
                 'hero-title': 'Software a medida para que tu operación no se detenga',
                 'hero-sub': 'Planificamos, diseñamos y desarrollamos plataformas web que soportan ventas, inventarios y atención al cliente con control total y visibilidad.',
@@ -968,6 +1038,8 @@
                 'meta-title-testimonios': 'Testimonials · MCE Projects',
                 'meta-title-contacto': 'Contact · MCE Projects',
                 'brand-name': 'MCE Projects',
+                'bot-online': 'Online now',
+                'bot-input-ph': 'Type your question...',
                 'ts-view-project': 'View project',
                 'hero-title': 'Custom software so your operation never stops',
                 'hero-sub': 'We plan, design and build web platforms that support sales, inventory and customer care with full control and visibility.',
@@ -1314,6 +1386,8 @@
                 'meta-title-testimonios': 'Témoignages · Projets MCE',
                 'meta-title-contacto': 'Contact · Projets MCE',
                 'brand-name': 'Projets MCE',
+                'bot-online': 'En ligne maintenant',
+                'bot-input-ph': 'Écrivez votre question...',
                 'ts-view-project': 'Voir le projet',
                 'hero-title': 'Logiciel sur mesure pour que votre opération ne s’arrête pas',
                 'hero-sub': 'Nous planifions, concevons et développons des plateformes web pour ventes, inventaires et service client avec contrôle total et visibilité.',
@@ -1660,6 +1734,8 @@
                 'meta-title-testimonios': 'Referenzen · MCE Projekte',
                 'meta-title-contacto': 'Kontakt · MCE Projekte',
                 'brand-name': 'MCE Projekte',
+                'bot-online': 'Jetzt online',
+                'bot-input-ph': 'Schreibe deine Frage...',
                 'ts-view-project': 'Projekt ansehen',
                 'hero-title': 'Individuelle Software, damit dein Betrieb nicht stoppt',
                 'hero-sub': 'Wir planen, designen und bauen Webplattformen für Vertrieb, Lager und Kundenservice mit vollem Überblick.',
@@ -2006,6 +2082,8 @@
                 'meta-title-testimonios': 'Depoimentos · Projetos MCE',
                 'meta-title-contacto': 'Contato · Projetos MCE',
                 'brand-name': 'Projetos MCE',
+                'bot-online': 'On-line agora',
+                'bot-input-ph': 'Escreva sua pergunta...',
                 'ts-view-project': 'Ver projeto',
                 'hero-title': 'Software sob medida para sua operação não parar',
                 'hero-sub': 'Planejamos, desenhamos e desenvolvemos plataformas web que suportam vendas, estoques e atendimento com controle total e visibilidade.',
@@ -2352,6 +2430,8 @@
                 'meta-title-testimonios': 'Testimonianze · Progetti MCE',
                 'meta-title-contacto': 'Contatto · Progetti MCE',
                 'brand-name': 'Progetti MCE',
+                'bot-online': 'Online ora',
+                'bot-input-ph': 'Scrivi la tua domanda...',
                 'ts-view-project': 'Vedi progetto',
                 'hero-title': 'Software su misura perché la tua operazione non si fermi',
                 'hero-sub': 'Pianifichiamo, progettiamo e sviluppiamo piattaforme web per vendite, inventari e customer care con controllo totale e visibilità.',

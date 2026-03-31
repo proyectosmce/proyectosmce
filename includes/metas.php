@@ -1,12 +1,14 @@
-﻿<?php
+<?php
 // includes/metas.php
-$meta_titulo = $meta_titulo ?? 'Proyectos MCE - Desarrollo Web Profesional';
-$meta_descripcion = $meta_descripcion ?? 'Desarrollo de sistemas web a medida y aplicaciones. Transformamos tus ideas en código.';
+$meta_titulo = $meta_titulo ?? 'Proyectos MCE - Desarrollo Web Profesional y Sistemas a Medida';
+$meta_descripcion = $meta_descripcion ?? 'Expertos en desarrollo de software, sistemas web a medida y transformación digital en Colombia. Creamos soluciones robustas que impulsan tu negocio.';
 $meta_imagen = $meta_imagen ?? app_absolute_url('imag/MCE.jpg');
 ?>
-<!-- Meta tags basicos -->
+<!-- Meta tags básicos -->
 <meta name="description" content="<?php echo $meta_descripcion; ?>">
-<meta name="keywords" content="desarrollo web, sistemas a medida, php, mysql, inventario">
+<meta name="keywords" content="desarrollo web, sistemas a medida, software colombia, aplicaciones web, inventarios pro, proyectos mce">
+<meta name="author" content="Proyectos MCE">
+<meta name="robots" content="index, follow">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
@@ -14,6 +16,7 @@ $meta_imagen = $meta_imagen ?? app_absolute_url('imag/MCE.jpg');
 <meta property="og:title" content="<?php echo $meta_titulo; ?>">
 <meta property="og:description" content="<?php echo $meta_descripcion; ?>">
 <meta property="og:image" content="<?php echo $meta_imagen; ?>">
+<meta property="og:site_name" content="Proyectos MCE">
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image">

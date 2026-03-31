@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
-                    <a href="<?php echo app_url('contacto.php'); ?>?cta=agenda#agenda-llamada" class="inline-flex items-center justify-center bg-brand-primary text-white px-8 py-4 rounded-xl font-semibold shadow-glow hover:scale-[1.02] transition mce-call-ringing i18n-srv-btn-call" data-i18n="srv-btn-call">
+                    <a href="<?php echo app_url('contacto.php'); ?>?cta=agenda#agenda-llamada" class="cta-primary inline-flex items-center justify-center text-white px-8 py-4 rounded-xl font-semibold shadow-glow hover:scale-[1.02] transition mce-call-ringing i18n-srv-btn-call" data-i18n="srv-btn-call">
                         <span class="call-ico-wrap mr-2 text-slate-900">
                             <i class="fas fa-phone-alt"></i>
                             <span class="call-ring call-ring--1"></span>
@@ -103,12 +103,12 @@
                             </div>
                         </li>
                     </ul>
-                    <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20una%20consultoria%20para%20mi%20proyecto" target="_blank" rel="noopener" class="relative p-4 rounded-xl bg-white/8 border border-white/15 flex items-center justify-between hover:bg-white/12 transition">
+                    <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20una%20consultoria%20para%20mi%20proyecto" target="_blank" rel="noopener" class="cta-primary relative p-4 rounded-xl border border-white/15 flex items-center justify-between hover:scale-[1.01] transition">
                         <div>
-                            <p class="text-sm text-white/70 i18n-srv-side-cta-label" data-i18n="srv-side-cta-label">Consultoría inicial</p>
+                            <p class="text-sm text-white/70 i18n-srv-side-cta-label" data-i18n="srv-side-label">Consultoría inicial</p>
                             <p class="font-semibold i18n-srv-side-cta-text" data-i18n="srv-side-cta-text">Agenda un diagnóstico sin costo</p>
                         </div>
-                        <i class="fas fa-arrow-right text-brand-accent text-xl"></i>
+                        <i class="fas fa-arrow-right text-white text-xl"></i>
                     </a>
                 </div>
             </div>
@@ -198,7 +198,7 @@
             <p class="text-white/85 mt-2 i18n-srv-next-desc" data-i18n="srv-next-desc">Respondemos en menos de 24 horas con un plan de acción y tiempos estimados.</p>
         </div>
         <div class="flex flex-wrap gap-3">
-            <a href="<?php echo app_url('contacto.php'); ?>?cta=agenda#agenda-llamada" class="inline-flex items-center px-5 py-3 rounded-xl bg-white text-brand-ink font-semibold shadow-soft hover:-translate-y-[2px] transition mce-call-ringing">
+            <a href="<?php echo app_url('contacto.php'); ?>?cta=agenda#agenda-llamada" class="cta-primary inline-flex items-center px-5 py-3 rounded-xl font-semibold shadow-soft hover:-translate-y-[2px] transition mce-call-ringing">
                 <span class="call-ico-wrap mr-2 text-slate-900">
                     <i class="fas fa-phone-alt"></i>
                     <span class="call-ring call-ring--1"></span>

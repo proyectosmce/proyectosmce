@@ -29,7 +29,7 @@ $featuredProject = $projects[0] ?? null;
                     <span class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/15 text-sm i18n-pf-chip3" data-i18n="pf-chip3"><i class="fas fa-lock mr-2 text-brand-accent"></i><span>Seguridad y pruebas completas</span></span>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
-                    <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center justify-center bg-brand-primary text-white px-8 py-4 rounded-xl font-semibold shadow-glow hover:scale-[1.02] transition i18n-pf-btn-demo" data-i18n="pf-btn-demo">
+                    <a href="<?php echo app_url('contacto.php'); ?>" class="cta-primary inline-flex items-center justify-center text-white px-8 py-4 rounded-xl font-semibold shadow-glow hover:scale-[1.02] transition i18n-pf-btn-demo" data-i18n="pf-btn-demo">
                         <i class="fas fa-rocket mr-2"></i> Solicitar demo
                     </a>
                     <a href="#proyectos-grid" class="inline-flex items-center justify-center border border-white/40 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition i18n-pf-btn-see" data-i18n="pf-btn-see">
@@ -76,12 +76,12 @@ $featuredProject = $projects[0] ?? null;
                             </div>
                         </li>
                     </ul>
-                    <a href="#proyectos-grid" class="relative p-4 rounded-xl bg-white/8 border border-white/15 flex items-center justify-between hover:bg-white/12 transition">
+                    <a href="#proyectos-grid" class="cta-primary relative p-4 rounded-xl border border-white/15 flex items-center justify-between hover:scale-[1.01] transition">
                         <div>
                             <p class="text-sm text-white/70 i18n-pf-cta-small" data-i18n="pf-cta-small">Entrega con visibilidad</p>
                             <p class="font-semibold i18n-pf-cta-big" data-i18n="pf-cta-big">Demos frecuentes y documentación</p>
                         </div>
-                        <i class="fas fa-arrow-right text-brand-accent text-xl"></i>
+                        <i class="fas fa-arrow-right text-white text-xl"></i>
                     </a>
                 </div>
             </div>

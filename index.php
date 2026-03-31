@@ -1,196 +1,7 @@
-﻿<?php require_once 'includes/config.php'; ?>
+<?php require_once 'includes/config.php'; ?>
 <?php require_once 'includes/project-helpers.php'; ?>
 <?php include 'includes/header.php'; ?>
 
-<style>
-/* Botones flotantes y asistente */
-.floating-buttons {
-    position: fixed;
-    bottom: 100px;
-    right: 18px;
-    display: grid;
-    gap: 10px;
-    justify-items: end;
-    grid-auto-rows: min-content;
-    grid-auto-flow: row;
-    z-index: 99999;
-}
-.float-btn {
-    width: 64px;
-    height: 64px;
-    border-radius: 12px;
-    border: 2px solid #3f1f6d;
-    cursor: pointer;
-    color: #1c1233;
-    display: grid;
-    place-items: center;
-    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    font-size: 1.3rem;
-}
-.float-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(0,0,0,0.32); }
-.float-btn.assistant {
-    position: relative;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    width: auto;
-    height: auto;
-    border-radius: 0;
-    padding: 0;
-}
-.float-btn.assistant img.bot-img {
-    display: block;
-    width: 64px;
-    height: 64px;
-    object-fit: cover;
-    border-radius: 0;
-    animation: botWaveCycle 14s ease-in-out infinite;
-}
-.float-btn.whatsapp {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: #25D366;
-    color: #fff;
-    border: 2px solid #128C7E;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-    font-size: 1.2rem;
-}
-.float-btn.assistant:hover img.bot-img,
-.float-btn.assistant.paused img.bot-img {
-    animation-play-state: paused;
-}
-
-@keyframes botWaveCycle {
-    0%,70%   { transform: rotate(0deg); }
-    80%      { transform: rotate(10deg); }
-    88%      { transform: rotate(-10deg); }
-    95%      { transform: rotate(6deg); }
-    100%     { transform: rotate(0deg); }
-}
-.assistant-panel {
-    position: fixed;
-    bottom: 180px;
-    right: 18px;
-    width: 320px;
-    max-height: 420px;
-    background: #ffffff;
-    border: 1px solid #e3e9f3;
-    box-shadow: 0 18px 36px rgba(0,0,0,0.25);
-    border-radius: 14px;
-    display: none;
-    flex-direction: column;
-    overflow: visible;
-    z-index: 99998;
-}
-.assistant-panel.open { display: flex; }
-.assistant-header {
-    background: linear-gradient(135deg, #3f1f6d, #5B21B6);
-    color: white;
-    padding: 10px 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    font-size: 0.95rem;
-}
-.assistant-header .left { display: flex; align-items: center; gap: 10px; }
-.assistant-avatar {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    object-fit: cover;
-    border: 2px solid #22C55E;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-}
-.assistant-body { padding: 12px; display: grid; gap: 10px; font-size: 0.9rem; color: #1b2b48; }
-.assistant-answer {
-    background: #f5f7fb;
-    border: 1px solid #e3e9f3;
-    border-radius: 10px;
-    padding: 10px;
-    min-height: 60px;
-    line-height: 1.4;
-}
-.assistant-lang {
-    display: flex;
-    justify-content: flex-end;
-    position: relative;
-}
-.assistant-lang select { display: none; }
-.lang-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 10px;
-    border-radius: 10px;
-    border: 1px solid #d4dce7;
-    font-size: 0.85rem;
-    background: #fff;
-    color: #1b2b48;
-    cursor: pointer;
-}
-.lang-toggle img {
-    width: 18px;
-    height: 14px;
-    object-fit: cover;
-    border-radius: 2px;
-}
-.lang-list {
-    position: absolute;
-    right: 0;
-    top: 110%;
-    background: #fff;
-    border: 1px solid #d4dce7;
-    border-radius: 10px;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
-    padding: 8px 8px 10px;
-    display: none;
-    z-index: 5;
-    max-height: 200px;
-    overflow-y: auto;
-    min-width: 180px;
-}
-.lang-list::-webkit-scrollbar {
-    width: 8px;
-}
-.lang-list::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 6px;
-}
-.lang-list::-webkit-scrollbar-track {
-    background: #f8fafc;
-    border-radius: 6px;
-}
-.lang-list.open { display: block; }
-.lang-option {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 8px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: #1b2b48;
-}
-.lang-option:hover { background: #f1f5f9; }
-.lang-option img {
-    width: 18px;
-    height: 14px;
-    object-fit: cover;
-    border-radius: 2px;
-}
-.assistant-input { display: flex; gap: 8px; }
-.assistant-input input {
-    flex: 1; padding: 10px 12px; border-radius: 10px;
-    border: 1px solid #d4dce7; font-size: 0.9rem;
-}
-.assistant-input button {
-    padding: 10px 12px; border-radius: 10px; border: none;
-    background: #7C3AED; color: #F8F7FF; font-weight: 700; cursor: pointer;
-}
-</style>
 
 <!-- Hero Section renovado -->
 <section class="relative overflow-hidden bg-gradient-to-br from-brand-ink via-[#120c2c] to-brand-dark text-white mce-rounded-hero">
@@ -228,7 +39,7 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-2">
-                    <a href="<?php echo app_url('contacto.php'); ?>?cta=plan#contacto-form" class="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm md:text-base bg-brand-primary text-white shadow-glow hover:scale-[1.02] transition i18n-btn-plan whitespace-nowrap" data-i18n="btn-plan">
+                    <a href="<?php echo app_url('contacto.php'); ?>?cta=plan#contacto-form" class="cta-primary inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm md:text-base shadow-glow hover:scale-[1.02] transition i18n-btn-plan whitespace-nowrap" data-i18n="btn-plan">
                         <i class="fas fa-rocket mr-2"></i> Armar mi plan
                     </a>
                     <a href="<?php echo app_url('portafolio.php'); ?>" class="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-sm md:text-base border border-white/40 text-white hover:bg-white/10 transition i18n-btn-portfolio whitespace-nowrap" data-i18n="btn-portfolio">
@@ -310,12 +121,12 @@
                             </div>
                         </li>
                     </ul>
-                    <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20agendar%20un%20discovery%20con%20MCE" target="_blank" rel="noopener" class="relative flex items-center justify-between p-4 rounded-2xl bg-white/8 border border-white/15 hover:bg-white/12 transition">
+                    <a href="https://wa.me/573114125971?text=Hola%21%20Quiero%20agendar%20un%20discovery%20con%20MCE" target="_blank" rel="noopener" class="cta-primary relative flex items-center justify-between p-4 rounded-2xl border border-white/15 hover:scale-[1.01] transition">
                         <div>
                             <p class="text-sm text-white/70 i18n-cta-discovery-label">Disponibilidad inmediata</p>
-                            <p class="font-semibold i18n-cta-discovery-text">Agenda tu sesión de discovery sin costo</p>
+                            <p class="font-semibold i18n-cta-discovery-text" data-i18n="cta-discovery-text">Agenda tu sesión de discovery sin costo</p>
                         </div>
-                        <i class="fas fa-arrow-right text-brand-accent text-xl"></i>
+                        <i class="fas fa-arrow-right text-white text-xl"></i>
                     </a>
                 </div>
             </div>

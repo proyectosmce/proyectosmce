@@ -1,4 +1,4 @@
-﻿<?php require_once 'includes/config.php'; ?>
+<?php require_once 'includes/config.php'; ?>
 <?php require_once 'includes/project-helpers.php'; ?>
 <?php require_once 'includes/form-guard.php'; ?>
 <?php require_once 'includes/testimonial-helpers.php'; ?>
@@ -124,7 +124,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
-                    <a href="#testimonios" class="inline-flex items-center justify-center bg-brand-primary text-white px-8 py-4 rounded-xl font-semibold shadow-glow hover:scale-[1.02] transition i18n-ts-btn-read" data-i18n="ts-btn-read">
+                    <a href="#testimonios" class="cta-primary inline-flex items-center justify-center text-white px-8 py-4 rounded-xl font-semibold shadow-glow hover:scale-[1.02] transition i18n-ts-btn-read" data-i18n="ts-btn-read">
                         <i class="fas fa-comments mr-2"></i> Leer testimonios
                     </a>
                     <a href="#form-testimonio" class="inline-flex items-center justify-center border border-white/40 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition i18n-ts-btn-share" data-i18n="ts-btn-share">
@@ -205,7 +205,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
             <h2 class="text-3xl font-bold text-slate-900 i18n-ts-exp-title" data-i18n="ts-exp-title">Historias de equipos que confiaron en Proyectos MCE</h2>
             <p class="text-gray-700 mt-2 max-w-3xl i18n-ts-exp-desc" data-i18n="ts-exp-desc">Lee cómo usamos entregas iterativas, acompañamiento y soporte para llevar sus proyectos a producción.</p>
         </div>
-        <a href="#form-testimonio" class="inline-flex items-center px-5 py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition">
+        <a href="#form-testimonio" class="cta-primary inline-flex items-center px-5 py-3 rounded-xl text-white font-semibold shadow-lg hover:scale-[1.02] transition">
             <i class="fas fa-comments mr-2"></i> <span class="i18n-ts-exp-btn" data-i18n="ts-exp-btn">Quiero contar mi experiencia</span>
         </a>
     </div>
@@ -329,7 +329,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                 </div>
                 <div class="flex gap-3">
                     <button type="button" id="t-prev-btn" class="bg-blue-600 text-white px-5 py-3 rounded-lg hover:bg-blue-700 transition i18n-ts-form-prev" data-i18n="ts-form-prev">Ver vista previa</button>
-                    <button type="submit" id="testimonial-submit" <?php echo ($hasProjectOptions && $testimonialRecaptchaEnabled) ? '' : 'disabled'; ?> class="border border-blue-600 text-blue-600 px-5 py-3 rounded-lg hover:bg-blue-50 transition disabled:border-gray-300 disabled:text-gray-400 disabled:bg-gray-100 i18n-ts-form-submit" data-i18n="ts-form-submit">
+                    <button type="submit" id="testimonial-submit" <?php echo ($hasProjectOptions && $testimonialRecaptchaEnabled) ? '' : 'disabled'; ?> class="cta-primary text-white border border-blue-600 px-5 py-3 rounded-lg hover:bg-blue-700 transition disabled:border-gray-300 disabled:text-gray-400 disabled:bg-gray-100 i18n-ts-form-submit" data-i18n="ts-form-submit">
                         Enviar testimonio
                     </button>
                 </div>
@@ -369,7 +369,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
             <p class="text-white/70 mt-2 i18n-ts-cta-desc" data-i18n="ts-cta-desc">Cuéntanos cómo te fue con tu proyecto y te contactamos para publicarlo.</p>
         </div>
         <div class="flex flex-wrap gap-3">
-            <a href="#form-testimonio" class="inline-flex items-center px-5 py-3 rounded-xl bg-white text-slate-900 font-semibold shadow-lg hover:bg-blue-50 transition">
+            <a href="#form-testimonio" class="cta-primary inline-flex items-center px-5 py-3 rounded-xl text-white font-semibold shadow-lg hover:scale-[1.02] transition">
                 <i class="fas fa-paper-plane mr-2"></i> <span class="i18n-ts-cta-btn1" data-i18n="ts-cta-btn1">Dejar testimonio</span>
             </a>
             <a href="<?php echo app_url('contacto.php'); ?>" class="inline-flex items-center px-5 py-3 rounded-xl border border-white/60 text-white font-semibold hover:bg-white/10 transition">
@@ -444,7 +444,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     const joseBodyEs = 'Yo, Jose Delgado dueno de Destello de Oro 18K, durante este tiempo estuvimos desarrollando un sistema para el control de inventario y debo decir que el resultado fue excelente. El proceso fue muy profesional: siempre estuvo dispuesto a escuchar mis necesidades, hacer ajustes cuando era necesario y proponer soluciones que realmente optimizaron la forma en que manejo mi negocio.\n\nHoy cuento con un sistema mucho mas organizado, practico y hecho a la medida de lo que necesitaba. Esto me ha permitido tener mayor control y ahorrar tiempo en la gestion diaria.\n\nSi estas pensando en desarrollar software, sistemas a medida o una pagina web, definitivamente lo recomiendo. Es una persona responsable, comprometida con su trabajo y que realmente busca que el cliente quede satisfecho con el resultado final.\n\nSupero mis expectativas, lo recomiendo 100 %. MUCHAS GRACIAS!';
     const joseBodyEn = 'I, Jose Delgado, owner of Destello de Oro 18K, developed an inventory system and the result was excellent. Very professional: always listened to my needs, made adjustments and proposed solutions that optimized my business.\n\nNow I have a more organized, practical, tailor-made system. It gives me more control and saves time daily.\n\nIf you plan to build software, custom systems or a website, I definitely recommend him. Responsible, committed and focused on client satisfaction.\n\nHe exceeded my expectations, I recommend 100%. THANK YOU!';
     const joseBodyDe = 'Ich, Jose Delgado, Inhaber von Destello de Oro 18K, habe ein Inventarsystem entwickelt und das Ergebnis war ausgezeichnet. Sehr professionell: hat zugehort, angepasst und Losungen vorgeschlagen, die mein Geschaft optimierten.\n\nJetzt habe ich ein massgeschneidertes, organisiertes und praktisches System. Es gibt mir mehr Kontrolle und spart taglich Zeit.\n\nWenn du Software, massgeschneiderte Systeme oder eine Website bauen willst, empfehle ich ihn definitiv. Verantwortlich, engagiert und kundenorientiert.\n\nEr hat meine Erwartungen ubertroffen, 100 % empfehlenswert. DANKE!';
-    const joseBodyPt = 'Eu, Jose Delgado, dono da Destello de Oro 18K, desenvolvi um sistema de inventario e o resultado foi excelente. Muito profissional: sempre ouviu minhas necessidades, fez ajustes e propôs solucoes que otimizaram meu negocio.\n\nAgora tenho um sistema mais organizado, pratico e sob medida. Isso me da mais controle e economiza tempo no dia a dia.\n\nSe voce pretende criar software, sistemas sob medida ou um site, eu recomendo. Responsavel, comprometido e focado na satisfacao do cliente.\n\nSuperou minhas expectativas, recomendo 100%. OBRIGADO!';
+    const joseBodyPt = 'Eu, Jose Delgado, dono da Destello de Oro 18K, desenvolvi um sistema de inventario e o resultado foi excelente. Muito profissional: sempre ouviu minhas necessidades, fez ajustes e propôs solucoes que otimizaram meu negocio.\n\nAgora tenho um sistema mais organizado, pratico e sob medida. Isso me da mais controle e economiza tempo no dia a dia.\n\nSe voce pretende criar software, sistemas sob medida ou um site, eu recomendo. Responsavel, comprometido e focado na satisfacao do cliente.\n\nSuperou minhas expectativas, recomenda 100%. OBRIGADO!';
     const joseBodyIt = 'Io, Jose Delgado, proprietario di Destello de Oro 18K, ho sviluppato un sistema di inventario e il risultato e stato eccellente. Molto professionale: ha ascoltato le mie esigenze, fatto modifiche e proposto soluzioni che hanno ottimizzato il mio business.\n\nOra ho un sistema piu organizzato, pratico e su misura. Mi da piu controllo e mi fa risparmiare tempo ogni giorno.\n\nSe vuoi sviluppare software, sistemi su misura o un sito web, lo raccomando assolutamente. Responsabile, impegnato e orientato al cliente.\n\nHa superato le mie aspettative, lo consiglio al 100%. GRAZIE!';
     const joseBodyFr = 'Moi, Jose Delgado, proprietaire de Destello de Oro 18K, nous avons developpe un systeme dinventaire et le resultat a ete excellent. Tres professionnel: il a ecoute mes besoins, apporte des ajustements et propose des solutions qui ont optimise mon activite.\n\nJai maintenant un systeme plus organise, pratique et sur mesure. Il me donne plus de controle et me fait gagner du temps au quotidien.\n\nSi vous envisagez de developper un logiciel, des systemes sur mesure ou un site web, je le recommande vivement. Responsable, engage et centre sur la satisfaction client.\n\nIl a depasse mes attentes, je le recommande a 100 %. MERCI !';
 
@@ -738,8 +738,3 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     attachValidationMessages();
 })();
 </script>
-
-
-
-
-
