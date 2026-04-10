@@ -101,6 +101,13 @@ h1, h2, h3, h4, h5, h6,
     will-change: transform, box-shadow;
     /* Se elimina el halo animado para que el botón se vea como un solo círculo */
     animation: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border-radius: 9999px;
 }
 
 .mce-whatsapp-float::before {
