@@ -441,7 +441,9 @@ h1, h2, h3, h4, h5, h6,
 }
 .srv-modal__panel {
     position: relative;
-    max-width: 720px;
+    width: min(92vw, 760px);
+    max-height: 88vh;
+    overflow-y: auto;
     margin: 6vh auto;
     background: #0b1224;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -503,6 +505,21 @@ h1, h2, h3, h4, h5, h6,
     font-size: 1rem;
 }
 
+.srv-modal__body {
+    padding-bottom: 8px;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+@media (max-width: 640px) {
+    .srv-modal__panel {
+        width: 92vw;
+        margin: 4vh auto;
+        max-height: 84vh;
+    }
+}
 .no-scroll {
     overflow: hidden;
 }
