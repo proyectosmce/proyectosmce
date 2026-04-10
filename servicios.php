@@ -154,9 +154,10 @@
                 $priceSummary = 'Consultar';
             }
         ?>
-        <div class="srv-card collapsed group bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-soft hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden animate-on-scroll p-8 text-white"
+        <div class="srv-card group bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-soft hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden animate-on-scroll p-8 text-white"
              role="button"
              tabindex="0"
+             aria-haspopup="dialog"
              aria-expanded="false">
             <!-- Barra decorativa superior -->
             <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-primary to-brand-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
@@ -177,93 +178,106 @@
                 <span class="srv-summary-hint">Toca para ver detalles</span>
             </div>
 
-            <p class="srv-extra text-slate-100/90 leading-relaxed mb-4 <?php echo $i18nKey ? 'i18n-' . $i18nKey . '-desc' : ''; ?>" <?php echo $i18nKey ? 'data-i18n="'.$i18nKey.'-desc"' : ''; ?>>
-                <?php echo $row['descripcion']; ?>
-            </p>
-            
-            <!-- Precios por nivel -->
-            <div class="srv-extra flex flex-col mb-6 bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm space-y-2 text-slate-100">
-                <?php if (strpos($titLow, 'landing') !== false): ?>
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1">Desde</span>
-                        <span class="text-4xl font-black text-[#7C3AED] tracking-tighter">$100</span>
-                        <span class="text-2xl font-bold text-[#7C3AED]">USD</span>
-                    </div>
-                    <p class="srv-level-desc">Página profesional para campañas o presentación de servicios.</p>
+            <!-- Contenido detallado para modal (oculto en la tarjeta) -->
+            <div class="srv-modal-template" hidden>
+                <p class="srv-extra text-slate-100 leading-relaxed mb-4 <?php echo $i18nKey ? 'i18n-' . $i18nKey . '-desc' : ''; ?>" <?php echo $i18nKey ? 'data-i18n="'.$i18nKey.'-desc"' : ''; ?>>
+                    <?php echo $row['descripcion']; ?>
+                </p>
+                
+                <div class="srv-extra flex flex-col mb-6 bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm space-y-2 text-slate-100">
+                    <?php if (strpos($titLow, 'landing') !== false): ?>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1">Desde</span>
+                            <span class="text-4xl font-black text-[#7C3AED] tracking-tighter">$100</span>
+                            <span class="text-2xl font-bold text-[#7C3AED]">USD</span>
+                        </div>
+                        <p class="srv-level-desc">Página profesional para campañas o presentación de servicios.</p>
 
-                <?php elseif (strpos($titLow, 'desarrollo') !== false): ?>
-                    <div class="flex items-center justify-between py-1 border-b border-white/10">
-                        <div>
-                            <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Básico</span>
-                            <p class="srv-level-desc">Landing page / sitio (hasta 5 secciones, responsive)</p>
+                    <?php elseif (strpos($titLow, 'desarrollo') !== false): ?>
+                        <div class="flex items-center justify-between py-1 border-b border-white/10">
+                            <div>
+                                <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Básico</span>
+                                <p class="srv-level-desc">Landing page / sitio (hasta 5 secciones, responsive)</p>
+                            </div>
+                            <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$100 <span class="text-xs font-semibold">USD</span></span>
                         </div>
-                        <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$100 <span class="text-xs font-semibold">USD</span></span>
-                    </div>
-                    <div class="flex items-center justify-between py-1 border-b border-white/10">
-                        <div>
-                            <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Medio</span>
-                            <p class="srv-level-desc">Panel admin, gestión de contenido, roles básicos</p>
+                        <div class="flex items-center justify-between py-1 border-b border-white/10">
+                            <div>
+                                <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Medio</span>
+                                <p class="srv-level-desc">Panel admin, gestión de contenido, roles básicos</p>
+                            </div>
+                            <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$450 <span class="text-xs font-semibold">USD</span></span>
                         </div>
-                        <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$450 <span class="text-xs font-semibold">USD</span></span>
-                    </div>
-                    <div class="flex items-center justify-between py-1">
-                        <div>
-                            <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Avanzado</span>
-                            <p class="srv-level-desc">Módulos personalizados, APIs, reportes avanzados</p>
+                        <div class="flex items-center justify-between py-1">
+                            <div>
+                                <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Avanzado</span>
+                                <p class="srv-level-desc">Módulos personalizados, APIs, reportes avanzados</p>
+                            </div>
+                            <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$800 <span class="text-xs font-semibold">USD</span></span>
                         </div>
-                        <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$800 <span class="text-xs font-semibold">USD</span></span>
-                    </div>
 
-                <?php elseif (strpos($titLow, 'inventario') !== false): ?>
-                    <div class="flex items-center justify-between py-1 border-b border-white/10">
-                        <div>
-                            <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Básico</span>
-                            <p class="srv-level-desc">Control de stock, productos, alertas</p>
+                    <?php elseif (strpos($titLow, 'inventario') !== false): ?>
+                        <div class="flex items-center justify-between py-1 border-b border-white/10">
+                            <div>
+                                <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Básico</span>
+                                <p class="srv-level-desc">Control de stock, productos, alertas</p>
+                            </div>
+                            <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$350 <span class="text-xs font-semibold">USD</span></span>
                         </div>
-                        <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$350 <span class="text-xs font-semibold">USD</span></span>
-                    </div>
-                    <div class="flex items-center justify-between py-1 border-b border-white/10">
-                        <div>
-                            <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Medio</span>
-                            <p class="srv-level-desc">+ Ventas, clientes, facturación básica</p>
+                        <div class="flex items-center justify-between py-1 border-b border-white/10">
+                            <div>
+                                <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Medio</span>
+                                <p class="srv-level-desc">+ Ventas, clientes, facturación básica</p>
+                            </div>
+                            <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$600 <span class="text-xs font-semibold">USD</span></span>
                         </div>
-                        <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$600 <span class="text-xs font-semibold">USD</span></span>
-                    </div>
-                    <div class="flex items-center justify-between py-1">
-                        <div>
-                            <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Avanzado</span>
-                            <p class="srv-level-desc">+ Garantías, compras, precios mayorista, cierres</p>
+                        <div class="flex items-center justify-between py-1">
+                            <div>
+                                <span class="text-xs font-bold text-[#7C3AED] uppercase tracking-wider">Avanzado</span>
+                                <p class="srv-level-desc">+ Garantías, compras, precios mayorista, cierres</p>
+                            </div>
+                            <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$900 <span class="text-xs font-semibold">USD</span></span>
                         </div>
-                        <span class="text-lg font-black text-[#7C3AED] whitespace-nowrap ml-2">$900 <span class="text-xs font-semibold">USD</span></span>
-                    </div>
 
-                <?php else: ?>
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1">Desde</span>
-                        <span class="text-3xl font-black text-[#7C3AED]">Consultar</span>
-                    </div>
-                <?php endif; ?>
+                    <?php else: ?>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1">Desde</span>
+                            <span class="text-3xl font-black text-[#7C3AED]">Consultar</span>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                
+                <a href="https://wa.me/573114125971?text=Hola!%20Vengo%20de%20la%20web%20y%20quiero%20consultar%20por%20el%20servicio%20de%20<?php echo urlencode($row['titulo']); ?>" 
+                   target="_blank"
+                   rel="noopener"
+                   data-track-lead="<?php echo htmlspecialchars($row['titulo']); ?>"
+                   class="srv-extra mt-4 inline-flex items-center gap-2 text-brand-accent font-semibold transition-colors duration-300">
+                    <span class="i18n-srv-ask-quote" data-i18n="srv-ask-quote">Solicitar presupuesto</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-            
-            <!-- Botón con efecto directo a WhatsApp (Color conservado en hover) -->
-            <a href="https://wa.me/573114125971?text=Hola!%20Vengo%20de%20la%20web%20y%20quiero%20consultar%20por%20el%20servicio%20de%20<?php echo urlencode($row['titulo']); ?>" 
-               target="_blank"
-               rel="noopener"
-               data-track-lead="<?php echo htmlspecialchars($row['titulo']); ?>"
-               class="srv-extra mt-4 inline-flex items-center text-brand-accent font-semibold transition-colors duration-300">
-                <span class="i18n-srv-ask-quote" data-i18n="srv-ask-quote">Solicitar presupuesto</span>
-                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-2 transition"></i>
-            </a>
-
-            <!-- Botón para volver al modo compacto -->
-            <button type="button" class="srv-back mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white font-semibold transition hover:bg-white/15">
-                <i class="fas fa-arrow-left"></i>
-                <span>Volver atrás</span>
-            </button>
         </div>
         <?php endwhile; ?>
     </div>
 </section>
+
+<!-- Modal de servicios -->
+<div id="srv-modal" class="srv-modal" aria-hidden="true">
+    <div class="srv-modal__overlay" data-close-modal></div>
+    <div class="srv-modal__panel" role="dialog" aria-modal="true" aria-labelledby="srv-modal-title">
+        <button class="srv-modal__close" type="button" aria-label="Cerrar" data-close-modal>
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="srv-modal__header">
+            <div class="srv-modal__icon"></div>
+            <div class="srv-modal__title-wrap">
+                <h3 id="srv-modal-title" class="srv-modal__title"></h3>
+                <p class="srv-modal__summary"></p>
+            </div>
+        </div>
+        <div class="srv-modal__body"></div>
+    </div>
+</div>
 
 <!-- CTA final -->
 <section class="max-w-7xl mx-auto px-4 pb-16">
@@ -296,34 +310,51 @@
 <script>
 (() => {
     const cards = document.querySelectorAll('.srv-card');
+    const modal = document.getElementById('srv-modal');
+    const modalBody = modal.querySelector('.srv-modal__body');
+    const modalTitle = modal.querySelector('.srv-modal__title');
+    const modalSummary = modal.querySelector('.srv-modal__summary');
+    const modalIcon = modal.querySelector('.srv-modal__icon');
+    const closeEls = modal.querySelectorAll('[data-close-modal]');
+    let lastFocus = null;
+
+    const openModal = (card) => {
+        const template = card.querySelector('.srv-modal-template');
+        if (!template) return;
+        lastFocus = document.activeElement;
+        modalTitle.textContent = card.querySelector('h3')?.textContent || '';
+        modalSummary.textContent = card.querySelector('.srv-summary-price')?.textContent || '';
+        modalBody.innerHTML = template.innerHTML;
+        modalIcon.innerHTML = card.querySelector('.text-5xl')?.innerHTML || '';
+        modal.classList.add('is-active');
+        modal.setAttribute('aria-hidden', 'false');
+        modal.querySelector('.srv-modal__close')?.focus();
+        document.documentElement.classList.add('no-scroll');
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('is-active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.documentElement.classList.remove('no-scroll');
+        if (lastFocus) lastFocus.focus();
+    };
+
     cards.forEach(card => {
-        const backBtn = card.querySelector('.srv-back');
-
-        const collapse = (evt) => {
-            if (evt) evt.stopPropagation();
-            card.classList.add('collapsed');
-            card.setAttribute('aria-expanded', 'false');
-        };
-
-        const expand = () => {
-            card.classList.remove('collapsed');
-            card.setAttribute('aria-expanded', 'true');
-        };
-
-        card.addEventListener('click', expand);
+        card.addEventListener('click', () => openModal(card));
         card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                expand();
+                openModal(card);
             }
         });
-        backBtn?.addEventListener('click', (e) => {
-            e.stopPropagation();
-            collapse();
-        });
+    });
 
-        // inicio colapsado
-        collapse();
+    closeEls.forEach(btn => btn.addEventListener('click', closeModal));
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('is-active')) closeModal();
+    });
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
     });
 })();
 </script>
