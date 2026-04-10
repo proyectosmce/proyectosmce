@@ -428,6 +428,13 @@ h1, h2, h3, h4, h5, h6,
 }
 .srv-card .srv-extra {
     color: #e2e8f0;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+.srv-card .srv-level-desc {
+    font-size: 0.97rem;
+    line-height: 1.5;
+    color: #e5e7eb;
 }
 
 /* --------- Ajustes móviles --------- */
