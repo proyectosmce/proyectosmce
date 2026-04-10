@@ -378,6 +378,10 @@ h1, h2, h3, h4, h5, h6,
 /* Tarjetas de servicios: modo compacto/expandido */
 .srv-card {
     cursor: pointer;
+    background: linear-gradient(145deg, #0b1224 0%, #0f172a 45%, #111827 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #e5e7eb;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }
 .srv-card .srv-back {
     display: none;
@@ -390,6 +394,38 @@ h1, h2, h3, h4, h5, h6,
 }
 .srv-card:not(.collapsed) .srv-back {
     display: inline-flex;
+}
+.srv-card:not(.collapsed) {
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 50px rgba(37, 99, 235, 0.18);
+}
+
+.srv-summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #cbd5f5;
+}
+.srv-summary-price {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    background: rgba(59, 130, 246, 0.16);
+    color: #93c5fd;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+}
+.srv-summary-hint {
+    font-size: 0.9rem;
+    color: rgba(226, 232, 240, 0.78);
+}
+
+.srv-card h3 {
+    color: #f8fafc;
+}
+.srv-card .srv-extra {
+    color: #e2e8f0;
 }
 
 /* --------- Ajustes móviles --------- */

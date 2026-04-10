@@ -172,16 +172,17 @@
             </h3>
             
             <!-- Resumen compacto -->
-            <div class="srv-summary text-slate-200 font-semibold mb-4">
-                <?php echo $priceSummary; ?>
+            <div class="srv-summary mb-4">
+                <span class="srv-summary-price"><?php echo $priceSummary; ?></span>
+                <span class="srv-summary-hint">Toca para ver detalles</span>
             </div>
 
-            <p class="srv-extra text-blue-300 mb-4 line-clamp-2 <?php echo $i18nKey ? 'i18n-' . $i18nKey . '-desc' : ''; ?>" <?php echo $i18nKey ? 'data-i18n="'.$i18nKey.'-desc"' : ''; ?>>
+            <p class="srv-extra text-slate-100/90 leading-relaxed mb-4 <?php echo $i18nKey ? 'i18n-' . $i18nKey . '-desc' : ''; ?>" <?php echo $i18nKey ? 'data-i18n="'.$i18nKey.'-desc"' : ''; ?>>
                 <?php echo $row['descripcion']; ?>
             </p>
             
             <!-- Precios por nivel -->
-            <div class="srv-extra flex flex-col mb-6 bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm space-y-2">
+            <div class="srv-extra flex flex-col mb-6 bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm space-y-2 text-slate-100">
                 <?php if (strpos($titLow, 'landing') !== false): ?>
                     <div class="flex items-baseline gap-2">
                         <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1">Desde</span>
@@ -255,7 +256,7 @@
             </a>
 
             <!-- Botón para volver al modo compacto -->
-            <button type="button" class="srv-back mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 border border-white/15 text-white/90 font-semibold transition hover:bg-white/15">
+            <button type="button" class="srv-back mt-5 inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white font-semibold transition hover:bg-white/15">
                 <i class="fas fa-arrow-left"></i>
                 <span>Volver atrás</span>
             </button>
