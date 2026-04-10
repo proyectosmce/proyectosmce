@@ -154,14 +154,15 @@
             // Precio resumen para vista compacta
             $titLow = strtolower($row['titulo']);
             if (strpos($titLow, 'landing') !== false) {
-                $priceSummary = 'Desde $100 USD';
+                $priceAmount = '$100 USD';
             } elseif (strpos($titLow, 'desarrollo') !== false) {
-                $priceSummary = 'Desde $100 USD';
+                $priceAmount = '$100 USD';
             } elseif (strpos($titLow, 'inventario') !== false) {
-                $priceSummary = 'Desde $350 USD';
+                $priceAmount = '$350 USD';
             } else {
-                $priceSummary = 'Consultar';
+                $priceAmount = 'Consultar';
             }
+            $priceHasFrom = $priceAmount !== 'Consultar';
         ?>
         <div class="srv-card group bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-soft hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden animate-on-scroll p-8 text-white"
              role="button"
@@ -183,8 +184,13 @@
             
             <!-- Resumen compacto -->
             <div class="srv-summary mb-4">
-                <span class="srv-summary-price"><?php echo $priceSummary; ?></span>
-                <span class="srv-summary-hint">Toca para ver detalles</span>
+                <span class="srv-summary-price">
+                    <?php if ($priceHasFrom): ?>
+                        <span data-i18n="srv-from">Desde</span>
+                    <?php endif; ?>
+                    <?php echo $priceAmount; ?>
+                </span>
+                <span class="srv-summary-hint" data-i18n="srv-summary-hint">Toca para ver detalles</span>
             </div>
 
             <!-- Contenido detallado para modal (oculto en la tarjeta) -->
@@ -196,7 +202,7 @@
                 <div class="srv-extra flex flex-col mb-6 bg-white/5 p-4 rounded-2xl border border-white/10 shadow-sm space-y-2 text-slate-100">
                     <?php if (strpos($titLow, 'landing') !== false): ?>
                         <div class="flex items-baseline gap-2">
-                            <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1">Desde</span>
+                            <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1" data-i18n="srv-from">Desde</span>
                             <span class="text-4xl font-black text-[#7C3AED] tracking-tighter">$100</span>
                             <span class="text-2xl font-bold text-[#7C3AED]">USD</span>
                         </div>
@@ -250,7 +256,7 @@
 
                     <?php else: ?>
                         <div class="flex items-baseline gap-2">
-                            <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1">Desde</span>
+                            <span class="text-xs font-black uppercase tracking-widest text-[#7C3AED] mr-1" data-i18n="srv-from">Desde</span>
                             <span class="text-3xl font-black text-[#7C3AED]">Consultar</span>
                         </div>
                     <?php endif; ?>
