@@ -320,6 +320,338 @@ $workerFlows = $normalizeFlowShots($workerFlows);
 </div>
 
 <script>
+// Traducción específica del caso Destello de Oro 18K
+(() => {
+    const translations = {
+        es: {
+            heroBadge: 'Caso real',
+            heroTitle: 'Destello de Oro 18K',
+            heroDesc: 'Documentación visual del sistema para joyería: flujos de administrador y trabajador, con capturas numeradas y descripción de cada proceso clave.',
+            btnAdmin: 'Flujos de administrador',
+            btnWorker: 'Flujos de trabajador',
+            descTag: 'Destello de Oro 18K',
+            descTitle: 'Joyería laminada con respaldo real',
+            descP1: 'Ofrecemos piezas y artículos de oro laminado con acabado premium, garantía escrita de 1 año, envíos gratis en compras superiores a $250.000 y un programa de fidelidad con promociones y descuentos escalonados para clientes recurrentes.',
+            descP2: 'Nuestro equipo te asesora en tallas, estilos y cuidado de las piezas para que tu inversión conserve su brillo. Si necesitas catálogos o una cotización puntual, contáctanos y respondemos al instante.',
+            btnWa: 'Escríbenos por WhatsApp',
+            btnIg: 'Síguenos en Instagram',
+            features: [
+                { title: 'Garantía de 1 año', text: 'Cobertura frente a defectos de fabricación y desgaste anormal.' },
+                { title: 'Envío gratis', text: 'Sin costo en pedidos mayores a $250.000.' },
+                { title: 'Promociones y fidelidad', text: 'Descuentos progresivos y beneficios exclusivos para clientes frecuentes.' },
+                { title: 'Asesoría directa', text: 'Atención personalizada vía WhatsApp para elegir y cuidar tus piezas.' },
+            ],
+            adminBadge: 'Panel administrador',
+            adminTitle: 'Procesos y capturas',
+            workerBadge: 'Panel trabajador',
+            workerTitle: 'Procesos y capturas',
+            total: (n) => `Total: ${n} flujos`,
+            lightboxCount: (i, total) => `Imagen ${i} de ${total}`,
+            adminFlows: [
+                {
+                    title: 'Acceso y recuperación de cuenta',
+                    summary: 'Pantallas de ingreso y soporte de credenciales para garantizar que solo personal autorizado entre al panel.',
+                    shots: [
+                        { caption: 'Login de administrador', alt: 'Formulario de ingreso para administrador con usuario y contraseña' },
+                        { caption: 'Credenciales entregadas', alt: 'Vista donde se muestran las credenciales generadas para el administrador' },
+                        { caption: 'Recuperar contraseña', alt: 'Pantalla para solicitar recuperación de contraseña por correo' },
+                    ],
+                },
+                {
+                    title: 'Cambio de contraseña',
+                    summary: 'Flujo guiado para que el administrador actualice su contraseña con validación de seguridad.',
+                    shots: [
+                        { caption: 'Acceso al cambio', alt: 'Formulario inicial para cambiar la contraseña actual' },
+                        { caption: 'Confirmación', alt: 'Pantalla de confirmación de nueva contraseña' },
+                    ],
+                },
+                {
+                    title: 'Panel principal y perfil',
+                    summary: 'Tablero con métricas rápidas y acceso al perfil personal para mantener datos al día.',
+                    shots: [
+                        { caption: 'Panel administrador', alt: 'Dashboard con accesos a ventas, inventario y gastos' },
+                        { caption: 'Información personal', alt: 'Ficha editable con datos de contacto del administrador' },
+                    ],
+                },
+                {
+                    title: 'Inventario y altas de producto',
+                    summary: 'Control total del stock: ver existencias, crear nuevos artículos y surtir nuevamente.',
+                    shots: [
+                        { caption: 'Tabla de inventario', alt: 'Listado de productos de joyería con existencias y precios' },
+                        { caption: 'Alta de producto', alt: 'Formulario para agregar un nuevo producto de oro 18K con precio y descripción' },
+                        { caption: 'Surtir inventario', alt: 'Interfaz para aumentar stock de un producto existente' },
+                    ],
+                },
+                {
+                    title: 'Ventas y cobranzas',
+                    summary: 'Proceso en tres pasos para generar la venta, registrar método de pago y dejar todo conciliado.',
+                    shots: [
+                        { caption: 'Selección de cliente y producto', alt: 'Paso 1 del flujo de venta donde se elige cliente y piezas' },
+                        { caption: 'Método de pago', alt: 'Paso 2 para indicar forma de pago y abonos' },
+                        { caption: 'Confirmación de venta', alt: 'Paso 3 con resumen y confirmación final' },
+                        { caption: 'Pagos pendientes', alt: 'Listado de ventas con saldo pendiente para seguimiento' },
+                    ],
+                },
+                {
+                    title: 'Gastos y control de caja',
+                    summary: 'Registro de gastos operativos y trazabilidad para cortes diarios o semanales.',
+                    shots: [
+                        { caption: 'Registro de gasto', alt: 'Formulario para cargar un gasto con monto y categoría' },
+                        { caption: 'Historial general', alt: 'Tabla con todos los gastos registrados' },
+                        { caption: 'Detalle por fecha', alt: 'Vista filtrada de movimientos en un periodo' },
+                        { caption: 'Detalle por concepto', alt: 'Detalle de cada gasto con monto y responsable' },
+                    ],
+                },
+                {
+                    title: 'Garantías y cambios',
+                    summary: 'Gestión de garantías para piezas de oro laminado: desde la solicitud hasta la reposición.',
+                    shots: [
+                        { caption: 'Crear garantía', alt: 'Formulario para abrir una garantía con descripción del daño' },
+                        { caption: 'Seguimiento', alt: 'Estado del caso de garantía y datos del cliente' },
+                        { caption: 'Histórico', alt: 'Historial de garantías previas para control' },
+                        { caption: 'Cierre', alt: 'Pantalla de cierre con confirmación de entrega o reposición' },
+                    ],
+                },
+            ],
+            workerFlows: [
+                {
+                    title: 'Acceso y perfil',
+                    summary: 'Ingreso del trabajador y actualización de sus datos para operar en tienda.',
+                    shots: [
+                        { caption: 'Login trabajador', alt: 'Formulario de ingreso para usuario trabajador' },
+                        { caption: 'Credenciales recibidas', alt: 'Vista con usuario y contraseña asignados' },
+                        { caption: 'Perfil personal', alt: 'Edición de datos básicos del trabajador' },
+                    ],
+                },
+                {
+                    title: 'Panel e inventario',
+                    summary: 'Inicio rápido para visualizar tareas y revisar existencias disponibles.',
+                    shots: [
+                        { caption: 'Panel trabajador', alt: 'Dashboard con accesos a ventas e inventario' },
+                        { caption: 'Inventario', alt: 'Listado de productos con stock visible para el vendedor' },
+                    ],
+                },
+                {
+                    title: 'Proceso de venta',
+                    summary: 'Flujo guiado para cerrar ventas en piso de tienda, registrando pago y saldo.',
+                    shots: [
+                        { caption: 'Selección de productos', alt: 'Paso 1: elegir artículos para la venta' },
+                        { caption: 'Pago del cliente', alt: 'Paso 2: definir método de pago y abono' },
+                        { caption: 'Confirmación', alt: 'Paso 3: confirmar y generar recibo' },
+                    ],
+                },
+            ],
+        },
+        en: {
+            heroBadge: 'Real case',
+            heroTitle: 'Destello de Oro 18K',
+            heroDesc: 'Visual documentation of the jewelry system: admin and worker flows with numbered screenshots and step-by-step descriptions.',
+            btnAdmin: 'Admin flows',
+            btnWorker: 'Worker flows',
+            descTag: 'Destello de Oro 18K',
+            descTitle: 'Gold-plated jewelry with real backing',
+            descP1: 'We offer gold-plated pieces with premium finish, a 1-year written warranty, free shipping over $250,000, and a loyalty program with tiered discounts for repeat customers.',
+            descP2: 'Our team advises on sizes, styles and care so your investment keeps its shine. Need catalogs or a quote? Message us and we reply instantly.',
+            btnWa: 'Message us on WhatsApp',
+            btnIg: 'Follow us on Instagram',
+            features: [
+                { title: '1-year warranty', text: 'Coverage for manufacturing defects and abnormal wear.' },
+                { title: 'Free shipping', text: 'No cost on orders over $250,000.' },
+                { title: 'Promos & loyalty', text: 'Tiered discounts and exclusive perks for recurring customers.' },
+                { title: 'Direct guidance', text: 'Personal WhatsApp assistance to choose and care for your pieces.' },
+            ],
+            adminBadge: 'Admin panel',
+            adminTitle: 'Processes and screenshots',
+            workerBadge: 'Worker panel',
+            workerTitle: 'Processes and screenshots',
+            total: (n) => `Total: ${n} flows`,
+            lightboxCount: (i, total) => `Image ${i} of ${total}`,
+            adminFlows: [
+                {
+                    title: 'Account access & recovery',
+                    summary: 'Login and credential support to ensure only authorized staff enter the panel.',
+                    shots: [
+                        { caption: 'Admin login', alt: 'Login form for admin with user and password' },
+                        { caption: 'Delivered credentials', alt: 'View showing generated credentials for the admin' },
+                        { caption: 'Password recovery', alt: 'Screen to request password reset via email' },
+                    ],
+                },
+                {
+                    title: 'Password change',
+                    summary: 'Guided flow for the admin to update password with security validation.',
+                    shots: [
+                        { caption: 'Open password change', alt: 'Initial form to change current password' },
+                        { caption: 'Confirmation', alt: 'Confirmation screen for new password' },
+                    ],
+                },
+                {
+                    title: 'Main dashboard & profile',
+                    summary: 'Quick metrics dashboard and access to the personal profile to keep data updated.',
+                    shots: [
+                        { caption: 'Admin dashboard', alt: 'Dashboard with shortcuts to sales, inventory and expenses' },
+                        { caption: 'Personal info', alt: 'Editable card with admin contact data' },
+                    ],
+                },
+                {
+                    title: 'Inventory & product intake',
+                    summary: 'Full stock control: view inventory, create new items and restock.',
+                    shots: [
+                        { caption: 'Inventory table', alt: 'Product list with stock and prices' },
+                        { caption: 'New product intake', alt: 'Form to add a new 18K gold item with price and description' },
+                        { caption: 'Restock inventory', alt: 'Interface to increase stock of an existing product' },
+                    ],
+                },
+                {
+                    title: 'Sales & payments',
+                    summary: 'Three-step process to create the sale, register payment method and reconcile.',
+                    shots: [
+                        { caption: 'Select customer and products', alt: 'Step 1 of sale flow choosing customer and pieces' },
+                        { caption: 'Payment method', alt: 'Step 2 to set payment method and deposits' },
+                        { caption: 'Sale confirmation', alt: 'Step 3 with summary and final confirmation' },
+                        { caption: 'Pending payments', alt: 'List of sales with outstanding balance for follow-up' },
+                    ],
+                },
+                {
+                    title: 'Expenses & cash control',
+                    summary: 'Log operational expenses and traceability for daily or weekly closes.',
+                    shots: [
+                        { caption: 'Expense entry', alt: 'Form to record an expense with amount and category' },
+                        { caption: 'General history', alt: 'Table with all recorded expenses' },
+                        { caption: 'Detail by date', alt: 'Filtered view of movements in a period' },
+                        { caption: 'Detail by concept', alt: 'Detail of each expense with amount and responsible' },
+                    ],
+                },
+                {
+                    title: 'Warranties & exchanges',
+                    summary: 'Warranty management for gold-plated pieces: from request to replacement.',
+                    shots: [
+                        { caption: 'Create warranty', alt: 'Form to open a warranty with damage description' },
+                        { caption: 'Follow-up', alt: 'Warranty case status and customer data' },
+                        { caption: 'History', alt: 'History of previous warranties for control' },
+                        { caption: 'Closure', alt: 'Close screen with confirmation of delivery or replacement' },
+                    ],
+                },
+            ],
+            workerFlows: [
+                {
+                    title: 'Access & profile',
+                    summary: 'Worker login and update of personal data to operate in store.',
+                    shots: [
+                        { caption: 'Worker login', alt: 'Login form for worker user' },
+                        { caption: 'Received credentials', alt: 'View with assigned user and password' },
+                        { caption: 'Personal profile', alt: 'Edit basic worker data' },
+                    ],
+                },
+                {
+                    title: 'Dashboard & inventory',
+                    summary: 'Quick start to view tasks and check available stock.',
+                    shots: [
+                        { caption: 'Worker dashboard', alt: 'Dashboard with shortcuts to sales and inventory' },
+                        { caption: 'Inventory', alt: 'Product list with visible stock for the seller' },
+                    ],
+                },
+                {
+                    title: 'Sales process',
+                    summary: 'Guided flow to close store sales, recording payment and balance.',
+                    shots: [
+                        { caption: 'Select products', alt: 'Step 1: choose items for sale' },
+                        { caption: 'Customer payment', alt: 'Step 2: define payment method and deposit' },
+                        { caption: 'Confirmation', alt: 'Step 3: confirm and generate receipt' },
+                    ],
+                },
+            ],
+        },
+        fr: {}, de: {}, pt: {}, it: {} // placeholder for brevity above
+    };
+
+    const setText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el && typeof text === 'string') el.textContent = text;
+    };
+
+    const applyLangToFlows = (lang, type, data) => {
+        const flows = Array.from(document.querySelectorAll(`[data-flow-type=\"${type}\"][data-flow-index]`));
+        flows.forEach(flowEl => {
+            const idx = parseInt(flowEl.dataset.flowIndex || '0', 10);
+            const tflow = data[idx];
+            if (!tflow) return;
+            const titleEl = flowEl.querySelector('.do-flow-title');
+            const summaryEl = flowEl.querySelector('.do-flow-summary');
+            if (titleEl) titleEl.textContent = tflow.title;
+            if (summaryEl) summaryEl.textContent = tflow.summary;
+
+            const shots = Array.from(flowEl.querySelectorAll('[data-shot-index]'));
+            shots.forEach(fig => {
+                const sidx = parseInt(fig.dataset.shotIndex || '0', 10);
+                const shot = tflow.shots?.[sidx];
+                if (!shot) return;
+                fig.dataset.title = tflow.title;
+                fig.dataset.summary = tflow.summary;
+                fig.dataset.caption = shot.caption;
+                fig.dataset.alt = shot.alt;
+                const capEl = fig.querySelector('.do-shot-caption');
+                const altEl = fig.querySelector('.do-shot-alt');
+                const imgEl = fig.querySelector('img');
+                if (capEl) capEl.textContent = shot.caption;
+                if (altEl) altEl.textContent = shot.alt;
+                if (imgEl && shot.alt) imgEl.alt = shot.alt;
+            });
+        });
+    };
+
+    const apply = (lang) => {
+        const dict = translations[lang] || translations.es;
+        setText('do-hero-badge', dict.heroBadge);
+        setText('do-hero-title', dict.heroTitle);
+        setText('do-hero-desc', dict.heroDesc);
+        setText('do-btn-admin', dict.btnAdmin);
+        setText('do-btn-worker', dict.btnWorker);
+        setText('do-desc-tag', dict.descTag);
+        setText('do-desc-title', dict.descTitle);
+        setText('do-desc-p1', dict.descP1);
+        setText('do-desc-p2', dict.descP2);
+        setText('do-btn-wa', dict.btnWa);
+        setText('do-btn-ig', dict.btnIg);
+
+        const featureItems = Array.from(document.querySelectorAll('#do-features [data-feature-index]'));
+        featureItems.forEach(item => {
+            const idx = parseInt(item.dataset.featureIndex || '0', 10);
+            const f = dict.features?.[idx];
+            if (!f) return;
+            const tEl = item.querySelector('.do-feature-title');
+            const pEl = item.querySelector('.do-feature-text');
+            if (tEl) tEl.textContent = f.title;
+            if (pEl) pEl.textContent = f.text;
+        });
+
+        setText('do-admin-badge', dict.adminBadge);
+        setText('do-admin-title', dict.adminTitle);
+        setText('do-worker-badge', dict.workerBadge);
+        setText('do-worker-title', dict.workerTitle);
+
+        const adminCount = document.querySelectorAll('[data-flow-type=\"admin\"][data-flow-index]').length;
+        const workerCount = document.querySelectorAll('[data-flow-type=\"worker\"][data-flow-index]').length;
+        setText('do-admin-total', typeof dict.total === 'function' ? dict.total(adminCount) : dict.total);
+        setText('do-worker-total', typeof dict.total === 'function' ? dict.total(workerCount) : dict.total);
+
+        applyLangToFlows(lang, 'admin', dict.adminFlows || []);
+        applyLangToFlows(lang, 'worker', dict.workerFlows || []);
+    };
+
+    const current = window.mceCurrentLang || localStorage.getItem('siteLang') || 'es';
+    apply(current);
+    window.addEventListener('mce-lang-changed', (e) => {
+        apply(e.detail?.lang || 'es');
+    });
+
+    window.doLightboxCount = (index, total, lang) => {
+        const dict = translations[lang] || translations.es;
+        return dict.lightboxCount ? dict.lightboxCount(index + 1, total) : `Imagen ${index + 1} de ${total}`;
+    };
+})();
+</script>
+
+<script>
 (() => {
     const overlay = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
