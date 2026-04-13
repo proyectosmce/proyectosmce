@@ -122,20 +122,20 @@ $workerFlows = $normalizeFlowShots($workerFlows);
 ?>
 
 <!-- Hero -->
-<section class="relative bg-gradient-to-r from-[#f2b416] via-[#f7d370] to-[#d99a0a] text-white overflow-hidden mce-rounded-hero">
+<section id="do-hero" class="relative bg-gradient-to-r from-[#f2b416] via-[#f7d370] to-[#d99a0a] text-white overflow-hidden mce-rounded-hero">
     <div class="absolute inset-0 bg-white/10 mix-blend-overlay"></div>
     <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
     
     <div class="relative max-w-6xl mx-auto px-4 py-20 text-center">
-        <p class="uppercase tracking-widest text-sm mb-3">Caso real</p>
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Destello de Oro 18K</h1>
-        <p class="text-lg md:text-xl text-[#fff9db] max-w-3xl mx-auto">
+        <p id="do-hero-badge" class="uppercase tracking-widest text-sm mb-3">Caso real</p>
+        <h1 id="do-hero-title" class="text-4xl md:text-5xl font-extrabold mb-4">Destello de Oro 18K</h1>
+        <p id="do-hero-desc" class="text-lg md:text-xl text-[#fff9db] max-w-3xl mx-auto">
             Documentación visual del sistema para joyería: flujos de administrador y trabajador,
             con capturas numeradas y descripción de cada proceso clave.
         </p>
         <div class="mt-8 flex flex-wrap justify-center gap-4">
-            <a href="#admin" class="bg-white text-[#d99a0a] px-6 py-3 rounded-lg font-semibold shadow-lg hover:-translate-y-1 transition">Flujos de administrador</a>
-            <a href="#trabajador" class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#d99a0a] transition">Flujos de trabajador</a>
+            <a id="do-btn-admin" href="#admin" class="bg-white text-[#d99a0a] px-6 py-3 rounded-lg font-semibold shadow-lg hover:-translate-y-1 transition">Flujos de administrador</a>
+            <a id="do-btn-worker" href="#trabajador" class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#d99a0a] transition">Flujos de trabajador</a>
         </div>
     </div>
 </section>
@@ -145,53 +145,53 @@ $workerFlows = $normalizeFlowShots($workerFlows);
     <div class="bg-white rounded-2xl shadow-xl border border-[#f7d370] p-8 md:p-10">
         <div class="grid md:grid-cols-2 gap-8 items-center">
             <div class="space-y-4">
-                <p class="text-sm uppercase tracking-[0.2em] text-[#d99a0a] font-semibold">Destello de Oro 18K</p>
-                <h2 class="text-3xl font-bold text-gray-900">Joyería laminada con respaldo real</h2>
-                <p class="text-gray-700 leading-relaxed">
+                <p id="do-desc-tag" class="text-sm uppercase tracking-[0.2em] text-[#d99a0a] font-semibold">Destello de Oro 18K</p>
+                <h2 id="do-desc-title" class="text-3xl font-bold text-gray-900">Joyería laminada con respaldo real</h2>
+                <p id="do-desc-p1" class="text-gray-700 leading-relaxed">
                     Ofrecemos piezas y artículos de oro laminado con acabado premium, garantía escrita de 1 año,
                     envíos gratis en compras superiores a $250.000 y un programa de fidelidad con promociones
                     y descuentos escalonados para clientes recurrentes.
                 </p>
-                <p class="text-gray-700 leading-relaxed">
+                <p id="do-desc-p2" class="text-gray-700 leading-relaxed">
                     Nuestro equipo te asesora en tallas, estilos y cuidado de las piezas para que tu inversión
                     conserve su brillo. Si necesitas catálogos o una cotización puntual, contáctanos y respondemos al instante.
                 </p>
                 <div class="flex flex-wrap gap-3">
-                    <a href="<?php echo $WA_LINK; ?>" target="_blank" rel="noopener" class="bg-[#25D366] text-white px-6 py-3 rounded-lg shadow hover:bg-[#1ebe5a] transition">
+                    <a id="do-btn-wa" href="<?php echo $WA_LINK; ?>" target="_blank" rel="noopener" class="bg-[#25D366] text-white px-6 py-3 rounded-lg shadow hover:bg-[#1ebe5a] transition">
                         Escríbenos por WhatsApp
                     </a>
-                    <a href="https://www.instagram.com/destellodeoro18k/" target="_blank" rel="noopener" class="px-6 py-3 rounded-lg text-white font-semibold shadow transition" style="background: linear-gradient(135deg, #f58529, #dd2a7b 45%, #8134af 70%, #515bd4);">
+                    <a id="do-btn-ig" href="https://www.instagram.com/destellodeoro18k/" target="_blank" rel="noopener" class="px-6 py-3 rounded-lg text-white font-semibold shadow transition" style="background: linear-gradient(135deg, #f58529, #dd2a7b 45%, #8134af 70%, #515bd4);">
                         Síguenos en Instagram
                     </a>
                 </div>
             </div>
-            <div class="bg-[#fff6dd] border border-[#f7d370] rounded-xl p-6 space-y-3">
-                <div class="flex items-start space-x-3">
+            <div id="do-features" class="bg-[#fff6dd] border border-[#f7d370] rounded-xl p-6 space-y-3">
+                <div class="flex items-start space-x-3" data-feature-index="0">
                     <i class="fas fa-shield-alt text-[#f2b416] text-xl"></i>
                     <div>
-                        <p class="font-semibold text-gray-900">Garantía de 1 año</p>
-                        <p class="text-gray-600 text-sm">Cobertura frente a defectos de fabricación y desgaste anormal.</p>
+                        <p class="font-semibold text-gray-900 do-feature-title">Garantía de 1 año</p>
+                        <p class="text-gray-600 text-sm do-feature-text">Cobertura frente a defectos de fabricación y desgaste anormal.</p>
                     </div>
                 </div>
-                <div class="flex items-start space-x-3">
+                <div class="flex items-start space-x-3" data-feature-index="1">
                     <i class="fas fa-shipping-fast text-[#f2b416] text-xl"></i>
                     <div>
-                        <p class="font-semibold text-gray-900">Envío gratis</p>
-                        <p class="text-gray-600 text-sm">Sin costo en pedidos mayores a $250.000.</p>
+                        <p class="font-semibold text-gray-900 do-feature-title">Envío gratis</p>
+                        <p class="text-gray-600 text-sm do-feature-text">Sin costo en pedidos mayores a $250.000.</p>
                     </div>
                 </div>
-                <div class="flex items-start space-x-3">
+                <div class="flex items-start space-x-3" data-feature-index="2">
                     <i class="fas fa-gift text-[#f2b416] text-xl"></i>
                     <div>
-                        <p class="font-semibold text-gray-900">Promociones y fidelidad</p>
-                        <p class="text-gray-600 text-sm">Descuentos progresivos y beneficios exclusivos para clientes frecuentes.</p>
+                        <p class="font-semibold text-gray-900 do-feature-title">Promociones y fidelidad</p>
+                        <p class="text-gray-600 text-sm do-feature-text">Descuentos progresivos y beneficios exclusivos para clientes frecuentes.</p>
                     </div>
                 </div>
-                <div class="flex items-start space-x-3">
+                <div class="flex items-start space-x-3" data-feature-index="3">
                     <i class="fas fa-headset text-[#f2b416] text-xl"></i>
                     <div>
-                        <p class="font-semibold text-gray-900">Asesoría directa</p>
-                        <p class="text-gray-600 text-sm">Atención personalizada vía WhatsApp para elegir y cuidar tus piezas.</p>
+                        <p class="font-semibold text-gray-900 do-feature-title">Asesoría directa</p>
+                        <p class="text-gray-600 text-sm do-feature-text">Atención personalizada vía WhatsApp para elegir y cuidar tus piezas.</p>
                     </div>
                 </div>
             </div>
@@ -203,24 +203,27 @@ $workerFlows = $normalizeFlowShots($workerFlows);
 <section id="admin" class="max-w-7xl mx-auto px-4 py-14 space-y-10">
     <div class="flex items-center justify-between">
         <div>
-            <p class="text-sm uppercase tracking-widest text-[#d99a0a] font-semibold">Panel administrador</p>
-            <h2 class="text-3xl font-bold text-gray-900">Procesos y capturas</h2>
+            <p id="do-admin-badge" class="text-sm uppercase tracking-widest text-[#d99a0a] font-semibold">Panel administrador</p>
+            <h2 id="do-admin-title" class="text-3xl font-bold text-gray-900">Procesos y capturas</h2>
         </div>
-        <span class="text-sm text-gray-500">Total: <?php echo count($adminFlows); ?> flujos</span>
+        <span id="do-admin-total" class="text-sm text-gray-500">Total: <?php echo count($adminFlows); ?> flujos</span>
     </div>
 
-    <?php foreach ($adminFlows as $flow): ?>
-    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-[#f7d370]">
+    <?php foreach ($adminFlows as $flowIndex => $flow): ?>
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-[#f7d370]" data-flow-type="admin" data-flow-index="<?php echo $flowIndex; ?>">
         <div class="p-6 md:p-8 border-b border-gray-100">
-            <h3 class="text-2xl font-bold text-gray-900 mb-2"><?php echo $flow['title']; ?></h3>
-            <p class="text-gray-600"><?php echo $flow['summary']; ?></p>
+            <h3 class="text-2xl font-bold text-gray-900 mb-2 do-flow-title"><?php echo $flow['title']; ?></h3>
+            <p class="text-gray-600 do-flow-summary"><?php echo $flow['summary']; ?></p>
         </div>
         <div class="p-6 md:p-8">
             <div class="grid md:grid-cols-<?php echo min(3, count($flow['shots'])); ?> gap-6">
-                <?php foreach ($flow['shots'] as $shot): ?>
+                <?php foreach ($flow['shots'] as $shotIndex => $shot): ?>
                 <figure
                     class="bg-gray-50 rounded-xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition"
                     data-lightbox="true"
+                    data-flow-type="admin"
+                    data-flow-index="<?php echo $flowIndex; ?>"
+                    data-shot-index="<?php echo $shotIndex; ?>"
                     data-src="<?php echo $shot['src']; ?>"
                     data-title="<?php echo htmlspecialchars($flow['title'], ENT_QUOTES, 'UTF-8'); ?>"
                     data-summary="<?php echo htmlspecialchars($flow['summary'], ENT_QUOTES, 'UTF-8'); ?>"
@@ -229,8 +232,8 @@ $workerFlows = $normalizeFlowShots($workerFlows);
                 >
                     <img src="<?php echo $shot['src']; ?>" alt="<?php echo $shot['alt']; ?>" class="w-full h-56 object-cover">
                     <figcaption class="p-4">
-                        <p class="text-sm font-semibold text-gray-800"><?php echo $shot['caption']; ?></p>
-                        <p class="text-xs text-gray-500 mt-1"><?php echo $shot['alt']; ?></p>
+                        <p class="text-sm font-semibold text-gray-800 do-shot-caption"><?php echo $shot['caption']; ?></p>
+                        <p class="text-xs text-gray-500 mt-1 do-shot-alt"><?php echo $shot['alt']; ?></p>
                     </figcaption>
                 </figure>
                 <?php endforeach; ?>
@@ -245,24 +248,27 @@ $workerFlows = $normalizeFlowShots($workerFlows);
     <div class="max-w-7xl mx-auto px-4 space-y-10">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-sm uppercase tracking-widest text-[#d99a0a] font-semibold">Panel trabajador</p>
-                <h2 class="text-3xl font-bold text-gray-900">Procesos y capturas</h2>
+                <p id="do-worker-badge" class="text-sm uppercase tracking-widest text-[#d99a0a] font-semibold">Panel trabajador</p>
+                <h2 id="do-worker-title" class="text-3xl font-bold text-gray-900">Procesos y capturas</h2>
             </div>
-            <span class="text-sm text-gray-500">Total: <?php echo count($workerFlows); ?> flujos</span>
+            <span id="do-worker-total" class="text-sm text-gray-500">Total: <?php echo count($workerFlows); ?> flujos</span>
         </div>
 
-        <?php foreach ($workerFlows as $flow): ?>
-        <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-[#f7d370]">
+        <?php foreach ($workerFlows as $flowIndex => $flow): ?>
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-[#f7d370]" data-flow-type="worker" data-flow-index="<?php echo $flowIndex; ?>">
             <div class="p-6 md:p-8 border-b border-gray-100">
-                <h3 class="text-2xl font-bold text-gray-900 mb-2"><?php echo $flow['title']; ?></h3>
-                <p class="text-gray-600"><?php echo $flow['summary']; ?></p>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2 do-flow-title"><?php echo $flow['title']; ?></h3>
+                <p class="text-gray-600 do-flow-summary"><?php echo $flow['summary']; ?></p>
             </div>
             <div class="p-6 md:p-8">
                 <div class="grid md:grid-cols-<?php echo min(3, count($flow['shots'])); ?> gap-6">
-                    <?php foreach ($flow['shots'] as $shot): ?>
+                    <?php foreach ($flow['shots'] as $shotIndex => $shot): ?>
                     <figure
                         class="bg-gray-50 rounded-xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition"
                         data-lightbox="true"
+                        data-flow-type="worker"
+                        data-flow-index="<?php echo $flowIndex; ?>"
+                        data-shot-index="<?php echo $shotIndex; ?>"
                         data-src="<?php echo $shot['src']; ?>"
                         data-title="<?php echo htmlspecialchars($flow['title'], ENT_QUOTES, 'UTF-8'); ?>"
                         data-summary="<?php echo htmlspecialchars($flow['summary'], ENT_QUOTES, 'UTF-8'); ?>"
@@ -271,8 +277,8 @@ $workerFlows = $normalizeFlowShots($workerFlows);
                     >
                         <img src="<?php echo $shot['src']; ?>" alt="<?php echo $shot['alt']; ?>" class="w-full h-56 object-cover">
                         <figcaption class="p-4">
-                            <p class="text-sm font-semibold text-gray-800"><?php echo $shot['caption']; ?></p>
-                            <p class="text-xs text-gray-500 mt-1"><?php echo $shot['alt']; ?></p>
+                            <p class="text-sm font-semibold text-gray-800 do-shot-caption"><?php echo $shot['caption']; ?></p>
+                            <p class="text-xs text-gray-500 mt-1 do-shot-alt"><?php echo $shot['alt']; ?></p>
                         </figcaption>
                     </figure>
                     <?php endforeach; ?>
