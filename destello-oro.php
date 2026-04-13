@@ -1075,6 +1075,14 @@ $workerFlows = $normalizeFlowShots($workerFlows);
         });
     };
 
+    const getLang = () => {
+        const urlLang = (new URLSearchParams(window.location.search || '')).get('lang') || '';
+        const attrLang = document.documentElement?.getAttribute('data-site-lang') || '';
+        const current = window.mceCurrentLang || '';
+        const stored = localStorage.getItem('siteLang') || '';
+        return (urlLang || attrLang || current || stored || 'es').toLowerCase();
+    };
+
     const apply = (lang) => {
         const dict = translations[lang] || translations.es;
         setText('do-hero-badge', dict.heroBadge);
@@ -1114,11 +1122,16 @@ $workerFlows = $normalizeFlowShots($workerFlows);
         applyLangToFlows(lang, 'worker', dict.workerFlows || []);
     };
 
-    const current = window.mceCurrentLang || localStorage.getItem('siteLang') || 'es';
-    apply(current);
-    window.addEventListener('mce-lang-changed', (e) => {
-        apply(e.detail?.lang || 'es');
+    apply(getLang());
+
+    window.addEventListener('mce-lang-changed', (e) => apply(e.detail?.lang || getLang()));
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'siteLang') apply(getLang());
     });
+    const attrObserver = new MutationObserver(() => apply(getLang()));
+    if (document.documentElement) {
+        attrObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-site-lang'] });
+    }
 
     window.doLightboxCount = (index, total, lang) => {
         const dict = translations[lang] || translations.es;
