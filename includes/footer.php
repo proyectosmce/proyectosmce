@@ -3018,6 +3018,8 @@
             'ct-hours-detail': '.i18n-ct-hours-detail'
         };
 
+        const allowedLangs = ['es','en','fr','de','pt','it'];
+
         function setSiteLangUI(lang) {
         const flagMap = { es:'es', en:'us', fr:'fr', de:'de', pt:'pt', it:'it' };
             const labelMap = { es:'Español', en:'English', fr:'Français', de:'Deutsch', pt:'Português', it:'Italiano' };
@@ -3036,9 +3038,17 @@
         }
 
         function initSiteLang() {
-            const stored = localStorage.getItem('siteLang') || 'es';
-            applyLang(stored);
-            setSiteLangUI(stored);
+            const params = new URLSearchParams(window.location.search || '');
+            const urlLang = (params.get('lang') || '').toLowerCase();
+            const stored = (localStorage.getItem('siteLang') || '').toLowerCase();
+            const initial = allowedLangs.includes(urlLang)
+                ? urlLang
+                : (allowedLangs.includes(stored) ? stored : 'es');
+            if (allowedLangs.includes(urlLang) && urlLang !== stored) {
+                localStorage.setItem('siteLang', urlLang);
+            }
+            applyLang(initial);
+            setSiteLangUI(initial);
         }
 
         document.getElementById('site-lang-toggle')?.addEventListener('click', () => {

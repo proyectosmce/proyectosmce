@@ -266,7 +266,7 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
                         <i class="fas fa-shield-alt text-white/800"></i> <span class="i18n-ts-verified" data-i18n="ts-verified">Testimonio verificado</span>
                     </span>
                     <div class="flex items-center gap-2">
-                        <a href="<?php echo htmlspecialchars($projectUrl, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-3 py-1 text-sm font-semibold text-blue-700 hover:bg-blue-50 transition i18n-ts-view-project" data-i18n="ts-view-project">Ver proyecto</a>
+                        <a href="<?php echo htmlspecialchars($projectUrl, ENT_QUOTES, 'UTF-8'); ?>" data-project-url="<?php echo htmlspecialchars($projectUrl, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg border border-blue-200 px-3 py-1 text-sm font-semibold text-blue-700 hover:bg-blue-50 transition i18n-ts-view-project" data-i18n="ts-view-project">Ver proyecto</a>
                         <button type="button" class="flex items-center gap-2 rounded-full border border-red-100 bg-red-50 px-3 py-1 text-sm font-semibold text-red-600 hover:bg-red-100 transition like-btn" data-like-id="<?php echo (int) $t['id']; ?>">
                             <i class="fas fa-heart"></i>
                             <span class="like-count"><?php echo (int) ($t['likes'] ?? 0); ?></span>
@@ -524,6 +524,43 @@ $testimonialRecaptchaEnabled = form_guard_recaptcha_enabled();
     apply(lang);
     window.addEventListener('mce-lang-changed', e => {
         apply(e.detail?.lang || 'es');
+    });
+})();
+</script>
+
+<script>
+// Mantiene el enlace "Ver proyecto" en el idioma activo
+(() => {
+    const links = Array.from(document.querySelectorAll('[data-project-url]'));
+    if (!links.length) return;
+
+    const isExternal = (url) => /^https?:\\/\\//i.test(url) || url.startsWith('//');
+
+    const setLangOnLinks = (lang) => {
+        links.forEach(link => {
+            const base = link.dataset.projectUrl || '';
+            if (!base || base === '#') {
+                link.href = base || '#';
+                return;
+            }
+            if (isExternal(base)) {
+                link.href = base;
+                return;
+            }
+            try {
+                const u = new URL(base, window.location.origin);
+                u.searchParams.set('lang', lang);
+                link.href = u.pathname + u.search + u.hash;
+            } catch (_) {
+                link.href = base;
+            }
+        });
+    };
+
+    const current = window.mceCurrentLang || localStorage.getItem('siteLang') || 'es';
+    setLangOnLinks(current);
+    window.addEventListener('mce-lang-changed', (e) => {
+        setLangOnLinks(e.detail?.lang || 'es');
     });
 })();
 </script>
