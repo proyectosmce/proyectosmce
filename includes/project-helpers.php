@@ -67,12 +67,15 @@ function getProjectPublicUrl(array $project): string
     }
 
     $customRoutes = [
-        'Destello de Oro 18K' => app_url('destello-oro.php'),
+        'destello de oro 18k' => app_url('destello-oro.php'),
     ];
 
     $title = trim((string) ($project['titulo'] ?? ''));
-    if (isset($customRoutes[$title])) {
-        return $customRoutes[$title];
+    if ($title !== '') {
+        $norm = mb_strtolower($title, 'UTF-8');
+        if (isset($customRoutes[$norm])) {
+            return $customRoutes[$norm];
+        }
     }
 
     return '#';

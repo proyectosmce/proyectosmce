@@ -561,7 +561,483 @@ $workerFlows = $normalizeFlowShots($workerFlows);
                 },
             ],
         },
-        fr: {}, de: {}, pt: {}, it: {} // placeholder for brevity above
+        fr: {
+            heroBadge: 'Cas réel',
+            heroTitle: 'Destello de Oro 18K',
+            heroDesc: 'Documentation visuelle du système pour une bijouterie : parcours admin et vendeur avec captures numérotées et description de chaque étape.',
+            btnAdmin: 'Parcours admin',
+            btnWorker: 'Parcours vendeur',
+            descTag: 'Destello de Oro 18K',
+            descTitle: 'Bijoux plaqué or avec vrai suivi',
+            descP1: 'Nous proposons des pièces plaquées or finition premium, garantie écrite d’un an, livraison gratuite dès 250 000 et programme fidélité avec remises progressives.',
+            descP2: 'Notre équipe conseille sur les tailles, styles et l’entretien pour garder l’éclat. Besoin d’un catalogue ou d’un devis ? Écrivez-nous, réponse immédiate.',
+            btnWa: 'Écris-nous sur WhatsApp',
+            btnIg: 'Suis-nous sur Instagram',
+            features: [
+                { title: 'Garantie 1 an', text: 'Couverture des défauts de fabrication et usure anormale.' },
+                { title: 'Livraison gratuite', text: 'Sans frais pour les commandes supérieures à 250 000.' },
+                { title: 'Promos et fidélité', text: 'Remises progressives et avantages exclusifs pour clients fidèles.' },
+                { title: 'Conseil direct', text: 'Assistance personnalisée via WhatsApp pour choisir et entretenir vos pièces.' },
+            ],
+            adminBadge: 'Panneau admin',
+            adminTitle: 'Processus et captures',
+            workerBadge: 'Panneau vendeur',
+            workerTitle: 'Processus et captures',
+            total: (n) => `Total : ${n} flux`,
+            lightboxCount: (i, total) => `Image ${i} sur ${total}`,
+            adminFlows: [
+                {
+                    title: 'Accès et récupération de compte',
+                    summary: 'Écrans de connexion et support d’identifiants pour garantir un accès autorisé uniquement.',
+                    shots: [
+                        { caption: 'Login administrateur', alt: 'Formulaire de connexion avec utilisateur et mot de passe' },
+                        { caption: 'Identifiants remis', alt: 'Vue des identifiants générés pour l’administrateur' },
+                        { caption: 'Récupérer le mot de passe', alt: 'Écran pour demander la réinitialisation par e-mail' },
+                    ],
+                },
+                {
+                    title: 'Changement de mot de passe',
+                    summary: 'Parcours guidé pour mettre à jour le mot de passe avec validation de sécurité.',
+                    shots: [
+                        { caption: 'Accès au changement', alt: 'Formulaire initial pour modifier le mot de passe actuel' },
+                        { caption: 'Confirmation', alt: 'Écran de confirmation du nouveau mot de passe' },
+                    ],
+                },
+                {
+                    title: 'Tableau de bord et profil',
+                    summary: 'Tableau avec métriques rapides et accès au profil personnel pour garder les données à jour.',
+                    shots: [
+                        { caption: 'Dashboard admin', alt: 'Tableau de bord avec accès ventes, inventaire et dépenses' },
+                        { caption: 'Informations personnelles', alt: 'Fiche éditable avec données de contact de l’admin' },
+                    ],
+                },
+                {
+                    title: 'Inventaire et créations de produit',
+                    summary: 'Contrôle complet du stock : voir, créer des articles et réapprovisionner.',
+                    shots: [
+                        { caption: 'Table d’inventaire', alt: 'Liste des produits de bijouterie avec stock et prix' },
+                        { caption: 'Nouvel article', alt: 'Formulaire pour ajouter un article 18K avec prix et description' },
+                        { caption: 'Réassort d’inventaire', alt: 'Interface pour augmenter le stock d’un produit existant' },
+                    ],
+                },
+                {
+                    title: 'Ventes et encaissements',
+                    summary: 'Processus en trois étapes : vente, mode de paiement et rapprochement.',
+                    shots: [
+                        { caption: 'Sélection client et produits', alt: 'Étape 1 du flux de vente : choix du client et des pièces' },
+                        { caption: 'Mode de paiement', alt: 'Étape 2 pour définir mode de paiement et acomptes' },
+                        { caption: 'Confirmation de vente', alt: 'Étape 3 avec résumé et confirmation finale' },
+                        { caption: 'Paiements en attente', alt: 'Liste des ventes avec solde à suivre' },
+                    ],
+                },
+                {
+                    title: 'Dépenses et caisse',
+                    summary: 'Enregistrement des dépenses et traçabilité pour clôtures quotidiennes ou hebdomadaires.',
+                    shots: [
+                        { caption: 'Saisie de dépense', alt: 'Formulaire pour enregistrer une dépense avec montant et catégorie' },
+                        { caption: 'Historique général', alt: 'Tableau de toutes les dépenses enregistrées' },
+                        { caption: 'Détail par date', alt: 'Vue filtrée des mouvements sur une période' },
+                        { caption: 'Détail par concept', alt: 'Détail de chaque dépense avec montant et responsable' },
+                    ],
+                },
+                {
+                    title: 'Garanties et échanges',
+                    summary: 'Gestion des garanties pour pièces plaquées or : de la demande à la remise.',
+                    shots: [
+                        { caption: 'Créer une garantie', alt: 'Formulaire pour ouvrir une garantie avec description du dommage' },
+                        { caption: 'Suivi', alt: 'Statut du dossier de garantie et données client' },
+                        { caption: 'Historique', alt: 'Historique des garanties précédentes' },
+                        { caption: 'Clôture', alt: 'Écran de clôture avec confirmation de remise ou remplacement' },
+                    ],
+                },
+            ],
+            workerFlows: [
+                {
+                    title: 'Accès et profil',
+                    summary: 'Connexion de l’employé et mise à jour de ses données pour travailler en boutique.',
+                    shots: [
+                        { caption: 'Login employé', alt: 'Formulaire de connexion pour utilisateur vendeur' },
+                        { caption: 'Identifiants reçus', alt: 'Vue avec utilisateur et mot de passe assignés' },
+                        { caption: 'Profil personnel', alt: 'Édition des données de base du vendeur' },
+                    ],
+                },
+                {
+                    title: 'Tableau et inventaire',
+                    summary: 'Démarrage rapide pour voir les tâches et vérifier le stock disponible.',
+                    shots: [
+                        { caption: 'Dashboard vendeur', alt: 'Tableau de bord avec accès ventes et inventaire' },
+                        { caption: 'Inventaire', alt: 'Liste de produits avec stock visible pour le vendeur' },
+                    ],
+                },
+                {
+                    title: 'Processus de vente',
+                    summary: 'Parcours guidé pour conclure les ventes en boutique, en enregistrant paiement et solde.',
+                    shots: [
+                        { caption: 'Sélection de produits', alt: 'Étape 1 : choisir les articles à vendre' },
+                        { caption: 'Paiement client', alt: 'Étape 2 : définir mode de paiement et acompte' },
+                        { caption: 'Confirmation', alt: 'Étape 3 : confirmer et générer le reçu' },
+                    ],
+                },
+            ],
+        },
+        de: {
+            heroBadge: 'Echter Fall',
+            heroTitle: 'Destello de Oro 18K',
+            heroDesc: 'Visuelle Dokumentation des Schmucksystems: Admin- und Mitarbeiter-Flows mit nummerierten Screenshots und Schrittbeschreibungen.',
+            btnAdmin: 'Admin-Abläufe',
+            btnWorker: 'Mitarbeiter-Abläufe',
+            descTag: 'Destello de Oro 18K',
+            descTitle: 'Vergoldeter Schmuck mit echtem Support',
+            descP1: 'Wir bieten vergoldete Stücke mit Premium-Finish, einjähriger Garantie, kostenlosen Versand ab 250.000 und ein Treueprogramm mit gestaffelten Rabatten.',
+            descP2: 'Unser Team berät zu Größen, Styles und Pflege, damit deine Investition glänzt. Brauchst du Kataloge oder ein Angebot? Schreib uns, wir antworten sofort.',
+            btnWa: 'Schreib uns per WhatsApp',
+            btnIg: 'Folge uns auf Instagram',
+            features: [
+                { title: '1 Jahr Garantie', text: 'Abdeckung bei Herstellungsfehlern und abnormaler Abnutzung.' },
+                { title: 'Gratis Versand', text: 'Keine Kosten für Bestellungen über 250.000.' },
+                { title: 'Aktionen & Treue', text: 'Gestaffelte Rabatte und exklusive Vorteile für Stammkunden.' },
+                { title: 'Direkte Beratung', text: 'Persönliche WhatsApp-Betreuung bei Auswahl und Pflege.' },
+            ],
+            adminBadge: 'Admin-Panel',
+            adminTitle: 'Prozesse und Screens',
+            workerBadge: 'Mitarbeiter-Panel',
+            workerTitle: 'Prozesse und Screens',
+            total: (n) => `Summe: ${n} Abläufe`,
+            lightboxCount: (i, total) => `Bild ${i} von ${total}`,
+            adminFlows: [
+                {
+                    title: 'Zugang & Kontowiederherstellung',
+                    summary: 'Login und Zugangsdaten-Support, damit nur autorisiertes Personal ins Panel kommt.',
+                    shots: [
+                        { caption: 'Admin-Login', alt: 'Login-Formular für Admin mit Benutzer und Passwort' },
+                        { caption: 'Zugangsdaten bereitgestellt', alt: 'Ansicht der generierten Zugangsdaten für den Admin' },
+                        { caption: 'Passwort zurücksetzen', alt: 'Seite zum Anfordern des Passwort-Resets per E-Mail' },
+                    ],
+                },
+                {
+                    title: 'Passwort ändern',
+                    summary: 'Geführter Ablauf zum sicheren Passwort-Update.',
+                    shots: [
+                        { caption: 'Passwortwechsel öffnen', alt: 'Erstes Formular zum Ändern des aktuellen Passworts' },
+                        { caption: 'Bestätigung', alt: 'Bestätigungsseite für das neue Passwort' },
+                    ],
+                },
+                {
+                    title: 'Haupt-Dashboard & Profil',
+                    summary: 'Schnelle Kennzahlen und Zugriff auf das persönliche Profil, um Daten aktuell zu halten.',
+                    shots: [
+                        { caption: 'Admin-Dashboard', alt: 'Dashboard mit Shortcuts zu Verkäufen, Inventar und Ausgaben' },
+                        { caption: 'Persönliche Daten', alt: 'Bearbeitbare Karte mit Kontaktdaten des Admins' },
+                    ],
+                },
+                {
+                    title: 'Inventar & Wareneingang',
+                    summary: 'Komplette Lagerkontrolle: Bestand sehen, neue Artikel anlegen und nachfüllen.',
+                    shots: [
+                        { caption: 'Inventartabelle', alt: 'Produktliste mit Bestand und Preisen' },
+                        { caption: 'Neuer Artikel', alt: 'Formular zum Hinzufügen eines 18K-Artikels mit Preis und Beschreibung' },
+                        { caption: 'Bestand auffüllen', alt: 'Interface zum Erhöhen des Bestands eines bestehenden Produkts' },
+                    ],
+                },
+                {
+                    title: 'Verkäufe & Zahlungen',
+                    summary: 'Drei Schritte: Verkauf anlegen, Zahlungsart erfassen und abgleichen.',
+                    shots: [
+                        { caption: 'Kunde und Produkte wählen', alt: 'Schritt 1: Kunde und Stücke auswählen' },
+                        { caption: 'Zahlungsart', alt: 'Schritt 2: Zahlungsart und Anzahlungen setzen' },
+                        { caption: 'Verkaufsbestätigung', alt: 'Schritt 3: Zusammenfassung und finale Bestätigung' },
+                        { caption: 'Offene Zahlungen', alt: 'Liste der Verkäufe mit ausstehendem Saldo' },
+                    ],
+                },
+                {
+                    title: 'Ausgaben & Kasse',
+                    summary: 'Erfassung operativer Ausgaben und Nachvollziehbarkeit für tägliche oder wöchentliche Abschlüsse.',
+                    shots: [
+                        { caption: 'Ausgabe erfassen', alt: 'Formular zum Erfassen einer Ausgabe mit Betrag und Kategorie' },
+                        { caption: 'Gesamthistorie', alt: 'Tabelle aller erfassten Ausgaben' },
+                        { caption: 'Detail nach Datum', alt: 'Gefilterte Ansicht der Bewegungen in einem Zeitraum' },
+                        { caption: 'Detail nach Konzept', alt: 'Detail jeder Ausgabe mit Betrag und Verantwortlichem' },
+                    ],
+                },
+                {
+                    title: 'Garantien & Umtausch',
+                    summary: 'Garantiemanagement für vergoldete Stücke: von der Anfrage bis zur Ersatzlieferung.',
+                    shots: [
+                        { caption: 'Garantie erstellen', alt: 'Formular zum Öffnen einer Garantie mit Schadensbeschreibung' },
+                        { caption: 'Nachverfolgung', alt: 'Status des Garantie-Falls und Kundendaten' },
+                        { caption: 'Historie', alt: 'Verlauf früherer Garantien zur Kontrolle' },
+                        { caption: 'Abschluss', alt: 'Schlussbild mit Bestätigung von Übergabe oder Ersatz' },
+                    ],
+                },
+            ],
+            workerFlows: [
+                {
+                    title: 'Zugang & Profil',
+                    summary: 'Mitarbeiter-Login und Aktualisierung persönlicher Daten für den Shopbetrieb.',
+                    shots: [
+                        { caption: 'Mitarbeiter-Login', alt: 'Login-Formular für Verkaufsmitarbeiter' },
+                        { caption: 'Zugangsdaten erhalten', alt: 'Ansicht mit zugewiesenem Benutzer und Passwort' },
+                        { caption: 'Persönliches Profil', alt: 'Bearbeitung grundlegender Mitarbeiterdaten' },
+                    ],
+                },
+                {
+                    title: 'Dashboard & Inventar',
+                    summary: 'Schneller Start, um Aufgaben zu sehen und verfügbaren Bestand zu prüfen.',
+                    shots: [
+                        { caption: 'Dashboard Verkäufer', alt: 'Dashboard mit Shortcuts zu Verkäufen und Inventar' },
+                        { caption: 'Inventar', alt: 'Produktliste mit sichtbarem Bestand für den Verkäufer' },
+                    ],
+                },
+                {
+                    title: 'Verkaufsprozess',
+                    summary: 'Geführter Ablauf zum Abschließen von Verkäufen im Laden, Zahlung und Saldo erfassen.',
+                    shots: [
+                        { caption: 'Produkte auswählen', alt: 'Schritt 1: Artikel für den Verkauf wählen' },
+                        { caption: 'Zahlung Kunde', alt: 'Schritt 2: Zahlungsart und Anzahlung festlegen' },
+                        { caption: 'Bestätigung', alt: 'Schritt 3: Bestätigen und Beleg erzeugen' },
+                    ],
+                },
+            ],
+        },
+        pt: {
+            heroBadge: 'Caso real',
+            heroTitle: 'Destello de Oro 18K',
+            heroDesc: 'Documentação visual do sistema de joalheria: fluxos de administrador e vendedor com capturas numeradas e descrição passo a passo.',
+            btnAdmin: 'Fluxos do administrador',
+            btnWorker: 'Fluxos do vendedor',
+            descTag: 'Destello de Oro 18K',
+            descTitle: 'Joias folheadas com respaldo real',
+            descP1: 'Oferecemos peças folheadas a ouro com acabamento premium, garantia escrita de 1 ano, frete grátis acima de 250.000 e programa de fidelidade com descontos progressivos.',
+            descP2: 'Nossa equipe orienta sobre tamanhos, estilos e cuidados para manter o brilho. Precisa de catálogos ou orçamento? Fale conosco e respondemos na hora.',
+            btnWa: 'Fale no WhatsApp',
+            btnIg: 'Siga no Instagram',
+            features: [
+                { title: 'Garantia de 1 ano', text: 'Cobertura para defeitos de fabricação e desgaste anormal.' },
+                { title: 'Frete grátis', text: 'Sem custo em pedidos acima de 250.000.' },
+                { title: 'Promoções e fidelidade', text: 'Descontos progressivos e benefícios exclusivos para clientes recorrentes.' },
+                { title: 'Assessoria direta', text: 'Atendimento personalizado via WhatsApp para escolher e cuidar das peças.' },
+            ],
+            adminBadge: 'Painel admin',
+            adminTitle: 'Processos e capturas',
+            workerBadge: 'Painel vendedor',
+            workerTitle: 'Processos e capturas',
+            total: (n) => `Total: ${n} fluxos`,
+            lightboxCount: (i, total) => `Imagem ${i} de ${total}`,
+            adminFlows: [
+                {
+                    title: 'Acesso e recuperação de conta',
+                    summary: 'Telas de login e suporte de credenciais para garantir acesso apenas autorizado.',
+                    shots: [
+                        { caption: 'Login do administrador', alt: 'Formulário de login para admin com usuário e senha' },
+                        { caption: 'Credenciais entregues', alt: 'Tela com credenciais geradas para o administrador' },
+                        { caption: 'Recuperar senha', alt: 'Tela para solicitar redefinição de senha por e-mail' },
+                    ],
+                },
+                {
+                    title: 'Troca de senha',
+                    summary: 'Fluxo guiado para o admin atualizar a senha com validação de segurança.',
+                    shots: [
+                        { caption: 'Abrir troca de senha', alt: 'Formulário inicial para mudar a senha atual' },
+                        { caption: 'Confirmação', alt: 'Tela de confirmação da nova senha' },
+                    ],
+                },
+                {
+                    title: 'Dashboard e perfil',
+                    summary: 'Métricas rápidas e acesso ao perfil pessoal para manter dados atualizados.',
+                    shots: [
+                        { caption: 'Dashboard admin', alt: 'Painel com atalhos para vendas, inventário e despesas' },
+                        { caption: 'Informações pessoais', alt: 'Ficha editável com dados de contato do admin' },
+                    ],
+                },
+                {
+                    title: 'Inventário e cadastro',
+                    summary: 'Controle total do estoque: ver, criar itens novos e reabastecer.',
+                    shots: [
+                        { caption: 'Tabela de inventário', alt: 'Lista de produtos de joalheria com estoque e preços' },
+                        { caption: 'Novo produto', alt: 'Formulário para adicionar peça 18K com preço e descrição' },
+                        { caption: 'Reabastecer', alt: 'Interface para aumentar estoque de um produto existente' },
+                    ],
+                },
+                {
+                    title: 'Vendas e cobranças',
+                    summary: 'Processo em três passos: venda, método de pagamento e conciliação.',
+                    shots: [
+                        { caption: 'Selecionar cliente e produtos', alt: 'Passo 1 da venda escolhendo cliente e peças' },
+                        { caption: 'Método de pagamento', alt: 'Passo 2 para definir forma de pagamento e entradas' },
+                        { caption: 'Confirmação da venda', alt: 'Passo 3 com resumo e confirmação final' },
+                        { caption: 'Pagamentos pendentes', alt: 'Lista de vendas com saldo pendente para acompanhamento' },
+                    ],
+                },
+                {
+                    title: 'Gastos e caixa',
+                    summary: 'Registro de gastos operacionais e rastreabilidade para fechamentos diários ou semanais.',
+                    shots: [
+                        { caption: 'Registrar gasto', alt: 'Formulário para lançar gasto com valor e categoria' },
+                        { caption: 'Histórico geral', alt: 'Tabela com todos os gastos registrados' },
+                        { caption: 'Detalhe por data', alt: 'Vista filtrada dos movimentos em um período' },
+                        { caption: 'Detalhe por conceito', alt: 'Detalhe de cada gasto com valor e responsável' },
+                    ],
+                },
+                {
+                    title: 'Garantias e trocas',
+                    summary: 'Gestão de garantias para peças folheadas: da solicitação à reposição.',
+                    shots: [
+                        { caption: 'Criar garantia', alt: 'Formulário para abrir garantia com descrição do dano' },
+                        { caption: 'Acompanhamento', alt: 'Status do caso de garantia e dados do cliente' },
+                        { caption: 'Histórico', alt: 'Histórico de garantias anteriores para controle' },
+                        { caption: 'Encerramento', alt: 'Tela de fechamento com confirmação de entrega ou reposição' },
+                    ],
+                },
+            ],
+            workerFlows: [
+                {
+                    title: 'Acesso e perfil',
+                    summary: 'Login do vendedor e atualização de dados pessoais para atuar na loja.',
+                    shots: [
+                        { caption: 'Login vendedor', alt: 'Formulário de login para usuário vendedor' },
+                        { caption: 'Credenciais recebidas', alt: 'Tela com usuário e senha atribuídos' },
+                        { caption: 'Perfil pessoal', alt: 'Edição dos dados básicos do vendedor' },
+                    ],
+                },
+                {
+                    title: 'Dashboard e inventário',
+                    summary: 'Início rápido para ver tarefas e checar estoque disponível.',
+                    shots: [
+                        { caption: 'Dashboard vendedor', alt: 'Painel com atalhos para vendas e inventário' },
+                        { caption: 'Inventário', alt: 'Lista de produtos com estoque visível para o vendedor' },
+                    ],
+                },
+                {
+                    title: 'Processo de venda',
+                    summary: 'Fluxo guiado para fechar vendas na loja, registrando pagamento e saldo.',
+                    shots: [
+                        { caption: 'Selecionar produtos', alt: 'Passo 1: escolher itens da venda' },
+                        { caption: 'Pagamento do cliente', alt: 'Passo 2: definir forma de pagamento e entrada' },
+                        { caption: 'Confirmação', alt: 'Passo 3: confirmar e gerar recibo' },
+                    ],
+                },
+            ],
+        },
+        it: {
+            heroBadge: 'Caso reale',
+            heroTitle: 'Destello de Oro 18K',
+            heroDesc: 'Documentazione visiva del sistema per gioielleria: flussi admin e commesso con screenshot numerati e descrizione passo-passo.',
+            btnAdmin: 'Flussi admin',
+            btnWorker: 'Flussi commesso',
+            descTag: 'Destello de Oro 18K',
+            descTitle: 'Gioielli placcati oro con garanzia reale',
+            descP1: 'Offriamo pezzi placcati oro con finitura premium, garanzia scritta di 1 anno, spedizione gratuita sopra 250.000 e programma fedeltà con sconti progressivi.',
+            descP2: 'Il nostro team consiglia su taglie, stili e cura per mantenere la lucentezza. Hai bisogno di cataloghi o preventivo? Scrivici, rispondiamo subito.',
+            btnWa: 'Scrivici su WhatsApp',
+            btnIg: 'Seguici su Instagram',
+            features: [
+                { title: 'Garanzia 1 anno', text: 'Copertura per difetti di fabbrica e usura anomala.' },
+                { title: 'Spedizione gratuita', text: 'Senza costo per ordini sopra 250.000.' },
+                { title: 'Promo e fedeltà', text: 'Sconti progressivi e vantaggi esclusivi per clienti abituali.' },
+                { title: 'Consulenza diretta', text: 'Assistenza personalizzata via WhatsApp per scegliere e curare i tuoi pezzi.' },
+            ],
+            adminBadge: 'Pannello admin',
+            adminTitle: 'Processi e schermate',
+            workerBadge: 'Pannello commesso',
+            workerTitle: 'Processi e schermate',
+            total: (n) => `Totale: ${n} flussi`,
+            lightboxCount: (i, total) => `Immagine ${i} di ${total}`,
+            adminFlows: [
+                {
+                    title: 'Accesso e recupero account',
+                    summary: 'Schermate di login e supporto credenziali per garantire accesso solo autorizzato.',
+                    shots: [
+                        { caption: 'Login amministratore', alt: 'Form di accesso per admin con utente e password' },
+                        { caption: 'Credenziali consegnate', alt: 'Vista delle credenziali generate per l’amministratore' },
+                        { caption: 'Recupero password', alt: 'Schermata per richiedere il reset via email' },
+                    ],
+                },
+                {
+                    title: 'Cambio password',
+                    summary: 'Flusso guidato per aggiornare la password con validazione di sicurezza.',
+                    shots: [
+                        { caption: 'Apri cambio password', alt: 'Form iniziale per cambiare la password attuale' },
+                        { caption: 'Conferma', alt: 'Schermata di conferma della nuova password' },
+                    ],
+                },
+                {
+                    title: 'Dashboard principale e profilo',
+                    summary: 'Dashboard con metriche rapide e accesso al profilo personale per mantenere i dati aggiornati.',
+                    shots: [
+                        { caption: 'Dashboard admin', alt: 'Dashboard con accessi a vendite, inventario e spese' },
+                        { caption: 'Info personali', alt: 'Scheda modificabile con dati di contatto dell’admin' },
+                    ],
+                },
+                {
+                    title: 'Inventario e nuovi prodotti',
+                    summary: 'Controllo completo dello stock: vedere, creare articoli e rifornire.',
+                    shots: [
+                        { caption: 'Tabella inventario', alt: 'Elenco prodotti con stock e prezzi' },
+                        { caption: 'Nuovo prodotto', alt: 'Form per aggiungere un articolo 18K con prezzo e descrizione' },
+                        { caption: 'Rifornire inventario', alt: 'Interfaccia per aumentare lo stock di un prodotto esistente' },
+                    ],
+                },
+                {
+                    title: 'Vendite e incassi',
+                    summary: 'Processo in tre passi: creare la vendita, registrare pagamento e riconciliare.',
+                    shots: [
+                        { caption: 'Seleziona cliente e prodotti', alt: 'Passo 1 della vendita scegliendo cliente e pezzi' },
+                        { caption: 'Metodo di pagamento', alt: 'Passo 2 per impostare metodo di pagamento e acconti' },
+                        { caption: 'Conferma vendita', alt: 'Passo 3 con riepilogo e conferma finale' },
+                        { caption: 'Pagamenti pendenti', alt: 'Elenco vendite con saldo in sospeso da seguire' },
+                    ],
+                },
+                {
+                    title: 'Spese e cassa',
+                    summary: 'Registrazione spese operative e tracciabilità per chiusure giornaliere o settimanali.',
+                    shots: [
+                        { caption: 'Registrare spesa', alt: 'Form per registrare una spesa con importo e categoria' },
+                        { caption: 'Storico generale', alt: 'Tabella con tutte le spese registrate' },
+                        { caption: 'Dettaglio per data', alt: 'Vista filtrata dei movimenti in un periodo' },
+                        { caption: 'Dettaglio per voce', alt: 'Dettaglio di ogni spesa con importo e responsabile' },
+                    ],
+                },
+                {
+                    title: 'Garanzie e cambi',
+                    summary: 'Gestione delle garanzie per pezzi placcati oro: dalla richiesta alla sostituzione.',
+                    shots: [
+                        { caption: 'Creare garanzia', alt: 'Form per aprire una garanzia con descrizione del danno' },
+                        { caption: 'Follow-up', alt: 'Stato del caso di garanzia e dati del cliente' },
+                        { caption: 'Storico', alt: 'Storico delle garanzie precedenti per controllo' },
+                        { caption: 'Chiusura', alt: 'Schermata di chiusura con conferma di consegna o sostituzione' },
+                    ],
+                },
+            ],
+            workerFlows: [
+                {
+                    title: 'Accesso e profilo',
+                    summary: 'Login del commesso e aggiornamento dati personali per operare in negozio.',
+                    shots: [
+                        { caption: 'Login commesso', alt: 'Form di accesso per utente venditore' },
+                        { caption: 'Credenziali ricevute', alt: 'Vista con utente e password assegnati' },
+                        { caption: 'Profilo personale', alt: 'Modifica dei dati base del venditore' },
+                    ],
+                },
+                {
+                    title: 'Dashboard e inventario',
+                    summary: 'Avvio rapido per vedere attività e controllare lo stock disponibile.',
+                    shots: [
+                        { caption: 'Dashboard venditore', alt: 'Dashboard con scorciatoie a vendite e inventario' },
+                        { caption: 'Inventario', alt: 'Lista prodotti con stock visibile al venditore' },
+                    ],
+                },
+                {
+                    title: 'Processo di vendita',
+                    summary: 'Flusso guidato per chiudere vendite in negozio registrando pagamento e saldo.',
+                    shots: [
+                        { caption: 'Seleziona prodotti', alt: 'Passo 1: scegliere gli articoli da vendere' },
+                        { caption: 'Pagamento cliente', alt: 'Passo 2: definire metodo di pagamento e acconto' },
+                        { caption: 'Conferma', alt: 'Passo 3: confermare e generare ricevuta' },
+                    ],
+                },
+            ],
+        }
+    };
     };
 
     const setText = (id, text) => {
@@ -680,7 +1156,10 @@ $workerFlows = $normalizeFlowShots($workerFlows);
         caption.textContent = el.dataset.alt || '';
         summary.textContent = el.dataset.summary || '';
         tag.textContent = el.dataset.title || '';
-        count.textContent = `Imagen ${index + 1} de ${items.length}`;
+        const lang = window.mceCurrentLang || localStorage.getItem('siteLang') || 'es';
+        count.textContent = window.doLightboxCount
+            ? window.doLightboxCount(index, items.length, lang)
+            : `Imagen ${index + 1} de ${items.length}`;
         prevBtn.disabled = index === 0;
         nextBtn.disabled = index === items.length - 1;
         overlay.classList.remove('hidden');
