@@ -457,14 +457,15 @@ function send_invoice_email(array $payment, string $toEmail, mysqli $conn, ?stri
     if (file_exists($secretPath)) {
         require $secretPath;
     }
-    $smtpUser = $SMTP_USER ?? getenv('SMTP_USER') ?? 'proyectosmceaa@gmail.com';
+    $defaultSmtpEmail = 'contacto@proyectosmce.com';
+    $smtpUser = $SMTP_USER ?? getenv('SMTP_USER') ?? $defaultSmtpEmail;
     $smtpPass = $SMTP_PASS ?? getenv('SMTP_PASS') ?? '';
     $smtpHost = $SMTP_HOST ?? getenv('SMTP_HOST') ?? 'smtp.gmail.com';
     $smtpPort = (int) ($SMTP_PORT ?? getenv('SMTP_PORT') ?? 587);
     $smtpSecure = strtolower((string) ($SMTP_SECURE ?? getenv('SMTP_SECURE') ?? 'tls'));
-    $smtpFromEmail = $SMTP_FROM_EMAIL ?? getenv('SMTP_FROM_EMAIL') ?? $smtpUser;
+    $smtpFromEmail = $SMTP_FROM_EMAIL ?? getenv('SMTP_FROM_EMAIL') ?? $defaultSmtpEmail;
     $smtpFromName = $SMTP_FROM_NAME ?? getenv('SMTP_FROM_NAME') ?? 'Proyectos MCE';
-    $smtpToAdmin = $SMTP_TO_EMAIL ?? getenv('SMTP_TO_EMAIL') ?? $smtpUser;
+    $smtpToAdmin = $SMTP_TO_EMAIL ?? getenv('SMTP_TO_EMAIL') ?? $defaultSmtpEmail;
 
     // Ajuste Gmail: quitar espacios en app password
     if (stripos($smtpHost, 'gmail.com') !== false) {
